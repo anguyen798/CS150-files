@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Folders - ignore to keep contributions to minimum
+coursereader/
+form/
+inclass/
+slides/
+transcript/
+misc/
