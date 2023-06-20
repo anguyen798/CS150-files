@@ -126,7 +126,6 @@ So this is going to be an int.
 So we're going to create the result.
 We're going to initialize it to zero.
 You can do it like that.
-You can do it like that.
 Either one of those is fine.
 What you can't do is that.
 If you do that, you have a random result.
@@ -704,24 +703,24 @@ If one test depends on the result
 of both of the tests that came before it or after it
 you have, are not supposed to use
 independent if statements.
-Instead, when only
-one condition can be true, then you should
+Instead, when only one
+condition can be true, then you should
 use if, else if,
 else if, else if. These are
-called ladder style if, else if
-statements. They're ladder style because you can read
-on them like the rungs of a ladder and you can
-look at each condition and pick out the
-one condition that could possibly
+called ladder style if, else if statements.
+They're ladder style because you can read down
+them like the rungs of a ladder and you can
+look at each condition and pick out the one
+condition that could possibly
 be true. And so this is
 a program that is checking and turning
-a number, "and" into
-a word. One, two, three,
-four billion, two hundred and so forth.
+a number, "and," into a
+word. One, two, three,
+four billion, two hundred, and so forth.
 So this is obviously correct.
 The order matters, so you have to be
-more careful. In other words, because
-only one of them can be correct, you have to
+more careful. In other words,
+because only one of them can be correct, you have to
 make sure that you select kind of
 from the left as the problems come in.
 It's semantically correct. It says there will only

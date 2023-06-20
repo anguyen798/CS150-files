@@ -68,30 +68,28 @@ No numbers here.
 And so forth.
 So notice we're not doing this with a string.
 We're doing it with a stream.
-We're doing it with a stream.
 Remember all stream input is character input.
 Character input.
 So we talked about filter programs in the last lecture, in lecture 11.
 So filter programs read from standard input, and they write to standard output.
 State filters, like the one we did, look for changes in input.
 So CECO changed the state of its printed flag.
-So the printing Boolean flag was used to monitor the stream state,
+So the printing Boolean flag was used to monitor the stream state
 when we did that with Alice in Wonderland.
 Process filters modify their stream's contents.
 So here, for instance, is the toUpper filter that I showed you in the last lecture.
 Well, CN getCH, C output, toUpperCH.
 So we're processing the data as we go through.
-So we're going to do that with an exercise, just to get a little bit more used to stream input and output.
+So we're going to do that with an exercise just to get a little bit more used to stream input and output.
 We're going to write a 150 encryption library.
 So let's look at the details over there in our handout.
-So an encryption program scrambles the bytes in a file,
-so that the file is unreadable, except to those who know the decryption method and the secret keyword.
-Now, we're going to ignore 2000 years of progress in the field of encryption,
+So an encryption program scrambles the bytes in a file
+so that the file is unreadable except to those who know the decryption method and the secret keyword.
+Now, we're going to ignore 2,000 years of progress in the field of encryption,
 and we're going to use a method that was familiar to Julius Caesar.
 He simply replaced his A's with a D, B's with an E, and so forth.
-And this is called the Caesar Cipher.
-And so the idea with a Caesar Cipher, or any cipher,
-is you get input, which is plain text,
+And this is called the Caesar cipher.
+And so the idea with a Caesar cipher, or any cipher, is you get input, which is plain text,
 and then you get output, which is called cipher text.
 Now, notice a couple things about it.
 We are only ciphering the things that are characters.
@@ -101,8 +99,8 @@ Now, with encryption, if we pass in encryption text, we should get back the plai
 So let's go ahead and look at our lib function in the starter code over here in B.
 Let's close Even Summer, close these shells we've opened already,
 go down to B, and you can see I have a folder called enclib.
-So let's open a shell on that, on enclib,
-and we're going to look at encrypt the header file.
+So let's open a shell on that, on enclib.
+And we're going to look at encrypt the header file.
 And you can see I've already put inside here the two functions we're going to write in the namespace inc.
 I've already documented them.
 And we are simply going to implement those two functions over here.

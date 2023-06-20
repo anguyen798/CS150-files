@@ -367,7 +367,6 @@ That's the name of the executable.
 The objects are algo.o.
 So for every CPP file, you're going to create an object file.
 So algo.o, cs150check.o, and tester.o.
-So algo.o, cs150check.o, and tester.o.
 So each of these is going to be separately compiled,
 and then they'll be linked together when we put in our rule.
 So our second step is the rule to build the target.
@@ -673,7 +672,6 @@ So this is the file comment.
 This is the namespace comment.
 Then in front of each function we're going to add a function comment.
 So again, slash, star, star, and ending with star, slash.
-Slash, star, star, ending with star, slash.
 Slash, star, star, ending with star, slash.
 So that's the basic structure.
 It will always start with a single line that describes what it does and ends in a period.

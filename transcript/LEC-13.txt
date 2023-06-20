@@ -69,7 +69,7 @@ And technically, we should do a static cast on this.
 But it actually works without it.
 The reason we need a static cast is because this is an int.
 Because if I'm going backwards here, I want to make sure I can go less than 0 when I'm done.
-And so we're going to say result equals result, substring 0, up until the position where the comma is supposed to go.
+And so we're going to say result equals result, substring 0, up into the position where the comma is supposed to go.
 We'll add a comma to it, and then we'll get the rest of the result.
 So that's going to let me get, these three is from 0 to the position.
 So that position would be there.

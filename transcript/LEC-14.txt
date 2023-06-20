@@ -317,7 +317,6 @@ I don't know if that's the correct error message.
 OK, so notice the code that may fail
 is placed inside our try block.
 This code cannot fail.
-This code cannot fail.
 It's placed inside a try block.
 So let's try it.
 And I left out a set of arrows there.
@@ -652,7 +651,6 @@ I can say that my intention, my assumption,
 is that I should never, ever be able to get
 to this line of code.
 It's unreachable.
-It's unreachable.
 But what if I inadvertently say break?
 Like that.
 So this is a piece of error in my code now.
@@ -796,7 +794,6 @@ We have only one type name here, but two arguments
 that are type T. So it's going to look at this one and say,
 oh, no, it's a double.
 Oh, no, it's an int.
-It doesn't compile.
 It doesn't compile.
 OK.
 So how do we fix that?

@@ -1,87 +1,54 @@
 Hello everyone, this is Steve Gilbert. Welcome to lecture 6 on programming with loops.
 Before you get started make sure you've gone into Canvas and that you have
-you have clicked week 2.
-In week 2 you've gone and clicked the lecture exercise in programming with loops, the third tab over.
-On the lecture exercise click the starter form.
-When you get the starter form go ahead and rename it here so you'll be able to find it when we get started.
+you have clicked week 2. In week 2 you've gone and clicked the lecture exercise in programming with loops, the third tab over.
+On the lecture exercise click the starter form. When you get the starter form go ahead and rename it here so you'll be able to find it when we get started.
 Now C++, like Java, has several different kinds of loops.
-They have four of them. There's a while loop, there's a do while loop,
+They have four of them. There's a while loop,
+there's a do while loop,
 there is a for loop, and then there is the simplified for loop we saw in the last lecture.
-But just knowing about these four kinds of loops really doesn't give you any guidance
-when you want to decide what loop should I use for this problem.
+But just knowing about these four kinds of loops really doesn't give you any guidance when you want to decide what loop should I use for this problem.
 For that you really need a different way of thinking about loops.
-And so rather than thinking about the four kinds of loops syntax,
-think about the five ways to control the number of repetitions.
-Last lecture we looked at range iteration.
-We visited every element in the container.
-That's what the simplified or the range based for loop is for.
-We have counter controlled iteration.
-We're going to look at that today.
-That's when we have a fixed number of times we're going to repeat.
-Do this loop ten times.
-We have a sentinel loop.
-A sentinel loop is for input, when we look at the contents of input
-and we look for a specific value that tells us to stop looping.
-We have a data loop.
-A data loop is also known as an end of file loop,
-when we simply want to process all the data that remains in input.
+And so rather than thinking about the four kinds of loops syntax, think about the five ways to control the number of repetitions.
+Last lecture we looked at range iteration. We visited every element in the container. That's what the simplified or the range based for loop is for.
+We have counter controlled iteration. We're going to look at that today. That's when we have a fixed number of times we're going to repeat. Do this loop ten times.
+We have a sentinel loop. A sentinel loop is for input. When we look at the contents of input and we look for a specific value that tells us to stop looping.
+We have a data loop. A data loop is also known as an end of file loop. When we simply want to process all the data that remains in input.
 So both the sentinel loop and the data loop are used for input loops.
-Finally we have a limit loop.
-A limit loop is when we want to do a calculation,
-look at the calculation and somehow determine are we close enough.
-Have we reached our limit?
-And so we're going to use this to think about loops.
-We're going to use these five ideas to think about loops when we write our loops.
+Finally we have a limit loop. A limit loop is when we want to do a calculation, look at the calculation, and somehow determine are we close enough?
+Have we reached our limit? So we're going to use this to think about loops. We're going to use these five ideas to think about loops when we write our loops.
 So let's look first at a little bit of review for the range loops.
-So C++11 introduced this new simplified range-based for loop,
-similar to the for loop in Python
-and the new for loop introduced in Java 5 in Java.
-And so this will allow you to visit every element inside a collection.
-It works on the string type, it works on the vector type,
-it works on the built-in array type,
-it actually works on all the collection types that are in the standard library.
-And the basic syntax looks like this.
-For, then you declare a variable.
-Now you can specifically specify the type, like char C,
-or you can use auto here, auto E.
+So C++11 introduced this new simplified range based for loop. Similar to the for loop in Python and the new for loop introduced in Java 5 in Java.
+And so this will allow you to visit every element inside a collection. It works on the string type, it works on the vector type, it works on the built in array type.
+It actually works on all the collection types that are in the standard library.
+And the basic syntax looks like this. For, then you declare a variable. Now you can specifically specify the type, like char C, or you can use auto here, auto E.
 Then a colon, and then just the name of the collection variable that you want to loop over.
 This will go through each copy of the variable and put that variable inside E.
-Now there are three variations in C++, Java has only one variation.
-In, similar to Java, we can use value iteration,
-meaning take the first element out of the collection,
-put it in the variable E, put a copy of it in the variable E,
-then take the second one, put it in the variable E,
-then take the third one, put it in the variable E.
-Instead of making a copy of each of those elements though,
-we can actually look directly at the element.
-And so this is for auto ref, again you don't need to use auto here,
-you can use char or int or whatever the type of the elements in the collection are.
+Now there are three variations in C++. Java has only one variation.
+In, similar to Java, we can use value iteration. Meaning take the first element out of the collection, put it in the variable E, put a copy of it in the variable E.
+Then take the second one, put it in the variable E. Then take the third one, put it in the variable E.
+Instead of making a copy of each of those elements though, we can actually look directly at the element.
+And so this is for auto ref. Again, you don't need to use auto here, you can use char or int or whatever the type of the elements in the collection are.
 And this actually looks at the individual elements, so you can actually change them.
-Now suppose our collection was filled with very, very large elements, say pictures.
+Now suppose our collection was filled with very, very large elements. Say, pictures.
 You were going through the camera roll on your iPhone.
 This first one would be very, very expensive to make a copy of each picture just to look at it.
-The second one would be more efficient,
-but it's possible that the function would modify the pictures in your picture roll.
+The second one would be more efficient, but it's possible that the function would modify the pictures in your picture roll.
 What you might want to do there is use this third one.
-For this third one, we look at the element,
-but because of the const in front of it, we're prevented from modifying it.
+For this third one, we look at the element, but because of the const in front of it, we're prevented from modifying it.
 Okay, so that was what we did last lecture.
 Now let's look at counter-controlled loops.
-So a counter-controlled loop creates a separate variable called a loop control variable,
-and that will control the number of repetitions, the counter.
+So a counter-controlled loop creates a separate variable called a loop control variable, and that will control the number of repetitions.
+The counter.
 Now we can use this loop control variable two ways.
 Traditionally we use this to the for loop, but you can do it with a while loop as well.
-One way is when we want to loop through a string,
-and we want to access the elements of the string,
-or we want to access the elements of an array or a vector or something like that.
-To do that, because the array and the string and the vector all start their element numbering at zero,
-we want to start our index at zero.
-And so because we don't want to think about how to end that, we use an asymmetric bounds.
+One way is when we want to loop through a string, and we want to access the elements of the string.
+Or we want to access the elements of an array, or a vector, or something like that.
+To do that, because the array and the string and the vector all start their element numbering at zero, we want to start our index at zero.
+And so, because we don't want to think about how to end that, we use an asymmetric bounds.
 Notice it includes the initial bounds, the lower bounds, index zero, but it excludes the upper bounds.
 So notice it's less than ten here.
 Now the name for these loop control variables, i and j, are very common names.
-If you have a nested loop, you'd start with i and then go to j,
-and then maybe k if you had three nested loops inside each other.
+If you have a nested loop, you'd start with i and then go to j, and then maybe k if you had three nested loops inside each other.
 This int i = 0 is initialized before the loop is entered.
 And the scope of the counter i, or the control variable i, is only inside the body of the for loop.
 It doesn't extend after the for loop.

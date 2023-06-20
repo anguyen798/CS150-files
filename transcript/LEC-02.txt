@@ -97,7 +97,6 @@ No, I take that back. We can do it in the old editor. We can't do it in the next
 So I'm just going to select those lines I'm going to tab over.
 And then I'm going to put quotes around the parts that I want to stay as is.
 Quote.
-Quote.
 And quote.
 Quote.
 So the part that's going to stay plain text, I'm putting inside quotes to turn it into a string.
@@ -113,8 +112,6 @@ Tab it over so it's indented.
 And put the operator there, the output operator.
 I'm going to put the output operator between those two pieces.
 The output operator between those two pieces.
-The output operator between those two pieces.
-Those two pieces.
 Those two pieces.
 And finally a new line at the end of it.
 Okay, so now I have figured out what I want to do. I've planned.
@@ -477,7 +474,8 @@ Let's see if I spelled it right.
 Yeah, it'll probably pick it up in a couple seconds.
 We're going to create a second one here for this months per year.
 So I'm going to say const, just to give you some practice,
-constantkmonthsperyear is 12. I think we all know that.
+constant k months per year is 12.
+I think we all know that, but k months per year.
 Okay, that looks pretty good.
 Let's go ahead and try running it again.
 So to clear the terminal like this,
@@ -488,68 +486,75 @@ Okay, I got an error.
 That's because I put a period here instead of a semicolon.
 There I got a semicolon.
 So let's clear the terminal and run it again.
-So it wants my current salary $10,000.
+Okay, so it wants my current salary $10,000.
 Okay, well my output actually, we actually kind of skipped one step.
-And that is, I've done the input, I've done the processing,
-but my output, I'm still using constants here, literals.
+And that is I've done the input, I've done the processing,
+but my output I'm still using constants here, literals.
 And so I want to take new annual,
 and I want to replace this number that I put in there.
-And I want to replace new monthly.
-And I want to replace that number that I put in there.
-And I want to take retro pay.
-And I want to take, replace that number that I put in there.
+And I want to replace new monthly,
+and I want to replace that number that I put in there.
+And I want to take retro pay,
+and I want to take replace that number that I put in there.
 So once we've done that,
 now let's go ahead and make run.
-This time, when I put in the $10,000,
+This time when I put in the $10,000,
 it's actually doing my processing and calculation.
 If I put in different numbers, I'd get different values out.
 And, ooh, it actually even looks worse than it did before.
 I still don't have the periods here.
-I have three decimal places there, and I have no decimal places there.
+I have three decimal places there,
+and I have no decimal places there.
 So let's tackle that next.
 How do we format real numbers?
-When we format real numbers with something called input-output manipulators,
-these are in a different header file.
-They are not in Iostream.
-They are in the header file called IOManip.
+And we format real numbers with something called
+input/output manipulators.
+These are in a different header file.
+They are not in I/O Stream.
+They are in the header file called I/O Manip.
 And these are objects.
-These provide objects and functions that we can set inside
-and print out to the stream to modify the way the stream works.
+These provide objects and functions
+that we can set inside and print out to the stream
+to modify the way the stream works.
 Now, we're only going to memorize one of these now.
-So we're going to put in the IOManip.
+So we're going to put in the I/O Manip.
 And I've probably already put it at the top.
 Yeah, I've already put it here at the top for this problem.
 And we're going to say, before we do any output,
-we're going to say I want all of my real numbers to appear in fixed format,
-meaning not scientific notation.
+we're going to say, I want all of my real numbers
+to appear in fixed format, meaning not scientific notation.
 And when those real numbers appear,
-I want their decimal places or their precision to be two decimal places.
+I want their decimal places or their precision
+to be two decimal places.
 Now again, this only needs to appear once.
 It only needs to appear once.
-So let's try running it again.
-Make run.
-$10,000.
-And notice now, we get--oh, actually I got--these numbers are wrong, aren't they?
+So let's try our running it again.
+Make run $10,000.
+And notice now, we get-- oh, actually, I got--
+these numbers are wrong, aren't they?
 Oh, I did 1,000, not 10,000.
 Let me do 10,000.
-Okay, so this time I got my two decimals there.
-I got my .67.
+OK, so this time I got my two decimals there.
+I got my 0.67.
 I got my two decimals there.
 Now, once we've run this,
 I'm going to maximize that panel size,
 and I can minimize it there rather than bringing it up and down.
 Once I've done this, I can test to make sure if it's correct.
-So I'm going to say make test.
-And notice it will check for all of these different kinds of inputs for the original salary.
+So I'm going to say, make test.
+And notice it will check for all of these different kinds of inputs
+for the original salary.
 Notice it will say here my name and the instructor tests.
 And this is what you're going to take a picture of for your screen.
-At the top it wants a picture of your source code,
-and then you're going to paste in a picture of your test results there.
+At the top, it wants a picture of your source code.
+And then you're going to paste in a picture of your test results there.
 So those are the two things we're going to turn in for this.
 We don't--I'm going to minimize that again.
-We don't, when we're doing in-class exercises, you won't do make submit.
-If you tried to do make submit, it would tell you, "I'm sorry, there's nothing like that here."
-So make submit, it will say, "No, there's no rule to make the target submit."
+We don't, when we're doing in-class exercises,
+you won't do make submit.
+If you tried to do make submit, it would tell you,
+I'm sorry, there's nothing like that here, so make submit.
+It'll say, no, there's no rule to make the target submit.
 And so that simply means we don't do that for in-class exercises.
 Okay, so that's it for the in-class exercise.
 Let me talk to you a little bit more about variables.
@@ -563,9 +568,10 @@ And so a declaration of a variable has this keyword extern in front of it.
 So when I say extern int x, I'm telling the compiler that x is of type int.
 This does not specifically create the variable at this point.
 The variable can be created somewhere else in your program.
-And the variables in your program must be declared for the rest of your program to compile.
-They do not need to be defined.
-For instance, in your homework you have a variable assignment.
+And the variables in your program must be declared
+for the rest of your program to compile.
+They do not need to be defined. For instance,
+in your homework you have a variable assignment.
 Let's go look at one of your homeworks.
 So I'm going to go up to homework.
 I'm going to go homework 1.
@@ -714,7 +720,7 @@ Okay, so the assignment statement has three parts.
 The object where the value is going to be stored.
 That appears on the left of the assignment operator,
 and so it's called an L value.
-And an L value has to be an object.
+An L value has to be an object.
 That means it has to be a region where we can store values.
 That means it has to be addressable.
 The assignment operator, the equals sign, as I mentioned before,

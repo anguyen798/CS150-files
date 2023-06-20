@@ -441,7 +441,6 @@ But you may prefer it with array notation.
 So let's pop that up. Let's go ahead and
 close the things we had previously.
 [typing]
-[typing]
 Okay, so
 countmatches.cpp. Let's close those
 two and let's open a shell on that one.

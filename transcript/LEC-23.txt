@@ -270,7 +270,7 @@ We're going to create dynamic variables for each of these.
 Those dynamic variables are going to be unnamed,
 and they're going to be pointed to by a pointer.
 So I'm going to have int pointer ip for an int pointer equals new int.
-I'll initialize, what was my int up there initialized to?
+And I'll initialize, what was my int up there initialized to?
 It was initialized to 3.
 I'll initialize mine to 4 for this new one.
 So then we have a double.
@@ -314,14 +314,9 @@ So let's look at how we would print each of those.
 So what I'm going to do is I'm going to take this here.
 I'm going to copy it right down here.
 Star ip.
-Star ip.
-Star dp.
 Star dp.
 Star fp.
-Star fp.
 Star cp.
-Star cp.
-Star sp.
 Star sp.
 So ia.
 And remember with pointers, we can use the subscript just like with an array.
@@ -344,7 +339,7 @@ It doesn't have a constructor, which we'll learn about a little bit later.
 And let's try that again.
 Make run.
 Okay, so an int is three.
-IP is four, 350, 450.
+IP is four. 350, 450.
 CP is S.
 SP is Gilbert.
 An array is 456.

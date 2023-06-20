@@ -697,7 +697,6 @@ Now let's bring this one down here like that.
 And that.
 It's going to be easier to see.
 And that.
-And that.
 So the last one is what it points to.
 And it points to star IP.
 And star DP.

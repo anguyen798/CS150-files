@@ -311,8 +311,6 @@ No errors.
 Let's do make test.
 Okay, one of them worked, which is the 75.
 This one did not work at all.
-This one did not work at all.
-This one did not work at all.
 Okay, so maybe what I'm going to guess, I'm going to make a quick guess
 and make this digit a double.
 And I'm also going to make dollars a double as well.

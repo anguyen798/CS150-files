@@ -79,25 +79,24 @@ when you have a parameter that's pointing to an array.
 Unlike a vector, you cannot pass an array by value.
 You cannot pass an array by value.
 So we're going to look at this. I think it's useful to see this visually.
-So I'm going to run a...I'm going to try and run a thing.
-Let's see if this will pop up. Yes, it popped up.
-I'm going to bring this over here and maximize it over here.
+So I'm going to run a...
+I'm going to try and run a thing. Let's see if this will pop up.
+Yes, it popped up. I'm going to bring this over here and maximize it over here.
 So here's a little function where I create an array. I'm going to go to the first here.
 I create an array. When I initialize it, it's initialized on the stack to 1, 2, 3, 4, 5.
-Now I'm going to call this function sum.
-You notice that it takes an argument, an array, a, and the length,
-and it's simply going to loop through that array and sum the element.
+Now I'm going to call this function sum. You notice that it takes an argument, an array, a, and the length.
+And it's simply going to loop through that array and sum the element.
 So watch what happens when I call sum.
 So we have to create what's called a stack frame.
 Notice that the parameter a is a pointer to const.
-So a is a pointer, length is a size t, result is a local variable.
-And these, of course, are all created on the stack.
+And so a is a pointer, length is a size t, result is a local variable.
+And these of course are all created on the stack.
 Now as we go through, notice that a is pointed to that array.
 So we haven't passed the array, we've passed the pointer.
 And as we loop through here, it goes through and just adds the values.
 And finally it's going to return the result.
-We're going to print the result 15 out here when we're done,
-and that stack frame is going to be destroyed.
+We're going to print the result 15 out here when we're done.
+And that stack frame is going to be destroyed.
 So the effect of doing that is similar to pass by reference.
 And so we always, but notice we don't use the ampersand with the array parameter at all.
 Again, don't get confused with that.
