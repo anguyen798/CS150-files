@@ -1,0 +1,668 @@
+Hello everyone, my name is Steve Gilbert and this is chapter one in your course reader on C++ mechanics.
+In today's lecture we're going to talk about how do you actually create a C++ program?
+What are the mechanical steps you need to go through?
+Now in 1970, when Ken Thompson and Dennis Ritchie created Unix,
+Dennis Ritchie and Brian Curnahan also wrote a book to introduce the world to the C programming language.
+In the book they wrote this, "The only way to learn a new programming language is to write programs for it.
+The first program to write is the same for all languages. Print the words 'Hello World'."
+Now you've probably heard of this, a Hello World program. This is where this statement comes from.
+Now to go on to write. This is a big hurdle. To leap over it you have to be able to create the program text somewhere.
+Compile it, load it, run it, and find out where your output went.
+That's what we're going to cover today.
+He goes on to say, I think a little tongue in cheek,
+"With these mechanical details mastered, everything else is comparatively easy."
+Now that's not exactly true. All of these mechanical details are necessary,
+but they're not going to be sufficient for you to write good C++ programs.
+But it is important that you learn how to do them and make them so they're second nature.
+So we're going to start. Here's Dennis Ritchie's C version of Hello World.
+We're going to create a C++ version and take our inspiration from the movie The Princess Bride.
+"Hello, my name is Inigo Montoya. You killed my father. Prepare to die."
+So we're not simply going to write one line. We're going to write one, two, three, four, five lines to output.
+So how do we do that?
+Well first, what we need to do is we need to write the C++ instruction somewhere.
+This is called source code.
+Now if you look at my little illustration on the right of this slide, you'll see that it says C code.
+But it could be C code or C++ code or any kind of code.
+So the basic idea behind a high-level language is that we write source code in high-level or human-like languages.
+And then we take those languages and we convert them into a language the computer understands,
+a mechanical or binary language.
+Now for C++, we're going to write our code using the extension .cpp.
+This is not really required for C++ like it is for Java with the .java extension.
+But we're going to follow this convention, .cpp for C++ files, .c for C language files, .h for header files.
+Now to convert our code, we need to use what's called a driver program.
+Now frequently this will be called a compiler.
+It's not actually a compiler.
+It's a series of programs.
+And we have one program that kind of orchestrates that.
+And each of these different compilers or drivers have a series of programs that they work with.
+And that series of programs we call a tool chain.
+So Clang is one tool chain.
+GCC is another tool chain.
+Visual C++ is another tool chain.
+And their driver programs are named similarly.
+So Clang++ is the driver for the Clang tool chain, the one that's native to Mac OS.
+C++ is the native driver for the GCC tool chain, the GNU compiler collection.
+Cl is the driver for the Visual C++ compiler.
+So what this driver does is it starts up these different programs.
+The first program it starts is called the preprocessor.
+What the preprocessor does is it reads through your source code and it replaces certain statements.
+These are called preprocessor directives with the code that it intends to make a change to.
+Mostly that's including header files in C++ and C and expanding macros.
+Now when that's done, the preprocessed source code, what we call a translation unit,
+can either be saved to disk, if you see in the picture over there,
+those are usually saved in a file called a .i file or a .ii, standing for intermediate code,
+or it can just be saved in memory, which is the normal case.
+It's just stored in memory.
+And then that output, the preprocessor output, is passed on to the next step,
+which is called the compiler proper.
+Again, most of us informally call Clang or GCC the compiler,
+but again it's a driver that drives these different subprograms.
+Now the compiler actually has two phases.
+Sometimes it's called C1 and C2, and those are actually different programs.
+The first part of the compiler is to parse the code, to make sense of your source code.
+Is it formed correctly?
+It finds syntax errors, like errors where you've made a typo, you forgot a comma,
+you've made a mistake in the grammar.
+It finds declaration errors, you've used names in your code
+and you haven't told the compiler what they mean.
+And it finds type errors.
+You may perhaps write a code that's syntactically correct,
+but you're trying to put the wrong kind of value in the wrong kind of variable.
+All of those are discovered before we can actually generate any code.
+This is the parsing phase, or phase one, of the compiler.
+The second phase of the compiler is to take the output,
+it's usually called a syntax tree or a parsing tree,
+take the output of this first phase and pass it through a code generator.
+And the code generator produces some kind of intermediate language.
+On the tool chain we're going to be using, GCC, it produces assembly language.
+On other tool chains, I believe Plang, it may produce some kind of intermediate code
+that is closer perhaps to Java's byte code.
+But it produces some kind of intermediate code,
+not code that the computer can actually run.
+And, again, if you look at the picture on the right,
+you'll see that that code can be saved in a file,
+a .asm file for assembly or a .s file, which is what GCC uses.
+Now, once we've produced a human-readable form of the machine language
+that the compiler understands,
+we actually have to turn that into machine language.
+And that's the assembly phase.
+It uses something called the assembler.
+And this produces an output that is pure binary code.
+It is no longer human-readable.
+It doesn't use the symbols that we use for reading and writing.
+So the assembler takes this assembly language
+and it produces native machine code.
+And, again, depending on your tool chain,
+if you're using Microsoft's CL tool chain, it will produce a .obj file.
+For both Clang and G++, it produces a .o file.
+Again, as the picture shows,
+we can actually skip saving those intermediate files
+and go directly from memory to memory again.
+Now, the last part is something that you aren't familiar with in Java.
+This is called linking.
+So in Java, this happens when you run your program.
+When you run your program, the linking happens at run time.
+In C++, we do it before that.
+We do it when we build our code.
+And this whole process, the picture on the right,
+is called building your executable,
+turning your source code into an executable program.
+Now, your object code can actually be understood by the CPU on your computer.
+It is native object code.
+However, to get it into memory, we have to load it.
+And to load it, we're going to need some startup code to be combined with it.
+So the linker combines that startup code with your object code
+plus any kind of library features that you have used.
+So it links those library features, those library functions,
+those library classes, those library objects into your executable.
+So it becomes part of your executable along with your object code.
+As I mentioned, Java does the same thing,
+but it does it when your program runs.
+When you type in Java, it actually looks out on disk,
+finds the library code, combines it in memory,
+and produces the executable thing that runs.
+Now, with the executable machine code,
+you run it by running it on your computer.
+Now, this is a little different than Java.
+In Java, we run a hypervisor or a virtual machine, the program Java,
+the Java virtual machine.
+In C++, we do not.
+The operating system actually loads your native machine code into memory,
+and it's run by the CPU on your computer.
+So that's the process.
+Let's go ahead and look at each of those steps.
+Now, in fact, as we go on in the semester,
+we will kind of ignore each of these steps.
+But it's important when you start out to realize that each of these things
+is happening.
+It will be important later when you write code,
+because the compiler will give you error messages that give you a hint about
+which part of the process failed.
+Okay, so the simplest C++ program has one function named main.
+Now, you're probably familiar with that with Java, public static void main.
+It follows the same purpose.
+So in Java, you have a function called main.
+In C++, you have a function called main.
+The syntax for the main function, again, is the entry point.
+It's called by the startup code when you load your program.
+That startup code was added by the linker, as we saw in the last slide,
+to initialize the memory in your computer, set aside space,
+set up the machine registers correctly,
+and just then turn everything over to the CPU so it can start working.
+Now, in your homework, you're going to find out that we are not going to have
+a main function.
+That's because I've put the main function inside a library,
+and it's going to call a second function called run.
+But I just don't want you to be confused when you start working your homework
+and see that there is no main function.
+There actually is a main function.
+So let's create our main function here.
+Let's look at the syntax for it.
+So the first part is going to be these words main.
+So that's probably simpler, you notice.
+It doesn't say public static void.
+It's just the main.
+What this means is this tells us what the function returns.
+That tells us the output.
+So the kind of value produced by the function is the int.
+The name of the function is main.
+If we were to spell it with a capital M, it would still compile,
+but the linker wouldn't find it when it tried to call it
+because the linker is calling this main with lowercase.
+So the functions are case sensitive.
+Thirdly, if we passed any arguments, if we had any information we wanted to pass
+in the main, we would pass any arguments inside this,
+what's called a parameter list or argument list.
+Here we don't have any, and so we don't need it.
+The implementation, so this is called the interface of the function,
+the part that tells the compiler what kinds of things go into the function,
+what the name of the function is,
+and what kind of things go out of the function.
+The implementation is where the code is actually generated.
+This is put between a set of braces, which mean the same thing they do in Java.
+It means begin this section of code and end this section of code.
+Another name for these set of braces is a block.
+So a function body or the implementation is a block.
+So let's look back at our code here.
+And here is our block.
+Let's look at how we would compile that.
+I'm going to start just by compiling it with G++.
+I'm going to say G++ hello.cpp.
+If I don't get any errors, that means it worked correctly.
+So this compiles and runs correctly.
+In Unix, this is Unix here,
+and in Unix we would run it by typing the name of the output program.
+Remember what Dennis Ritchie wrote.
+You have to figure out where your output went.
+So where did my program go when I compiled it?
+If we type in LS, which stands for list,
+we can see we have two files here,
+hello.cpp, the one I created,
+and something called a.out.
+That is an old name that stands for assembly output.
+And so I can run that program by typing in ./a.out.
+And of course I have no code inside there,
+but in fact that program did something.
+What it did was it printed out
+or it returned to the operating system an integer.
+And you might think, what integer?
+Well, in fact, every function, like Java,
+if it says it has to return a value,
+it has to return a value.
+The main function in C++ is a little special though,
+because it will return a value if you don't return a value.
+The default value it returns is this.
+So this is implicitly written in every C++ program,
+return zero.
+And zero signifies to the operating system
+that there was no problem.
+Now we might be able to,
+I'm going to see if I remember this,
+because I don't seem with my video to have any way to pause this,
+which is kind of unfortunate.
+I'm going to see if I can echo.
+Yes, that is echoing the return value
+from the last program written.
+And notice it returns zero.
+So many times you'll see the return zero put in there explicitly.
+You don't have to put that in.
+So now let's see what we want to do to print out our "Hello, world!"
+So if this was Python, we'd use a function called print.
+And so I would write print, "Hello, print.
+My name is print Inigo Montoyo,"
+although I'd use my own name, of course.
+This is built into the language.
+You don't have to add anything special to do this into Python.
+It's part of the Python language itself.
+I can have multiple arguments.
+I can say print, "Hello, space," or a comma, "My name is," and so forth.
+And it would add a new line.
+I wouldn't need to have a semicolon after it.
+So in Python, it would look like this.
+I could write print, "Hello, my name is," and so forth.
+So I could put all of those things in there.
+It would be built into the language, and I wouldn't need to put a semicolon in it.
+Most of you are probably more familiar with Java, however.
+And in Java, what we need to do is we use the system.out.print method.
+And so that is not part of the language.
+It's part of the standard library that comes with Java.
+However, it's available to every Java program.
+We say it's auto-loaded.
+Java automatically loads part of the standard library whenever you run a program.
+You can have a single argument.
+So in Java, I would have to write that somewhat like this.
+I'd have to write system.out.println, "Hello," system.out.println,
+"My name is," and so forth.
+Now you notice with Java, I've had to add a semicolon at the end.
+And I've had to use println instead of print.
+If I used the print method, I would have to manually add in a new line or use println.
+For C++, we don't use a function.
+We don't use a method.
+Instead, we use an object and an operator, an insertion operator.
+And so this, like Java, is not part of the language.
+It's in the library.
+Unlike Java, it's not auto-loaded.
+Unlike Java, it's in something called a namespace.
+So you can have multiple arguments.
+You can have multiple operators.
+But you do need a semicolon.
+If you want a new line, you have to manually add a new line with the new line escape sequence or endl.
+So this is how we do it in C++.
+Again, that doesn't work for -- this doesn't work for -- we can't put Java inside here.
+We're in C++.
+So we'd say cl, "Hello."
+We manually put in a new line.
+"Cout my name is" -- or we could use the endl.
+And notice I have multiple arguments.
+And for each argument, I need an operator that sends my argument to the output object.
+Now, this is called cout, not "cout."
+And cout stands for "character output."
+So we're going to send this out as characters.
+I'm going to put "cout Steven Gilbert" instead of that.
+You can put in your own name.
+I can also put a new line in the middle of a sentence like that if I want, like I've done before.
+And I don't need -- I can put in -- I can put this on multiple lines so you can have multiple arguments.
+And that's the end of the sentence.
+So notice this is one statement.
+I have multiple arguments, multiple operators, and all of them are sending the output to cout.
+This is one statement.
+The statement ends with the semicolon.
+And here is our C++ version of "Hello, world!"
+Now, in Python, I said that it was a function called print.
+So a function -- C++ has functions.
+Function is a named piece of code that may take arguments and returns a value
+or may carry out an action.
+So square root is a function.
+Notice that we pass arguments to it and we get back a value.
+We pass arguments to it and we get back a value.
+Now notice Python has functions.
+C++ has functions.
+Java does not really have functions.
+Java instead has a method.
+In C++ we call these member functions.
+Now a function, like square root, is not associated with an object or a class.
+A member function or a method is defined in a class,
+and a member function takes an implicit or invisible reference to an object as its first argument.
+So notice if we had a string named str in Java,
+we'd call it by writing str.length.
+We wouldn't call it by calling length and passing str to it.
+That's because str is invisibly passed as a first argument here inside the function.
+It's a parameter called this.
+And so we use the same thing in C++.
+If we have member functions, we call them by using this dot notation, str.length,
+which means call length and pass str as the invisible first argument.
+Finally we have operators.
+Again, we have these in both Python and we have them in C++.
+We do not have them in Java.
+And an overloaded operator is simply a function that has a special name.
+We call that function not by using function call notation or method call notation,
+but operator infix notation.
+So when I write cout, arrow, arrow, hello,
+what I'm doing is I'm calling a function called operator output or operator arrow, arrow,
+and I'm passing the left-hand side of this expression
+and the right-hand side of that expression as two arguments.
+So if you think of an infix expression, a plus b,
+a is the left-hand side, b is the right-hand side, plus is the operator.
+This is the left-hand side, cout.
+This is the operator and this is the right-hand side.
+And those are implemented in C++ by writing a special function called operator
+with the name of the operator that's used.
+Okay, so let's go on and look.
+So let's compile our program again.
+Now that I've done that, let me go ahead and do it again
+and see if I can get this to print hello.
+So I'm going to go g++ hello.cpp
+and instead I get a whole bunch of errors.
+Notice that it didn't work.
+These are all syntax errors.
+Notice it gave me some suggested alternatives.
+Those usually are meaningless.
+And so when you get errors like this,
+what you want to do is you want to find the first error and fix that.
+Cout was not declared in that scope.
+So what does that mean?
+What have I forgotten in my code here?
+What have I done wrong?
+So as I mentioned, input and output, the cout object, the endl object,
+are not part of the language.
+They are part of the standard C++ library.
+Just like system.out is not part of the Java language.
+It's part of the Java library.
+However, in Java, when you run a program,
+it automatically includes part of the library,
+what's called the java.lang package,
+and that includes string and system.out and so forth.
+In C++, that's not true at all.
+In C++, it's our job to make sure we include everything that we use.
+So we use a library feature by including the header.
+And so the header we want to include is named Iostream.
+That will insert the declarations and the definitions from the standard
+library Iostream header into our code.
+We'll see in a few moments how that works.
+Now, there are actually more than 70 of these headers in C++11,
+and so you're going to need to learn some of them by heart.
+Otherwise, you're going to look up by looking up the documentation.
+So lines that start with a pound sign are not processed by the main compiler.
+They are processed and removed by the preprocessor.
+These are called preprocessor directives or preprocessor instructions.
+So in this case, the include will be replaced with the actual text of the
+header file.
+Okay, now I'm not going to do this one right now.
+We're going to come back and do that one in a moment.
+Okay?
+So I want to add in the include.
+So I'm going to say include Iostream.
+So the Iostream goes in brackets.
+You notice how your editor will help you there
+and show you the different code.
+And we'll come down here with the terminal window.
+If you type in control and L, you can clear the whole terminal window.
+And so we're going to type in just -- oops, hit the wrong key again -- G++
+hello.cpp.
+Notice we get some errors that are similar but slightly different,
+slightly different, right?
+So, again, the first error, CL was not declared in this scope.
+But notice the alternative here is slightly different.
+It no longer says that we have -- thinks we should put in an enum.
+It says, "Oh, you notice in Iostream.61.18, standard CL was declared there.
+Did you mean to be using that standard CL?"
+And, in fact, we do.
+So that is the next step.
+We need to look at -- hold on, I'm trying to get my thing over here.
+I'm going to look at the preprocessed source code in a second.
+So in C++, we have something that there's nothing similar to in Java
+except the math class.
+So a namespace is a group of related classes and functions.
+And the math class in Java is very similar to that.
+You know that scanner object in the Java util package?
+What you do is you create a scanner.
+Scanner in equals new scanner system in.
+You use a class to create an object.
+With things in the math class, you don't.
+Matter of fact, it's impossible for you to create a math object.
+Instead, the math class simply acts as a container to contain groups of functions,
+static functions they're called in the math class,
+like math.square root and math.pal.
+So namespaces do the same job in C++.
+A namespace groups together similar kinds of functions.
+And all of the functions in the standard C++ library are in the namespace called std.
+Now because std has bad meanings,
+bad -- I can't think of the word I'm thinking of --
+we generally pronounce it the standard namespace,
+rather than spelling out the words.
+So to use the namespace, we can do three things.
+First, we can explicitly qualify each object.
+Now you can do the same thing in Java.
+In Java, instead of writing import Java.util scanner at the top of your program,
+you can write Java.util scanner in equals new Java.util scanner.
+And you never need to use the import statement.
+In other words, you can explicitly qualify each of the names in the class.
+And we can do the same thing.
+We can explicitly qualify the name of the function.
+Here I've done that with square root by saying,
+I want to call the square root function that's in the standard namespace.
+Now in Java, when we do that, we use a dot.
+So Java.util dot scanner.
+In C++, if we have the same classes, we'd write Java colon colon util colon colon scanner
+to say that the scanner was in the util package, which is in the Java package.
+So this is called the scope resolution operator, colon colon.
+And it's used when we mean that something exists inside of something else.
+So here we're saying the square root exists in the standard namespace.
+Many C++ programmers like this style.
+It's very, very common.
+I know at UCI they do all of their C++ programming using this style.
+I think it's a little wordy.
+And so there are two options for that.
+Just like you can write import Java util dot star or import Java util dot scanner,
+we can do something similar by saying at the top, using standard square root.
+When I do that, in my code, I only have to use the name square root.
+Notice I haven't imported any other name from the standard namespace, just square root.
+This is called a using declaration.
+Similarly, I can import everything.
+I can do the import Java util dot star, all the names inside there.
+And so we can use a using directive using namespace standard.
+Now, there are certain places where we cannot do this.
+But for C++ single file implementation files, this is perfectly legal.
+So I'm going to go back to my C++ program, and I'm going to add that statement in.
+So using namespace standard.
+I'm going to try once more. I'm going to go ahead and erase this code here.
+And I'm going to do -- again, every time I clear that, G++ hello.cpp.
+Now, the fact that I don't get any error messages here means that it compiled correctly.
+I can run it. You remember our output is named a out.
+And there you have my output, just like it appears on the screen.
+Now, I want to look a little bit more at each of the steps that we just did.
+I just typed in G++ hello.cpp.
+And as it did that, it happily did all of the steps and didn't save anything to disk.
+For our in-class exercise, what I want to do is I want to look at --
+I'm going to go and open the in-class exercise, click the link for the starter form,
+make a copy of the document in my own Google Drive.
+Okay, I want to look at each of these steps in the hello program.
+The first step I want to look at is the step for the intermediate code.
+And so instead of just saying G++ hello.cpp,
+what I'm going to do is I'm going to say G++ -e.
+Now, this is called a flag. It's telling the driver, I only want to do part of this.
+So I don't know why it's -e.
+So I'm going to say hello.cpp.
+And then I'm going to do a -o. I know that stands for output.
+I'm going to say hello.ii.
+So I'm going to save just one part of this.
+I'm not going to run the compiler phase. I'm just going to run the preprocessor phase.
+Then I'm going to go over here and look, and I'm going to see that I have a new file called hello.ii.
+So I'm going to go ahead and open that.
+And you'll see that this is the code that was actually inside the iostreams.header.
+And you'll see, in fact, that it's about 30,000 lines long.
+So I'm going to take a little screenshot of part of that.
+And I'm on Windows, so I'm going to do that by holding down my Windows key, Shift and S.
+And I'm just going to drag a little thing through that.
+And then I'm going to go over to my document here.
+And I'm going to paste a screenshot of the fact that I can look at the preprocessed source code.
+I can look at the preprocessed source code.
+That was the exercise we skipped earlier.
+Now, I want to take that preprocessed source code.
+So I'm going to type something slightly different than what I have here.
+But notice I have another flag here. I have -S.
+This is going to do the parsing and the code generation phase.
+So let me bring my code over here.
+So I'm going to go over here. Actually, I'm going to leave that one open.
+I'm going to say g++ -S.
+Here I'm not going to say hello.cpp. I'm just going to say hello.ii.
+I'm actually going to take this as input, my intermediate code, and I'm going to produce another file.
+Now watch the file tree on the left when I do that.
+Notice that it produces another file here.
+If you open that up, you'll notice that this code, again, is human readable.
+We can actually look at the code and see what it says.
+But this is code for the processor I'm working on, a 64-bit Windows processor.
+So I'm going to take my next screenshot, again, Windows Shift-S.
+If you're on the Mac, you'd use the Mac ones to do that.
+I'm going to take a picture of some of the code there.
+And I'm going to go over to my exercise document.
+And I'm going to turn the translation unit into assembly and paste in a screenshot of that.
+So we've just converted the preprocessed translation unit into assembly language.
+Step three is I'm going to take that assembly language and convert it into machine code.
+Again, my driver, G++, is going to run another program.
+So I'm going to type in here G++-c.
+Now, e and s were uppercase.
+This c is lowercase.
+I'm going to do hello.s because that's my input.
+And it is going to, again, produce another piece of output over here, hello.o.
+Try and clink that.
+It says it's binary data.
+It can't be displayed.
+So this has all been human readable.
+Now it's binary data.
+So we have to run another program to show that binary data.
+And so that program is called xxd.
+And I'm going to say hello.o.
+xxd stands for hex dump.
+And this shows us in binary the version of our code.
+So these are the instructions in binary.
+Now, some of them you can recognize over here showing you the parts that are English and so forth.
+And so I'm going to go ahead and shoot a screenshot of that.
+Shift-s.
+And I'm going to paste that where it wants the next one.
+So this is my object code.
+Now I want to take that object code.
+Let me go back to the slides here.
+So that converts our assembly language into object code.
+And xxd hello.o lets us see the object code.
+Now I want to link that object code with some startup code to produce an executable.
+So this I'm going to say g++.
+My input is going to be hello.o.
+And my output is going to be the executable hello.
+Now in Unix we generally don't name the executables exe.
+And so I have the object file over here.
+I'm going to clear this a little bit.
+Control-L.
+I'm going to click there so I don't get the weird screen thing showing up.
+I'm going to say g++ hello.o.
+That's my input.
+And my output is going to be hello.
+So notice this time I don't have any flag.
+I'm just taking the object file as input producing output.
+And you notice it produced a new file over there called hello.
+Now that's the output of the linker.
+That's executable code.
+Again, in Unix we usually don't name files with an extension that are executable.
+If we look inside the -- if we use the Unix shell and we looked inside the terminal,
+we used ls, which is the instruction for displaying things.
+Notice we have hello here in green with a star after it,
+which means that that is executable.
+How do we run the program in Unix?
+We run the program in Unix by simply using its name.
+We simply use its name.
+So we could run this program by simply typing hello.
+But in Windows that would work fine.
+If we do that, it's going to say, "I'm sorry, hello isn't found."
+So we have to type in ./, which means make the current directory part of the executable path.
+And so hello.
+So there's my program.
+So when you see that ./, you're just saying run this program in the current working directory I'm inside.
+That's all the ./ in front of it means.
+So let me go back to my things.
+So we turned it into object code.
+So let's look at hello again, by the way, now that I've turned it into object code.
+Let's look at xxd hello, not hello.o.
+Notice it still looks like object code.
+But if we looked at the front of it -- I'm going to go to the very front up here.
+Well, actually, if you look through it, you would see a lot of additional stuff that wasn't in the original.
+This additional stuff is the library code.
+Notice this is from glibcxx3.4, libc2.25.
+And so that's where it's getting the cout object from that.
+So here's the cout object, which is linked into our code.
+So I'm going to take that screenshot, control-F-S.
+And I'm going to go in and put that inside there.
+And again, we wouldn't have seen this in the object code, which is right here.
+And I just ran my program.
+I'm going to do it again so I can --
+I'm going to shoot a screenshot of that.
+And I'm going to go in and paste in my screenshot there.
+And finally, I'm going to do one last screenshot here.
+I'm going to take a picture of my source code.
+Okay, again, Windows-Shift-S.
+And I'm going to put that inside there.
+Okay, so once you've got that copy, what you'll want to do is go to your exercise.
+You will have clicked the start assignment.
+On the start assignment, you will then go ahead and submit it by either uploading the file,
+or in my case I saved it into Google Drive.
+And I actually don't know if this works.
+I haven't done it before, so I'm going to try it here.
+I'm going to select the file.
+And this looks like the one I've just done, doesn't it?
+Today, I'm going to add that.
+I'm going to attach that.
+Okay, that actually looked like kind of a lot of work.
+What you can do instead of that is you can do just file, download, download it as PDF or open document.
+I usually do PDF.
+Then open that.
+I actually can't see where that is.
+That's in my downloads folder over here.
+Copy of LEC01.
+You might want to change the name on it, put your name on it, and so forth.
+And then you can go up here and you can just do file, upload, upload file, choose file.
+Here's my copy of Lecture 1, open, and then submit the assignment.
+So either one of those will work fine.
+And I get the nice confetti that I have actually attempted it.
+You can also do new attempt as much as you want.
+Okay, so I want to talk a little bit about different kinds of errors before I finish up here.
+So compiler errors are the ones that are discovered during the parsing phase.
+So if you try and put the wrong value in a variable, you'll get a type error.
+If you forget a semicolon, you forget a closing quote, you put the braces in the wrong place.
+You'll get a syntax or a grammar error.
+The one that's most difficult for students coming to C++ are declaration errors.
+C++ doesn't know your name.
+And so you saw that when I used perfectly legal code, but I forgot to include the I/O stream
+or I forgot to include using namespace standard.
+So these are called declaration errors.
+And your code will not compile if you have any of these errors.
+Now it's possible that you could have an error, but your code would compile,
+but in fact it would not run.
+So let me show you another program.
+Well, I've still got my sandbox up over here.
+I'm going to create another program called temp.cpp.
+In here I'm going to put in all the stuff I need, include I/O stream, using namespace standard,
+and main, notice I've capitalized main here.
+Let's see, hello, and I'll return zero, or I could leave off the return zero.
+So all of us realize that this should compile.
+So I'm going to do control L, select here.
+I'm going to do G++ dash C.
+Dash C just means compile it.
+So notice I don't get any syntax or compiler time errors at that point.
+However, if I try and build this, now you can simply do make temp
+and not have to go through all the steps we went through.
+So notice I got this set of weird errors.
+The bottom error here says linker error, command failed with exit code one.
+So here is the part I'm going to explain what this means.
+In function underscore start, undefined reference to main.
+Well, what is function underscore start?
+That is part of what the linker code added as startup code.
+And so that is actually the first part of every executable,
+and it calls the function named main.
+So notice these errors that don't have any -- this one happily says it's a linker error.
+Most of them will not say it's a linker error,
+but they will be errors that look like this.
+Frequently they will refer to LD or something like that.
+This sandbox seems to use the Clang toolkit for doing the linking.
+Ours will use the G++, which will say LD, and it won't say linker.
+So these are linker errors, errors that don't happen at compile time.
+You can't find the reference to refer to in the compiled files and so forth.
+So missing main, trying to compile a program that requires separate files
+and you didn't include one file, you have declared a function,
+but you didn't define the function.
+All of those are discovered during the linking phase.
+Again, the only reason we're pointing this out here is because your compiler will
+give you back different kinds of error messages,
+and they will not exactly explain what happens.
+The third type of error is called undefined behavior.
+Java went to great lengths to eliminate undefined behavior,
+although in Java you could still have a logic error.
+You could have an error where your program produced the wrong output.
+In C++ we can have something that runs, might produce the right output,
+but it still has undefined error.
+Undefined error is you're using a feature in the language that may work
+occasionally but only runs accidentally.
+So, for instance, using a name without a correct header.
+It may work on compiler A, but it won't work on compiler B.
+It is an error, even if your compiler will accept it.
+It is still an error.
+Okay, well that's it for Chapter 1.
+I'll see you back next time for Chapter 2.

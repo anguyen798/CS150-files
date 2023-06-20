@@ -1,0 +1,389 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 11, where we're going to talk about streams and filters.
+So what is a stream? A stream is an abstract data flow. So data comes into your program from something called a source.
+So that may be your keyboard, you may read data from a file, it may be a satellite if your program is reading data from a GPS satellite,
+it may be a little sensor on the brakes of your car or somewhere in the engine of your car.
+The data flows from that source, wherever the data comes from, and it flows into your program where your program processes the data.
+When your program is done processing the data, then it sends it out of your program to some kind of sync.
+Now that again may be your screen, it may be a printer, it may be an internet connection somewhere out on the internet,
+it may be a little light or a dial on the dashboard of your car, it may be some numbers that appear in your GPS machine.
+So the sync is where the data appears, the output appears. So you notice this is the input/output processing cycle that we've done from the very beginning.
+Now sending information to a sync is called writing to the sync, and getting information from a source is called reading from a source.
+So how do we do that in the C++ program? Well, your operating system, not C++, but your operating system has three global stream objects.
+These are called standard in, standard out, and standard error, where the error messages are sent.
+Now C++ has specialized classes which interact with these global stream objects.
+And these classes know how to do input, in other words read, and how to do output, in other words write.
+And those two classes in the header file Iostream are called Istream, which are objects that know how to read information.
+In Java this class is generally called InputStream.
+And Ostream, objects which know how to write information.
+Now, as you remember from Java, a class is a blueprint for creating objects. And the objects are what actually do the work in your program.
+So we can't do anything with Istream or Ostream, we need to create some objects.
+And C++ will automatically create several global stream objects every time you run a program.
+So cin is the type of Istream, it's the input object, and it wraps or connects to the operating system object called standard in.
+cout is the output object, and it wraps standard out, and cerror wraps standard error.
+So these three objects, cin, cout, and cerror, are automatically created for you whenever you include Iostream.h.
+You don't need to do anything else to create them.
+Now, these are objects, cin and cout and cerror, of course, are all objects so they have member functions, or methods as we call them in Java.
+And so the get member function reads a single character from standard in.
+The put member function writes a single character to standard out.
+And if we use cerrorput, we'll write a single character to standard error.
+So you notice I'm using the object and telling it to put the character, or asking it to get the character.
+Notice we use the input object cin to get the characters, and cout or cerror to put the characters.
+Now, using these single member functions is much more efficient than using the insertion or extraction operators,
+the little arrow arrow that we've been using so far, because they don't have to, these methods just read raw characters.
+They don't have to convert, and so much, much more efficient, much, much faster.
+So to use these to read more than a single character, what we do is we use a loop.
+And this kind of loop is called a data loop.
+And so we create a character object, we pass that character object to cin get.
+When cin get fails, then this loop will end, and each time we get a character, we print it out.
+So this kind of loop, a data loop, is a loop that stops processing, stops running, when there's no more data to process.
+Now let's look at those two member functions.
+So both the get and put member functions return the stream that they're used to call them on.
+That means that stream is modified.
+So when we read a stream with get, it takes in this character, reads the character, and returns the stream after it's read the character,
+returns the input stream.
+Now, the character c is an output parameter.
+That means we must pass it a variable.
+And we can use this stream that we get back to check to see if there's more data.
+And so this is the basic input data loop.
+While cin get ch, process whatever we got.
+To write a character, we use the put member function.
+This also returns a stream that was written, in other words, c out or c error.
+But notice that the argument is slightly different.
+Up here we add a character by reference, an output parameter, which must be a variable.
+Here we have an input or value parameter.
+That means it's convertible.
+That means I can call put with not only a character, like a, and print out a,
+I can call it with a number, and that number will be converted to a character.
+In this case, this number is just going to represent the ASCII character.
+So this will also print out an a.
+OK, so let's put those to work. That seems kind of theoretical.
+We're going to write what's called the basic text echo filter program.
+And the basic echo text filter program is simply this.
+I've already showed it to you.
+Create a character.
+While cin get ch, c output ch.
+So this reads a character and it stores it in the variable ch,
+and then it prints it to the output.
+And this, the cin get ch, returns a stream, which is false when there is no more data.
+So let's flip over to our exercises here.
+So again, make sure you're in week three.
+Make sure you have gone to the streams and filters lecture exercise.
+Make sure you've gone to lecture 11.
+Of course, if you're watching this, you have already.
+And make sure you've started the lecture 11 exercise.
+And we'll look at this data loop.
+So let's get IC11.
+Let's right click on this folder A
+and open a terminal there.
+So there I have a terminal.
+And let's open up this ceco.cpp.
+So open it up. Here's our basic data loop.
+And let's just do make run.
+So notice the program doesn't appear to be doing anything.
+It's just sitting there.
+And what it's doing is it's waiting for a character from input.
+So let's type a character, A.
+That didn't seem to do anything, right?
+B, C, D, E, F.
+So when C++ asks for a character,
+what it does is it turns over the request to a program that is at the source.
+In our case, since standard in is reading from the keyboard,
+that's called the keyboard driver or the terminal driver.
+And so the terminal driver gets a request.
+And what it does is it allows you to type in different characters, edit them.
+And only sends the programs to your program when you hit the enter key.
+So I'm hitting the enter key. This is called buffered input.
+I'm hitting the enter key.
+And notice that it then went and read the A from input.
+It asked for input.
+Now my keyboard driver had already gotten some input from me.
+And so only when it exhausted all the input that I had sent to it
+in my one input, my one buffer, did it stop and ask for more input.
+So this is called a data loop.
+This is called a data loop.
+It stops when the input is exhausted.
+Now you might wonder why it hasn't stopped.
+It's still running.
+How do we make it stop?
+Well, at the console, there really is no running out of data.
+The keyboard driver will simply say, "Do you want to type in any more?"
+So from the console, we can simulate that out of data
+simply by holding down the control key and pressing D in Unix,
+which we're in, like that.
+And notice the program ended when it tried to get a character,
+it got the symbol, it was out of file, out of data.
+So on Windows, we would do this with Control and Z on Windows.
+Now this is not normally how we use an input file like this.
+It's not meant to be used interactively in an IPO program.
+Instead, it's meant to process data using redirection
+to open and process files.
+So the operating system facility, which connects standard in and standard out
+to different files, devices, or processes, is called redirection.
+So if we want to redirect C out, in other words,
+so the source that C out is writing to is no longer the screen,
+but something else, we use a little symbol here when we run the program.
+So this would run the program, this would redirect it to output.txt,
+this would create output.txt, erase it if it already exists,
+and anything written to C out would appear in output.txt.
+If we wanted to not erase it, and we wanted to run the program several times,
+and simply append to the output, we'd simply use a couple of different arrows.
+So two arrows instead of one arrow.
+Now don't confuse these with the arrows we use for C in or C out.
+Don't confuse them with the arrows we use for C in or C out.
+Because first, those arrows go the opposite direction.
+And secondly, this happens when you run the program, not from inside your program.
+Now we can send the output that's sent to C out in your program,
+and the output that's sent to C air to different files.
+And we do that by putting a little number before the little arrow.
+So one is called the standard out, and two is the standard air.
+So we're saying run this program, anything that goes to standard out,
+open and put the data in out.txt,
+anything that was sent to standard air, put in the air.txt.
+Now normally, when you run a program, both standard air and standard out appear on the screen.
+There's no difference to them. You can't tell which one is which.
+And if you want that same thing, but you want to combine the two and have it appear in one file,
+you have to combine the two files.
+So here I'm running the output. I'm sending all of it, or I'm running the executable.
+I'm sending all of its output to combo.txt,
+but I'm combining the error stream two on the output stream one.
+So those are combined or duped together.
+Now sometimes you might want to discard the output.
+For instance, we ran the program Doxygen,
+which produces a lot of output that isn't really useful when you're running the program.
+I would rather only see the errors.
+And you can do that by sending the output to the null device.
+Now, unlike these ones right here, which work in Windows or the Mac,
+this changes depending on the operating system.
+So this is the Unix or the Mac version.
+In Windows, instead of /dev/null,
+you would simply use nul colon.
+That's called the null device in Windows.
+But it would work exactly the same way.
+Now, what if we wanted to run the program,
+send its output, and have another program run that output,
+or eat that output, you know, read that output?
+We do this by doing exe.
+All of our output is not sent to the screen.
+It's not sent to the file.
+It's simply kept in memory until this program runs.
+And when this program runs, every piece of output,
+every CN statement inside this program,
+would consume the data that was sitting there in memory.
+This is called a pipe.
+And a combination of different programs running one program,
+sending its output as the input to the next program,
+and sending the output of that as the input to the next program,
+is called a pipeline.
+Finally, for input.
+So this would be a way to run this program,
+and then pipe its output as the input to this program.
+Or, if we want to run the program and get its input from a text file,
+we can use the input redirection with the arrows that go the other way.
+So we're going to modify our program to read aliceinwonderland.txt.
+So, let's go back and look at our code.
+So what do you suppose I need to change inside here
+to get it to read aliceinwonderland.txt?
+Well, that's kind of the magic of filter programs.
+We don't need to change anything.
+It's ready to run aliceinwonderland.txt.
+All we have to do is change our make file and tell it.
+So when we do make run, it runs from the keyboard.
+If we want to do make read alice,
+we run the program and we tell it,
+"I want you to get your input from alice.txt."
+Get your input from alice.txt.
+Now notice we have not changed our program, CECO, at all.
+All we've done is change how we're running the program.
+So let's come over here.
+Let's do make read alice, our pseudo target,
+and now it's going to run exactly the same code that we ran here.
+No change to our code, but it's going to get its input
+when we run it from aliceinwonderland.txt.
+And so there is the whole text of aliceinwonderland
+printed to the screen, character by character.
+We read each line one piece at a time and printed it.
+Okay, now that's somewhat useful, right?
+It's like the type program in Windows
+or the cat program in Unix.
+Basically, that is what the program looks like inside.
+Now, and so basically I could do the same thing.
+Let me just show you.
+Let me clear that.
+I could simply run the program cat, which is built in,
+which looks just like our CECO program, basically.
+And I could say alice.txt,
+and we would get exactly the same output as we had before
+from our own program, right?
+So cat is a filter program.
+So let's talk about filter programs.
+So filter programs are programs that read from standard input
+and write to standard output,
+so they can be used with redirection.
+And there are two general categories of filters.
+A state filter will examine ch for changes,
+and when it sees a change, it will take some action,
+ch meaning the character as it goes by.
+A process filter will modify ch.
+So let me go ahead and just show you what I mean by that.
+I'm going to modify CECO.
+So I'm just going to say instead of printing out ch,
+I'm going to print out QUIPR.
+So I'm getting a character, I'm modifying as it goes through.
+And now I'm going to say down here,
+I'm going to say CECO,
+and I'm going to read alice.txt,
+the text from Alice in Wonderland.
+So notice we haven't changed Alice in text.
+I'm filtering the data and turning it into--
+oh, it didn't work, did it?
+Oh, I didn't build--sorry, I didn't make to echo,
+so make CECO.
+And let me do it once again.
+So now I'm doing it with Alice.txt,
+and so now notice we have created a filter.
+This is called a process filter
+that looks at each character and input
+and makes a change to it, right?
+Does something or processes or modifies that character.
+OK, instead of that, let's go ahead and look for changes.
+Now what we want to do is print the chapter headings only,
+and what we're going to look for is a new line
+followed by a capital C.
+We'll continue printing until we encounter the next new line.
+And so this is called a process filter.
+We're not doing anything with every character.
+We're only doing something when we're in a particular state,
+when we're in the printing state.
+So one of the things with state filters
+is that we will always want to--
+we will always want to have some way of maintaining the state.
+So the state we're trying to maintain
+is whether we're printing or not.
+So we'll create a variable
+and say we're never printing.
+Now whenever we read a character,
+what we'll need to decide is that are we going to start printing
+or are we not going to start printing.
+So what we're going to need to do is we're going to say
+if ch equals a capital C, printing equals true.
+And then if we're printing,
+we're going to print the character.
+And finally, if ch equals the new line,
+we're going to turn printing off.
+So notice how I'm going from printing on to printing off.
+I'm monitoring the state and only printing the characters
+under certain circumstances.
+So this is not really what we want yet, but let's try it.
+Let's do make read Alice.
+Well, it looks like there are a lot of capital C's here.
+So we really need to, in this filter,
+keep track of only capital C's that precede a new line.
+And so for that we're going to need another variable.
+So here's my char ch.
+I'm going to create a char.
+I call it prev for previous.
+I'm going to set it to a value that is not meaningful.
+I don't want a random value.
+And so we'll say if previous is the new line
+and ch is that, then printing is true.
+And of course, previous is never going to be the new line
+unless we change it.
+So at the end of every go round in the loop,
+we want to say previous equals ch.
+So this will let us look at the character before the one
+we're processing.
+OK, let's try that now.
+Make read Alice.
+Whoa, it looked like it works pretty good,
+except for one sentence right here.
+One sentence looks like it's broken.
+So that looks like it almost does what we want,
+but not quite.
+So what we'd really like to do is now, in our example,
+it looks like I need to look ahead to make sure
+I'm not only getting a C, but that the next character
+is an H.
+If it's an H, it looks like I have chapter 1, 2, 3, 4, 5, 6,
+7, 8, 9, 10, 11.
+So it looks like that filter will work OK
+for this particular program.
+And so let's talk about how we would look ahead.
+So we can look at the next character in the stream
+by calling in peak, cnpeak.
+Now notice this doesn't take any arguments.
+It doesn't take a ch like the other one did.
+Instead, it returns the character
+embedded inside an integer.
+So if the integer is OK,
+three of those four bytes will be zeros,
+and the lower byte will be the ASCII character we want.
+If we are out of data,
+it will return minus 1 in all four of those bytes.
+So notice it's an int, not a character,
+but we use it to read a character.
+We can put a character that we've read back into the stream.
+This supports at least one character,
+and we don't need to put the same character that we read back.
+So I could read a character.
+If it's uppercase, I could change the character to lowercase
+and put it back in the stream, and then try reading it again.
+I could read a digit. If the digit I read is a digit,
+I might want to push it back into the stream
+and use it to then read with formatted input
+to read a larger number from the stream.
+If you want to put back the same character,
+you can just do cn_unget, and you don't have to pass an argument.
+Finally, we might want to read and discard unwanted input.
+And so this is the method called ignore.
+You tell it the maximum number of characters you want to ignore
+and the delimiter you want to stop on.
+So this is usually when you're doing line-by-line input
+and you want to discard the rest of the line.
+The delimiter would be the new line.
+So let's go ahead and do that, and we're going to read from Alice.txt,
+and then we're going to change it so the output is toc.txt.
+So that's going to require a couple of changes.
+First, in our program, we're going to have to not only say
+is the previous the new line, and is the current character the c,
+but also and cn_peak equals a capital H.
+Then I'll put the printing down like that.
+So all three of these have to happen.
+Let's go ahead and try that now and do make read Alice.
+Ooh, that looks pretty good.
+Now, that's all we have to do, but we want to put the output in a text file.
+And so for that, we're going to need to go back to our make file.
+And I've written you a stub here for the write toc version.
+So to read, we're going to need to read from Alice.txt.
+And then we're going to write to toc.txt.
+Now, we might want to print some extra information on that,
+so I'm going to do that.
+I'm going to do tab, and I'm going to write some code out
+just by using the operating system, the echo function,
+and I'm going to pass echo Alice in Wonderland,
+and I'm going to send that to toc.txt.
+And then I'm going to print table of contents,
+and I'm going to try and print that out.
+So it's centered. I'm not quite sure if that will work.
+And I'm going to send that out to toc.txt.
+Okay, now I have a problem, because when I do this second line,
+and when I do the third line, each one is going to reopen toc.txt and erase it.
+So I really don't want that line or this line to erase my table of contents.
+I want to append to it.
+Let's do one more, and I'll simply do a dash dash like that.
+So this is our pseudo target, write toc,
+so we'd run it with make write toc.
+Of course, we could just type in these commands manually, right?
+In other words, the make file is only typing the commands for us,
+so we can type a simpler command.
+Okay, let's do make toc, make write toc, table of contents.
+It didn't do anything.
+Oh, no, that's because all the output didn't go to our screen this time.
+Instead, our output went to this file, toc.txt,
+and notice that we not only have this in here,
+we have the other lines that we wrote to it as well.
+Other lines we wrote to it as well.
+So that's it for our initial exercise on streams and filters.
+When we come back in the next lecture, lecture 12,
+we'll continue and we'll look at reading and writing files.
+See you then.
+[END]

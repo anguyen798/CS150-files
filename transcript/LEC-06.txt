@@ -1,0 +1,413 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 6 on programming with loops.
+Before you get started make sure you've gone into Canvas and that you have
+you have clicked week 2.
+In week 2 you've gone and clicked the lecture exercise in programming with loops, the third tab over.
+On the lecture exercise click the starter form.
+When you get the starter form go ahead and rename it here so you'll be able to find it when we get started.
+Now C++, like Java, has several different kinds of loops.
+They have four of them. There's a while loop, there's a do while loop,
+there is a for loop, and then there is the simplified for loop we saw in the last lecture.
+But just knowing about these four kinds of loops really doesn't give you any guidance
+when you want to decide what loop should I use for this problem.
+For that you really need a different way of thinking about loops.
+And so rather than thinking about the four kinds of loops syntax,
+think about the five ways to control the number of repetitions.
+Last lecture we looked at range iteration.
+We visited every element in the container.
+That's what the simplified or the range based for loop is for.
+We have counter controlled iteration.
+We're going to look at that today.
+That's when we have a fixed number of times we're going to repeat.
+Do this loop ten times.
+We have a sentinel loop.
+A sentinel loop is for input, when we look at the contents of input
+and we look for a specific value that tells us to stop looping.
+We have a data loop.
+A data loop is also known as an end of file loop,
+when we simply want to process all the data that remains in input.
+So both the sentinel loop and the data loop are used for input loops.
+Finally we have a limit loop.
+A limit loop is when we want to do a calculation,
+look at the calculation and somehow determine are we close enough.
+Have we reached our limit?
+And so we're going to use this to think about loops.
+We're going to use these five ideas to think about loops when we write our loops.
+So let's look first at a little bit of review for the range loops.
+So C++11 introduced this new simplified range-based for loop,
+similar to the for loop in Python
+and the new for loop introduced in Java 5 in Java.
+And so this will allow you to visit every element inside a collection.
+It works on the string type, it works on the vector type,
+it works on the built-in array type,
+it actually works on all the collection types that are in the standard library.
+And the basic syntax looks like this.
+For, then you declare a variable.
+Now you can specifically specify the type, like char C,
+or you can use auto here, auto E.
+Then a colon, and then just the name of the collection variable that you want to loop over.
+This will go through each copy of the variable and put that variable inside E.
+Now there are three variations in C++, Java has only one variation.
+In, similar to Java, we can use value iteration,
+meaning take the first element out of the collection,
+put it in the variable E, put a copy of it in the variable E,
+then take the second one, put it in the variable E,
+then take the third one, put it in the variable E.
+Instead of making a copy of each of those elements though,
+we can actually look directly at the element.
+And so this is for auto ref, again you don't need to use auto here,
+you can use char or int or whatever the type of the elements in the collection are.
+And this actually looks at the individual elements, so you can actually change them.
+Now suppose our collection was filled with very, very large elements, say pictures.
+You were going through the camera roll on your iPhone.
+This first one would be very, very expensive to make a copy of each picture just to look at it.
+The second one would be more efficient,
+but it's possible that the function would modify the pictures in your picture roll.
+What you might want to do there is use this third one.
+For this third one, we look at the element,
+but because of the const in front of it, we're prevented from modifying it.
+Okay, so that was what we did last lecture.
+Now let's look at counter-controlled loops.
+So a counter-controlled loop creates a separate variable called a loop control variable,
+and that will control the number of repetitions, the counter.
+Now we can use this loop control variable two ways.
+Traditionally we use this to the for loop, but you can do it with a while loop as well.
+One way is when we want to loop through a string,
+and we want to access the elements of the string,
+or we want to access the elements of an array or a vector or something like that.
+To do that, because the array and the string and the vector all start their element numbering at zero,
+we want to start our index at zero.
+And so because we don't want to think about how to end that, we use an asymmetric bounds.
+Notice it includes the initial bounds, the lower bounds, index zero, but it excludes the upper bounds.
+So notice it's less than ten here.
+Now the name for these loop control variables, i and j, are very common names.
+If you have a nested loop, you'd start with i and then go to j,
+and then maybe k if you had three nested loops inside each other.
+This int i = 0 is initialized before the loop is entered.
+And the scope of the counter i, or the control variable i, is only inside the body of the for loop.
+It doesn't extend after the for loop.
+Now the test expression, the second part of this counter controlled loop, is tested before the loop is entered.
+And so we call this kind of loop a guarded loop, meaning you can't get to the actions unless you pass the test.
+This condition here is the loop guard.
+Finally, after we've gone through and executed all the statements in the body of the loop,
+we come back to this loop control variable and increment it here.
+This is called the update expression.
+This is not updated after we do the test, it's updated after we do all the things in the body.
+Now the for loop can also be used for a second purpose.
+That is, it can be used to generate a sequence of data.
+And when we do that, you use a slightly different set of conditions, a different set of bounds called symmetric bounds.
+What that means is you'll start at the lower bounds and include that, but you'll also include the upper bounds.
+So if we wanted to write a loop that would print from 1 to 10, rather than writing for 0, int i = 0, i < 10,
+and then printing i + 1, we'd print for int i = 1, i <= 10.
+So when you generate sequences of data, you want to include both the lower bounds, int i = 1,
+and the upper bounds, i <= 10.
+Notice with the asymmetric bounds we didn't include the upper bounds 10.
+We said keep going while i < 10.
+Now for strings and counter-controlled loops, there is a pattern that you can memorize.
+And first, initialize both the lower and upper bounds in the initialization section.
+Both the upper and lower bounds, in other words, i and what you're going to test i against, the size or the length.
+Use size t as the control variable, not int.
+That's because strings, the size function, the size member function, returns a size t.
+Initialize the upper bounds with str.size, and make sure that the control variable never, ever goes less than 0.
+So some of the loops that you would write in Java simply won't work in C++.
+Now we are going to use this first idiom we're going to look at. It's called the "building a string" idiom.
+So the input for building a string will be a const string ref. It won't be modified.
+The result will be an empty string. The output will be the empty string.
+Each time you go through the loop, you'll concatenate something to the result to produce the output.
+So we're going to do an exercise to show you this idiom and to get you started with some hands-on work with processing strings with counter-controlled loops.
+And so this is the exercise called "to reverse."
+And so this will be in A in your starter code in ICO6.
+And so go ahead and put your name on the top of it.
+So a "building a string" idiom produces a new string. So the output is going to be called "string."
+"To reverse" is the name of a function. It takes a single string as an argument and produces a duplicate with the characters in reverse order.
+You may use the library function "size" and "at." The argument will not be modified.
+So "string to reverse." Its argument is not going to be modified, so it's a const string ref str.
+The output is going to be a new string, so "string result."
+And we're going to return the result.
+Okay, so let's try that. Let's go ahead and, oh, I need to open a terminal on that.
+So let me open a terminal on A. Open an integrated terminal.
+So now we've opened that folder A.
+And let's go ahead and do "make test."
+And all of the code compiles correctly. Of course it doesn't produce the correct output.
+It isn't reversed string, but we have the mechanics working.
+So now we're going to go into that second pattern for counter-controlled loops.
+So we're going to write "for something something do something."
+So in this first section, we're going to create the control variable, the lower bounds, and the upper bounds, what the highest part is.
+So we're going to say "for size p, i = 0, and len = str.size."
+So notice we're doing both of these. Separate them with a comma, not with a semicolon.
+Our upper bounds is going to be "i < len."
+And then we're going to go "++i."
+Now you might wonder why I can't say "str.size t, i = 0, i < str.size++i."
+You'll see many people do that, but the size is not going to change here.
+So we don't want to keep calling this function every time we come back to this condition.
+So this is a better way to do that. Save the size. Make sure you save it in a size t.
+So now we're at step four, or we're at the last part of the building a string idiom.
+And what we're going to do is we're going to say "result = str."
+And I can use a substring or I can use charAt.
+So I can use strAt, or at, not charAt. strAt i + result.
+So you notice each time, instead of putting the character after the one before it,
+by switching the order of these two things, I'm putting the character in front of it,
+and I'm reversing the string. I'm reversing the string.
+I'm going to show you a couple more ways to do this, but let's look to make sure that this works correctly.
+We'll do Ctrl+L to clear it, and do make test.
+And in fact that reverses all of the input strings correctly.
+Now many of you, I'm going to comment this one out, because that's a very simple way to do it.
+Many of you would solve this problem like this.
+You'd say for size p, i = strSize -1, i >= 0, - - i, result = result.
+Or let's do the shorthand, result += strAt i.
+Now this would make sense in Java, but it has a problem here.
+Here, when i is 0, it'll add the first element here, at the end of it.
+Then we do i - -. Well that doesn't go to -1.
+As a matter of fact, this condition cannot ever be false.
+And so if we come down here, and we try and just make it, notice we get an error there.
+We're doing a comparison of an unsigned expression, greater or equal to 0, by definition is always true.
+By definition is always true.
+And so that's an error. This piece of code is an error.
+Also, even if it did work, what if the input string was empty?
+Again, strSize -1 would not be, strSize would be 0.
+0 - 1 is not -1. It's all unsigned numbers.
+So when I subtract 1 from 0, I get the very, very large number 18 quintillion, or something like that.
+Very, very large number.
+So this simply won't even compile.
+We could fix it like this.
+So now it'll compile, but down here, we would need to remember to go i - 1.
+Because of course, strSize would crash when we ran it.
+When i was strSize, and we tried to get the str at strSize, that is out of bounds, and it would crash at that point.
+So this version will work as well.
+Let's go ahead and clear that.
+And do make test.
+But you can see if you want to do that, you have to always be aware that you cannot go less than 0.
+It literally is impossible for you to do that.
+So either two of those are perfectly fine.
+Okay, so now let's look at processing substrings.
+Here is a substring catapult.
+Notice that it has 7 characters, or 8 characters, indexes 0 through 7.
+Suppose we want to count the number of times the cat appears in the string.
+Well, I would need to look at 3 characters at a time, not a single character like the idiom we looked at before.
+So this algorithm and technique is worth mentioning.
+Worth memorizing.
+So here we have 3 variables.
+We have our counter control variable i,
+slen, which is going to be the length of our substring, cat in this case,
+and len, which is going to be the size of the string, in this case 7.
+We set i and slen, i, not to be 0, but to be the size of the substring.
+So i is pointing right here at 3.
+Then in our loop, rather than stopping at i less than len,
+so len of course is 8 in this case because there are 8 characters,
+we're going to go i plus len, so we have a little pointer here, or an index here,
+where we're going to stop, this second little arrow right here.
+Now we're going to extract the substring we're looking at
+by taking s.substring, i minus slen, slen.
+So again, this is something you can memorize.
+It will always work.
+And then you can do conditionals to examine the substring that you extracted.
+So we're going to do this with an exercise called count.
+And we're going to count the number, just like I'd count the number of cats here,
+we're going to count the number of times the code appears in a string.
+Now there's a couple little details here that make it a little bit more complex.
+So this is going to be b.
+I'm going to put my name on top of it.
+And I'm going to go ahead and open a terminal here
+on b so I can write code on it.
+So let's look at the instructions.
+We're going to write a function called count code.
+It will take a single string as an argument.
+It will not be modified.
+It will return the number of times that a pattern like code appears in the string.
+Any character at all is acceptable in place of the d.
+You can use size, substring, at, and back.
+You may not use find.
+So this is going to return a count, so it's not going to return a string.
+It's going to return an int.
+The function is named count code.
+The argument is a string that's not modified, so that's a const string reference str.
+The result in this case is an int rather than a string.
+And if you do that, you're going to have an error, because result is a primitive type.
+It's uninitialized, so we want to initialize that to zero.
+And finally we want to return the result.
+We'll go ahead and check to make sure that I have the syntax right
+by making it and testing it.
+So I'll make test.
+And I actually got 40%.
+I didn't really do any work on it, because I'm returning zero,
+and zero is correct for several of these answers.
+Code doesn't appear.
+But the important part here is that it compiles and it links,
+and I have that part correct.
+Okay, now our variables.
+So size T, SLEN equals four.
+We're looking for four.
+And our loop for size TI equals SLEN.
+And, of course, LEN.
+LEN equals std size.
+I less than or equal to SLEN.
+To LEN, not SLEN.
+Plus plus I.
+So that will allow us to go through and get four characters at a time,
+which we'll do with substring.
+So string subs equals str substring I minus SLEN.
+SLEN.
+So we're getting four characters at a time.
+Now we can see, now I know I'm guaranteed,
+because I've memorized this idiom right here,
+I'm guaranteed that I have four characters in subs,
+because I've made sure that this only allows me to get four characters at a time.
+And that means I can say if subs substring zero two is equal to CO,
+it starts with CO, and subs back equals E,
+then it's that code pattern I'm looking for.
+And I can increment result.
+So here's the pattern for processing substrings inside a string.
+So let's try that out again.
+Let's clear the thing and do a make test.
+Now let me show you another way to do it, just like I did previously.
+So this is the way I recommend, but,
+actually I'm going to leave SLEN there.
+I'm going to comment that out.
+We could do it like this.
+I'm not quite sure what just happened there.
+I must have, oh, no.
+Let me save it.
+I'm not quite sure why I'm getting a,
+I have no idea what this is.
+Hold on, I'm going to pause this for a while while I try and figure out what,
+okay, I'm back.
+I don't know why it was doing that.
+I just kind of ended up closing the little window that opened up and did it again.
+So let's try it this way.
+Let's try it forward.
+So for size p, i equals zero.
+LEN equals third size.
+I less than LEN plus plus I.
+String subs equals third subster,
+I SLEN.
+So starting at zero, getting four characters.
+And if subs size equals four,
+and subs substring zero two equals CO,
+and subs back equals E,
+then result plus plus.
+So this will work as well, but notice I had to add this extra case here,
+because it's possible that I wouldn't get four characters here
+when the I is gone past the length.
+Now, you might try and fix that.
+In fact, in Java you would fix it by simply saying size minus three.
+Why doesn't that work here?
+That doesn't work here because these are unsigned numbers.
+If the length is less than three,
+this will give you a huge number and your program will crash.
+Program will crash.
+So I'm going to leave that there.
+I'm going to comment out this part right here.
+And I want to show you the program crashing.
+Because you'll notice on our inputs here,
+we have two strings, one string that is less than zero.
+And so this is the effect we'll get if we do that,
+which would be the standard way you'd write it in Java.
+Make test.
+And notice this substring pos, which is one, this size, which is zero.
+So notice that this aborted, it core dumped,
+which means basically that it crashed at that point.
+So this thing that would work in Java simply won't work in C++.
+So we can put it like this.
+And let's make sure it will work again.
+Let's do make test.
+Okay, so that works perfectly fine.
+But I actually think this is a little more complex.
+It goes through more times than are necessary.
+And I think learning this one is a little bit better.
+This one is a little bit easier.
+So I'm going to comment out that one.
+Even though it works, I kind of don't like because it's a little complex.
+I'm going to uncomment this one.
+And you comment and uncomment with just control and the slash character.
+Control and the slash character.
+And let me just go a third time to make sure it works.
+Control L, control L.
+And yes, we get the right answer.
+Okay, so processing characters right here.
+And look at the two reverse example we did.
+And processing substrings, this one right here.
+Now there are a couple of other loops.
+Those are the only two exercises we're going to do.
+But I want to talk about a couple of other kinds of loops,
+which are indefinite loop.
+The simplest indefinite loop syntactically uses while.
+And basically it's while the condition is true,
+do these statements over and over and over again.
+So let me show you a while loop and tell me how many times it repeats.
+So I call a function randchar.
+It gives me back a random character and I store it in the variable C.
+Now while C is not equal to the Q character, I print out C.
+And then I set C again to the next random character.
+How many times will that loop repeat?
+Well, it might repeat once.
+It might repeat not at all.
+The first character I get might be a Q.
+Or it might never come up.
+The randchar function might in fact never return me a random Q in that case.
+So you can't tell by looking at the loop.
+And that's why we call it an indefinite loop, an indefinite loop.
+Now one kind of indefinite loop is a primed sentinel loop.
+A sentinel loop reads from input.
+And when it reads a special value from input, the sentinel, it stops.
+The primed loop is one technique for writing a sentinel loop.
+It was named after this old-fashioned water pump.
+And the old-fashioned water pump back in the old west
+was simply a pipe stuck in the ground with a piston inside
+that drew water from down underground by using suction.
+But to get suction, they had to have a good seal around the piston.
+And so to get a good seal, you would first pour a bucket of water into the pump.
+That would create a seal around the piston, and so you could start pumping.
+And that pouring the bucket of water in before you started pumping
+is called priming the loop.
+And so this loop is called a primed loop.
+And here's the algorithm for that.
+You read a value into a variable.
+If the variable is not the sentinel, you process the variable,
+then read the next value.
+So while the variable is not the sentinel, process the variable,
+read the next value.
+Now, we could do the same thing and not require two read statements.
+So look back here.
+Notice I have read a value into a variable before the loop,
+and at the end of the loop I have read the next value into the variable.
+What if we only want to have the read a value into a variable part once?
+For that, we can use a flag-controlled loop.
+So instead of two read statements, you can use a Boolean flag
+to signal if you've found the sentinel.
+So here you'd create a flag.
+I've called it finished here of type bool, and I've set it to false.
+I'm not finished.
+Then my loop control is while I'm not finished.
+Now I read the value into the variable.
+Notice I'm only reading once.
+If the value is the sentinel, set finish to true.
+Otherwise, or else, process the variable.
+So this is the code for a flag-controlled sentinel loop.
+Finally, we can use what's called a loop-and-a-half idiom.
+Now, normally a loop has only one exit at the loop condition,
+at the while or the for.
+Some languages, however, allow you to exit from inside a loop.
+Ada, the language Ada, does this with its exit-when construct.
+Now in C++, you can do the same thing Ada does
+by using an if and a break.
+And so this is a loop-and-a-half.
+While there is more data to process,
+read the value.
+If the value is the sentinel, then exit or break.
+Process the variable.
+This is called the loop-and-a-half idiom, as I just mentioned.
+Now, many programmers don't like this.
+I actually am relatively fond of it.
+I think it's easy to understand.
+And there is a paper that you might want to look at.
+On the slides you can find the link to it.
+It's "Loop Exits in Structured Programming."
+Now, it's an old paper. It's from 1999.
+It's talking about the Pascal language, so it's not exactly up to date.
+But it, in fact, provides good reasons
+why this is actually a pretty good loop-control strategy.
+Why it's actually better than some of the other ones.
+Well, that's it for this lecture.
+We're going to follow up on these loop-and-a-half idioms
+and learn about exits in our next lecture
+when we're going to do more on loops.
+[no audio]

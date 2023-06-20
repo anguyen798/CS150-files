@@ -1,0 +1,1336 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, this is Steve Gilbert. Welcome to lecture 13 on string streams and assertions.
+
+2
+00:00:00,000 --> 00:00:00,000
+So, we have been working with streams that print to a source and read from a sink.
+
+3
+00:00:00,000 --> 00:00:00,000
+That source has been your keyboard or a file, and the sink has been the monitor or a file or a screen.
+
+4
+00:00:00,000 --> 00:00:00,000
+But instead of writing output to the screen or a file, or reading input from a keyboard or a file,
+
+5
+00:00:00,000 --> 00:00:00,000
+a string stream reads and writes data to and from string objects in memory.
+
+6
+00:00:00,000 --> 00:00:00,000
+Now to use string streams we have to include a new header. They are not included in Iostream or Fstream.
+
+7
+00:00:00,000 --> 00:00:00,000
+This header is called Sstream. So for output files we create a new output string stream which is called an OStringStream.
+
+8
+00:00:00,000 --> 00:00:00,000
+Now when you create that output string stream, nothing has been written to it yet. There is no data, so it is empty.
+
+9
+00:00:00,000 --> 00:00:00,000
+You can write any kind of data to it using the regular interface of the stream classes.
+
+10
+00:00:00,000 --> 00:00:00,000
+You can use put, you can use the extraction operator, you can print of course strings like this, or you can print integers.
+
+11
+00:00:00,000 --> 00:00:00,000
+All of them will be converted to output in this string stream.
+
+12
+00:00:00,000 --> 00:00:00,000
+Now once you have the data, what you want to do is you want to make a copy of the string that the string stream contains.
+
+13
+00:00:00,000 --> 00:00:00,000
+And you do that by calling the member function str.
+
+14
+00:00:00,000 --> 00:00:00,000
+So when you are finished writing, you get a string object, you extract it from the string by calling out.str.
+
+15
+00:00:00,000 --> 00:00:00,000
+Now string streams are really useful when you need to mix numeric and text formatting.
+
+16
+00:00:00,000 --> 00:00:00,000
+So in Java you do something like this, str.ance = the answer is colon + 42.
+
+17
+00:00:00,000 --> 00:00:00,000
+And Java would automatically convert this 42 to a string and concatenate it with this string.
+
+18
+00:00:00,000 --> 00:00:00,000
+In C++ what you do is you take an OStringStream, an output string stream, and you would print the answer is and then 42.
+
+19
+00:00:00,000 --> 00:00:00,000
+And then you would say string out = outString.
+
+20
+00:00:00,000 --> 00:00:00,000
+Now you can reuse the same string stream object over and over again, in other words print a line, extract the string, print a line and extract the string.
+
+21
+00:00:00,000 --> 00:00:00,000
+But when you do that you need to clear out the old string object.
+
+22
+00:00:00,000 --> 00:00:00,000
+And you do that by calling str. function, but this time instead of passing no arguments, you pass an empty string.
+
+23
+00:00:00,000 --> 00:00:00,000
+And that will give you a fresh stream buffer. So this is like set the string I'm carrying to nothing, this is like get the string that I'm carrying around to nothing.
+
+24
+00:00:00,000 --> 00:00:00,000
+So we are going to do an exercise here.
+
+25
+00:00:00,000 --> 00:00:00,000
+And we are going to write a function that takes a double monetary value and returns a dollar formatted C++ string.
+
+26
+00:00:00,000 --> 00:00:00,000
+And you would use the function like this. If you have an amount, you would simply write $2 amount when you do cout and that would convert it to this dollar formatted string.
+
+27
+00:00:00,000 --> 00:00:00,000
+So if the amount was 1234, it should produce $1,234.00
+
+28
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and do that. Make sure you have opened up your VSCode. And this is in 13A, so let's open dollars there.
+
+29
+00:00:00,000 --> 00:00:00,000
+Let's open a shell on it, open an integrated terminal.
+
+30
+00:00:00,000 --> 00:00:00,000
+And let's complete the $2 function here.
+
+31
+00:00:00,000 --> 00:00:00,000
+So let's put our ID up here.
+
+32
+00:00:00,000 --> 00:00:00,000
+Ok, so I'm going to put this down a little bit and put that over here so we can see the code a little bit more.
+
+33
+00:00:00,000 --> 00:00:00,000
+Ok, so the function is going to return a string. It's named as $2.
+
+34
+00:00:00,000 --> 00:00:00,000
+It is going to take a double amount.
+
+35
+00:00:00,000 --> 00:00:00,000
+And we want to turn that into a string. Now to convert a double to a string, we just do this.
+
+36
+00:00:00,000 --> 00:00:00,000
+$string $out $out $fixed $setPrecision $to $out $amount
+
+37
+00:00:00,000 --> 00:00:00,000
+And return $out.$string
+
+38
+00:00:00,000 --> 00:00:00,000
+So we created a string stream. We set the formatting on the string stream.
+
+39
+00:00:00,000 --> 00:00:00,000
+We printed our amount to the string stream. And then we extracted the string from that and returned the string stream.
+
+40
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and try that. Let's do a test. It's not going to be correct yet because we haven't put in the commas or the dollars.
+
+41
+00:00:00,000 --> 00:00:00,000
+But you notice it is in fact turning our thing into a number with two decimal places here at the end.
+
+42
+00:00:00,000 --> 00:00:00,000
+So now all we need to do is we need to insert the comma and the dollar sign.
+
+43
+00:00:00,000 --> 00:00:00,000
+We can do that using string formatting.
+
+44
+00:00:00,000 --> 00:00:00,000
+So basically what I'm going to do is I'm going to say $str = $out$str
+
+45
+00:00:00,000 --> 00:00:00,000
+Now what I want to do, so let's look at what we have for our output string.
+
+46
+00:00:00,000 --> 00:00:00,000
+So I have something like this.
+
+47
+00:00:00,000 --> 00:00:00,000
+Let's see if that in fact copied control C.
+
+48
+00:00:00,000 --> 00:00:00,000
+It might not have.
+
+49
+00:00:00,000 --> 00:00:00,000
+Maybe I can copy it like
+
+50
+00:00:00,000 --> 00:00:00,000
+No, it doesn't look like I can copy it.
+
+51
+00:00:00,000 --> 00:00:00,000
+Oh, I can copy it. I did copy it.
+
+52
+00:00:00,000 --> 00:00:00,000
+So what I want to do is I want to go 1, 2, 3, 4, 5, 6 and put in a comma.
+
+53
+00:00:00,000 --> 00:00:00,000
+Hi folks, I'm back. I kind of got interrupted there for some meetings and an office hour and so forth.
+
+54
+00:00:00,000 --> 00:00:00,000
+OK, so let's return to this problem of the $2 function.
+
+55
+00:00:00,000 --> 00:00:00,000
+What we're going to do here is rather than just returning $out$str
+
+56
+00:00:00,000 --> 00:00:00,000
+We're going to save the output as a result variable, as a string.
+
+57
+00:00:00,000 --> 00:00:00,000
+And then we're going to return the dollar sign, the space and result at the end.
+
+58
+00:00:00,000 --> 00:00:00,000
+And now all I need to do is I need to look inside here and find out where to put commas.
+
+59
+00:00:00,000 --> 00:00:00,000
+I need to add one comma here.
+
+60
+00:00:00,000 --> 00:00:00,000
+And so obviously it needs to be greater than 1, 2, 3, 4, 5, 6 characters before I add a comma.
+
+61
+00:00:00,000 --> 00:00:00,000
+Otherwise, it's fine just the way it is.
+
+62
+00:00:00,000 --> 00:00:00,000
+So if result size is greater than 6, what we're going to need to do is split it up and bring in commas.
+
+63
+00:00:00,000 --> 00:00:00,000
+So the place where I'm going to put the first comma is at position 6.
+
+64
+00:00:00,000 --> 00:00:00,000
+If it's only 6 long, it doesn't need a comma.
+
+65
+00:00:00,000 --> 00:00:00,000
+So I'm going to save that in an int variable.
+
+66
+00:00:00,000 --> 00:00:00,000
+I'm going to call this "pos"
+
+67
+00:00:00,000 --> 00:00:00,000
+And I'm going to get the string size, the result size, minus 6.
+
+68
+00:00:00,000 --> 00:00:00,000
+And technically, we should do a static cast on this.
+
+69
+00:00:00,000 --> 00:00:00,000
+But it actually works without it.
+
+70
+00:00:00,000 --> 00:00:00,000
+The reason we need a static cast is because this is an int.
+
+71
+00:00:00,000 --> 00:00:00,000
+Because if I'm going backwards here, I want to make sure I can go less than 0 when I'm done.
+
+72
+00:00:00,000 --> 00:00:00,000
+And so we're going to say result equals result, substring 0, up until the position where the comma is supposed to go.
+
+73
+00:00:00,000 --> 00:00:00,000
+We'll add a comma to it, and then we'll get the rest of the result.
+
+74
+00:00:00,000 --> 00:00:00,000
+So that's going to let me get, these three is from 0 to the position.
+
+75
+00:00:00,000 --> 00:00:00,000
+So that position would be there.
+
+76
+00:00:00,000 --> 00:00:00,000
+And the second part is from the position to the end, and we added a comma to it.
+
+77
+00:00:00,000 --> 00:00:00,000
+Now we might need to add more commas.
+
+78
+00:00:00,000 --> 00:00:00,000
+We can go ahead and try this right here.
+
+79
+00:00:00,000 --> 00:00:00,000
+Do make test.
+
+80
+00:00:00,000 --> 00:00:00,000
+And we'll see the first three work, where we only have one, but here I need another comma.
+
+81
+00:00:00,000 --> 00:00:00,000
+And I might need more here.
+
+82
+00:00:00,000 --> 00:00:00,000
+Here I have several commas.
+
+83
+00:00:00,000 --> 00:00:00,000
+And so what I'm going to do is I'm going to say pos minus equals 3, move back three characters.
+
+84
+00:00:00,000 --> 00:00:00,000
+And while pos is greater than 0, I'm going to say result equals result, substring 0, pos, plus comma, plus result, substring, pos.
+
+85
+00:00:00,000 --> 00:00:00,000
+Finally, to make that loop go around, I'll need to say pos minus equals 3 if I need another one.
+
+86
+00:00:00,000 --> 00:00:00,000
+OK, let's see if that does it.
+
+87
+00:00:00,000 --> 00:00:00,000
+So let's do control L.
+
+88
+00:00:00,000 --> 00:00:00,000
+Do make test.
+
+89
+00:00:00,000 --> 00:00:00,000
+And it looks like we have all of ours.
+
+90
+00:00:00,000 --> 00:00:00,000
+So here I have one, two, three, four commas in this one.
+
+91
+00:00:00,000 --> 00:00:00,000
+Notice how this also, when we converted it to a string, it converted that .99, rounded up to an 8 for the number there.
+
+92
+00:00:00,000 --> 00:00:00,000
+So it did that correctly.
+
+93
+00:00:00,000 --> 00:00:00,000
+OK, so now let's look at input strings.
+
+94
+00:00:00,000 --> 00:00:00,000
+So in Java you can parse a string by using a scanner.
+
+95
+00:00:00,000 --> 00:00:00,000
+So I can create a scanner, in equals new scanner, and instead of passing in system in, I can pass the string that I want to parse.
+
+96
+00:00:00,000 --> 00:00:00,000
+And so then I could simply use in next, which would give me March, and in next int, which would give me the 17 here.
+
+97
+00:00:00,000 --> 00:00:00,000
+And then I could say int year equals in next year.
+
+98
+00:00:00,000 --> 00:00:00,000
+Notice that it's kind of hard here, however, to parse it if it's going to contain a comma or something like that.
+
+99
+00:00:00,000 --> 00:00:00,000
+In C++ you use an input string stream to do something similar.
+
+100
+00:00:00,000 --> 00:00:00,000
+So here's an iStringStream in, instead of a scanner in.
+
+101
+00:00:00,000 --> 00:00:00,000
+This is January 1st, 2018.
+
+102
+00:00:00,000 --> 00:00:00,000
+Notice here I do have a comma in this one.
+
+103
+00:00:00,000 --> 00:00:00,000
+Then I can get a month.
+
+104
+00:00:00,000 --> 00:00:00,000
+I can read in the month like this.
+
+105
+00:00:00,000 --> 00:00:00,000
+I can get an int for the day and the year, and notice month was a string.
+
+106
+00:00:00,000 --> 00:00:00,000
+An int for the day, the year, and a character for the comma that I want to read.
+
+107
+00:00:00,000 --> 00:00:00,000
+And then I can just read in the day, the comma, to extract this comma after that and the year.
+
+108
+00:00:00,000 --> 00:00:00,000
+And this input will skip all of this extra white space.
+
+109
+00:00:00,000 --> 00:00:00,000
+So really, really very flexible.
+
+110
+00:00:00,000 --> 00:00:00,000
+So we're going to put that to work.
+
+111
+00:00:00,000 --> 00:00:00,000
+And we're going to complete a function which takes a string that contains multiple parts.
+
+112
+00:00:00,000 --> 00:00:00,000
+So we're going to parse the arguments.
+
+113
+00:00:00,000 --> 00:00:00,000
+And then we're going to print only the input lines following between those lines.
+
+114
+00:00:00,000 --> 00:00:00,000
+And so this list function will take a string that looks like this.
+
+115
+00:00:00,000 --> 00:00:00,000
+This says open Alice.text and prints the lines 40 to 50 in Alice.text.
+
+116
+00:00:00,000 --> 00:00:00,000
+We'll assume that the lines start at 1 and that we'll include both 40 and 50.
+
+117
+00:00:00,000 --> 00:00:00,000
+Now this time, if the function doesn't work, we're going to return, if it does work, we're going to return true.
+
+118
+00:00:00,000 --> 00:00:00,000
+Otherwise, we're going to return false.
+
+119
+00:00:00,000 --> 00:00:00,000
+So let's minimize that. Let's close dollars.
+
+120
+00:00:00,000 --> 00:00:00,000
+Let's come on over here and open up B.
+
+121
+00:00:00,000 --> 00:00:00,000
+And open up list.cpp.
+
+122
+00:00:00,000 --> 00:00:00,000
+So put your ID here.
+
+123
+00:00:00,000 --> 00:00:00,000
+OK, in the instructions it gives you a little bit more information.
+
+124
+00:00:00,000 --> 00:00:00,000
+So we're going to attempt a file name that passes the first word.
+
+125
+00:00:00,000 --> 00:00:00,000
+Cannot open file name or return false.
+
+126
+00:00:00,000 --> 00:00:00,000
+If the starting number is larger than the ending number, the starting number and ending number are the same.
+
+127
+00:00:00,000 --> 00:00:00,000
+We're going to print that one line.
+
+128
+00:00:00,000 --> 00:00:00,000
+We'll print invalid starter end position along with the argument and return false.
+
+129
+00:00:00,000 --> 00:00:00,000
+If the file is opened and the starting number is not larger than the ending number,
+
+130
+00:00:00,000 --> 00:00:00,000
+then the function reads the lines specified in the file and prints those lines.
+
+131
+00:00:00,000 --> 00:00:00,000
+Assume that the line numbers start at 1, not 0.
+
+132
+00:00:00,000 --> 00:00:00,000
+And print the line numbers in a field 4 wide, followed by a period and a space and the line.
+
+133
+00:00:00,000 --> 00:00:00,000
+If successful, it should return true.
+
+134
+00:00:00,000 --> 00:00:00,000
+So we're going to assume it's successful, so I'll add that line.
+
+135
+00:00:00,000 --> 00:00:00,000
+Return true.
+
+136
+00:00:00,000 --> 00:00:00,000
+OK, now let's parse args.
+
+137
+00:00:00,000 --> 00:00:00,000
+So I'm going to create an input string stream, iStringStream.
+
+138
+00:00:00,000 --> 00:00:00,000
+I'll call it StirIn.
+
+139
+00:00:00,000 --> 00:00:00,000
+And I'm going to initialize it by passing in the arguments.
+
+140
+00:00:00,000 --> 00:00:00,000
+Now I'm going to extract from that string stream the file name.
+
+141
+00:00:00,000 --> 00:00:00,000
+So, string, fName, and StirIn, fName.
+
+142
+00:00:00,000 --> 00:00:00,000
+Now I want to extract the starting and ending positions.
+
+143
+00:00:00,000 --> 00:00:00,000
+So, if starting, ending, StirIn, starting, and ending.
+
+144
+00:00:00,000 --> 00:00:00,000
+OK, so this is how we read from a string stream.
+
+145
+00:00:00,000 --> 00:00:00,000
+Now let's put this to work and do our two possible errors.
+
+146
+00:00:00,000 --> 00:00:00,000
+So, we'll do an ifStream, in, and I'll use fName.
+
+147
+00:00:00,000 --> 00:00:00,000
+If in fail, couldn't open it, we'll see error, cannot open, fName.
+
+148
+00:00:00,000 --> 00:00:00,000
+And we'll return false.
+
+149
+00:00:00,000 --> 00:00:00,000
+Another possibility. Starting is greater than ending.
+
+150
+00:00:00,000 --> 00:00:00,000
+If starting greater than ending.
+
+151
+00:00:00,000 --> 00:00:00,000
+See error.
+
+152
+00:00:00,000 --> 00:00:00,000
+Let's just go ahead and copy from the handout.
+
+153
+00:00:00,000 --> 00:00:00,000
+Args.
+
+154
+00:00:00,000 --> 00:00:00,000
+And we'll return false as well.
+
+155
+00:00:00,000 --> 00:00:00,000
+So here we extracted or parsed the data.
+
+156
+00:00:00,000 --> 00:00:00,000
+Here we're double checking or validating that data to make sure it's OK.
+
+157
+00:00:00,000 --> 00:00:00,000
+We have the right file name, we can open it.
+
+158
+00:00:00,000 --> 00:00:00,000
+Now, we're going to go ahead and print the lines.
+
+159
+00:00:00,000 --> 00:00:00,000
+So I need a int lineName equals one.
+
+160
+00:00:00,000 --> 00:00:00,000
+I need a string line.
+
+161
+00:00:00,000 --> 00:00:00,000
+I need a while getLine, in, line.
+
+162
+00:00:00,000 --> 00:00:00,000
+Let's start the line number zero.
+
+163
+00:00:00,000 --> 00:00:00,000
+And then immediately say lineNode++.
+
+164
+00:00:00,000 --> 00:00:00,000
+Now, we're only going to print it if it's in front of, after the starting.
+
+165
+00:00:00,000 --> 00:00:00,000
+So if lineNode is greater or equal to starting.
+
+166
+00:00:00,000 --> 00:00:00,000
+See out.
+
+167
+00:00:00,000 --> 00:00:00,000
+We want a field for wide.
+
+168
+00:00:00,000 --> 00:00:00,000
+Let's look at our instructions again.
+
+169
+00:00:00,000 --> 00:00:00,000
+For wide.
+
+170
+00:00:00,000 --> 00:00:00,000
+And we're going to print the line number in that field.
+
+171
+00:00:00,000 --> 00:00:00,000
+That's followed by a period and a space.
+
+172
+00:00:00,000 --> 00:00:00,000
+That's followed by line.
+
+173
+00:00:00,000 --> 00:00:00,000
+OK, so let's try it.
+
+174
+00:00:00,000 --> 00:00:00,000
+OK, let's actually close that terminal.
+
+175
+00:00:00,000 --> 00:00:00,000
+And open up a terminal over here.
+
+176
+00:00:00,000 --> 00:00:00,000
+Now, we have a problem already.
+
+177
+00:00:00,000 --> 00:00:00,000
+So we're going to see that when we test the code.
+
+178
+00:00:00,000 --> 00:00:00,000
+OK, so our checking, invalid start position and position work.
+
+179
+00:00:00,000 --> 00:00:00,000
+Our checking for the cannot open no file.
+
+180
+00:00:00,000 --> 00:00:00,000
+But here, we're looking for Moby Dick from 101 to 103.
+
+181
+00:00:00,000 --> 00:00:00,000
+Expected three lines.
+
+182
+00:00:00,000 --> 00:00:00,000
+But we found 22,000 lines.
+
+183
+00:00:00,000 --> 00:00:00,000
+Yeah, 22,000 lines.
+
+184
+00:00:00,000 --> 00:00:00,000
+And so the problem is that we didn't stop.
+
+185
+00:00:00,000 --> 00:00:00,000
+We didn't stop when we hit our end.
+
+186
+00:00:00,000 --> 00:00:00,000
+So let's say.
+
+187
+00:00:00,000 --> 00:00:00,000
+And.
+
+188
+00:00:00,000 --> 00:00:00,000
+Line no is less than.
+
+189
+00:00:00,000 --> 00:00:00,000
+OK, and so that will stop us when we get to the ending number.
+
+190
+00:00:00,000 --> 00:00:00,000
+Now we have to read all the ones up to the starting number. We don't have to read any of the ones after that.
+
+191
+00:00:00,000 --> 00:00:00,000
+Alright, let's try it.
+
+192
+00:00:00,000 --> 00:00:00,000
+Let's do make test.
+
+193
+00:00:00,000 --> 00:00:00,000
+OK, so here we're running the correct number of lines.
+
+194
+00:00:00,000 --> 00:00:00,000
+Now you might wonder, you might wonder.
+
+195
+00:00:00,000 --> 00:00:00,000
+Why I didn't say this if we're going to include the line number.
+
+196
+00:00:00,000 --> 00:00:00,000
+Because notice we're incrementing the line number before we decide if we're going to print it.
+
+197
+00:00:00,000 --> 00:00:00,000
+And so if I said less than or equal to ending.
+
+198
+00:00:00,000 --> 00:00:00,000
+When it was on ending, we'd go and we'd print the next line number after.
+
+199
+00:00:00,000 --> 00:00:00,000
+So be really careful when you're doing this to make sure that you have this part set up correctly.
+
+200
+00:00:00,000 --> 00:00:00,000
+OK, so that's it for our string streams and input string stream and an output string stream.
+
+201
+00:00:00,000 --> 00:00:00,000
+So let's go ahead now and talk about one other topic.
+
+202
+00:00:00,000 --> 00:00:00,000
+This is assumptions and preconditions.
+
+203
+00:00:00,000 --> 00:00:00,000
+Now often a function makes assumptions about its inputs.
+
+204
+00:00:00,000 --> 00:00:00,000
+These are called the functions preconditions.
+
+205
+00:00:00,000 --> 00:00:00,000
+And for instance, if I say cout the square root of n.
+
+206
+00:00:00,000 --> 00:00:00,000
+What is assumed about n?
+
+207
+00:00:00,000 --> 00:00:00,000
+We assume that it's positive number.
+
+208
+00:00:00,000 --> 00:00:00,000
+If it's not a positive number, the output is not correct.
+
+209
+00:00:00,000 --> 00:00:00,000
+In the standard library, there's a function called s2i or string to int.
+
+210
+00:00:00,000 --> 00:00:00,000
+That will convert a string to an integer.
+
+211
+00:00:00,000 --> 00:00:00,000
+What would we assume about s when we're calling s2i s?
+
+212
+00:00:00,000 --> 00:00:00,000
+We'd assume that s contains something like 125 and not the word one.
+
+213
+00:00:00,000 --> 00:00:00,000
+Now at a minimum, when you're writing a function, you need to think about and document your assumptions.
+
+214
+00:00:00,000 --> 00:00:00,000
+And we do that with a statement called a pre statement.
+
+215
+00:00:00,000 --> 00:00:00,000
+This is part of the doxygen tags.
+
+216
+00:00:00,000 --> 00:00:00,000
+So for the square root, the precondition would be that n is greater or equal to zero.
+
+217
+00:00:00,000 --> 00:00:00,000
+Now, a post condition is what we assume will be true when the functions completed.
+
+218
+00:00:00,000 --> 00:00:00,000
+Now that may be include things like external side effects.
+
+219
+00:00:00,000 --> 00:00:00,000
+A global variable will be set.
+
+220
+00:00:00,000 --> 00:00:00,000
+If you do see output 65, a is set to the standard output.
+
+221
+00:00:00,000 --> 00:00:00,000
+Right, that's a side effect. That's the post condition.
+
+222
+00:00:00,000 --> 00:00:00,000
+You should include what the functions assumed to return as well.
+
+223
+00:00:00,000 --> 00:00:00,000
+So all of these are the post conditions.
+
+224
+00:00:00,000 --> 00:00:00,000
+And you should document those as well using doxygen tags.
+
+225
+00:00:00,000 --> 00:00:00,000
+And so at post says the status is true.
+
+226
+00:00:00,000 --> 00:00:00,000
+If the number is read correctly, we might have more to say about that.
+
+227
+00:00:00,000 --> 00:00:00,000
+If the function throws an exception, we'd use an at exception tag.
+
+228
+00:00:00,000 --> 00:00:00,000
+Again, that's part of the post condition.
+
+229
+00:00:00,000 --> 00:00:00,000
+This is what will happen.
+
+230
+00:00:00,000 --> 00:00:00,000
+So if the function works correctly, the status is true.
+
+231
+00:00:00,000 --> 00:00:00,000
+If the function does not work correctly, it throws an exception when the number is out of range.
+
+232
+00:00:00,000 --> 00:00:00,000
+So again, when you're writing your functions, you want to document those.
+
+233
+00:00:00,000 --> 00:00:00,000
+You want to allow the people who see the function to know what will happen when an error occurs.
+
+234
+00:00:00,000 --> 00:00:00,000
+So when we have a precondition violation, when we have inappropriate input given to our function,
+
+235
+00:00:00,000 --> 00:00:00,000
+we can do five things.
+
+236
+00:00:00,000 --> 00:00:00,000
+Three of them are appropriate in certain circumstances.
+
+237
+00:00:00,000 --> 00:00:00,000
+Two of them are commonly done, but are not really very appropriate.
+
+238
+00:00:00,000 --> 00:00:00,000
+The first is you can make the input fail safely.
+
+239
+00:00:00,000 --> 00:00:00,000
+So this is sometimes called defensive programming.
+
+240
+00:00:00,000 --> 00:00:00,000
+Specifically, what you're defending against is the program crashing.
+
+241
+00:00:00,000 --> 00:00:00,000
+You don't want the program to crash.
+
+242
+00:00:00,000 --> 00:00:00,000
+So for instance, we could have S2I1 simply return the value zero.
+
+243
+00:00:00,000 --> 00:00:00,000
+What's the problem with that?
+
+244
+00:00:00,000 --> 00:00:00,000
+That makes it very hard to find errors in your code.
+
+245
+00:00:00,000 --> 00:00:00,000
+In other words, you won't find the place where you in fact passed the wrong argument to S2I1.
+
+246
+00:00:00,000 --> 00:00:00,000
+You'll just get back a zero in that case, which is not really the right answer.
+
+247
+00:00:00,000 --> 00:00:00,000
+So number one is really not a good idea.
+
+248
+00:00:00,000 --> 00:00:00,000
+We really don't want that to happen.
+
+249
+00:00:00,000 --> 00:00:00,000
+Number two, if your function gets an invalid input,
+
+250
+00:00:00,000 --> 00:00:00,000
+or you notice some other kind of precondition violation,
+
+251
+00:00:00,000 --> 00:00:00,000
+you can terminate the program with an error message.
+
+252
+00:00:00,000 --> 00:00:00,000
+Think about would you like that to happen in your web browser.
+
+253
+00:00:00,000 --> 00:00:00,000
+You type in a URL and Chrome or Firefox crash.
+
+254
+00:00:00,000 --> 00:00:00,000
+You wouldn't like that.
+
+255
+00:00:00,000 --> 00:00:00,000
+You try to save a document in Word and the disk is full and it just terminates the program.
+
+256
+00:00:00,000 --> 00:00:00,000
+Again, you wouldn't like that.
+
+257
+00:00:00,000 --> 00:00:00,000
+So there are certain situations where that's not appropriate.
+
+258
+00:00:00,000 --> 00:00:00,000
+Three, you can return an error code, which the user can check.
+
+259
+00:00:00,000 --> 00:00:00,000
+Or what we've seen with our streams, you can set an error state like see and fail.
+
+260
+00:00:00,000 --> 00:00:00,000
+When an error occurs, they set an error state.
+
+261
+00:00:00,000 --> 00:00:00,000
+It's up to us to check that.
+
+262
+00:00:00,000 --> 00:00:00,000
+Is there a problem with that?
+
+263
+00:00:00,000 --> 00:00:00,000
+Yeah, actually.
+
+264
+00:00:00,000 --> 00:00:00,000
+Programmers may or sometimes will just ignore those error states.
+
+265
+00:00:00,000 --> 00:00:00,000
+So it doesn't force the programmer to handle potential problems.
+
+266
+00:00:00,000 --> 00:00:00,000
+The way you can force programmers to handle potential problems,
+
+267
+00:00:00,000 --> 00:00:00,000
+which we'll cover in the next lecture, is you can throw an exception, which can be caught.
+
+268
+00:00:00,000 --> 00:00:00,000
+Finally, you can do what most programmers do.
+
+269
+00:00:00,000 --> 00:00:00,000
+That's number five.
+
+270
+00:00:00,000 --> 00:00:00,000
+You just don't do anything.
+
+271
+00:00:00,000 --> 00:00:00,000
+You just hope for the best.
+
+272
+00:00:00,000 --> 00:00:00,000
+Or you say, that's a feature.
+
+273
+00:00:00,000 --> 00:00:00,000
+It's not a bug.
+
+274
+00:00:00,000 --> 00:00:00,000
+So all of those are possibilities.
+
+275
+00:00:00,000 --> 00:00:00,000
+So today in this lecture, I want to talk about one of these situations,
+
+276
+00:00:00,000 --> 00:00:00,000
+terminating the program with an error message.
+
+277
+00:00:00,000 --> 00:00:00,000
+When is that the correct thing to do?
+
+278
+00:00:00,000 --> 00:00:00,000
+Some errors are caused by external circumstances.
+
+279
+00:00:00,000 --> 00:00:00,000
+The user types in the wrong URL, as I mentioned.
+
+280
+00:00:00,000 --> 00:00:00,000
+They save to a full thumb drive.
+
+281
+00:00:00,000 --> 00:00:00,000
+Well, that's not the right way to handle that problem.
+
+282
+00:00:00,000 --> 00:00:00,000
+You don't want the program to terminate when that happens.
+
+283
+00:00:00,000 --> 00:00:00,000
+However, other errors are caused by you, the programmer.
+
+284
+00:00:00,000 --> 00:00:00,000
+Here, if you've made a mistake in your code,
+
+285
+00:00:00,000 --> 00:00:00,000
+you want the error to announce itself as soon as it's found
+
+286
+00:00:00,000 --> 00:00:00,000
+and stop at the point where the error occurs.
+
+287
+00:00:00,000 --> 00:00:00,000
+You don't want just the program to crash
+
+288
+00:00:00,000 --> 00:00:00,000
+and not tell you where the problem was.
+
+289
+00:00:00,000 --> 00:00:00,000
+You don't want it to fail silently,
+
+290
+00:00:00,000 --> 00:00:00,000
+because then you'll never find the bug.
+
+291
+00:00:00,000 --> 00:00:00,000
+To do this, we use a statement called an assert statement.
+
+292
+00:00:00,000 --> 00:00:00,000
+Now, this is inherited from the C language.
+
+293
+00:00:00,000 --> 00:00:00,000
+As you can see, the header file is called C assert.
+
+294
+00:00:00,000 --> 00:00:00,000
+All of the C inherited functions are C assert.
+
+295
+00:00:00,000 --> 00:00:00,000
+And in this, you just write assert counter is greater than 3.
+
+296
+00:00:00,000 --> 00:00:00,000
+If this was the precondition, the counter must be 3.
+
+297
+00:00:00,000 --> 00:00:00,000
+The advantage of assertions is it allows you to write self-checking code.
+
+298
+00:00:00,000 --> 00:00:00,000
+If you write a statement, you're certain, or you assume that it does one thing,
+
+299
+00:00:00,000 --> 00:00:00,000
+write an assertion for that.
+
+300
+00:00:00,000 --> 00:00:00,000
+This is called instrumenting your code.
+
+301
+00:00:00,000 --> 00:00:00,000
+This allows you to automatically detect and notify you when an error occurs.
+
+302
+00:00:00,000 --> 00:00:00,000
+Sometimes these are called sanity checks or smoke tests.
+
+303
+00:00:00,000 --> 00:00:00,000
+So you want to use assert only for things that cannot logically happen.
+
+304
+00:00:00,000 --> 00:00:00,000
+Don't use asserts for things where the user will input bad data.
+
+305
+00:00:00,000 --> 00:00:00,000
+Only for things that cannot logically happen.
+
+306
+00:00:00,000 --> 00:00:00,000
+So if I have a function called sumBetween,
+
+307
+00:00:00,000 --> 00:00:00,000
+I want to make sure that lower is not greater than upper.
+
+308
+00:00:00,000 --> 00:00:00,000
+And so I'm going to assert that lower is less than or equal to upper.
+
+309
+00:00:00,000 --> 00:00:00,000
+It's impossible for that not to pass.
+
+310
+00:00:00,000 --> 00:00:00,000
+Logically, that must be true for this function to have any sense at all.
+
+311
+00:00:00,000 --> 00:00:00,000
+And so I have on my slide here, it cannot happen,
+
+312
+00:00:00,000 --> 00:00:00,000
+but it really must happen.
+
+313
+00:00:00,000 --> 00:00:00,000
+Now assertions actually are something called a macro.
+
+314
+00:00:00,000 --> 00:00:00,000
+And a macro is a piece of code that this is going to expand
+
+315
+00:00:00,000 --> 00:00:00,000
+when I write assert lower less than or equal to upper.
+
+316
+00:00:00,000 --> 00:00:00,000
+It's going to say, if lower is greater than upper,
+
+317
+00:00:00,000 --> 00:00:00,000
+then terminate the program, print out the file number, and so forth.
+
+318
+00:00:00,000 --> 00:00:00,000
+So this is going to expand, we say the macro expands,
+
+319
+00:00:00,000 --> 00:00:00,000
+into an if statement.
+
+320
+00:00:00,000 --> 00:00:00,000
+And as you can imagine, a macro or an assert statement
+
+321
+00:00:00,000 --> 00:00:00,000
+takes time to do this check.
+
+322
+00:00:00,000 --> 00:00:00,000
+It takes time to do this automatic detection.
+
+323
+00:00:00,000 --> 00:00:00,000
+And so when we have found all of these logical errors in our code,
+
+324
+00:00:00,000 --> 00:00:00,000
+and we're ready to ship it out to our users,
+
+325
+00:00:00,000 --> 00:00:00,000
+what we call production code,
+
+326
+00:00:00,000 --> 00:00:00,000
+we would generally remove that code by defining the end debug symbol
+
+327
+00:00:00,000 --> 00:00:00,000
+before including cassert.
+
+328
+00:00:00,000 --> 00:00:00,000
+That simply replaces what the assert did with just nothing.
+
+329
+00:00:00,000 --> 00:00:00,000
+Now alternatively, and normally, we'll add a make debug
+
+330
+00:00:00,000 --> 00:00:00,000
+or make release flag to our make file,
+
+331
+00:00:00,000 --> 00:00:00,000
+and it will just pass in the -d end debug when we're compiling.
+
+332
+00:00:00,000 --> 00:00:00,000
+So we don't actually have to change the source code at all.
+
+333
+00:00:00,000 --> 00:00:00,000
+Okay, so that's it for this lecture.
+
+334
+00:00:00,000 --> 00:00:00,000
+We'll see you next time with lecture 14.
+

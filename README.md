@@ -60,6 +60,46 @@ winget install -e --id ShareX.ShareX
 winget install -e --id Obsidian.Obsidian
 
 ---
+# Audio Transcription Githubs
+
+## Linux
+https://github.com/ggerganov/whisper.cpp
+
+## Windows
+https://github.com/Const-me/Whisper
+
+---
+# Books
+https://github.com/anguyen798/cplusplus
+In 002-References
+
+## The C++ Programing Language Fourth Edition - Bjarne Stroustrup
+
+## C++ Primer Fifth Edition - Stanley B. Lippman, Josee Lajoie, Barbara E. Moo
+
+## Fundamentals of C++ Programing - Richard L. Halterman
+
+---
+# Udemy
+https://github.com/anguyen798/cplusplus
+In 002-References
+
+## Beginning C++ Programming - From Beginner to Beyond - Tim Buchalka
+https://www.udemy.com/course/beginning-c-plus-plus-programming/
+
+## Learn C++ Programming -Beginner to Advance- Deep Dive in C++ - Abdul Bari
+https://www.udemy.com/course/cpp-deep-dive/
+
+## Mastering 4 critical SKILLS using C++ 17 - Moustafa Ibrahim
+https://www.udemy.com/course/cpp-4skills/
+
+## Mastering Data Structures & Algorithms using C and C++ - Abdul Bari
+https://www.udemy.com/course/datastructurescncpp/
+
+## The C++20 Masterclass : From Fundamentals to Advanced - Daniel Gakwaya
+https://www.udemy.com/course/the-modern-cpp-20-masterclass/
+
+---
 # Location
 06/12/2023 - 08/04/2023
 Tuesday 01:00 PM - 04:50 PM
@@ -72,4 +112,5 @@ https://cs170-console.appspot.com/login
 ---
 # Codespaces
 https://github.com/occ-cs150/
+
 ---

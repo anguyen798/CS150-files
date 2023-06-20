@@ -1,0 +1,716 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 5. In this lecture we're going to look at strings and characters.
+Now characters are built in to the C++ language, just like ints are and just like doubles are.
+Unlike Java though, or unlike Python, in C++ the C++ char type is a 7-bit ASCII character.
+Now you might think, with 8 bits, how can you, with a byte being the smallest thing, how can you have a 7-bit character set?
+Well, originally when C++ was created, they used the extra bit as part of the communication protocol, and so they only defined 7 bits from 0 to 127.
+And so that means that in C++ only 128 characters are defined.
+Now those extra 128 characters, or 127 characters, that you would have from 128 on to 255, those are what's called the extended ASCII character set.
+But that is not standardized and it's not built in to C++, so you really can't rely on what those characters are.
+Instead, for larger character sets, in other words for Unicode and so forth, C++ has always had the Wchar_t, or the Wchar type.
+Now, because different versions of Unicode are represented different ways, since C++11, C++ has added two additional types for Unicode.
+So Wchar_t, which is 16-bit Unicode, which is the same as Java's Unicode, and Wchar_t, which is the same as Python's Unicode.
+Now, we also, remember, use the Wchar type for small numbers.
+Java has the type byte, C++ does not, and instead of byte, it uses a signed char.
+In C++, we can also use an unsigned char, which is actually useful, a byte that goes from 0 to 255.
+Now, to deal with this built-in type, we inherited from C, all the headers that start with C, like C, C type, are inherited from the C library.
+It has functions, actually they're called macros, we'll learn a little bit later what those are, that are used for char.
+So again, the headers that start with C are inherited from the C library.
+So there are some classification functions inside here.
+So I can take a character, C, and I can ask, "Is it a digit?"
+And I'll get back yes or no.
+Actually, because it's C and they didn't have true or false, you get back 0 and 1, but you treat it as true or false.
+Or, "Is it an alpha character?" or "Is it a space?" or "Is it punctuation?" and so forth.
+There are two conversion functions in here that you can use to convert a character from lowercase to uppercase and from uppercase to lowercase.
+These functions only convert if it's appropriate.
+So it's perfectly legal to pass a lowercase character to C, a lowercase character to toLower, and it simply won't do the conversion.
+It'll work just fine.
+You don't have to say, "If it's upper, pass it to toLower."
+Now, a sequence of characters we call a string.
+So what we call text is called a string.
+C++ has two kinds of strings.
+The built-in string inherited from C is called a C-style or C-string.
+It's an array of characters which are terminated with a null byte.
+It's not a class. It's not a library type. It's built into the language.
+Anytime you have a string literal, like "Hello, world," what you're working with is a C-style string.
+We'll study these when we look at pointers and arrays.
+We're going to kind of ignore them for right now.
+The C++ standard library, however, has a type called string.
+Now, remember in Java, it was uppercase string. It's lowercase in C++.
+Just like in Java, this is a class type.
+It's not built into the C++ language. It's part of the library.
+And remember in C++, in Java, you can use the string type without doing any extra work.
+But in C++, to use the string type, you have to remember to include the string header.
+Remember, none of the library functions are included if you do not include them explicitly.
+Now, a C++ string literal, starting in C++14, can be written as "Hello," just like a C-string literal, in double quotes,
+with an "s" at the end of it. And that will be a string object.
+So let me show you briefly. I'm going to do a little exploring here over in our example CPP.
+I'm going to make sure I want to use the string class, so I'm going to include string.
+And I'm going to create a couple of different things.
+I'm going to try "Hello." I'm going to try and actually print out "cl hello.size."
+And then I'm going to try and print out "cl hello s.size."
+Now when I try and compile this, "make example," notice I get an error.
+This is not a string object. I'm trying to ask for a member function on a C-style string.
+So these are not string objects. However, let me comment that one that doesn't work out.
+So, do "make example" again. Notice that that compiles. So "hello" with an "s" is a C++ string literal.
+If I run "example," of course it prints out 5, because there are 5 characters in the word "hello."
+Alright, let's go back and look at creating string variables.
+Now, because this is a library type, all library types you create with a constructor.
+So, the syntax is slightly different with C++ using a constructor than it is with Java.
+So, in Java, we would write "string s = new string hello world."
+Now, of course, there's a shorthand, so we don't have to do the new string. We could just put the "hello world."
+But behind the scenes, Java is doing this new string "hello world."
+In C++, you don't need to repeat the name "string," and you don't use the new operator.
+So this is a string object. Now, if we did that in Java, we would have a string variable,
+but the variable would not be a string object. It would not refer to a string object at that point.
+In C++, when you create a class type, you do not need to call the constructor explicitly.
+It is automatically implicitly called.
+So this is the same as writing "string s = " the empty quote.
+So, it is the empty string.
+We can also do it exactly like we do in Java, "string s = hello world."
+And, again, that works just the same in C++ as it does in Java, more or less.
+You can also use parentheses or braces around it.
+So I can say "string s," not use the equal sign, and use the new style, "uniform initialization," if I want.
+I also have some more complex constructors.
+For instance, I can tell it how many characters I want and tell it the character I want.
+So here, this string is 50 dashes. That's really useful sometimes.
+I can take a C-style string and extract part of it, like taking a substring.
+So here I'm constructing a string from the literal "hello" and I'm getting the first through third characters.
+I'm getting three characters from it.
+So I'm getting "ell" starts at index 1, which is the "e," of course, and gives me three characters.
+And finally, if you've ever had to use escape characters in Java, in C++ you can get around that by creating what's called a "raw" string.
+So a raw string starts with a capital "R," a quote, and a left paren, and then what you want inside the parentheses.
+So notice that this is not an escape character. This is not a delimiter.
+This is literally the thing that will appear out.
+So if you ever have to do something where you would need to escape a string, using a raw string is a useful thing.
+Notice it ends with the parentheses and quote.
+So quote, paren on the beginning, and paren, quote on the end of it.
+Everything between is just passed through as if it were a raw string.
+Now, a C++ string is a library type like it is in Java, but it's a value type.
+In Java, the library types are all references types.
+So that means that the C++ library types act like the built-in types when it comes to assignment and copying and all of those kinds of features when it comes to comparison.
+So let's see how that works.
+So here is a Java reference type.
+Notice I've used the capital string for Java.
+I've created a string "A," pointed it to "Hello," so I have a string variable.
+That string variable points to the word "Hi," not "Hello."
+Then I create a second string and assign it to "B."
+That creates another variable, but it doesn't create another copy of the word "Hi."
+We have one string object with Java.
+C++ acts as if these strings were integers.
+It uses value or copy assignment.
+Java uses reference assignment.
+And so when I write the same thing in C++, when I create the string "A," "A" contains "By."
+It's not a variable that points to "Hi." It's a variable that points to "By." It contains "By."
+When I say "B" equals "A," I get another copy of the "By."
+I have two copies of strings, two string objects here, one string object in Java.
+So how else are C++ strings like built-in types unlike Java's types?
+Well, we can use native operator comparison.
+In Java, you have to use the method equals or compareTo.
+So if I have two string objects, "A" is Zebra, "B" is Aardvark, I can say if "A" less than "B," illegal in Java.
+Or if "A" equals equals "B," that's legal in Java, but it's kind of meaningless.
+You really should use equals in that case.
+Now, strings in C++ may be modified.
+Java strings may not. Java strings are immutable.
+So it's legal to do this. I've created a string str that contains "Hello."
+I've constructed it from this C-style string.
+And then I've gone in and I've changed the zeroth element to the character "J."
+So this string now contains "Jello."
+Again, this is illegal in Java.
+Now, like Java, C++ strings can be concatenated to either string literals or to characters.
+So if I have two strings, "Hello" and "World," I can say str3 equals str1 plus, and this can be a string literal or it could be a character.
+So notice I've got a character here at the end. That works fine.
+I've got a string literal here. That works fine.
+What you cannot do, though, because string literals are not string objects, you cannot concatenate C string literals.
+You also cannot concatenate numbers.
+So if I did this, str1 equals "Hello," a C string literal, plus another C string literal, plus "World," that would be illegal.
+Now, just to tell you how you can actually do that without this, is if you leave off the plus signs,
+any C string literals that appear in code that are adjacent to each other will be automatically concatenated.
+You don't need the plus sign, and that would work perfectly fine.
+Another thing we might want to do in Java that's illegal in C++ is we might want to say concatenate a string plus a number
+and have a new string that says "amount 23.45" as a string.
+That's, again, illegal in C++.
+How about input and output? So with cin and cout, we can do that with strings.
+Again, you have to include string when you do this.
+So here's a string called "firstname." I've printed out "firstname" for my prompt.
+Notice I've ended in a little space, and then I've just read it like that.
+Now, that will read only the first name.
+What if your first name has two words? It won't work.
+It reads only one token. It stops on any whitespace character.
+What if I wanted to read the whole name?
+Well, to read the whole name, I need to use a function, not just cin, but I need to pass cin to a function called "getline."
+This is a function in the string header. It's not in Iostream, so you have to include string.
+And so here's a full name.
+Then I've printed out "cout fullname," and I've given them a little example, last comma first, of what I want.
+And then I've done "getline." The first argument to "getline" is where I want to get the data from.
+In this case, I want to read from cin.
+And the second argument is an empty string that is going to be filled in inside the function.
+We call this a reference parameter or an output parameter.
+So "getline" to read a line, just cin with the extraction operator here to read only a word.
+Now, as in Java, objects have methods associated with them.
+So when you create an object, there are functions associated with that object.
+In C++, we actually call them member functions instead of methods.
+But member functions and methods are synonymous with each other.
+So the number of characters from a string you can get with str.size or str.length.
+Size is shorter, it's less words, and if you remember in Java, if you had the string type,
+you called str.length as a function, a member function or a method.
+If you had an array, you called a.length but didn't put the parenthesis around it.
+And if you had an array list to get the number of elements, you did list.size.
+Well, in C++, you can use size for everything.
+So size is shorter, it works for everything, so I just forget about using length at all, even though you can.
+Now, another difference between Java, when we get the number of characters,
+is in C++, the value that's returned is an unsigned number.
+And it has its own type.
+The type of the number returned from string is string colon colon size type.
+Now, the colon colon here, you remember, is the scope operator.
+And in this context, the scope operator means the size type that is defined inside the string class.
+It tells us the size type from the string type.
+And each type, if we had a vector, it would be vector colon colon size type.
+Now, that's kind of a lot of typing.
+To type string colon colon size type, len equals str.size.
+And so you can reduce typing by using the general type, which is what I'll do normally,
+and that is size underscore t.
+This is the general size type.
+Now, don't use int.
+And don't compare int to a variable.
+So, many of you in Java were used to doing something like this.
+For int i equals zero, i less than s size.
+You notice our compiler is set up so this will not even compile.
+That's because i is an int, s.size is this unsigned type, and you cannot compare them legally.
+You cannot compare them safely.
+Okay, so we select an individual character in a string by indexing.
+So you're probably familiar with this with arrays from both Java or Python.
+So legal subscripts are from zero to the string size minus one.
+So string size, of course, is outside the bounds of the array.
+You can do this two ways.
+You can use the subscript operator, the square brackets that you're familiar with with arrays.
+So if I create a string hello, I can say str sub zero equals j.
+Now, in Java, you would expect if you went outside the bounds of the array,
+like str bracket bracket five, we pronounce this str subs five, or str sub five equals that.
+Notice that that would be beyond the O.
+It would be in this position out here, and we would get an exception thrown.
+In C++, you will not.
+It is not range checked.
+It's up to you to say in bounds.
+Because of that, because it's obvious that all of us frequently make mistakes when we're programming or when we're typing,
+C++ has a simpler, the string class has a simpler and safer way to do it,
+which is the method called at.
+So this is range checked, and this is the preferred way to do this.
+So string str equals hello, str at zero equals j, that's okay,
+and str at five equals the exclamation point.
+This is safe because just like Java, this will throw an exception.
+So you want to use at instead of the square brackets.
+So let's look at extracting substrings.
+You can copy a portion of a string into another string.
+That's called a substring.
+In Java, you do this with a method called substring.
+In Java, this method uses two indexes, pos1 and pos2.
+So if I have the string, hello world, and I ask for the substring from six to 11,
+it goes zero, one, two, three, four, five, six, so it's going to start at w,
+seven, eight, nine, ten, and it's going to stop when it reaches 11.
+So this will be world without the exclamation point.
+C++ changes the name, it's substr, not with substring,
+and it is simpler.
+If we wanted the same characters world, we'd say start at six, which is the w,
+and give me just five characters.
+So to count one, two, three, four, five, and it'd give me world.
+I don't need to figure out where this ending index is like I do with Java.
+So if you're used to programming in Java, keep this in mind.
+Now, there is only one exception thrown by substring,
+and that is if this initial position is greater than the string size.
+Well, you might ask, well, what if it is the string size?
+Shouldn't that be out of range?
+No, in that case, the substring will return an empty string to you.
+So if pos1 is greater than the string size, you'll get an exception.
+If the length, this five here, is larger than the numbers accepted,
+it'll only give you the ones that are there.
+You can also call substring with only one argument,
+and if you do that, it'll just give you from that position
+to the rest of the characters in the string.
+So we're going to do an exercise with substrings,
+but first I want to talk about references.
+What is a reference?
+Because we're going to write a function that works on a substring,
+and so we have to learn how to pass strings to functions.
+So a reference is a C++ derived type.
+It's based on other types,
+and it's basically a name that acts as an alias for a variable.
+It is not a new variable.
+So here I have one variable, a, that has the value 42,
+and here I've given a a new name, b.
+So I have two names for one object in memory.
+I've said b is a reference to an int,
+and the int it references is a.
+b is just another name for a.
+These are not references like in Java or C#.
+References in Java and C# are much closer to what we call pointers in C++,
+and we'll study those later.
+Now, references can only refer to L values or variables.
+So if I were to say n is a reference to an int,
+and I refer it to 42,
+42 is not an int variable.
+It's not an object, so that would be illegal.
+Now, there are also no conversions possible.
+Only exact type matches.
+So if I said pi is 3.1459,
+and I tried to write int ref pi2 = pi,
+I'd get an error. Why?
+Because pi2 is a reference to an int,
+and I've given it a double here.
+Now, of course, if these were values,
+if I said int pi2 = pi,
+it would simply truncate this and give me a new value of 3 in pi.
+But a reference is not a new variable.
+It refers to something that already exists.
+Of course, to get it right, I'd have to write double ref pi3 = pi.
+This is an exact match. That works OK.
+Now, what are references good for?
+Well, references are useful because we pass them to functions.
+A reference parameter, like this string ref s,
+is not a new variable,
+and you indicate that it's a reference by putting the ampersand
+after the variable's type.
+So that says the reverse function is not going to take,
+as its argument, a copy of the string.
+It's going to work on the string that you pass to it.
+Now, if I were to change s inside this function,
+which obviously the reverse function is going to do,
+it would change the argument that s was used to call the function with.
+These are called output parameters.
+So here I've got string str = "hello",
+and here I have reverse str.
+We're going to ignore that phone that's ringing in the background here for a second.
+There, it stopped.
+So notice that I've called it with the function str,
+but inside the function,
+that str is simply s is simply another name for this function str.
+When I print out str, of course the reverse function will reverse the arguments.
+We're going to write this function a little bit later, not today.
+Now, reference parameters, the reason we use reference parameters
+is because they're much more efficient than value parameters
+for large objects like string.
+You remember in Java, when we make a copy of a string,
+we actually don't make a copy of the string object.
+We simply create another variable that points to the one variable.
+Since C++ doesn't work like that,
+if we had parameters that were strings,
+every time you called the function, you'd make a copy of the entire string.
+And so with references, no copies are made,
+and so less memory is used.
+And because no constructors are called to make those copies,
+they run faster.
+But there's a downside.
+Reference parameters are also more dangerous,
+and they're not quite as flexible.
+That's because with a reference parameter,
+you may accidentally change an argument
+when you didn't mean to change that argument.
+And so C++ prevents that
+by providing you with constant references.
+And so if I were writing a function called print,
+and I wanted to print a string,
+I wouldn't say "string s" because that would be expensive.
+It would use more memory, and it would run slower.
+I wouldn't say "string ref s"
+because I don't expect the print function to change this string.
+Instead, I'd write "const string ref s."
+So any time we have a function that takes a string as an argument,
+and we don't intend to change that string inside the function,
+we're going to pass it as "const string ref."
+So let's go ahead and do that,
+and we'll do our first exercise, the substring member function.
+So let me pull up my thing here.
+I'm going to go over to IC05A,
+and we're going to write the function called inside out.
+So you're going to put your name on this.
+And I'm going to look here at the starter code.
+We're going to write a function called inside out
+that takes a string as an argument and returns a new string
+where the middle character, if the string length is odd, has been removed,
+and placed both at the beginning and the end.
+If the string length is even, then the middle two characters are removed
+with the first placed before and the second placed after the string.
+If the length of the string is less than three,
+then we're going to return the original string.
+And here are three examples that show you those possibilities.
+So what we want now is just how we write this function.
+So remember the six steps.
+What does this function produce?
+It's producing a new string.
+What's the name of the function?
+Inside out.
+What is it going to take?
+It's going to take a string that doesn't change.
+So const string reference str.
+What's it going to return?
+A new string.
+So string result;.
+Notice we do not need to write equals quote, quote.
+That will call the constructor automatically and create the empty string
+and return result.
+Okay, we have our stub.
+We're going to right click on A here.
+Open it terminal on A.
+And we're going to do make test.
+And I got a warning.
+Now I'm going to move this over here to the side so we can see the whole thing.
+I got a warning telling me I'm not using this parameter.
+But notice my code compiles and it runs.
+Compiles and it runs.
+Okay, let's move that down to the bottom here.
+And let's look at our code.
+So we have three possibilities here, right?
+Remember looking here, we have this case, it's less than three.
+We have this case, it's odd.
+And this case, it's even.
+So let's write that skeleton out.
+Remembering what we learned in the last lecture about selection.
+So if something result equals str.
+Else if something else, else this.
+So what are these possibilities?
+Well this is if str size is less than three.
+The result is str.
+This is if str size remainder two equals one.
+This is odd.
+And this one of course is even.
+Okay, so what do we want to do if it's odd or even?
+Now you notice I've used str size here, str size here.
+And I'm going to have to use it again.
+So you might want to say create a variable for it.
+Now we can do this.
+String colon colon size type.
+Len equals str size.
+Or both.
+We can do size t.
+Len equals str size.
+I prefer this.
+Or we can use auto len.
+That's also okay.
+So I'm going to actually use the last one here.
+Okay, and now I can come along and I can say,
+now I don't have to calculate the size again, right?
+I can say if length is less than three.
+If length remainder two equals one.
+And now if I need to use len and these other ones, which I will,
+I don't have to call str size again.
+So in general, any time you call a member function,
+if you're going to not change that value, save it inside a variable.
+Cache it. Use it again later.
+So let's look at our problem.
+Okay, so if the length is odd,
+we're going to take the middle character
+and place it both at the beginning and the end.
+So let's find out where the middle character.
+So I'll do char mid equals str at len divided by two.
+That's the middle character.
+Notice I used len again so I didn't have to say str size.
+I'm going to set result equals to the mid character.
+Remember I'm putting it at the beginning and end.
+Plus str, substr.
+Starting at position zero,
+I'm going up to len divided by two.
+Not going up to, but taking that many characters.
+And then I'm going to add to that the substring.
+Starting at len divided by two plus one.
+Right after the middle character.
+Finally, I'm going to add on the middle character again.
+Okay, so that's the odd one.
+Now with the even one,
+with the even one, we get the middle two characters.
+So let's do ourselves a little example here.
+Many times it helps me a lot.
+So frog is a string that's larger than two,
+or larger than three, and is even number.
+And so the middle one, if I divide that size by four,
+let me do this, size is four,
+mid would be two.
+Do I want the character at two?
+Zero, one, two.
+No, I want the middle two, so I want r.
+So I want mid minus one, right for that.
+And I want two characters, so I can't use a char type.
+So I'm going to do string mid equals str, substring.
+Starting at len minus two.
+That would give me the o, len divided by two, I'm sorry.
+Minus one.
+That would give me the r in frog.
+And again, do this on a piece of paper if you want,
+but draw yourself a little picture so you know what these calculations are going to be each time.
+And I want two characters.
+Now, this time I'm going to create a couple of variables for it.
+Here I just created the calculations without the variables.
+Let me create the variables so you see what I was doing in this calculation.
+So I'm going to say string front equals str, substring.
+Starting at zero, going up to len minus two, divided by two, minus one.
+And string back equals str, substring, len divided by two, plus one.
+Which is exactly the same as this.
+So this is the back part.
+This is the front part of the string.
+And here I can do result equals mid at zero, or like that.
+Or in fact I can say mid front, like that.
+Either of those work.
+So I'm going to say mid at zero plus front plus back, plus mid at one.
+And here of course I could write, or since there are only two characters, right?
+Alright, that looks pretty good.
+Let's go ahead and see if we got it correct.
+Let's clear this with control L.
+Do make test.
+Ok, we didn't get any errors or any warnings this time.
+And all of our tests pass.
+All of our tests pass.
+Alright, let's go ahead now
+and look at searching for strings and characters.
+So in Java, you search for a string or character using indexOf and lastIndexOf.
+And you get back of course the index where that string exists.
+The same thing with Java, but you use the member function find.
+So find will return the position where arg is found in str.
+And arg can be a character, it can be a C string literal, or it can be a string object.
+Now in Java, when indexOf can't find the position, it returns minus one.
+However, find, like size, doesn't return an integer.
+It returns a string colon colon size type, which is an unsigned number.
+Thus we have to have a special value that signifies that it wasn't found.
+That special value is called string colon colon inpos.
+Inpos says no position found.
+That's how you think of it.
+Now there's an optional second argument to find.
+You can say string find arg pos.
+This would be good in a loop where you want to continue to look through the loop and find different copies of this by passing in different positions.
+So this search for arg starting at pos in the string position.
+Finally, the equivalent of lastIndexOf is called rfind.
+And that will search from the right and find the last instance of that in the string.
+So let's go ahead and do an example with the file, our second exercise called initials.
+Alright.
+Let's put that down. Let's bring this over here.
+Let's close inside out.
+Let's open up B, get initials.
+And let's open up a terminal there.
+So I can work on get initials.
+By the way, you can close the previous terminals you had open here. Like that.
+Okay, let's put our name on this.
+Okay, so write a function named initials that takes a string containing a person's name, return a new string consisting of the person's initials.
+So let's go ahead and write our stub first.
+So it's going to return a string.
+It's going to name initials.
+It's going to take a new string, so const string reference str.
+It's going to return a string, string result, and return result.
+Let's go ahead and do make test on that.
+Again, we got a warning because we're not using this string.
+But in fact it worked okay.
+Okay, so now we can go and think about it. So we want the person's initials.
+So it will return sdg. We're going to assume that there's no space.
+We're going to assume there's exactly three words, before or after.
+And so what I want to do is find the position of the first space, the position of the last space.
+And that will allow me to get the initials, the s, d, and g.
+So I can say, the initials are char, right? So I can say char first equals str at zero, or str sub zero, or str.
+All three of those will give me the first character.
+For the middle, I want auto. I'm going to use auto instead of size t, or I could use size t.
+I'll use size t here. Size t first space equals first find.
+Here I'm going to use a quote for the space.
+So I know that my second initial equals str at first space plus one.
+And my third one, I need the last space. So size p last space equals first r find.
+Oh no, not first. I'm saying str r find.
+Str find and str r find. Mistake there.
+And this will be the position of the last space. And char third equals str at last space plus one.
+And then the result equals first plus second plus third.
+Okay, now this isn't going to work. Let's see why it doesn't work.
+Let's do control L. I'm not sure it's even going to compile. Hit test.
+Now it compiles. But look at I have a little weird thing inside here. What's that?
+That's really pretty weird, isn't it?
+Okay, so let me tell you what the problem is.
+What kind of thing are first and second and third?
+Those are chars. The built in type.
+What do I get when I use this symbol with a char?
+I don't get concatenation. I get addition.
+So this is adding the ASCII value of this plus the ASCII value of that plus the ASCII value of that.
+Obviously when we print it out, it doesn't think that it's any kind of printable character at all.
+And so that doesn't work.
+So we can get around this by doing quote quote S plus.
+So now I have a string. Now I have concatenation.
+Now I've got another string. I have concatenation. I have another string. And I have concatenation.
+And so that would work. Make tests.
+And so now all of them work. I get SDG, HST and so forth.
+But that's really not a clean solution, is it?
+It's kind of a "Oh, I did something wrong and I need to fix it."
+The cleaner solution is not to make these chars in the first place.
+Let's make those strings.
+So string first.
+Then it can't be string at. It needs to be string substring.
+Zero. And one character. Same thing here.
+String. Second equals third substring.
+First base plus one. And we want one character inside that.
+And string third.
+Stir substring.
+One.
+OK. So this is clearer. Right?
+And so this of course, we could not use those. That wouldn't work at all in that case.
+OK. So let's try that.
+Let's clear the thing and do a test again.
+And we have a solution that works. And it's a little clearer when we look at it.
+The last thing we're going to look at today before we end this lecture is we're going to look at range or iterator loops.
+So C++11 introduced a new simplified called a range-based for loop.
+And this will work with all collection types including string, including vector, and including the built-in array types.
+Java has a similar loop called the simplified for loop introduced in Java 5.
+But it doesn't work with string. It only works with the collection types in the library.
+And so this is for the type of the element e and a colon and then the collection.
+Now in Java, what this does is it goes into the collection, gets the first element, puts it in the local variable e,
+and then you can work with that local variable e.
+The next time through, it gets the second element, puts it in the e, and you work with the variable e.
+So this is called value iteration.
+So C++ has that.
+You can use auto here or you could use the type. So you could use int or char, whatever the type is.
+I frequently use auto so I don't have to think about it.
+But that's the only kind you can do in Java.
+In C++, you can actually not get each copy, but look at each element directly in the collection.
+So this is called reference iteration.
+This is what you want to do when you want to change each of the elements.
+Finally, if you want to look at the elements, not make a copy, but you don't want to change them,
+you want to make sure they're not changed, you can do a const reference.
+So const auto ref e.
+So we're going to do two exercises, flipper and upper.
+OK, and for these, I'm going to look at the character functions to upper and to lower and is upper and is lower.
+And we're going to skip those.
+And we're going to look at how they're written.
+So we're going to write a function flip case that takes a string as an argument and returns a new string.
+Where every lower case character has been converted to upper case and vice versa.
+We're not going to use any library functions at all.
+That includes size or at or the square brackets or to upper or to lower.
+Now normally we would use to upper and to lower.
+OK, so let's bring that over. Let's drop that down.
+Let's close up B.
+Let's open up C and open up flipper.
+And let me drop this over.
+Put my name on that.
+And I believe the thing was called flipper, right? No, flip case.
+So string flip case.
+We're not going to change this string. So it's constant string ref str.
+We're going to have a string for the result.
+And we're going to return the result.
+OK, let's open a terminal there.
+We'll go on C, right click, open an integrated folder.
+And we will do make test.
+And in fact it compiles and links. OK.
+It compiles and links. OK.
+We didn't get a warning this time. I'm not quite sure because we didn't use the str at all.
+OK, so visit every element.
+I'm going to look at every element. I'm not going to change it.
+So for auto e in str.
+Now because each thing is a character, let's call it C here.
+So auto e in str.
+Now there are three possibilities. Right?
+Uppercase, lowercase, neither.
+So if something
+else if
+else it's neither.
+Now if it's neither, all we want to do is add result, add C to the result.
+So result plus equals C.
+Or result equals result plus C. It means the same thing.
+Now how do I tell if it's uppercase?
+Well, the uppercase characters look like A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, X, Y, Z.
+And they're all contiguous.
+It means they're right next to each other in memory.
+So if C is greater or equal to the character A,
+and C is less than or equal to the character Z,
+then it's an uppercase. Right?
+So that is in fact what the code is inside the isUpper function.
+And the same thing for toLower.
+isLower.
+If C is greater or equal to the lowercase A,
+and C is less than or equal to the lowercase Z,
+then it's a lowercase character.
+Now, let me put the lowercase characters here.
+Okay, these characters start with the ASCII character 97.
+That's the lowercase A.
+And these characters start with the ASCII character 65.
+So imagine that my character C here was the letter A.
+It had the value 65.
+I want to turn it to lowercase.
+That means I have to change it to 97.
+And so all I do is add the difference between 65 and 97 to that character.
+So again, imagine it was a lowercase character.
+I'd add, I'd say C plus equals, remember I'm turning it to lowercase, 97 minus 65.
+In other words, that's the difference between this character and this character.
+This character, right? This A.
+That's the difference between the two.
+Now, this is of course a magic number.
+It would be nice if we had a constant that represented that.
+It would also be nice that we didn't just have the numbers 97 and 65.
+We had some meaning.
+And so the way we can write that is const if equals the 97 minus the 65.
+So this is the case difference.
+And so now I can simply add C plus equals diff.
+And I can say result plus equals C.
+Now, notice I'm repeating this code here and here.
+And I'm going to repeat it here in this third one.
+So we'll see how we can simplify this a little bit in a moment.
+So C plus equals diff.
+Here we're going to do the same thing, except I'm going to say C,
+in other words, I want to go from 97 down to 65.
+So I'm going to say C minus equals diff and result C equals C.
+And we add the new character.
+So in each case I'm changing the character and then adding it to the end.
+Now, I want to improve this a little bit for the efficiency part.
+But let's just go see if it works right now.
+Let's go control L, make test.
+Yes, it does in fact flip all of these things and give us the correct output in all of those cases.
+So redundant code.
+What do we do when we have redundant code?
+Is it in all three of these?
+Yes, it is.
+That means it can appear after this.
+We don't need it here.
+If there's nothing inside there, we don't need the else.
+So this is still three branches.
+One if it's uppercase, one if it's lowercase, and one if it's neither.
+But now I don't need it there.
+I don't need it there.
+And we can see our code is much simpler.
+More efficient, easier to maintain, and so forth.
+And again, we can test that out once again to make sure we didn't make any mistakes.
+And flip case still gives us the correct answer.
+Okay, so let's close the flipper.
+And let's go to our last one on D, which is upper.
+Put your name on it.
+Open a terminal on there.
+And let's look at the function.
+Write a procedure to upper.
+Now, you remember a procedure is a function that doesn't return anything.
+It's going to take a single string as an argument and modify the string so that every lowercase character has been converted to uppercase.
+Again, we're going to not use any library functions here.
+So a procedure is void to upper string reference because we're going to modify str.
+That's our whole stub.
+We don't need to return anything.
+We can go ahead and do make test.
+And you can see it compiles and runs.
+It actually gives us the correct output if the string doesn't have any lowercase characters inside it.
+So to upper means we're going to convert everything that's a lowercase character to upper.
+So we're going to say for auto.
+Or, again, we don't need to use auto here.
+We can use char, right, because every character inside there.
+So char ref for each character inside the string.
+If it's a lower -- if it is uppercase, lowercase.
+If -- and let's give that a name, char c.
+If c is greater or equal to a and c is less than or equal to z.
+It's lower.
+Then what we want to do is we want to make it uppercase.
+We want to make it -- give it a smaller ASCII character.
+You remember from the last one.
+So we want to add the difference to it.
+So I can write the difference up there.
+Or I can just say c minus equals a minus a.
+That's the difference.
+I can write it like that and that will work perfectly fine.
+Or I could write it up here before my loop and create a const again.
+So const int case difference equals a minus lowercase a minus capital A.
+And maybe make my code a little bit readable.
+Now, what do I need to do if it's an uppercase character already?
+Nothing.
+Punctuation, nothing.
+So this one is slightly different.
+This will turn everything into uppercase.
+So let's try it.
+Make test.
+Ah, good.
+All of our tests pass.
+So you now have all your screenshots.
+You have everything done.
+And for chapter 5, you've got to read the chapter, take the quiz, do the reading exercises and so forth.
+And I will see you back here for lecture 6.

@@ -1,0 +1,2672 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, my name is Steve Gilbert and this is chapter one in your course reader on C++ mechanics.
+
+2
+00:00:00,000 --> 00:00:00,000
+In today's lecture we're going to talk about how do you actually create a C++ program?
+
+3
+00:00:00,000 --> 00:00:00,000
+What are the mechanical steps you need to go through?
+
+4
+00:00:00,000 --> 00:00:00,000
+Now in 1970, when Ken Thompson and Dennis Ritchie created Unix,
+
+5
+00:00:00,000 --> 00:00:00,000
+Dennis Ritchie and Brian Curnahan also wrote a book to introduce the world to the C programming language.
+
+6
+00:00:00,000 --> 00:00:00,000
+In the book they wrote this, "The only way to learn a new programming language is to write programs for it.
+
+7
+00:00:00,000 --> 00:00:00,000
+The first program to write is the same for all languages. Print the words 'Hello World'."
+
+8
+00:00:00,000 --> 00:00:00,000
+Now you've probably heard of this, a Hello World program. This is where this statement comes from.
+
+9
+00:00:00,000 --> 00:00:00,000
+Now to go on to write. This is a big hurdle. To leap over it you have to be able to create the program text somewhere.
+
+10
+00:00:00,000 --> 00:00:00,000
+Compile it, load it, run it, and find out where your output went.
+
+11
+00:00:00,000 --> 00:00:00,000
+That's what we're going to cover today.
+
+12
+00:00:00,000 --> 00:00:00,000
+He goes on to say, I think a little tongue in cheek,
+
+13
+00:00:00,000 --> 00:00:00,000
+"With these mechanical details mastered, everything else is comparatively easy."
+
+14
+00:00:00,000 --> 00:00:00,000
+Now that's not exactly true. All of these mechanical details are necessary,
+
+15
+00:00:00,000 --> 00:00:00,000
+but they're not going to be sufficient for you to write good C++ programs.
+
+16
+00:00:00,000 --> 00:00:00,000
+But it is important that you learn how to do them and make them so they're second nature.
+
+17
+00:00:00,000 --> 00:00:00,000
+So we're going to start. Here's Dennis Ritchie's C version of Hello World.
+
+18
+00:00:00,000 --> 00:00:00,000
+We're going to create a C++ version and take our inspiration from the movie The Princess Bride.
+
+19
+00:00:00,000 --> 00:00:00,000
+"Hello, my name is Inigo Montoya. You killed my father. Prepare to die."
+
+20
+00:00:00,000 --> 00:00:00,000
+So we're not simply going to write one line. We're going to write one, two, three, four, five lines to output.
+
+21
+00:00:00,000 --> 00:00:00,000
+So how do we do that?
+
+22
+00:00:00,000 --> 00:00:00,000
+Well first, what we need to do is we need to write the C++ instruction somewhere.
+
+23
+00:00:00,000 --> 00:00:00,000
+This is called source code.
+
+24
+00:00:00,000 --> 00:00:00,000
+Now if you look at my little illustration on the right of this slide, you'll see that it says C code.
+
+25
+00:00:00,000 --> 00:00:00,000
+But it could be C code or C++ code or any kind of code.
+
+26
+00:00:00,000 --> 00:00:00,000
+So the basic idea behind a high-level language is that we write source code in high-level or human-like languages.
+
+27
+00:00:00,000 --> 00:00:00,000
+And then we take those languages and we convert them into a language the computer understands,
+
+28
+00:00:00,000 --> 00:00:00,000
+a mechanical or binary language.
+
+29
+00:00:00,000 --> 00:00:00,000
+Now for C++, we're going to write our code using the extension .cpp.
+
+30
+00:00:00,000 --> 00:00:00,000
+This is not really required for C++ like it is for Java with the .java extension.
+
+31
+00:00:00,000 --> 00:00:00,000
+But we're going to follow this convention, .cpp for C++ files, .c for C language files, .h for header files.
+
+32
+00:00:00,000 --> 00:00:00,000
+Now to convert our code, we need to use what's called a driver program.
+
+33
+00:00:00,000 --> 00:00:00,000
+Now frequently this will be called a compiler.
+
+34
+00:00:00,000 --> 00:00:00,000
+It's not actually a compiler.
+
+35
+00:00:00,000 --> 00:00:00,000
+It's a series of programs.
+
+36
+00:00:00,000 --> 00:00:00,000
+And we have one program that kind of orchestrates that.
+
+37
+00:00:00,000 --> 00:00:00,000
+And each of these different compilers or drivers have a series of programs that they work with.
+
+38
+00:00:00,000 --> 00:00:00,000
+And that series of programs we call a tool chain.
+
+39
+00:00:00,000 --> 00:00:00,000
+So Clang is one tool chain.
+
+40
+00:00:00,000 --> 00:00:00,000
+GCC is another tool chain.
+
+41
+00:00:00,000 --> 00:00:00,000
+Visual C++ is another tool chain.
+
+42
+00:00:00,000 --> 00:00:00,000
+And their driver programs are named similarly.
+
+43
+00:00:00,000 --> 00:00:00,000
+So Clang++ is the driver for the Clang tool chain, the one that's native to Mac OS.
+
+44
+00:00:00,000 --> 00:00:00,000
+C++ is the native driver for the GCC tool chain, the GNU compiler collection.
+
+45
+00:00:00,000 --> 00:00:00,000
+Cl is the driver for the Visual C++ compiler.
+
+46
+00:00:00,000 --> 00:00:00,000
+So what this driver does is it starts up these different programs.
+
+47
+00:00:00,000 --> 00:00:00,000
+The first program it starts is called the preprocessor.
+
+48
+00:00:00,000 --> 00:00:00,000
+What the preprocessor does is it reads through your source code and it replaces certain statements.
+
+49
+00:00:00,000 --> 00:00:00,000
+These are called preprocessor directives with the code that it intends to make a change to.
+
+50
+00:00:00,000 --> 00:00:00,000
+Mostly that's including header files in C++ and C and expanding macros.
+
+51
+00:00:00,000 --> 00:00:00,000
+Now when that's done, the preprocessed source code, what we call a translation unit,
+
+52
+00:00:00,000 --> 00:00:00,000
+can either be saved to disk, if you see in the picture over there,
+
+53
+00:00:00,000 --> 00:00:00,000
+those are usually saved in a file called a .i file or a .ii, standing for intermediate code,
+
+54
+00:00:00,000 --> 00:00:00,000
+or it can just be saved in memory, which is the normal case.
+
+55
+00:00:00,000 --> 00:00:00,000
+It's just stored in memory.
+
+56
+00:00:00,000 --> 00:00:00,000
+And then that output, the preprocessor output, is passed on to the next step,
+
+57
+00:00:00,000 --> 00:00:00,000
+which is called the compiler proper.
+
+58
+00:00:00,000 --> 00:00:00,000
+Again, most of us informally call Clang or GCC the compiler,
+
+59
+00:00:00,000 --> 00:00:00,000
+but again it's a driver that drives these different subprograms.
+
+60
+00:00:00,000 --> 00:00:00,000
+Now the compiler actually has two phases.
+
+61
+00:00:00,000 --> 00:00:00,000
+Sometimes it's called C1 and C2, and those are actually different programs.
+
+62
+00:00:00,000 --> 00:00:00,000
+The first part of the compiler is to parse the code, to make sense of your source code.
+
+63
+00:00:00,000 --> 00:00:00,000
+Is it formed correctly?
+
+64
+00:00:00,000 --> 00:00:00,000
+It finds syntax errors, like errors where you've made a typo, you forgot a comma,
+
+65
+00:00:00,000 --> 00:00:00,000
+you've made a mistake in the grammar.
+
+66
+00:00:00,000 --> 00:00:00,000
+It finds declaration errors, you've used names in your code
+
+67
+00:00:00,000 --> 00:00:00,000
+and you haven't told the compiler what they mean.
+
+68
+00:00:00,000 --> 00:00:00,000
+And it finds type errors.
+
+69
+00:00:00,000 --> 00:00:00,000
+You may perhaps write a code that's syntactically correct,
+
+70
+00:00:00,000 --> 00:00:00,000
+but you're trying to put the wrong kind of value in the wrong kind of variable.
+
+71
+00:00:00,000 --> 00:00:00,000
+All of those are discovered before we can actually generate any code.
+
+72
+00:00:00,000 --> 00:00:00,000
+This is the parsing phase, or phase one, of the compiler.
+
+73
+00:00:00,000 --> 00:00:00,000
+The second phase of the compiler is to take the output,
+
+74
+00:00:00,000 --> 00:00:00,000
+it's usually called a syntax tree or a parsing tree,
+
+75
+00:00:00,000 --> 00:00:00,000
+take the output of this first phase and pass it through a code generator.
+
+76
+00:00:00,000 --> 00:00:00,000
+And the code generator produces some kind of intermediate language.
+
+77
+00:00:00,000 --> 00:00:00,000
+On the tool chain we're going to be using, GCC, it produces assembly language.
+
+78
+00:00:00,000 --> 00:00:00,000
+On other tool chains, I believe Plang, it may produce some kind of intermediate code
+
+79
+00:00:00,000 --> 00:00:00,000
+that is closer perhaps to Java's byte code.
+
+80
+00:00:00,000 --> 00:00:00,000
+But it produces some kind of intermediate code,
+
+81
+00:00:00,000 --> 00:00:00,000
+not code that the computer can actually run.
+
+82
+00:00:00,000 --> 00:00:00,000
+And, again, if you look at the picture on the right,
+
+83
+00:00:00,000 --> 00:00:00,000
+you'll see that that code can be saved in a file,
+
+84
+00:00:00,000 --> 00:00:00,000
+a .asm file for assembly or a .s file, which is what GCC uses.
+
+85
+00:00:00,000 --> 00:00:00,000
+Now, once we've produced a human-readable form of the machine language
+
+86
+00:00:00,000 --> 00:00:00,000
+that the compiler understands,
+
+87
+00:00:00,000 --> 00:00:00,000
+we actually have to turn that into machine language.
+
+88
+00:00:00,000 --> 00:00:00,000
+And that's the assembly phase.
+
+89
+00:00:00,000 --> 00:00:00,000
+It uses something called the assembler.
+
+90
+00:00:00,000 --> 00:00:00,000
+And this produces an output that is pure binary code.
+
+91
+00:00:00,000 --> 00:00:00,000
+It is no longer human-readable.
+
+92
+00:00:00,000 --> 00:00:00,000
+It doesn't use the symbols that we use for reading and writing.
+
+93
+00:00:00,000 --> 00:00:00,000
+So the assembler takes this assembly language
+
+94
+00:00:00,000 --> 00:00:00,000
+and it produces native machine code.
+
+95
+00:00:00,000 --> 00:00:00,000
+And, again, depending on your tool chain,
+
+96
+00:00:00,000 --> 00:00:00,000
+if you're using Microsoft's CL tool chain, it will produce a .obj file.
+
+97
+00:00:00,000 --> 00:00:00,000
+For both Clang and G++, it produces a .o file.
+
+98
+00:00:00,000 --> 00:00:00,000
+Again, as the picture shows,
+
+99
+00:00:00,000 --> 00:00:00,000
+we can actually skip saving those intermediate files
+
+100
+00:00:00,000 --> 00:00:00,000
+and go directly from memory to memory again.
+
+101
+00:00:00,000 --> 00:00:00,000
+Now, the last part is something that you aren't familiar with in Java.
+
+102
+00:00:00,000 --> 00:00:00,000
+This is called linking.
+
+103
+00:00:00,000 --> 00:00:00,000
+So in Java, this happens when you run your program.
+
+104
+00:00:00,000 --> 00:00:00,000
+When you run your program, the linking happens at run time.
+
+105
+00:00:00,000 --> 00:00:00,000
+In C++, we do it before that.
+
+106
+00:00:00,000 --> 00:00:00,000
+We do it when we build our code.
+
+107
+00:00:00,000 --> 00:00:00,000
+And this whole process, the picture on the right,
+
+108
+00:00:00,000 --> 00:00:00,000
+is called building your executable,
+
+109
+00:00:00,000 --> 00:00:00,000
+turning your source code into an executable program.
+
+110
+00:00:00,000 --> 00:00:00,000
+Now, your object code can actually be understood by the CPU on your computer.
+
+111
+00:00:00,000 --> 00:00:00,000
+It is native object code.
+
+112
+00:00:00,000 --> 00:00:00,000
+However, to get it into memory, we have to load it.
+
+113
+00:00:00,000 --> 00:00:00,000
+And to load it, we're going to need some startup code to be combined with it.
+
+114
+00:00:00,000 --> 00:00:00,000
+So the linker combines that startup code with your object code
+
+115
+00:00:00,000 --> 00:00:00,000
+plus any kind of library features that you have used.
+
+116
+00:00:00,000 --> 00:00:00,000
+So it links those library features, those library functions,
+
+117
+00:00:00,000 --> 00:00:00,000
+those library classes, those library objects into your executable.
+
+118
+00:00:00,000 --> 00:00:00,000
+So it becomes part of your executable along with your object code.
+
+119
+00:00:00,000 --> 00:00:00,000
+As I mentioned, Java does the same thing,
+
+120
+00:00:00,000 --> 00:00:00,000
+but it does it when your program runs.
+
+121
+00:00:00,000 --> 00:00:00,000
+When you type in Java, it actually looks out on disk,
+
+122
+00:00:00,000 --> 00:00:00,000
+finds the library code, combines it in memory,
+
+123
+00:00:00,000 --> 00:00:00,000
+and produces the executable thing that runs.
+
+124
+00:00:00,000 --> 00:00:00,000
+Now, with the executable machine code,
+
+125
+00:00:00,000 --> 00:00:00,000
+you run it by running it on your computer.
+
+126
+00:00:00,000 --> 00:00:00,000
+Now, this is a little different than Java.
+
+127
+00:00:00,000 --> 00:00:00,000
+In Java, we run a hypervisor or a virtual machine, the program Java,
+
+128
+00:00:00,000 --> 00:00:00,000
+the Java virtual machine.
+
+129
+00:00:00,000 --> 00:00:00,000
+In C++, we do not.
+
+130
+00:00:00,000 --> 00:00:00,000
+The operating system actually loads your native machine code into memory,
+
+131
+00:00:00,000 --> 00:00:00,000
+and it's run by the CPU on your computer.
+
+132
+00:00:00,000 --> 00:00:00,000
+So that's the process.
+
+133
+00:00:00,000 --> 00:00:00,000
+Let's go ahead and look at each of those steps.
+
+134
+00:00:00,000 --> 00:00:00,000
+Now, in fact, as we go on in the semester,
+
+135
+00:00:00,000 --> 00:00:00,000
+we will kind of ignore each of these steps.
+
+136
+00:00:00,000 --> 00:00:00,000
+But it's important when you start out to realize that each of these things
+
+137
+00:00:00,000 --> 00:00:00,000
+is happening.
+
+138
+00:00:00,000 --> 00:00:00,000
+It will be important later when you write code,
+
+139
+00:00:00,000 --> 00:00:00,000
+because the compiler will give you error messages that give you a hint about
+
+140
+00:00:00,000 --> 00:00:00,000
+which part of the process failed.
+
+141
+00:00:00,000 --> 00:00:00,000
+Okay, so the simplest C++ program has one function named main.
+
+142
+00:00:00,000 --> 00:00:00,000
+Now, you're probably familiar with that with Java, public static void main.
+
+143
+00:00:00,000 --> 00:00:00,000
+It follows the same purpose.
+
+144
+00:00:00,000 --> 00:00:00,000
+So in Java, you have a function called main.
+
+145
+00:00:00,000 --> 00:00:00,000
+In C++, you have a function called main.
+
+146
+00:00:00,000 --> 00:00:00,000
+The syntax for the main function, again, is the entry point.
+
+147
+00:00:00,000 --> 00:00:00,000
+It's called by the startup code when you load your program.
+
+148
+00:00:00,000 --> 00:00:00,000
+That startup code was added by the linker, as we saw in the last slide,
+
+149
+00:00:00,000 --> 00:00:00,000
+to initialize the memory in your computer, set aside space,
+
+150
+00:00:00,000 --> 00:00:00,000
+set up the machine registers correctly,
+
+151
+00:00:00,000 --> 00:00:00,000
+and just then turn everything over to the CPU so it can start working.
+
+152
+00:00:00,000 --> 00:00:00,000
+Now, in your homework, you're going to find out that we are not going to have
+
+153
+00:00:00,000 --> 00:00:00,000
+a main function.
+
+154
+00:00:00,000 --> 00:00:00,000
+That's because I've put the main function inside a library,
+
+155
+00:00:00,000 --> 00:00:00,000
+and it's going to call a second function called run.
+
+156
+00:00:00,000 --> 00:00:00,000
+But I just don't want you to be confused when you start working your homework
+
+157
+00:00:00,000 --> 00:00:00,000
+and see that there is no main function.
+
+158
+00:00:00,000 --> 00:00:00,000
+There actually is a main function.
+
+159
+00:00:00,000 --> 00:00:00,000
+So let's create our main function here.
+
+160
+00:00:00,000 --> 00:00:00,000
+Let's look at the syntax for it.
+
+161
+00:00:00,000 --> 00:00:00,000
+So the first part is going to be these words main.
+
+162
+00:00:00,000 --> 00:00:00,000
+So that's probably simpler, you notice.
+
+163
+00:00:00,000 --> 00:00:00,000
+It doesn't say public static void.
+
+164
+00:00:00,000 --> 00:00:00,000
+It's just the main.
+
+165
+00:00:00,000 --> 00:00:00,000
+What this means is this tells us what the function returns.
+
+166
+00:00:00,000 --> 00:00:00,000
+That tells us the output.
+
+167
+00:00:00,000 --> 00:00:00,000
+So the kind of value produced by the function is the int.
+
+168
+00:00:00,000 --> 00:00:00,000
+The name of the function is main.
+
+169
+00:00:00,000 --> 00:00:00,000
+If we were to spell it with a capital M, it would still compile,
+
+170
+00:00:00,000 --> 00:00:00,000
+but the linker wouldn't find it when it tried to call it
+
+171
+00:00:00,000 --> 00:00:00,000
+because the linker is calling this main with lowercase.
+
+172
+00:00:00,000 --> 00:00:00,000
+So the functions are case sensitive.
+
+173
+00:00:00,000 --> 00:00:00,000
+Thirdly, if we passed any arguments, if we had any information we wanted to pass
+
+174
+00:00:00,000 --> 00:00:00,000
+in the main, we would pass any arguments inside this,
+
+175
+00:00:00,000 --> 00:00:00,000
+what's called a parameter list or argument list.
+
+176
+00:00:00,000 --> 00:00:00,000
+Here we don't have any, and so we don't need it.
+
+177
+00:00:00,000 --> 00:00:00,000
+The implementation, so this is called the interface of the function,
+
+178
+00:00:00,000 --> 00:00:00,000
+the part that tells the compiler what kinds of things go into the function,
+
+179
+00:00:00,000 --> 00:00:00,000
+what the name of the function is,
+
+180
+00:00:00,000 --> 00:00:00,000
+and what kind of things go out of the function.
+
+181
+00:00:00,000 --> 00:00:00,000
+The implementation is where the code is actually generated.
+
+182
+00:00:00,000 --> 00:00:00,000
+This is put between a set of braces, which mean the same thing they do in Java.
+
+183
+00:00:00,000 --> 00:00:00,000
+It means begin this section of code and end this section of code.
+
+184
+00:00:00,000 --> 00:00:00,000
+Another name for these set of braces is a block.
+
+185
+00:00:00,000 --> 00:00:00,000
+So a function body or the implementation is a block.
+
+186
+00:00:00,000 --> 00:00:00,000
+So let's look back at our code here.
+
+187
+00:00:00,000 --> 00:00:00,000
+And here is our block.
+
+188
+00:00:00,000 --> 00:00:00,000
+Let's look at how we would compile that.
+
+189
+00:00:00,000 --> 00:00:00,000
+I'm going to start just by compiling it with G++.
+
+190
+00:00:00,000 --> 00:00:00,000
+I'm going to say G++ hello.cpp.
+
+191
+00:00:00,000 --> 00:00:00,000
+If I don't get any errors, that means it worked correctly.
+
+192
+00:00:00,000 --> 00:00:00,000
+So this compiles and runs correctly.
+
+193
+00:00:00,000 --> 00:00:00,000
+In Unix, this is Unix here,
+
+194
+00:00:00,000 --> 00:00:00,000
+and in Unix we would run it by typing the name of the output program.
+
+195
+00:00:00,000 --> 00:00:00,000
+Remember what Dennis Ritchie wrote.
+
+196
+00:00:00,000 --> 00:00:00,000
+You have to figure out where your output went.
+
+197
+00:00:00,000 --> 00:00:00,000
+So where did my program go when I compiled it?
+
+198
+00:00:00,000 --> 00:00:00,000
+If we type in LS, which stands for list,
+
+199
+00:00:00,000 --> 00:00:00,000
+we can see we have two files here,
+
+200
+00:00:00,000 --> 00:00:00,000
+hello.cpp, the one I created,
+
+201
+00:00:00,000 --> 00:00:00,000
+and something called a.out.
+
+202
+00:00:00,000 --> 00:00:00,000
+That is an old name that stands for assembly output.
+
+203
+00:00:00,000 --> 00:00:00,000
+And so I can run that program by typing in ./a.out.
+
+204
+00:00:00,000 --> 00:00:00,000
+And of course I have no code inside there,
+
+205
+00:00:00,000 --> 00:00:00,000
+but in fact that program did something.
+
+206
+00:00:00,000 --> 00:00:00,000
+What it did was it printed out
+
+207
+00:00:00,000 --> 00:00:00,000
+or it returned to the operating system an integer.
+
+208
+00:00:00,000 --> 00:00:00,000
+And you might think, what integer?
+
+209
+00:00:00,000 --> 00:00:00,000
+Well, in fact, every function, like Java,
+
+210
+00:00:00,000 --> 00:00:00,000
+if it says it has to return a value,
+
+211
+00:00:00,000 --> 00:00:00,000
+it has to return a value.
+
+212
+00:00:00,000 --> 00:00:00,000
+The main function in C++ is a little special though,
+
+213
+00:00:00,000 --> 00:00:00,000
+because it will return a value if you don't return a value.
+
+214
+00:00:00,000 --> 00:00:00,000
+The default value it returns is this.
+
+215
+00:00:00,000 --> 00:00:00,000
+So this is implicitly written in every C++ program,
+
+216
+00:00:00,000 --> 00:00:00,000
+return zero.
+
+217
+00:00:00,000 --> 00:00:00,000
+And zero signifies to the operating system
+
+218
+00:00:00,000 --> 00:00:00,000
+that there was no problem.
+
+219
+00:00:00,000 --> 00:00:00,000
+Now we might be able to,
+
+220
+00:00:00,000 --> 00:00:00,000
+I'm going to see if I remember this,
+
+221
+00:00:00,000 --> 00:00:00,000
+because I don't seem with my video to have any way to pause this,
+
+222
+00:00:00,000 --> 00:00:00,000
+which is kind of unfortunate.
+
+223
+00:00:00,000 --> 00:00:00,000
+I'm going to see if I can echo.
+
+224
+00:00:00,000 --> 00:00:00,000
+Yes, that is echoing the return value
+
+225
+00:00:00,000 --> 00:00:00,000
+from the last program written.
+
+226
+00:00:00,000 --> 00:00:00,000
+And notice it returns zero.
+
+227
+00:00:00,000 --> 00:00:00,000
+So many times you'll see the return zero put in there explicitly.
+
+228
+00:00:00,000 --> 00:00:00,000
+You don't have to put that in.
+
+229
+00:00:00,000 --> 00:00:00,000
+So now let's see what we want to do to print out our "Hello, world!"
+
+230
+00:00:00,000 --> 00:00:00,000
+So if this was Python, we'd use a function called print.
+
+231
+00:00:00,000 --> 00:00:00,000
+And so I would write print, "Hello, print.
+
+232
+00:00:00,000 --> 00:00:00,000
+My name is print Inigo Montoyo,"
+
+233
+00:00:00,000 --> 00:00:00,000
+although I'd use my own name, of course.
+
+234
+00:00:00,000 --> 00:00:00,000
+This is built into the language.
+
+235
+00:00:00,000 --> 00:00:00,000
+You don't have to add anything special to do this into Python.
+
+236
+00:00:00,000 --> 00:00:00,000
+It's part of the Python language itself.
+
+237
+00:00:00,000 --> 00:00:00,000
+I can have multiple arguments.
+
+238
+00:00:00,000 --> 00:00:00,000
+I can say print, "Hello, space," or a comma, "My name is," and so forth.
+
+239
+00:00:00,000 --> 00:00:00,000
+And it would add a new line.
+
+240
+00:00:00,000 --> 00:00:00,000
+I wouldn't need to have a semicolon after it.
+
+241
+00:00:00,000 --> 00:00:00,000
+So in Python, it would look like this.
+
+242
+00:00:00,000 --> 00:00:00,000
+I could write print, "Hello, my name is," and so forth.
+
+243
+00:00:00,000 --> 00:00:00,000
+So I could put all of those things in there.
+
+244
+00:00:00,000 --> 00:00:00,000
+It would be built into the language, and I wouldn't need to put a semicolon in it.
+
+245
+00:00:00,000 --> 00:00:00,000
+Most of you are probably more familiar with Java, however.
+
+246
+00:00:00,000 --> 00:00:00,000
+And in Java, what we need to do is we use the system.out.print method.
+
+247
+00:00:00,000 --> 00:00:00,000
+And so that is not part of the language.
+
+248
+00:00:00,000 --> 00:00:00,000
+It's part of the standard library that comes with Java.
+
+249
+00:00:00,000 --> 00:00:00,000
+However, it's available to every Java program.
+
+250
+00:00:00,000 --> 00:00:00,000
+We say it's auto-loaded.
+
+251
+00:00:00,000 --> 00:00:00,000
+Java automatically loads part of the standard library whenever you run a program.
+
+252
+00:00:00,000 --> 00:00:00,000
+You can have a single argument.
+
+253
+00:00:00,000 --> 00:00:00,000
+So in Java, I would have to write that somewhat like this.
+
+254
+00:00:00,000 --> 00:00:00,000
+I'd have to write system.out.println, "Hello," system.out.println,
+
+255
+00:00:00,000 --> 00:00:00,000
+"My name is," and so forth.
+
+256
+00:00:00,000 --> 00:00:00,000
+Now you notice with Java, I've had to add a semicolon at the end.
+
+257
+00:00:00,000 --> 00:00:00,000
+And I've had to use println instead of print.
+
+258
+00:00:00,000 --> 00:00:00,000
+If I used the print method, I would have to manually add in a new line or use println.
+
+259
+00:00:00,000 --> 00:00:00,000
+For C++, we don't use a function.
+
+260
+00:00:00,000 --> 00:00:00,000
+We don't use a method.
+
+261
+00:00:00,000 --> 00:00:00,000
+Instead, we use an object and an operator, an insertion operator.
+
+262
+00:00:00,000 --> 00:00:00,000
+And so this, like Java, is not part of the language.
+
+263
+00:00:00,000 --> 00:00:00,000
+It's in the library.
+
+264
+00:00:00,000 --> 00:00:00,000
+Unlike Java, it's not auto-loaded.
+
+265
+00:00:00,000 --> 00:00:00,000
+Unlike Java, it's in something called a namespace.
+
+266
+00:00:00,000 --> 00:00:00,000
+So you can have multiple arguments.
+
+267
+00:00:00,000 --> 00:00:00,000
+You can have multiple operators.
+
+268
+00:00:00,000 --> 00:00:00,000
+But you do need a semicolon.
+
+269
+00:00:00,000 --> 00:00:00,000
+If you want a new line, you have to manually add a new line with the new line escape sequence or endl.
+
+270
+00:00:00,000 --> 00:00:00,000
+So this is how we do it in C++.
+
+271
+00:00:00,000 --> 00:00:00,000
+Again, that doesn't work for -- this doesn't work for -- we can't put Java inside here.
+
+272
+00:00:00,000 --> 00:00:00,000
+We're in C++.
+
+273
+00:00:00,000 --> 00:00:00,000
+So we'd say cl, "Hello."
+
+274
+00:00:00,000 --> 00:00:00,000
+We manually put in a new line.
+
+275
+00:00:00,000 --> 00:00:00,000
+"Cout my name is" -- or we could use the endl.
+
+276
+00:00:00,000 --> 00:00:00,000
+And notice I have multiple arguments.
+
+277
+00:00:00,000 --> 00:00:00,000
+And for each argument, I need an operator that sends my argument to the output object.
+
+278
+00:00:00,000 --> 00:00:00,000
+Now, this is called cout, not "cout."
+
+279
+00:00:00,000 --> 00:00:00,000
+And cout stands for "character output."
+
+280
+00:00:00,000 --> 00:00:00,000
+So we're going to send this out as characters.
+
+281
+00:00:00,000 --> 00:00:00,000
+I'm going to put "cout Steven Gilbert" instead of that.
+
+282
+00:00:00,000 --> 00:00:00,000
+You can put in your own name.
+
+283
+00:00:00,000 --> 00:00:00,000
+I can also put a new line in the middle of a sentence like that if I want, like I've done before.
+
+284
+00:00:00,000 --> 00:00:00,000
+And I don't need -- I can put in -- I can put this on multiple lines so you can have multiple arguments.
+
+285
+00:00:00,000 --> 00:00:00,000
+And that's the end of the sentence.
+
+286
+00:00:00,000 --> 00:00:00,000
+So notice this is one statement.
+
+287
+00:00:00,000 --> 00:00:00,000
+I have multiple arguments, multiple operators, and all of them are sending the output to cout.
+
+288
+00:00:00,000 --> 00:00:00,000
+This is one statement.
+
+289
+00:00:00,000 --> 00:00:00,000
+The statement ends with the semicolon.
+
+290
+00:00:00,000 --> 00:00:00,000
+And here is our C++ version of "Hello, world!"
+
+291
+00:00:00,000 --> 00:00:00,000
+Now, in Python, I said that it was a function called print.
+
+292
+00:00:00,000 --> 00:00:00,000
+So a function -- C++ has functions.
+
+293
+00:00:00,000 --> 00:00:00,000
+Function is a named piece of code that may take arguments and returns a value
+
+294
+00:00:00,000 --> 00:00:00,000
+or may carry out an action.
+
+295
+00:00:00,000 --> 00:00:00,000
+So square root is a function.
+
+296
+00:00:00,000 --> 00:00:00,000
+Notice that we pass arguments to it and we get back a value.
+
+297
+00:00:00,000 --> 00:00:00,000
+We pass arguments to it and we get back a value.
+
+298
+00:00:00,000 --> 00:00:00,000
+Now notice Python has functions.
+
+299
+00:00:00,000 --> 00:00:00,000
+C++ has functions.
+
+300
+00:00:00,000 --> 00:00:00,000
+Java does not really have functions.
+
+301
+00:00:00,000 --> 00:00:00,000
+Java instead has a method.
+
+302
+00:00:00,000 --> 00:00:00,000
+In C++ we call these member functions.
+
+303
+00:00:00,000 --> 00:00:00,000
+Now a function, like square root, is not associated with an object or a class.
+
+304
+00:00:00,000 --> 00:00:00,000
+A member function or a method is defined in a class,
+
+305
+00:00:00,000 --> 00:00:00,000
+and a member function takes an implicit or invisible reference to an object as its first argument.
+
+306
+00:00:00,000 --> 00:00:00,000
+So notice if we had a string named str in Java,
+
+307
+00:00:00,000 --> 00:00:00,000
+we'd call it by writing str.length.
+
+308
+00:00:00,000 --> 00:00:00,000
+We wouldn't call it by calling length and passing str to it.
+
+309
+00:00:00,000 --> 00:00:00,000
+That's because str is invisibly passed as a first argument here inside the function.
+
+310
+00:00:00,000 --> 00:00:00,000
+It's a parameter called this.
+
+311
+00:00:00,000 --> 00:00:00,000
+And so we use the same thing in C++.
+
+312
+00:00:00,000 --> 00:00:00,000
+If we have member functions, we call them by using this dot notation, str.length,
+
+313
+00:00:00,000 --> 00:00:00,000
+which means call length and pass str as the invisible first argument.
+
+314
+00:00:00,000 --> 00:00:00,000
+Finally we have operators.
+
+315
+00:00:00,000 --> 00:00:00,000
+Again, we have these in both Python and we have them in C++.
+
+316
+00:00:00,000 --> 00:00:00,000
+We do not have them in Java.
+
+317
+00:00:00,000 --> 00:00:00,000
+And an overloaded operator is simply a function that has a special name.
+
+318
+00:00:00,000 --> 00:00:00,000
+We call that function not by using function call notation or method call notation,
+
+319
+00:00:00,000 --> 00:00:00,000
+but operator infix notation.
+
+320
+00:00:00,000 --> 00:00:00,000
+So when I write cout, arrow, arrow, hello,
+
+321
+00:00:00,000 --> 00:00:00,000
+what I'm doing is I'm calling a function called operator output or operator arrow, arrow,
+
+322
+00:00:00,000 --> 00:00:00,000
+and I'm passing the left-hand side of this expression
+
+323
+00:00:00,000 --> 00:00:00,000
+and the right-hand side of that expression as two arguments.
+
+324
+00:00:00,000 --> 00:00:00,000
+So if you think of an infix expression, a plus b,
+
+325
+00:00:00,000 --> 00:00:00,000
+a is the left-hand side, b is the right-hand side, plus is the operator.
+
+326
+00:00:00,000 --> 00:00:00,000
+This is the left-hand side, cout.
+
+327
+00:00:00,000 --> 00:00:00,000
+This is the operator and this is the right-hand side.
+
+328
+00:00:00,000 --> 00:00:00,000
+And those are implemented in C++ by writing a special function called operator
+
+329
+00:00:00,000 --> 00:00:00,000
+with the name of the operator that's used.
+
+330
+00:00:00,000 --> 00:00:00,000
+Okay, so let's go on and look.
+
+331
+00:00:00,000 --> 00:00:00,000
+So let's compile our program again.
+
+332
+00:00:00,000 --> 00:00:00,000
+Now that I've done that, let me go ahead and do it again
+
+333
+00:00:00,000 --> 00:00:00,000
+and see if I can get this to print hello.
+
+334
+00:00:00,000 --> 00:00:00,000
+So I'm going to go g++ hello.cpp
+
+335
+00:00:00,000 --> 00:00:00,000
+and instead I get a whole bunch of errors.
+
+336
+00:00:00,000 --> 00:00:00,000
+Notice that it didn't work.
+
+337
+00:00:00,000 --> 00:00:00,000
+These are all syntax errors.
+
+338
+00:00:00,000 --> 00:00:00,000
+Notice it gave me some suggested alternatives.
+
+339
+00:00:00,000 --> 00:00:00,000
+Those usually are meaningless.
+
+340
+00:00:00,000 --> 00:00:00,000
+And so when you get errors like this,
+
+341
+00:00:00,000 --> 00:00:00,000
+what you want to do is you want to find the first error and fix that.
+
+342
+00:00:00,000 --> 00:00:00,000
+Cout was not declared in that scope.
+
+343
+00:00:00,000 --> 00:00:00,000
+So what does that mean?
+
+344
+00:00:00,000 --> 00:00:00,000
+What have I forgotten in my code here?
+
+345
+00:00:00,000 --> 00:00:00,000
+What have I done wrong?
+
+346
+00:00:00,000 --> 00:00:00,000
+So as I mentioned, input and output, the cout object, the endl object,
+
+347
+00:00:00,000 --> 00:00:00,000
+are not part of the language.
+
+348
+00:00:00,000 --> 00:00:00,000
+They are part of the standard C++ library.
+
+349
+00:00:00,000 --> 00:00:00,000
+Just like system.out is not part of the Java language.
+
+350
+00:00:00,000 --> 00:00:00,000
+It's part of the Java library.
+
+351
+00:00:00,000 --> 00:00:00,000
+However, in Java, when you run a program,
+
+352
+00:00:00,000 --> 00:00:00,000
+it automatically includes part of the library,
+
+353
+00:00:00,000 --> 00:00:00,000
+what's called the java.lang package,
+
+354
+00:00:00,000 --> 00:00:00,000
+and that includes string and system.out and so forth.
+
+355
+00:00:00,000 --> 00:00:00,000
+In C++, that's not true at all.
+
+356
+00:00:00,000 --> 00:00:00,000
+In C++, it's our job to make sure we include everything that we use.
+
+357
+00:00:00,000 --> 00:00:00,000
+So we use a library feature by including the header.
+
+358
+00:00:00,000 --> 00:00:00,000
+And so the header we want to include is named Iostream.
+
+359
+00:00:00,000 --> 00:00:00,000
+That will insert the declarations and the definitions from the standard
+
+360
+00:00:00,000 --> 00:00:00,000
+library Iostream header into our code.
+
+361
+00:00:00,000 --> 00:00:00,000
+We'll see in a few moments how that works.
+
+362
+00:00:00,000 --> 00:00:00,000
+Now, there are actually more than 70 of these headers in C++11,
+
+363
+00:00:00,000 --> 00:00:00,000
+and so you're going to need to learn some of them by heart.
+
+364
+00:00:00,000 --> 00:00:00,000
+Otherwise, you're going to look up by looking up the documentation.
+
+365
+00:00:00,000 --> 00:00:00,000
+So lines that start with a pound sign are not processed by the main compiler.
+
+366
+00:00:00,000 --> 00:00:00,000
+They are processed and removed by the preprocessor.
+
+367
+00:00:00,000 --> 00:00:00,000
+These are called preprocessor directives or preprocessor instructions.
+
+368
+00:00:00,000 --> 00:00:00,000
+So in this case, the include will be replaced with the actual text of the
+
+369
+00:00:00,000 --> 00:00:00,000
+header file.
+
+370
+00:00:00,000 --> 00:00:00,000
+Okay, now I'm not going to do this one right now.
+
+371
+00:00:00,000 --> 00:00:00,000
+We're going to come back and do that one in a moment.
+
+372
+00:00:00,000 --> 00:00:00,000
+Okay?
+
+373
+00:00:00,000 --> 00:00:00,000
+So I want to add in the include.
+
+374
+00:00:00,000 --> 00:00:00,000
+So I'm going to say include Iostream.
+
+375
+00:00:00,000 --> 00:00:00,000
+So the Iostream goes in brackets.
+
+376
+00:00:00,000 --> 00:00:00,000
+You notice how your editor will help you there
+
+377
+00:00:00,000 --> 00:00:00,000
+and show you the different code.
+
+378
+00:00:00,000 --> 00:00:00,000
+And we'll come down here with the terminal window.
+
+379
+00:00:00,000 --> 00:00:00,000
+If you type in control and L, you can clear the whole terminal window.
+
+380
+00:00:00,000 --> 00:00:00,000
+And so we're going to type in just -- oops, hit the wrong key again -- G++
+
+381
+00:00:00,000 --> 00:00:00,000
+hello.cpp.
+
+382
+00:00:00,000 --> 00:00:00,000
+Notice we get some errors that are similar but slightly different,
+
+383
+00:00:00,000 --> 00:00:00,000
+slightly different, right?
+
+384
+00:00:00,000 --> 00:00:00,000
+So, again, the first error, CL was not declared in this scope.
+
+385
+00:00:00,000 --> 00:00:00,000
+But notice the alternative here is slightly different.
+
+386
+00:00:00,000 --> 00:00:00,000
+It no longer says that we have -- thinks we should put in an enum.
+
+387
+00:00:00,000 --> 00:00:00,000
+It says, "Oh, you notice in Iostream.61.18, standard CL was declared there.
+
+388
+00:00:00,000 --> 00:00:00,000
+Did you mean to be using that standard CL?"
+
+389
+00:00:00,000 --> 00:00:00,000
+And, in fact, we do.
+
+390
+00:00:00,000 --> 00:00:00,000
+So that is the next step.
+
+391
+00:00:00,000 --> 00:00:00,000
+We need to look at -- hold on, I'm trying to get my thing over here.
+
+392
+00:00:00,000 --> 00:00:00,000
+I'm going to look at the preprocessed source code in a second.
+
+393
+00:00:00,000 --> 00:00:00,000
+So in C++, we have something that there's nothing similar to in Java
+
+394
+00:00:00,000 --> 00:00:00,000
+except the math class.
+
+395
+00:00:00,000 --> 00:00:00,000
+So a namespace is a group of related classes and functions.
+
+396
+00:00:00,000 --> 00:00:00,000
+And the math class in Java is very similar to that.
+
+397
+00:00:00,000 --> 00:00:00,000
+You know that scanner object in the Java util package?
+
+398
+00:00:00,000 --> 00:00:00,000
+What you do is you create a scanner.
+
+399
+00:00:00,000 --> 00:00:00,000
+Scanner in equals new scanner system in.
+
+400
+00:00:00,000 --> 00:00:00,000
+You use a class to create an object.
+
+401
+00:00:00,000 --> 00:00:00,000
+With things in the math class, you don't.
+
+402
+00:00:00,000 --> 00:00:00,000
+Matter of fact, it's impossible for you to create a math object.
+
+403
+00:00:00,000 --> 00:00:00,000
+Instead, the math class simply acts as a container to contain groups of functions,
+
+404
+00:00:00,000 --> 00:00:00,000
+static functions they're called in the math class,
+
+405
+00:00:00,000 --> 00:00:00,000
+like math.square root and math.pal.
+
+406
+00:00:00,000 --> 00:00:00,000
+So namespaces do the same job in C++.
+
+407
+00:00:00,000 --> 00:00:00,000
+A namespace groups together similar kinds of functions.
+
+408
+00:00:00,000 --> 00:00:00,000
+And all of the functions in the standard C++ library are in the namespace called std.
+
+409
+00:00:00,000 --> 00:00:00,000
+Now because std has bad meanings,
+
+410
+00:00:00,000 --> 00:00:00,000
+bad -- I can't think of the word I'm thinking of --
+
+411
+00:00:00,000 --> 00:00:00,000
+we generally pronounce it the standard namespace,
+
+412
+00:00:00,000 --> 00:00:00,000
+rather than spelling out the words.
+
+413
+00:00:00,000 --> 00:00:00,000
+So to use the namespace, we can do three things.
+
+414
+00:00:00,000 --> 00:00:00,000
+First, we can explicitly qualify each object.
+
+415
+00:00:00,000 --> 00:00:00,000
+Now you can do the same thing in Java.
+
+416
+00:00:00,000 --> 00:00:00,000
+In Java, instead of writing import Java.util scanner at the top of your program,
+
+417
+00:00:00,000 --> 00:00:00,000
+you can write Java.util scanner in equals new Java.util scanner.
+
+418
+00:00:00,000 --> 00:00:00,000
+And you never need to use the import statement.
+
+419
+00:00:00,000 --> 00:00:00,000
+In other words, you can explicitly qualify each of the names in the class.
+
+420
+00:00:00,000 --> 00:00:00,000
+And we can do the same thing.
+
+421
+00:00:00,000 --> 00:00:00,000
+We can explicitly qualify the name of the function.
+
+422
+00:00:00,000 --> 00:00:00,000
+Here I've done that with square root by saying,
+
+423
+00:00:00,000 --> 00:00:00,000
+I want to call the square root function that's in the standard namespace.
+
+424
+00:00:00,000 --> 00:00:00,000
+Now in Java, when we do that, we use a dot.
+
+425
+00:00:00,000 --> 00:00:00,000
+So Java.util dot scanner.
+
+426
+00:00:00,000 --> 00:00:00,000
+In C++, if we have the same classes, we'd write Java colon colon util colon colon scanner
+
+427
+00:00:00,000 --> 00:00:00,000
+to say that the scanner was in the util package, which is in the Java package.
+
+428
+00:00:00,000 --> 00:00:00,000
+So this is called the scope resolution operator, colon colon.
+
+429
+00:00:00,000 --> 00:00:00,000
+And it's used when we mean that something exists inside of something else.
+
+430
+00:00:00,000 --> 00:00:00,000
+So here we're saying the square root exists in the standard namespace.
+
+431
+00:00:00,000 --> 00:00:00,000
+Many C++ programmers like this style.
+
+432
+00:00:00,000 --> 00:00:00,000
+It's very, very common.
+
+433
+00:00:00,000 --> 00:00:00,000
+I know at UCI they do all of their C++ programming using this style.
+
+434
+00:00:00,000 --> 00:00:00,000
+I think it's a little wordy.
+
+435
+00:00:00,000 --> 00:00:00,000
+And so there are two options for that.
+
+436
+00:00:00,000 --> 00:00:00,000
+Just like you can write import Java util dot star or import Java util dot scanner,
+
+437
+00:00:00,000 --> 00:00:00,000
+we can do something similar by saying at the top, using standard square root.
+
+438
+00:00:00,000 --> 00:00:00,000
+When I do that, in my code, I only have to use the name square root.
+
+439
+00:00:00,000 --> 00:00:00,000
+Notice I haven't imported any other name from the standard namespace, just square root.
+
+440
+00:00:00,000 --> 00:00:00,000
+This is called a using declaration.
+
+441
+00:00:00,000 --> 00:00:00,000
+Similarly, I can import everything.
+
+442
+00:00:00,000 --> 00:00:00,000
+I can do the import Java util dot star, all the names inside there.
+
+443
+00:00:00,000 --> 00:00:00,000
+And so we can use a using directive using namespace standard.
+
+444
+00:00:00,000 --> 00:00:00,000
+Now, there are certain places where we cannot do this.
+
+445
+00:00:00,000 --> 00:00:00,000
+But for C++ single file implementation files, this is perfectly legal.
+
+446
+00:00:00,000 --> 00:00:00,000
+So I'm going to go back to my C++ program, and I'm going to add that statement in.
+
+447
+00:00:00,000 --> 00:00:00,000
+So using namespace standard.
+
+448
+00:00:00,000 --> 00:00:00,000
+I'm going to try once more. I'm going to go ahead and erase this code here.
+
+449
+00:00:00,000 --> 00:00:00,000
+And I'm going to do -- again, every time I clear that, G++ hello.cpp.
+
+450
+00:00:00,000 --> 00:00:00,000
+Now, the fact that I don't get any error messages here means that it compiled correctly.
+
+451
+00:00:00,000 --> 00:00:00,000
+I can run it. You remember our output is named a out.
+
+452
+00:00:00,000 --> 00:00:00,000
+And there you have my output, just like it appears on the screen.
+
+453
+00:00:00,000 --> 00:00:00,000
+Now, I want to look a little bit more at each of the steps that we just did.
+
+454
+00:00:00,000 --> 00:00:00,000
+I just typed in G++ hello.cpp.
+
+455
+00:00:00,000 --> 00:00:00,000
+And as it did that, it happily did all of the steps and didn't save anything to disk.
+
+456
+00:00:00,000 --> 00:00:00,000
+For our in-class exercise, what I want to do is I want to look at --
+
+457
+00:00:00,000 --> 00:00:00,000
+I'm going to go and open the in-class exercise, click the link for the starter form,
+
+458
+00:00:00,000 --> 00:00:00,000
+make a copy of the document in my own Google Drive.
+
+459
+00:00:00,000 --> 00:00:00,000
+Okay, I want to look at each of these steps in the hello program.
+
+460
+00:00:00,000 --> 00:00:00,000
+The first step I want to look at is the step for the intermediate code.
+
+461
+00:00:00,000 --> 00:00:00,000
+And so instead of just saying G++ hello.cpp,
+
+462
+00:00:00,000 --> 00:00:00,000
+what I'm going to do is I'm going to say G++ -e.
+
+463
+00:00:00,000 --> 00:00:00,000
+Now, this is called a flag. It's telling the driver, I only want to do part of this.
+
+464
+00:00:00,000 --> 00:00:00,000
+So I don't know why it's -e.
+
+465
+00:00:00,000 --> 00:00:00,000
+So I'm going to say hello.cpp.
+
+466
+00:00:00,000 --> 00:00:00,000
+And then I'm going to do a -o. I know that stands for output.
+
+467
+00:00:00,000 --> 00:00:00,000
+I'm going to say hello.ii.
+
+468
+00:00:00,000 --> 00:00:00,000
+So I'm going to save just one part of this.
+
+469
+00:00:00,000 --> 00:00:00,000
+I'm not going to run the compiler phase. I'm just going to run the preprocessor phase.
+
+470
+00:00:00,000 --> 00:00:00,000
+Then I'm going to go over here and look, and I'm going to see that I have a new file called hello.ii.
+
+471
+00:00:00,000 --> 00:00:00,000
+So I'm going to go ahead and open that.
+
+472
+00:00:00,000 --> 00:00:00,000
+And you'll see that this is the code that was actually inside the iostreams.header.
+
+473
+00:00:00,000 --> 00:00:00,000
+And you'll see, in fact, that it's about 30,000 lines long.
+
+474
+00:00:00,000 --> 00:00:00,000
+So I'm going to take a little screenshot of part of that.
+
+475
+00:00:00,000 --> 00:00:00,000
+And I'm on Windows, so I'm going to do that by holding down my Windows key, Shift and S.
+
+476
+00:00:00,000 --> 00:00:00,000
+And I'm just going to drag a little thing through that.
+
+477
+00:00:00,000 --> 00:00:00,000
+And then I'm going to go over to my document here.
+
+478
+00:00:00,000 --> 00:00:00,000
+And I'm going to paste a screenshot of the fact that I can look at the preprocessed source code.
+
+479
+00:00:00,000 --> 00:00:00,000
+I can look at the preprocessed source code.
+
+480
+00:00:00,000 --> 00:00:00,000
+That was the exercise we skipped earlier.
+
+481
+00:00:00,000 --> 00:00:00,000
+Now, I want to take that preprocessed source code.
+
+482
+00:00:00,000 --> 00:00:00,000
+So I'm going to type something slightly different than what I have here.
+
+483
+00:00:00,000 --> 00:00:00,000
+But notice I have another flag here. I have -S.
+
+484
+00:00:00,000 --> 00:00:00,000
+This is going to do the parsing and the code generation phase.
+
+485
+00:00:00,000 --> 00:00:00,000
+So let me bring my code over here.
+
+486
+00:00:00,000 --> 00:00:00,000
+So I'm going to go over here. Actually, I'm going to leave that one open.
+
+487
+00:00:00,000 --> 00:00:00,000
+I'm going to say g++ -S.
+
+488
+00:00:00,000 --> 00:00:00,000
+Here I'm not going to say hello.cpp. I'm just going to say hello.ii.
+
+489
+00:00:00,000 --> 00:00:00,000
+I'm actually going to take this as input, my intermediate code, and I'm going to produce another file.
+
+490
+00:00:00,000 --> 00:00:00,000
+Now watch the file tree on the left when I do that.
+
+491
+00:00:00,000 --> 00:00:00,000
+Notice that it produces another file here.
+
+492
+00:00:00,000 --> 00:00:00,000
+If you open that up, you'll notice that this code, again, is human readable.
+
+493
+00:00:00,000 --> 00:00:00,000
+We can actually look at the code and see what it says.
+
+494
+00:00:00,000 --> 00:00:00,000
+But this is code for the processor I'm working on, a 64-bit Windows processor.
+
+495
+00:00:00,000 --> 00:00:00,000
+So I'm going to take my next screenshot, again, Windows Shift-S.
+
+496
+00:00:00,000 --> 00:00:00,000
+If you're on the Mac, you'd use the Mac ones to do that.
+
+497
+00:00:00,000 --> 00:00:00,000
+I'm going to take a picture of some of the code there.
+
+498
+00:00:00,000 --> 00:00:00,000
+And I'm going to go over to my exercise document.
+
+499
+00:00:00,000 --> 00:00:00,000
+And I'm going to turn the translation unit into assembly and paste in a screenshot of that.
+
+500
+00:00:00,000 --> 00:00:00,000
+So we've just converted the preprocessed translation unit into assembly language.
+
+501
+00:00:00,000 --> 00:00:00,000
+Step three is I'm going to take that assembly language and convert it into machine code.
+
+502
+00:00:00,000 --> 00:00:00,000
+Again, my driver, G++, is going to run another program.
+
+503
+00:00:00,000 --> 00:00:00,000
+So I'm going to type in here G++-c.
+
+504
+00:00:00,000 --> 00:00:00,000
+Now, e and s were uppercase.
+
+505
+00:00:00,000 --> 00:00:00,000
+This c is lowercase.
+
+506
+00:00:00,000 --> 00:00:00,000
+I'm going to do hello.s because that's my input.
+
+507
+00:00:00,000 --> 00:00:00,000
+And it is going to, again, produce another piece of output over here, hello.o.
+
+508
+00:00:00,000 --> 00:00:00,000
+Try and clink that.
+
+509
+00:00:00,000 --> 00:00:00,000
+It says it's binary data.
+
+510
+00:00:00,000 --> 00:00:00,000
+It can't be displayed.
+
+511
+00:00:00,000 --> 00:00:00,000
+So this has all been human readable.
+
+512
+00:00:00,000 --> 00:00:00,000
+Now it's binary data.
+
+513
+00:00:00,000 --> 00:00:00,000
+So we have to run another program to show that binary data.
+
+514
+00:00:00,000 --> 00:00:00,000
+And so that program is called xxd.
+
+515
+00:00:00,000 --> 00:00:00,000
+And I'm going to say hello.o.
+
+516
+00:00:00,000 --> 00:00:00,000
+xxd stands for hex dump.
+
+517
+00:00:00,000 --> 00:00:00,000
+And this shows us in binary the version of our code.
+
+518
+00:00:00,000 --> 00:00:00,000
+So these are the instructions in binary.
+
+519
+00:00:00,000 --> 00:00:00,000
+Now, some of them you can recognize over here showing you the parts that are English and so forth.
+
+520
+00:00:00,000 --> 00:00:00,000
+And so I'm going to go ahead and shoot a screenshot of that.
+
+521
+00:00:00,000 --> 00:00:00,000
+Shift-s.
+
+522
+00:00:00,000 --> 00:00:00,000
+And I'm going to paste that where it wants the next one.
+
+523
+00:00:00,000 --> 00:00:00,000
+So this is my object code.
+
+524
+00:00:00,000 --> 00:00:00,000
+Now I want to take that object code.
+
+525
+00:00:00,000 --> 00:00:00,000
+Let me go back to the slides here.
+
+526
+00:00:00,000 --> 00:00:00,000
+So that converts our assembly language into object code.
+
+527
+00:00:00,000 --> 00:00:00,000
+And xxd hello.o lets us see the object code.
+
+528
+00:00:00,000 --> 00:00:00,000
+Now I want to link that object code with some startup code to produce an executable.
+
+529
+00:00:00,000 --> 00:00:00,000
+So this I'm going to say g++.
+
+530
+00:00:00,000 --> 00:00:00,000
+My input is going to be hello.o.
+
+531
+00:00:00,000 --> 00:00:00,000
+And my output is going to be the executable hello.
+
+532
+00:00:00,000 --> 00:00:00,000
+Now in Unix we generally don't name the executables exe.
+
+533
+00:00:00,000 --> 00:00:00,000
+And so I have the object file over here.
+
+534
+00:00:00,000 --> 00:00:00,000
+I'm going to clear this a little bit.
+
+535
+00:00:00,000 --> 00:00:00,000
+Control-L.
+
+536
+00:00:00,000 --> 00:00:00,000
+I'm going to click there so I don't get the weird screen thing showing up.
+
+537
+00:00:00,000 --> 00:00:00,000
+I'm going to say g++ hello.o.
+
+538
+00:00:00,000 --> 00:00:00,000
+That's my input.
+
+539
+00:00:00,000 --> 00:00:00,000
+And my output is going to be hello.
+
+540
+00:00:00,000 --> 00:00:00,000
+So notice this time I don't have any flag.
+
+541
+00:00:00,000 --> 00:00:00,000
+I'm just taking the object file as input producing output.
+
+542
+00:00:00,000 --> 00:00:00,000
+And you notice it produced a new file over there called hello.
+
+543
+00:00:00,000 --> 00:00:00,000
+Now that's the output of the linker.
+
+544
+00:00:00,000 --> 00:00:00,000
+That's executable code.
+
+545
+00:00:00,000 --> 00:00:00,000
+Again, in Unix we usually don't name files with an extension that are executable.
+
+546
+00:00:00,000 --> 00:00:00,000
+If we look inside the -- if we use the Unix shell and we looked inside the terminal,
+
+547
+00:00:00,000 --> 00:00:00,000
+we used ls, which is the instruction for displaying things.
+
+548
+00:00:00,000 --> 00:00:00,000
+Notice we have hello here in green with a star after it,
+
+549
+00:00:00,000 --> 00:00:00,000
+which means that that is executable.
+
+550
+00:00:00,000 --> 00:00:00,000
+How do we run the program in Unix?
+
+551
+00:00:00,000 --> 00:00:00,000
+We run the program in Unix by simply using its name.
+
+552
+00:00:00,000 --> 00:00:00,000
+We simply use its name.
+
+553
+00:00:00,000 --> 00:00:00,000
+So we could run this program by simply typing hello.
+
+554
+00:00:00,000 --> 00:00:00,000
+But in Windows that would work fine.
+
+555
+00:00:00,000 --> 00:00:00,000
+If we do that, it's going to say, "I'm sorry, hello isn't found."
+
+556
+00:00:00,000 --> 00:00:00,000
+So we have to type in ./, which means make the current directory part of the executable path.
+
+557
+00:00:00,000 --> 00:00:00,000
+And so hello.
+
+558
+00:00:00,000 --> 00:00:00,000
+So there's my program.
+
+559
+00:00:00,000 --> 00:00:00,000
+So when you see that ./, you're just saying run this program in the current working directory I'm inside.
+
+560
+00:00:00,000 --> 00:00:00,000
+That's all the ./ in front of it means.
+
+561
+00:00:00,000 --> 00:00:00,000
+So let me go back to my things.
+
+562
+00:00:00,000 --> 00:00:00,000
+So we turned it into object code.
+
+563
+00:00:00,000 --> 00:00:00,000
+So let's look at hello again, by the way, now that I've turned it into object code.
+
+564
+00:00:00,000 --> 00:00:00,000
+Let's look at xxd hello, not hello.o.
+
+565
+00:00:00,000 --> 00:00:00,000
+Notice it still looks like object code.
+
+566
+00:00:00,000 --> 00:00:00,000
+But if we looked at the front of it -- I'm going to go to the very front up here.
+
+567
+00:00:00,000 --> 00:00:00,000
+Well, actually, if you look through it, you would see a lot of additional stuff that wasn't in the original.
+
+568
+00:00:00,000 --> 00:00:00,000
+This additional stuff is the library code.
+
+569
+00:00:00,000 --> 00:00:00,000
+Notice this is from glibcxx3.4, libc2.25.
+
+570
+00:00:00,000 --> 00:00:00,000
+And so that's where it's getting the cout object from that.
+
+571
+00:00:00,000 --> 00:00:00,000
+So here's the cout object, which is linked into our code.
+
+572
+00:00:00,000 --> 00:00:00,000
+So I'm going to take that screenshot, control-F-S.
+
+573
+00:00:00,000 --> 00:00:00,000
+And I'm going to go in and put that inside there.
+
+574
+00:00:00,000 --> 00:00:00,000
+And again, we wouldn't have seen this in the object code, which is right here.
+
+575
+00:00:00,000 --> 00:00:00,000
+And I just ran my program.
+
+576
+00:00:00,000 --> 00:00:00,000
+I'm going to do it again so I can --
+
+577
+00:00:00,000 --> 00:00:00,000
+I'm going to shoot a screenshot of that.
+
+578
+00:00:00,000 --> 00:00:00,000
+And I'm going to go in and paste in my screenshot there.
+
+579
+00:00:00,000 --> 00:00:00,000
+And finally, I'm going to do one last screenshot here.
+
+580
+00:00:00,000 --> 00:00:00,000
+I'm going to take a picture of my source code.
+
+581
+00:00:00,000 --> 00:00:00,000
+Okay, again, Windows-Shift-S.
+
+582
+00:00:00,000 --> 00:00:00,000
+And I'm going to put that inside there.
+
+583
+00:00:00,000 --> 00:00:00,000
+Okay, so once you've got that copy, what you'll want to do is go to your exercise.
+
+584
+00:00:00,000 --> 00:00:00,000
+You will have clicked the start assignment.
+
+585
+00:00:00,000 --> 00:00:00,000
+On the start assignment, you will then go ahead and submit it by either uploading the file,
+
+586
+00:00:00,000 --> 00:00:00,000
+or in my case I saved it into Google Drive.
+
+587
+00:00:00,000 --> 00:00:00,000
+And I actually don't know if this works.
+
+588
+00:00:00,000 --> 00:00:00,000
+I haven't done it before, so I'm going to try it here.
+
+589
+00:00:00,000 --> 00:00:00,000
+I'm going to select the file.
+
+590
+00:00:00,000 --> 00:00:00,000
+And this looks like the one I've just done, doesn't it?
+
+591
+00:00:00,000 --> 00:00:00,000
+Today, I'm going to add that.
+
+592
+00:00:00,000 --> 00:00:00,000
+I'm going to attach that.
+
+593
+00:00:00,000 --> 00:00:00,000
+Okay, that actually looked like kind of a lot of work.
+
+594
+00:00:00,000 --> 00:00:00,000
+What you can do instead of that is you can do just file, download, download it as PDF or open document.
+
+595
+00:00:00,000 --> 00:00:00,000
+I usually do PDF.
+
+596
+00:00:00,000 --> 00:00:00,000
+Then open that.
+
+597
+00:00:00,000 --> 00:00:00,000
+I actually can't see where that is.
+
+598
+00:00:00,000 --> 00:00:00,000
+That's in my downloads folder over here.
+
+599
+00:00:00,000 --> 00:00:00,000
+Copy of LEC01.
+
+600
+00:00:00,000 --> 00:00:00,000
+You might want to change the name on it, put your name on it, and so forth.
+
+601
+00:00:00,000 --> 00:00:00,000
+And then you can go up here and you can just do file, upload, upload file, choose file.
+
+602
+00:00:00,000 --> 00:00:00,000
+Here's my copy of Lecture 1, open, and then submit the assignment.
+
+603
+00:00:00,000 --> 00:00:00,000
+So either one of those will work fine.
+
+604
+00:00:00,000 --> 00:00:00,000
+And I get the nice confetti that I have actually attempted it.
+
+605
+00:00:00,000 --> 00:00:00,000
+You can also do new attempt as much as you want.
+
+606
+00:00:00,000 --> 00:00:00,000
+Okay, so I want to talk a little bit about different kinds of errors before I finish up here.
+
+607
+00:00:00,000 --> 00:00:00,000
+So compiler errors are the ones that are discovered during the parsing phase.
+
+608
+00:00:00,000 --> 00:00:00,000
+So if you try and put the wrong value in a variable, you'll get a type error.
+
+609
+00:00:00,000 --> 00:00:00,000
+If you forget a semicolon, you forget a closing quote, you put the braces in the wrong place.
+
+610
+00:00:00,000 --> 00:00:00,000
+You'll get a syntax or a grammar error.
+
+611
+00:00:00,000 --> 00:00:00,000
+The one that's most difficult for students coming to C++ are declaration errors.
+
+612
+00:00:00,000 --> 00:00:00,000
+C++ doesn't know your name.
+
+613
+00:00:00,000 --> 00:00:00,000
+And so you saw that when I used perfectly legal code, but I forgot to include the I/O stream
+
+614
+00:00:00,000 --> 00:00:00,000
+or I forgot to include using namespace standard.
+
+615
+00:00:00,000 --> 00:00:00,000
+So these are called declaration errors.
+
+616
+00:00:00,000 --> 00:00:00,000
+And your code will not compile if you have any of these errors.
+
+617
+00:00:00,000 --> 00:00:00,000
+Now it's possible that you could have an error, but your code would compile,
+
+618
+00:00:00,000 --> 00:00:00,000
+but in fact it would not run.
+
+619
+00:00:00,000 --> 00:00:00,000
+So let me show you another program.
+
+620
+00:00:00,000 --> 00:00:00,000
+Well, I've still got my sandbox up over here.
+
+621
+00:00:00,000 --> 00:00:00,000
+I'm going to create another program called temp.cpp.
+
+622
+00:00:00,000 --> 00:00:00,000
+In here I'm going to put in all the stuff I need, include I/O stream, using namespace standard,
+
+623
+00:00:00,000 --> 00:00:00,000
+and main, notice I've capitalized main here.
+
+624
+00:00:00,000 --> 00:00:00,000
+Let's see, hello, and I'll return zero, or I could leave off the return zero.
+
+625
+00:00:00,000 --> 00:00:00,000
+So all of us realize that this should compile.
+
+626
+00:00:00,000 --> 00:00:00,000
+So I'm going to do control L, select here.
+
+627
+00:00:00,000 --> 00:00:00,000
+I'm going to do G++ dash C.
+
+628
+00:00:00,000 --> 00:00:00,000
+Dash C just means compile it.
+
+629
+00:00:00,000 --> 00:00:00,000
+So notice I don't get any syntax or compiler time errors at that point.
+
+630
+00:00:00,000 --> 00:00:00,000
+However, if I try and build this, now you can simply do make temp
+
+631
+00:00:00,000 --> 00:00:00,000
+and not have to go through all the steps we went through.
+
+632
+00:00:00,000 --> 00:00:00,000
+So notice I got this set of weird errors.
+
+633
+00:00:00,000 --> 00:00:00,000
+The bottom error here says linker error, command failed with exit code one.
+
+634
+00:00:00,000 --> 00:00:00,000
+So here is the part I'm going to explain what this means.
+
+635
+00:00:00,000 --> 00:00:00,000
+In function underscore start, undefined reference to main.
+
+636
+00:00:00,000 --> 00:00:00,000
+Well, what is function underscore start?
+
+637
+00:00:00,000 --> 00:00:00,000
+That is part of what the linker code added as startup code.
+
+638
+00:00:00,000 --> 00:00:00,000
+And so that is actually the first part of every executable,
+
+639
+00:00:00,000 --> 00:00:00,000
+and it calls the function named main.
+
+640
+00:00:00,000 --> 00:00:00,000
+So notice these errors that don't have any -- this one happily says it's a linker error.
+
+641
+00:00:00,000 --> 00:00:00,000
+Most of them will not say it's a linker error,
+
+642
+00:00:00,000 --> 00:00:00,000
+but they will be errors that look like this.
+
+643
+00:00:00,000 --> 00:00:00,000
+Frequently they will refer to LD or something like that.
+
+644
+00:00:00,000 --> 00:00:00,000
+This sandbox seems to use the Clang toolkit for doing the linking.
+
+645
+00:00:00,000 --> 00:00:00,000
+Ours will use the G++, which will say LD, and it won't say linker.
+
+646
+00:00:00,000 --> 00:00:00,000
+So these are linker errors, errors that don't happen at compile time.
+
+647
+00:00:00,000 --> 00:00:00,000
+You can't find the reference to refer to in the compiled files and so forth.
+
+648
+00:00:00,000 --> 00:00:00,000
+So missing main, trying to compile a program that requires separate files
+
+649
+00:00:00,000 --> 00:00:00,000
+and you didn't include one file, you have declared a function,
+
+650
+00:00:00,000 --> 00:00:00,000
+but you didn't define the function.
+
+651
+00:00:00,000 --> 00:00:00,000
+All of those are discovered during the linking phase.
+
+652
+00:00:00,000 --> 00:00:00,000
+Again, the only reason we're pointing this out here is because your compiler will
+
+653
+00:00:00,000 --> 00:00:00,000
+give you back different kinds of error messages,
+
+654
+00:00:00,000 --> 00:00:00,000
+and they will not exactly explain what happens.
+
+655
+00:00:00,000 --> 00:00:00,000
+The third type of error is called undefined behavior.
+
+656
+00:00:00,000 --> 00:00:00,000
+Java went to great lengths to eliminate undefined behavior,
+
+657
+00:00:00,000 --> 00:00:00,000
+although in Java you could still have a logic error.
+
+658
+00:00:00,000 --> 00:00:00,000
+You could have an error where your program produced the wrong output.
+
+659
+00:00:00,000 --> 00:00:00,000
+In C++ we can have something that runs, might produce the right output,
+
+660
+00:00:00,000 --> 00:00:00,000
+but it still has undefined error.
+
+661
+00:00:00,000 --> 00:00:00,000
+Undefined error is you're using a feature in the language that may work
+
+662
+00:00:00,000 --> 00:00:00,000
+occasionally but only runs accidentally.
+
+663
+00:00:00,000 --> 00:00:00,000
+So, for instance, using a name without a correct header.
+
+664
+00:00:00,000 --> 00:00:00,000
+It may work on compiler A, but it won't work on compiler B.
+
+665
+00:00:00,000 --> 00:00:00,000
+It is an error, even if your compiler will accept it.
+
+666
+00:00:00,000 --> 00:00:00,000
+It is still an error.
+
+667
+00:00:00,000 --> 00:00:00,000
+Okay, well that's it for Chapter 1.
+
+668
+00:00:00,000 --> 00:00:00,000
+I'll see you back next time for Chapter 2.
+

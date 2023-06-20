@@ -1,0 +1,416 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 23, where we're going to talk about dynamic memory and the heap.
+Now before we do that, we aren't quite finished with C-style strings.
+And to do that we're going to talk about command line arguments.
+So if you run a program, you all know how you pass arguments to a function.
+But how do you pass arguments to the function named main?
+Because main isn't called from another one of your functions.
+So if you want to pass arguments from outside your program to the main function when your program starts, you use a different version of main.
+And so these are always passed as an array of C-style strings, just like the count matches program we used in the last exercise.
+Now to collect them you can use one of these versions of main.
+Now this kind of should look a little familiar with you because it's kind of similar to what Java does.
+In Java you have public static void main string bracket bracket args.
+Well these two arguments are the string bracket bracket args part.
+Now argc, that first argument, is the number of strings on the command lines.
+You remember in Java, arrays have a length field.
+And so string bracket bracket args knows how many strings are in it.
+In C, they don't.
+And so we have to pass the number of strings on the command line.
+And that includes the executing program name.
+So argc will always contain at least the value 1 anytime you run a program.
+Because the name of the program, of course, is what you use to execute the program.
+Argv is an array of character pointers.
+Now again you might wonder why it's not a const char star.
+And that's because in C they didn't have const char stars.
+They just had char stars.
+And so this again has been inherited from C and it's something we use.
+Now you can use argc to check the number of arguments passed.
+So if argc is 1, then no argument was passed.
+And then you can print out some kind of error message.
+Typically this is called a usage message.
+You notice when I'm doing the usage message, I'm printing out the name of the program
+and then whatever arguments they should pass here.
+And I'm exiting from the program.
+So you can use argv sub 0 to get the name of the program
+and you can use c error to print out a usage kind of message.
+You can use exit or you can use return if no argument is passed.
+For instance, if you're running a program, it requires arguments.
+You don't want to go on and do anything else.
+You don't want to allow them to enter the answer.
+The argument needs to be passed on the command line.
+So if you want to process all arguments, you can use a loop.
+So here I'm printing out the name of the program
+and I'm going through all the rest of the items from 1 to argc
+and I'm printing out the argument names.
+Now argc counts the number of words on the command line
+but it doesn't count redirection parameters.
+So obviously here there's only one word on the command line.
+I'm running the program ex and argc is 1.
+Here I'm running the program ex and I'm passing arg1 and arg2, so argc is 3.
+Here I'm running the program ex and I'm passing arg1
+but I'm redirecting it to out.txt.
+So the redirection parameters, the little ampersand and the out.txt don't count.
+So this still is argc sub 2 instead of 1, 2, 3, 4.
+OK, let's go ahead and try it.
+So we're going to write a program called frp, file replace.
+We're going to do this really simply, it's not going to be very, very fancy.
+But the purpose of the program is to open a file and print it
+replacing every instance of a given word with another.
+Now when I say every instance, we're only going to count if it's found once on a line
+rather than multiple times.
+So the command line arguments are the name of the file to open,
+the word we want to search for,
+and the word to use as a replacement, which is optional.
+If they don't supply the word to use as a replacement,
+then we'll just skip or delete that word from the output printing.
+Now there are some error messages and a sample dialog in the handout
+and you're going to test your program by writing make tester.
+Because obviously we can't say make frp because that simply wouldn't work.
+Frp is a program where we're testing the main function.
+So let's go ahead over here and look at frp.
+So if there are less than two arguments supplied, we're going to print an error message.
+Two arguments open the input file for reading the file line by line,
+displaying the entire file on the console.
+With all arguments, the second argument removed.
+If we can't open the file, print an error message and exit.
+Three arguments open the end file for reading.
+Read the file line by line, displaying the entire file on the console.
+With all instances, the second argument replaced by the third.
+As you read the file line by line, use find to see if the desired string exists in the line
+and then use substring to display all but the character you're replacing, the word you're replacing.
+So here are some sample runs.
+So I said ./frp and it doesn't have its arguments.
+So it gives me the usage message.
+Frp, you're supposed to pass the file to open, the word defined,
+and then optionally what you want to replace it with.
+Okay, I'm going to try it again. ./frp data a1.txt
+Again, I have supplied at least the three arguments and so it gives me the usage message.
+Here I've said .frp data.ax.txt her.
+Well, this is okay for the command lines,
+but when it tries to open ax.txt it says it can't open the input file a.txt.
+The rest of them, here I'm trying to say, here's the original file a1.txt,
+here I'm saying ./frp data a1.txt her,
+and it's going to remove all the copies of her from inside here.
+Here I'm going to remove, place all copy of her with Alice's in the output.
+Now again, this is very simplistic.
+We're not doing very complex where her could appear in the word there, for instance.
+We're not checking to make sure that doesn't happen.
+We're also not checking to see if her appeared multiple times on the line
+and replacing all of them.
+That would be more complex processing.
+So let's go ahead and go into IC23,
+go into frp.cpp,
+and let's just write our code.
+The first thing, we need a different version of main, don't we?
+So we need to have int argc,
+and we need to have char star argv, bracket bracket.
+Second, we need to check argc.
+So if argc is less than 3,
+then we don't have the right number of command lines.
+And so we can do "sr usage".
+I'm just going to write, I'll use the argv sub 0.
+We're file to open.
+Second argument, we're defined.
+Our optional argument, replace with.
+Notice I'm printing this on CR.
+And I'm going to return a value here, since this is a main function.
+I'm going to return a value -1 in this case.
+Now, if I get down to line 12 here,
+I know that I have at least 3 words on the command line, or 2 arguments.
+And so I'm going to try and open the file name.
+So I'm going to say "if stream in",
+and I'm going to do "argv sub 1".
+"argv sub 0" is the name of the file, "argv sub 1" is the file name.
+Now I'm going to check if that worked.
+If "in" failed,
+"sr could not open argv sub 1".
+This time I'll return a different number,
+so someone running this program could tell from the numbers I return what the value is,
+or what the error was.
+OK, so now I've opened the file.
+I know that I have found,
+I've been able to open the file, I have at least the right number of command lines.
+And so I'm going to, and I often do,
+use the C++ string class to make the rest of this easier.
+So even though "argv" is all C-style strings,
+I can construct C++ strings.
+So I'm going to say "string word = argv sub 2".
+I'm going to say "string replace",
+of course that's going to be the empty string,
+and if "argc" is greater than 3,
+in other words if we have four words on the command line,
+then I'm going to say "replace = argv sub 3".
+OK, the fourth thing in the array.
+OK, now the rest of this is pretty straightforward.
+We're going to say "file",
+let's get a line here, "string line",
+"get line in line".
+Well we can read a line.
+First we want to find out if we can find the word inside there.
+So we'll say "autopause" or "sizeT" pause
+equals "line find word".
+Now if "pause" is not equal to "string in pause",
+probably remember this from the first couple of weeks,
+then we want to make "line" equals "line substring 0",
+"pause characters",
+plus whatever the replacement string is,
+plus "line substring",
+"pause" plus "word size",
+and that's the rest of it.
+Now as I mentioned, suppose the word appears multiple times,
+we're not checking that.
+Suppose the word appears inside another word,
+we're not checking that.
+Suppose if the word doesn't appear inside another word,
+what about the space before and after?
+Again, we're not checking that, we're assuming that the space is going to be OK.
+So, very rudimentary, just to show you how to use the command lines.
+And then we'll do "cout line endo".
+OK, so let's do a terminal here,
+and then let's do "make tester",
+and that didn't work.
+Let's do "make test".
+OK, I should have just done "make test" instead of "make tester".
+I'll change that on the slides, and I'll check on that later.
+Let me just change the slide right now.
+OK, so it checks the different command lines here to make sure they work,
+they all do, then it checks some different files to make sure it replaces
+one word with another word throughout there.
+And that works OK.
+Alright, let's go on.
+And go to our second topic today, which is the heap.
+Now, like Java and Pascal, C++ places variables on the heap using the new operator.
+So look at this little piece of Java code here.
+We create an int a and put 3 in it. That's put on the stack.
+We create a double b and put 5 in it. That's put on the stack.
+By the way, Java and C++ work the same way here.
+Then we create a scanner variable in. That's put on the stack.
+But we put a scanner object on the heap and point that variable to that scanner object
+by using the new operator.
+We do the same thing in C++.
+So variables are allocated on the heap by using the operator called new.
+The result that you get back from new is an address.
+And we will store that address in a pointer.
+So here's an example.
+So int *pi. pi is a pointer to int.
+And we initialize it with a new int with a value 3 inside it.
+Here, ia is a pointer to an int.
+And we initialize it with the address of the first element of a new array of 3 ints.
+So very, very similar to what you do in Java.
+Slightly different, but similar.
+The big difference is in Java, when you put something on the heap with new,
+Java will take care of returning that memory to the operating system so it can be reused.
+In C++, that is not the case.
+In C++, you are responsible for returning the memory to the system.
+And so you do that with the operator delete, which is paired with the operator new.
+If you use a plain new, like new int, then you use delete on the pointer.
+Delete p1.
+If you use the array version of new, new int bracket bracket,
+you use the array version of delete.
+So I'm going to show you an example of this.
+And I'm not sure how this is going to work with this recording.
+So I'm going to try this.
+I may have to get the page off of another.
+I want to continue.
+So it dropped it over on another page here.
+So I have a program here that creates an int a1.
+Where is that variable going to be created?
+It's going to be created on the stack, and it's going to be initialized with 1.
+Now I'm going to create a new variable on the heap and a pointer on the stack.
+So b is a pointer.
+This new variable, which is unnamed, is pointed to by b.
+And so this is what we end up with.
+So this is a new object on the heap.
+Now in this visualizer here, it shows this as an array,
+but it's a single variable on the heap.
+Now I'm going to create a new array of 5 integers.
+I'm going to initialize the first 3.
+So notice I'm using new bracket bracket here, not just plain new.
+And so here I have my 5 elements on the heap.
+And finally I'm going to create an array of 3 variables on the stack.
+So int d bracket bracket equals 4, 5, and 6.
+And so you can see these are created on the heap.
+So this is what this looks like in memory.
+Now when I delete c, you remember c used the array version of new,
+and so I need to use the array version of delete.
+When I delete c, the memory on the heap is returned to the operating system.
+The pointer c is not changed, but it's no longer valid.
+That's why these visualizer people decided to use a poop emoji
+to show you that that pointer is no longer useful.
+The same thing with b. When I delete the pointer b,
+it doesn't really change the pointer, it makes it invalid,
+but it's just the same address, it's not really touched.
+But the thing that was on the heap goes away.
+And so that's what this new and delete works like.
+So let's introduce some dynamic variables and do an actual exercise.
+So we're going to request some memory on the heap.
+We're going to allocate memory on the heap with the new operator.
+So let me show you the different ways that we can use the new operator.
+We can say new and get an uninitialized variable.
+So new int will give me an int on the heap,
+p1 will point to it, but that int could have any value at all.
+If we say new int with braces around it,
+this is only available since C++11,
+we would get an int that was initialized to zero.
+If we say new int 3, here we can use either the braces or the parentheses,
+this will be directly initialized, one single integer.
+If we do new int square brackets, that's array new,
+that will give us an uninitialized array.
+If we use the braces around it, again only available since C++11,
+that will give us three integers that have the value zero.
+If we initialize it afterwards, we will get the 1, 2, 3, that will be initialized.
+If we did this with an object, like an employee,
+we would just do new employee and then initialize the employee like that.
+So let's go ahead to our exercise over here.
+Let's close firp and close that terminal.
+Let's go to B.
+Here are some automatic or stack based variables.
+An int, a double, a float, a char, a string, an array, an employee.
+Notice we print them just by using the name of the variable.
+We're going to create dynamic variables for each of these.
+Those dynamic variables are going to be unnamed,
+and they're going to be pointed to by a pointer.
+So I'm going to have int pointer ip for an int pointer equals new int.
+I'll initialize, what was my int up there initialized to?
+It was initialized to 3.
+I'll initialize mine to 4 for this new one.
+So then we have a double.
+So int star dp equals new double.
+That was 2.5.
+I'll do this 3.5.
+Int, that's a double.
+A double pointer dp.
+This is a float pointer.
+Fp equals new float.
+That was 2.5f.
+I'll make this 3.5f.
+I'll make that 4.5f.
+And then a char pointer.
+So char pointer cp equals new char.
+Again, we can use braces or parentheses.
+And we want the character s.
+We want a string pointer.
+New string.
+That's my last name there.
+I used the first name in this one up here.
+We'll use an array.
+Int star ia instead of ip equals new int.
+This time we have to put in a value.
+So I'll put 3.
+And I'll put 4, 5, and 6.
+Now unlike regular arrays, when you initialize a new array on the heap,
+you have to supply a value here.
+So if we were to do this, which would be perfectly legal for --
+if we left off the --
+that would be perfectly legal, right?
+But for a new array,
+you have to put the size in there.
+And finally we had an employee, right?
+So employee pointer ep equals new employee.
+And we'll do a bill.
+And we'll give him a slightly higher salary, $24,000.
+Okay, so this creates the dynamic variables.
+Now we want to go ahead and print those dynamic variables.
+So let's look at how we would print each of those.
+So what I'm going to do is I'm going to take this here.
+I'm going to copy it right down here.
+Star ip.
+Star ip.
+Star dp.
+Star dp.
+Star fp.
+Star fp.
+Star cp.
+Star cp.
+Star sp.
+Star sp.
+So ia.
+And remember with pointers, we can use the subscript just like with an array.
+So I can say ia sub zero.
+Ia sub i.
+And finally the last one is an employee.
+This one's a little bit different because I don't have an employee.
+I have an employee pointer.
+And so we'd have to say ep not dot name but arrow name.
+And ep not dot salary but ep arrow salary.
+Okay, so let's open a shell on that.
+And let's do make test.
+Let's just do make run.
+Okay.
+Okay, so I got an error.
+Let's see how we created the employee up here originally.
+Okay, so we created the employee like that.
+So let's put the braces because it's a structure.
+It doesn't have a constructor, which we'll learn about a little bit later.
+And let's try that again.
+Make run.
+Okay, so an int is three.
+IP is four, 350, 450.
+CP is S.
+SP is Gilbert.
+An array is 456.
+And ep is Bill.
+And that looks like it works perfectly fine.
+But there's a slight, slight problem.
+There is a slight, slight problem.
+So let's look at that problem.
+We didn't have any errors.
+Is everything okay?
+No.
+Unlike Java or unlike C#, we are responsible for returning any memory to the operating system.
+The memory that's allocated on the heap is not automatically collected and reused.
+And so we have additional programs.
+One is called Valgrind in Java.
+Windows has its own program that does this.
+There's no universal way to do it.
+I've also used some Google memory checkers to check that.
+And I've put those in the make file.
+So if we do make grind, you'll see that it runs a memory detector on it.
+And at the end, it tells us, it runs the program up here, right, just like it normally would.
+But at the end, it tells us, oh, we lost some memory.
+And it's kind of telling us where it was lost on line 44, line 41, line 43, and line 42 and so forth.
+And line 46.
+And each of those, we allocated some memory, but we didn't free the memory.
+Now, that's one way.
+That's actually running our program by running a separate program called Valgrind.
+If you look at the make file here, you can see that it runs Valgrind and then just runs the executable after the executable is built.
+If we do make check, what it does is recompiles our code with a special kind of code inside it.
+And then checks it that way.
+So let's go ahead and do make check.
+And it just depends which one you want to use.
+So make check.
+And let me close that over to that way.
+And so basically we get the same information.
+We don't get the startup thing at the bottom of it, but it tells us at the bottom where our code is leaking.
+And it tells us here, you look for your piece of code, dynamic CPP line 47, 46.
+So both of those will give us the same piece of information.
+They do it in a slightly different way.
+If you use Valgrind, you don't have to put any special code inside your program to do it.
+It works automatically on code that has already been compiled.
+If you use the checker, it automatically has to recompile your code and add this extra checking code inside your code.
+So how do we fix this?
+How do we fix this problem so that it works correctly?
+What we do is we use delete or delete to return the memory.
+You delete the pointer to free the heap object.
+Just like the visualization I just showed you.
+So let's go back to our code.
+Let's bring this down here.
+So I have delete IP, delete DP, delete FP, delete SP, delete CP, delete IP.
+No, EP.
+And finally, bracket bracket, IA.
+So you have to check and fix the run time errors for each one.
+So once we've done that, you can do either make grind or make check.
+So make check.
+If we got all of them, we won't have any errors at the end of it.
+Make grind would do the same thing.
+Now what if we use the wrong version of delete for this?
+What if I for instance said delete IP or delete IA there without the brackets?
+Let's see what happens when we do make check.
+So notice that creates an error.
+So we're using operator new versus operator delete with the brackets.
+That's an error.
+And this actually aborts because it would create more errors.
+Because we're actually trying to allocate.
+We're trying to deallocate memory that's on the stack, which is not legal.
+And so you have to be careful to make sure that you use the correct version of new with the correct version of delete.
+Let's do it one last time.
+And no errors on that at all.

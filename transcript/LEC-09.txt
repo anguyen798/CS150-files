@@ -1,0 +1,296 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 9. We're going to continue talking about
+functions and function libraries and we're going to concentrate on data flow today. In your reading
+you'll also read about two control structures, the switch statement, the conditional operator,
+and the do while loop that we didn't cover earlier. But I won't cover those in this lecture.
+So we're going to start with a little review on separate compilation and testing. So make sure
+that you have gone to week 3. In week 3 on Tuesday click the lecture exercise, click the link for the
+starter form, and in the starter form this is what we're going to do. We're going to recapitulate the
+material from the textbook section covering libraries and testing. So we're going to create
+a library named exlib that has two functions min and max in the namespace ex. So it'll be in the
+namespace ex which will return the appropriate value from three input parameters of type double.
+So we're going to place our code in the folder exlib. This is in IC9 exlib already. We're going
+to open the client file named cpp, client cpp, and the run test function. We're going to add a
+begin function test and an end function blocks for max and one for min. We're going to create a
+file wide epsilon concept constant and then we're going to write three different assert double equals
+tests for each function. And then we're going to type make client. It should fail to compile because
+we've only tested our functions. We haven't yet declared or defined them. Then we're going to
+shoot a screenshot of the error messages we get. So remember the client program is the program that
+tests your program. So go ahead and add your student ID here. I'm going to close that down
+there. And this is a skeleton for our testing framework. So we're going to write a function
+test for max and we're going to write a function test for min. So notice I copied the begin function
+test and the end function test. So we are going to write functions that test a double and so we're
+going to need a file wide constant here. Actually it doesn't need to be file wide. We can just well
+let's make it file wide like it says. So const double k epsilon equals 1.0 e to the minus 14.
+I'm trying to use the Google constant style now instead of the capitalized. Okay so this one
+min and max are going to take three arguments. We're going to return the smaller or the larger
+or the smaller and max we're going to turn the larger. So we're going to use this version of
+assert double equals. So let's call our function here. So it's going to be in the namespace EX
+and we're going to call max and we want the max from 1.1 1.01 and 1.011. Okay so they're very
+close together. Our tolerance value here is going to be k epsilon and what we expect to get out of
+that the largest of those is 1.011. I'm going to write three tests because I want to make sure
+that the code is actually doing what it says. And so what I'm going to do is notice this is
+the last place in this this is in the last place. In the second one I'm going to move it into the
+second place and in the third one I'm going to move it into the first place. So 1.011 1.1 and
+1.011. I'll make that 0.1 and I'll move 1.1 down here. Yeah and so this kind of makes sure since
+we have three input parameters we have three tests to make sure it can identify what the
+largest one is. For a second function we're going to run the same tests. I'm just going to copy that
+down there. But instead of the max function I'm going to call min. And instead of 1.01 oh actually
+that's not the maximum here the maximum of each of these is 1.1 right. And let's move that 1.1 over
+here. So there it's in the first there it's the last and we'll do 1.011. Okay so we have it the
+first second and third we got back 1.1 that is the maximum. Here the smallest one is 1.01 and
+1.01 is in the middle there at the end there. Let's move it to the front here. So again we're
+checking three different positions to get 1.01. Okay so that's just how testing works. You write
+a function you call your function you you write an assert equals method after you put in this boiler
+plate in the assert equals method you get the actual value by calling the function you're trying
+to test. Then you put in the expected value here and when this runs it will call your function it
+will compare these and it'll give you a plus sign or a negative sign. It didn't pass and tell you
+why it didn't pass. So let's go ahead let's open a terminal on EXLIB here open a new integrated
+terminal. Yeah let's make that a little bigger so we can see it and let's do make client. Okay so
+notice we got a whole bunch of errors EX has not been declared and so this is the picture we'll
+take for our first one that says EX has not been declared. So again notice we have tested our
+functions which is what you'll normally do first but we haven't even yet declared them or defined
+them. Okay so now we're going to test them we're going to create a header file extreme.h it'll
+contain the prototypes for our two functions you need to remember to add the header guards the
+namespace and document each of the functions using the javadoc documentation. Then include the file
+in the appropriate place in client.cpp and make client again. Our program should now compile but
+not link and when it does we'll paste a picture of that error message. So again the error message
+you're going to have in your first picture is going to be like this. Let me just shoot a picture
+I'm going to use the Windows Windows shift s and so that picture is going to look something like
+this. And now we're going to do the second part. So let me do that let me create the new file so
+I'll just right-click here on EXLIB new file and I'll call this file extreme.h and in extreme.h
+I'm going to start with the header guards if endef extreme.h defined extreme.h endif I'm
+going to put the file header at the top at file extreme.h at author and at version or at date
+and close that. So there's my file comment here are my two functions but first I need a namespace
+so namespace EX. Inside my namespace I need my two functions so double min double a double b
+double c and double max double a double b double c my documentation comment for that
+slash slash finds smallest of a b and c or of three doubles at param a at param b second number
+and at param c and at return the smallest of a b and c. Put a T on the end of that one and finally
+backspace and end that. Okay I can comment I can just copy this because the comments going to be
+almost the same for the second one. This is just going to be the largest of course.
+And we have one more comment to do.
+Okay we need to comment the namespace as well. Okay so here's our source code for the prototype
+and we should now be able to do again exactly the same line make client. Oh what did I forget?
+I forgot to come over here and my client still doesn't know about that so I need to include
+Xtreme.h. Now I've written my function tests for this so now let's try it we should get a
+different set of errors. Make client. Notice that looks entirely different so when I have
+make client this is an entirely different kind of error. Again for my picture I'm gonna take
+something like that. Undefined references. So we've declared them now we can come over
+here and paste our second picture in there. So now we're going to create an implementation file.
+We have used the functions. We have by calling the functions in our client we have declared
+the functions and we can see that that compiles but does not yet link. Now we're going to create
+an implementation file Xtreme.cpp containing the implementation of the two files. We have
+to include the header file and any other library functions such as string or C math. Then we're
+going to create a make file and we should now be able to build and test our program with make test.
+So let's add our third file here. New file and this new file is going to be Xtreme.cpp.
+And we're going to include Xtreme.h. I'm going to assume I don't need any functions in here so I'm
+not going to use the using namespace or anything. And so I'm going to go to Xtreme.h. I'm going to
+get my whole namespace. I'm going to copy it over into Xtreme.cpp. I'm going to get rid of
+these documentation comments. We don't need them inside the implementation. I'm going to put on a
+return zero. I'm going to stub them out by removing the semicolon, giving it a body and
+returning just a dummy value. Now I'm going to add one more file, the make files. So again right click
+new file, make file. In the make file I'm going to create a variable for the exe and I'm going to
+call that test Xtreme. I'm going to create a variable for the object files. So I need client.o
+and really what I'm doing down here is looking for the cpp files. Client.o CS150 check.o Xtreme.o
+and that looks like all the cpp files. Now I'm going to do my rule so the object file depends
+on the executable. That's what I'm trying to build. The executable depends on the object files
+and our rule for building that is to use the C++ compiler. Think of those xx's as pluses on their
+sides. Pass in the options called the CXX flags. Pass in the input which is the object file and
+let's make these, let's put an S on the end of this and put an S there. OBJS, OBJS, OBJS. I'm
+not quite sure. Oh because I didn't put the dollar sign in the right place. Syntax highlighting
+helps quite a bit right? And then -0 and I'm going to build the executable. Okay I'm also
+going to make a make test. So this is a pseudo target. So test relies on the executable being
+built. That's the target is the test and the dependency is the executable and for that I'm
+going to do ./, select the current directory, run the executable and because we're using the
+testing framework -t will run the tests when we do it. So let's try that. Let's clear this off.
+So make should work with no errors. It should just come back. It should build all of those
+object files and the executable. Make test should run our tests. All of our tests should pass because
+we're passing in zero as the return. We just stubbed out the answer but all of our tests run
+correctly. So let's do the last part. The last part is just figuring out which are the smallest
+of A, B and C. So if A is less than B and A is less than C we're going to return A. If B is less
+than A and B is less than C we're going to return B and if none of those are true we're going to
+return A. Now I probably should do it the way I've been showing you do it. So double result
+equals A else else if result equals B else
+else and this of course should be C return result. Now if these are all the same it will
+return the farthest one and return C in this case. Let's put the same thing down here for the minimum
+or maximum that was minimum. So if A is greater than B and A is greater than C and B is greater
+than A B is greater than C. Okay so there's our implementation. Let's test it out. Let's open up
+the thing here. Let me move that over so that the tests actually appear better and let's clear that
+with ctrl L and let's do make test. Okay and so all of those correctly give us the value. Can we be
+sure that they are working correctly? Yes because we figured out manually what the answer should be
+and put it into the testing function the assert function the assert equals function. Okay so let's
+look at what we've done here. So we created the client we wrote three assert equals tests for both
+min and max. We built it and we did a screenshot with the error message. Then we created the header
+file. We added the header guards to the header file. We added the documentation and then we did
+make client again and we got a different error message than we got up here. So what here the
+min and max were undeclared undeclared. Here min and max were declared so we didn't get a compiler
+error but they were undefined because we hadn't implemented them. So then we implemented them. We
+walked through those six steps that I told you to memorize and wrote the stubs. The test ran but
+didn't give us the correct answer and then we went back in and did the implementation. And so the
+tests worked and you can go ahead and shoot your final screenshots there. I'm not going to do it
+on this thing but they want a screenshot of your source code for extreme.h, a screenshot for the
+source code for extreme.cp, for client.cp, do make test to get a screenshot of running client,
+a screenshot of your make file and let's do the generated documentation. I will do that for you.
+Okay so remember what we need to do for Doxygen is we need to do a Doxygen doxy file. Okay we're
+going to get an error. Okay so Doxygen is already installed on mine. If it is not, if you get Doxygen
+does not exist or it's not a file or something like that, do apt sudo apt-get install Doxygen.
+Next do, see I've already installed, I've already got it installed here. Next do Doxygen - g. That
+will create a doxy file. Now I'm just going to go ahead and do this without changing any of the
+changes and that's just Doxygen doxy file. It generates all of the files. It tells me there's
+some problems down here and those are things we wanted to fix before. Then I'm going to come over
+here and notice I have this HTML folder. I'm going to right-click on the HTML folder, open in an
+integrated terminal. Okay I'm going to say HTTP - server and I'm going to serve those pages up so
+we can look at them in a web browser. Now it'll give us back the URL so you can do ctrl-click to
+open that URL in your web browser and then just find the index.html and open it. Now on the index
+you notice we have one namespace ex and click that namespace ex and you'll see the documentation,
+the generated documentation for those two functions that we added as javadoc comments.
+Okay when you're done don't just leave that server running use ctrl-c to close the server.
+Use ctrl-c to close the server. All right let's go on to this week and let's talk about function
+signatures. Now in languages like C function names must be unique. That means you ended up
+inventing new names to do the same work as another function if you had different kinds of arguments.
+So in the C standard library there's the function abs which works for integers, there's fabs which
+works for floating point numbers, and there's elabs which works for longs. In C++ standard
+library we use the same name for all of those functions for those three different functions.
+So how can we do that in C++? Well in C++ two functions can have the same name if the number
+of arguments they require differs or the type or order of their arguments differ. So this combination
+of the method name, the parameter types, number, and order is called the function signature. And
+it acts like DNA to uniquely identify a particular function under the hood to the linker to the
+compiler. Now an overloaded function is a function that has the same name but a different signature
+and of course a different implementation or a different body. So here are four functions all
+named f. So one takes an int, one takes an int and a double, one takes a double and an int. So notice
+these both take the same kind of arguments but in different order. And one takes three arguments
+double, double, double. If we looked inside the object code we'd see those functions have a
+different name. This is called a mangled name. And so the name for the double, double, double is
+underscore capital Z 1 F DDD. Right? So F plus three doubles. Here's F plus double and an int.
+Here's F and an int and a double. And here's F with only a single int. A single int. So this
+mangle name is used internally by the compiler and linker to uniquely identify a particular
+function. And that's how overloading works physically and why it was allowed in C++. In C
+function names are not mangled internally. Now when you call a function the compiler has to
+know which function you're trying to call. It has to have some way of telling exactly which
+function you mean. And this is called overloading resolution. So you resolve overloaded functions
+first by looking at all of the functions with the same name. These are called the candidate set.
+So in our four examples previously we would pick up all of the F's. Secondly we go through the
+candidates and we see how many have the correct number of convertible arguments. So in the
+previous one if I called F 1 comma 2 it would look through, it would throw out the first one which
+only took an int and the third fourth one which took three ints and it would leave a viable set
+of only two functions. The one that takes int and double and the one that takes double followed by
+int. Then it would look for an exact type match. Well in this case I don't have any exact type
+matches. I'm calling it with two ints but I have a function that takes an int and a double and I
+have a function that takes a double and an int. So I don't get that test at all. I skip it entirely.
+Now I look to see if there are any partial matches. Well the int and double matches one
+argument, the first argument, but the double and int also matches one argument. So I have two that
+match partially. Then if I don't have any partial matches but I can do conversions, I have the
+correct number of arguments and they're convertible, I try that. Well again I have int double and
+double int. Both of those work and if none of them, if I am not down to one specific function
+at this point, I have what's called ambiguity. There is more than one viable conversion.
+So let's look at a couple of questions. Consider this function call. Which of these function
+overloaded functions will be invoked? So I'm calling g one two. Now notice I'm not using the
+return type but even if I was that return type is not used as part of the resolution. However if I
+was assigning it to something then that expression would look at the return type and so b and d
+would not work in that case. In this case however my candidate set is a b c d and e or a b c and d.
+All of them have the same name. They're all in the candidate set. Second, find out the ones with the
+correct number of convertible arguments. Well this takes two, this takes two, this takes two, this
+takes two. They're all convertible so my viable set is the same as my candidate set. A, B, C, and D
+are all in the viable set. Number three, see if there are any exact matches. Well int and double
+it matches but not double. The double doesn't match here. The int matches there. Int, int, oh that
+matches exactly. So this must call the function c. This must call the function in number c. Let's try
+another one. So look at this function call. So I have fn with 1.0, 2.0, and 3.5. So first what are
+the candidates? A, B, C, and D. I have four functions named fn. Second, what's the viable set?
+Well can I convert 1 to an int? Yes. 2.0 to a double? Yes. 3.5 to a double reference? No.
+This is not a variable that can be converted to a double reference. So A is out. How about B?
+1.0 to an int? Yes. 2.0 to an int? Yes. 3.5 to a double reference? No. B is out. How about C?
+Okay, okay, and okay. Okay so C is okay. And D? Int, int, int. Again all of these are convertible
+so my viable set now consists of C and D. Do we have an exact match? Double, double, double.
+Nope, we don't have an exact match. Do I have a partial match? Well C matches one argument. D
+does not match any arguments. So in this case C will be the function that's chosen in that case.
+Yeah the second thing we want to talk about here is default arguments. So a function can have both
+mandatory and optional arguments. So this is how we would write the function. The function F here
+requires you to pass in one argument, but if you don't pass in B or C those default argument values
+will be used. Okay and that means we can call the function F in three different ways. If I call it
+with one argument then B will be set to the default value 3 and C will be set to the default value 4.
+If I call it with two arguments A will be set to 7, B will be set to 2, and C will use its default
+value 4. And if I call it with three arguments then A will be 8, B will be 5, and C will be 3.
+So even though I have one single function not all the arguments are required. Now there are some
+rules about this. First you cannot have a mandatory parameter after an optional one,
+and secondly you cannot have any references. So this would be illegal. I have provided an
+optional value for A and I have required them to put in B. So if I call F of 1, which one is it
+supposed to do? Is that supposed to go in the first argument? It just won't work. So that's illegal.
+No mandatory parameters in B after an optional parameter. And A is optional.
+Secondly I can have an int ref A. That's perfectly fine. But int ref B equals 3 is not fine.
+So you cannot have default arguments for reference parameters. Again 3 is... what is B a reference to?
+3 is not a variable and B would have to be a reference or another name for a existing variable.
+So we're going to try this, our second example today. We have this function that has main.
+I want to print hello and I want to print the A cosine of minus 1. And I expect to get out when I
+do that hello, which is just printing the words hello, and I expect to get out 3.1459.
+Now I also expect to be able to call the function with a string goodbye and a second argument.
+That's going to add a new line and I would expect to get goodbye and a new line. Notice I didn't
+have a new line when I just did print without the second argument. And finally I expect to be able
+to print the A cosine with an argument for the new line and an argument saying how many decimal
+places. Notice when I printed it up here I just got the default number of decimal places. So we're
+going to have a function with overloaded arguments. And we're going to do this one not in our
+not in our CS50 IDE, which we're done with for today, but in our code check.
+Okay so we're going to write two functions, the void function print and the second prints a double.
+And both have default bool arguments and the second has an additional default argument
+indicating how many decimals to use.
+So here's the main function we had. I'm going to make that a little bigger so we can see the whole
+thing. Okay so our first function, both these are void functions, so void print and void print.
+Okay the first one is going to take a const string reference and a bool
+newline equals false.
+Okay so by default if they don't pass the second argument it prints it as a new line.
+This one is going to take a double. I'll just call it num.
+It's going to take a bool newline equals false.
+And then it's going to take an int
+digits precision. I'll call it precision. And here I'm going to pass in a value
+that is going to indicate, so minus one is going to indicate that I don't want to pass
+in a precision. I want to be able to say I don't want any decimals printed.
+So two overloaded functions, two versions of print and two
+optional parameters here, one optional parameter here. So this is just going to say cout,
+let's give that string a name shall we?
+cout str and then if newline cout endo. So that one was pretty easy right?
+Okay let's look at the second one. So in this one we're going to say cout num
+and if newline cout endo.
+But here we need to decide what to do about the precision. So if precision
+not equal to minus one, then cout fixed set precision.
+Precision.
+And so that'll allow us to call this with print the a cosine of one with a newline
+and 17 digits of precision there. Okay let's try it.
+Okay and that worked for the first one here and it worked for the second one and the third one.
+So we got three out of three on that. So go ahead and take a picture of the
+testing code here and take a picture of your two overloaded functions with default arguments.
+Okay so that's it for our exercises today. Now I want to talk a little bit about parameter
+categories and data flows. You'll need this in programming exam four. So input parameters
+are the normal type that you have in java and in python. The information flows into your function
+when you call the function. So the data inside a flows into the square root function here
+and the return value n flows out of the square root function. Because the information is flowing in
+I can provide a literal. That's because the parameter for square root
+gets a copy of what is ever is called to the function. Now output parameters work differently.
+With output parameters you supply a variable. You pass that variable to the function. The function
+fills it in and you use it afterwards. So the cn object has a member function called get.
+Get will read a character but it doesn't return the character from the function. It returns whether
+it was able to read a character or not. So ch goes into the function empty and it comes out full.
+Because of that when we have an output parameter we cannot use a literal. We can only use a variable.
+Now input output parameters are where the data flows both ways. If I have two variables a and b
+and I call the function swap, a had one value going in and when the function is over it has
+a different value. So variables a and b are modified when I call the function swap.
+Now when you look at your functions and you look at a problem you have to decide which way
+the data is flowing. So for input output parameters and output parameters you will
+always pass them by reference after the type for all type categories. Now in Doxygen we can add a
+little specification to the end of the param tag that says it's in out or out. So people reading
+that will understand that it's an output parameter or an input output parameter.
+For input parameters when you're calling a function and the data is flowing into the
+function only and not flowing back out through the same variable the way you declare it depends
+on the type of input. For library types all library types all class types including string
+you will pass by const reference. You will never pass by value. We don't do this because it's
+illegal. We do it for efficiency. It uses less memory and it is faster. For the built-in types
+that means int, double, char and so forth we'll pass by value. We won't use const or
+the reference symbol for the built-in type input parameters. Only for the output parameters.
+Now I have a second. Often you don't know is that an input or output parameter.
+So let me give you a second checklist. You really should memorize both of these.
+Is the parameter a primitive or built-in type? Okay in other words is it an int, a char, a double,
+a bool, one of those. If it is, is the function supposed to change the argument? If it is you
+pass by reference. So notice that the swap function has a reference parameter for the
+left-hand side and the right-hand side. All other functions if the function does not change the
+argument you will always use pass by value. Again no const, no reference, no nothing.
+For object or library types always use pass by reference and then if the argument is unchanged
+use a const reference. So again you need to memorize these checklists and in the next
+lecture we'll do an exercise just to make sure that you understand these concepts.
+Okay that's it for this lecture. I'll see you next time.

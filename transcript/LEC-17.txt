@@ -1,0 +1,783 @@
+Hello everyone, this is Steve Gilbert.
+Welcome to week 5 and lecture 17.
+So today we're going to be talking about memory and pointers.
+In the next lecture we're going to be working with graphics.
+So before we do that though, let's do a little bit of review on vectors.
+So we create vectors by specifying the kind of thing
+that they're going to hold, called the base type.
+So v1 is a vector of int, v2 is a vector of int, all of these are vector of int.
+When we can create them, we can pass additional arguments to their constructor.
+And so if we pass a single integer, it says I want v2 to be an array of 10 integers,
+or a vector of 10 integers, zero initialized.
+If I don't want them zero initialized, I can pass two integers.
+So v3 is an array of three integers, all three are initialized to four.
+Or if I don't use the parentheses after the constructor,
+when I'm constructing the object, if I use braces instead,
+I'm saying that I want simply the values three and four.
+I'm list initializing them.
+We saw that we could access the individual elements in a vector with at,
+or front and back to get the first and the last one,
+or the square brackets, or the square brackets.
+We have members that change the object.
+We can get pushback and popback.
+Those both mutate the object.
+Pushback adds an item to the end of the list,
+and popback removes that item that's at the end of the list.
+Of course, if you call popback on an empty vector, you'll have an error.
+Size is an accessor.
+It tells us how many elements the array has.
+And we looked at several different loops in our exercises in the last lecture.
+We used the range-based loop.
+We can use the range-based loop with references, and so forth.
+So to just make this a little bit less theoretical,
+let's go ahead and do some vector function practice.
+So you pass passing vectors as function parameters.
+You always use a const vector ref, or a vector ref for an input or output parameter.
+We will never, ever pass a vector by value.
+We can also return a vector from a function.
+You simply create an empty vector.
+We did this with the next to the last version of unique in the last lecture.
+Fill it in, and then return it.
+Now, that makes a copy.
+And so adding an output parameter-- in other words,
+passing in an empty vector by reference-- may be more efficient.
+But actually, modern compilers will actually optimize that copy away.
+Since C++ 11, they're required to do that.
+Now, imagine that you are writing a program that is going to a web
+application, say, and you're writing the guts of it in C++.
+And you need to process the-- on the phone, on a phone--
+you need to process the camera roll.
+And all your application does is it looks through a person's camera roll,
+and it shows them a view of the pictures that have a cute cat in it.
+Now, you might think that you would pass in the camera roll as a vector of images.
+But remember, each image is quite large, so we don't want to make a copy.
+But because we're using input parameters, a const vector ref, we won't make a copy.
+It'll be very, very inefficient.
+We won't make duplicates of all those millions and millions of bytes.
+However, if you want to show them your pictures that have cats in it--
+the pictures of the cute cat pictures-- you
+may be tempted to create an empty vector of pictures,
+fill it in with just the cat pictures, and then return it.
+And that would be very, very inefficient,
+because we would make duplicates of all those millions of bytes
+of each cat picture, when really all we need to do
+is return a vector of the indexes into the camera roll.
+And then all your application would do is have to look at that.
+So that's very, very common to return a vector of indexes
+that's then used to index into the original vector.
+So for our first exercise here, we're going to complete these three functions.
+So again, make sure you've gone to week five, the second tab for Tuesday,
+on enumerations and memory.
+Gone to the lecture exercise and click the link for the starter form.
+When you have the starter form here, we're going to do these exercises right there.
+These exercises right there.
+So let's go over.
+Let's look at IC17.
+Let's look in vectors.h.
+These are the files we're going to create.
+And let's look at vectors.cpp.
+Now, if you don't modify these and you just click a couple of them,
+it doesn't reopen it, which is kind of frustrating.
+So I'm going to open vectors.cpp and put my name on it.
+Now I'm going to open vectors.h, and it'll open a new tab at the top,
+which is what I want.
+So here are the functions we want.
+We want to write swap ins, match up, and copy evens.
+So I'm going to copy all of those.
+So I don't simply have to go back and forth between them.
+And then as we do it, I'll remove the comments.
+So let's take our things here and just stub them out so that our code will always compile.
+So that's void.
+This function returns an int.
+And so I'm going to just return 0 here.
+Again, just to get a skeleton that works, copy evens.
+OK, so this is returning a vector.
+So I'm going to create a vector int the result.
+And I'm going to return the result.
+OK, let's get a shell here.
+And I can close that.
+And let's just do make test to make sure that our code compiles
+and we don't have any syntax errors on it.
+We don't, OK?
+So now we can go back to thinking about the code.
+So this first function we're going to write is going to have one parameter,
+which is an input/output parameter, a vector of int named nums.
+And if the vector length is greater than 0, then we're going to swap the first and last element.
+Now actually, it should be if the vector length is greater than 1,
+because if the vector length is 1, swapping the first and last elements gives me the same result.
+So I want to say if nums size is greater than 1, I'm going to swap them.
+Now to swap them, I have to temporarily save one value.
+And so I'm saving the first and the last.
+So I could do it four or five different ways.
+So first, I'm going to say int temp equals nums sub 0 or nums front,
+because it's a vector, or nums at 0.
+Now, so we can use all three of those, nums sub 0, nums.front, nums at.
+I like using nums.front, because it's kind of, you know, it's expressive.
+So I'm going to say, so I saved the first one.
+So now I'm going to change the first one, nums.front equals nums.back.
+And again, for nums.back, we could have written nums at nums size minus 1.
+Certainly nums.back is easier than doing that, right?
+And again, we could have used the square brackets with the same expression.
+And finally, I'm going to say nums.back equals temp.
+So this algorithm is called the swap algorithm.
+And in fact, it's in the standard library.
+So you generally don't need to write it yourself.
+You can just call the one in the standard library, and it will work fine.
+Okay, let's try it.
+Let's open our shell.
+Let's do make test.
+And all of our swap ins here should work fine.
+For the second function we're going to write,
+we're given a vector int nums1 and nums2 of the same length.
+And for every element in nums1, consider the corresponding element nums2 at the same index.
+So nums1 sub 0, nums2 sub 0.
+Return the count of the number of times that the two elements differ by 2 or less, but are not equal.
+So a couple different conditions.
+So we're returning a count, so I'm just going to call that variable.
+It matches 0, and I'm going to return the matches.
+Now I'm going to visit each element in both vectors.
+So could we use a range-based loop? No.
+We need to use a standard while or for loop. I'll use while.
+And because it told us they're the same length, I don't need to worry about that.
+That would be a slightly different problem.
+So I'm going to say for size t, i equals 0,
+len equals nums1.size. Again, it doesn't matter which one I use because they're the same size.
+i less than len, plus plus i.
+OK, so now if nums1 at i is not equal to nums2 at i,
+and again, for nums2 I'll do it like that, just so you can see that you can use either one of those.
+I try and train my fingers to do at.
+So if those are not equal, and the two elements differ by two or less,
+so how do we find out if something differs from each other?
+We subtract it.
+So nums1 at i minus nums2 at i is two or less, less than or equal to two.
+Then we're going to say matches plus plus.
+Now if you test this, you'll see a slight problem. Let's test it and see what that problem is.
+Oh, actually we didn't see it. Oh yeah, two of them didn't pass.
+So the problem is that when we take this, this only works if nums1 is larger than nums2.
+In the case where that's not the case, in cases where that is not the case,
+so in this case num1 is larger than num2, and I'm subtracting in this case.
+So it's not working in that case.
+So I need to think slightly different about that.
+This gives me the difference, but the difference can be positive or negative.
+So what do I really want to do?
+I want the absolute value of that difference.
+So I'm going to use the function from cmath,
+or actually this version of abs is from cstandard lib.
+So I have to include cmath in here.
+So it's from cstandard lib that knows how to use integers.
+I didn't include cstandard lib, so I probably should include.
+So include cstandard lib using standard abs.
+Okay, so let's try our code again for that function.
+Okay, and now all of the matchups work 100%.
+Okay, for the last test we're going to be doing here,
+we're going to be doing -- so I'm going to get rid of my code for this.
+The last review exercise we're doing is one where we're returning a vector.
+So we're getting a vector of positive ints.
+We're going to return a new vector array of length count,
+containing the first even numbers from the original vector.
+The original vector will contain at least count even numbers,
+but it may contain more.
+So we have two input vectors, or two input values.
+Nums is a vector of int, so it's const vector ref.
+And ecount is the number of even numbers in the return vector.
+Now you might wonder why I didn't do ecount like that.
+Now you could do that, but then you'd have to keep track of where you are in the two vectors.
+And it's actually easier to do it like this.
+While result size is less than ecount.
+As soon as we have the correct number of items in result,
+then our function is completely over.
+We're done with what we need to do.
+So what we want to do is we want to look through nums.
+So I want to say for --
+Oh no, actually I don't want to look through nums.
+I want to say size pi equals zero.
+If nums at i remainder two equals zero,
+if nums at i is even, then add it to the result.
+So add the number at i to the result.
+Each time we go through the loop, of course, we need to do i++.
+So we're looking at the correct element in nums.
+So this is not a counter controlled loop.
+This counter is being used to index into this.
+So the loop is only going to stop when result size gets to ecount.
+But our counter is actually being used to index into this while we go through that loop.
+OK, so let's see if copy evens works.
+And there copy evens works perfectly now.
+Copy evens works perfectly.
+OK, so a little review from the last lesson, last lecture.
+Let's go and talk about new items today.
+We're going to start looking at lower level.
+We're going to start drilling down into your computer and how your computer actually works.
+When you run a program, when you run an executable,
+your program runs a little part at the beginning of it called the startup code.
+That startup code is usually a function called start that is added by the linker.
+What that does is it sets the machine registers and it allocates memory.
+And so the memory it allocates is divided into sections.
+And machine registers point to each of these.
+So the static area, the part that's loaded directly from disk,
+this is in memory a picture of the image that you have on disk.
+This static area has code.
+That's the section marked down here as text.
+And it has all of your global variables.
+They're loaded into memory from disk when the program ends.
+And the machine registers, the code segment is set to point to this code.
+The data segment is set to point to these global areas.
+Those are registers on the machine.
+At the opposite end from where the memory is loaded into code,
+at a higher address up here, we have something called the stack.
+And again, this is just memory reserved for local variables and run time information.
+The return of disk, the mechanics of calling a function, parameters,
+all of that are placed in this area of memory called the stack.
+And as more items are added, the memory grows in this direction,
+down towards the static section.
+In between those is a third section.
+This is called the free store or the heap.
+And this is where dynamic variables are created.
+When you ask the operating system for some new data,
+for instance, when you're reading a file.
+So, for instance, if you ask the user to input a sentence,
+you don't know how long the sentence is.
+And so we cannot put that data on the stack or in the static storage area.
+It has to be determined depending on how much data they do.
+And the string class does that for you automatically.
+We'll work with the heap in a little bit.
+But right now, just know that it's where dynamic memory, like strings and vectors, go.
+So, with variables and functions as well, we have three related concepts.
+The first concept is scope.
+Where in your code can you see a name from?
+So scope is visibility.
+And C++ has two kinds of scope.
+Something that is created inside a block.
+For instance, a function body or the body of a for loop or an if statement.
+Something that's created inside the block is only visible from the point it's created
+to the end of the block that it was created in.
+Now sometimes this will be called local scope, but it's really not local scope, it's block scope.
+If you create something outside of a block, it has what's called file scope.
+File scope means that that name is visible from the point it's created to the end of the file that it was created in.
+Including inside any blocks.
+So block scope and file scope.
+Secondly, we have duration.
+In other words, how long does an item stay in memory?
+Now global variables, variables that are loaded into the static storage area,
+they persist as long as your program runs.
+You start running the program, the variable is created right at that moment.
+You stop running the program, the variable goes away.
+It stays at the same location.
+So static in this sense means it doesn't move.
+Now when you create a local variable, when does it come into existence?
+When the code is executed, that creates it.
+When does it go away?
+When the function or the block that you created it in ends.
+And so these variables are created on the stack up here, as I mentioned before,
+and they have what we call automatic duration.
+So they're automatic variables.
+Finally, we have variables, I mentioned them just briefly before,
+we're not going to create any now, that have dynamic duration.
+In other words, in one part of your program you can say,
+create this variable now, we do that with a new operator, like you do in Java,
+and in another part of this program we can say,
+I'm done with this, you can have it back to the operating system.
+Finally, when we have multiple files working together,
+those files are linked together.
+So you compile two CPP files, you link them together,
+which variables and which functions from which file can be used in which other file.
+So linkage determines which files and which functions can be used in each other.
+So if something has internal linkage,
+if I create a variable in one file using file scope,
+in other words, outside of a function,
+that variable can have internal linkage,
+meaning it can only be used inside that file,
+or it can have external linkage,
+meaning I can use it in that file and any other files that are linked in.
+So internal or external linkage,
+both of these have to do with functions and global variables.
+All other variables, local variables, have no linkage.
+They can only be used in the function that they're created in.
+So let's go look at a program, F1 and F2.
+I'm going to try and open them side by side.
+This is the first time we've been using this IDE right here.
+So this might be an interesting video.
+So here's F1 and here's F2.
+That's good.
+That's F1 and F2.
+Let me...
+I've got F1 and F2.
+I'm still trying to do it. There's F2.
+That's pretty good, and I'll move this over there.
+So here's F1 and F2.
+Notice that there's only one main function in F1 and F2.
+Actually, let me do one more thing.
+I'm going to open up a terminal on that folder.
+I'm simply going to type "nick run."
+Main first calls the function C.
+C is not defined in file F2, but it is linked together, and it's defined in file F1.
+So function C is over here, and it prints out the variables A and B.
+Now notice A is defined outside of any function here. It's a global variable.
+B also is defined outside of every function, and it's a global variable.
+So it prints out A and B, and so we get 37, and there's a new line.
+Then it calls the function D.
+So here's the function D.
+It creates a local variable E, another local variable F, 5 and 6,
+and it prints out A, B, E, and F.
+So we get 37 like we did before, and 56 just like you'd expect.
+Then we increment this variable F right here.
+So now we set A to 12, B to 13, and we call C again.
+So it's going to print A and B.
+So notice that the variable A lives over here.
+It's defined in F1, and we're changing it over here in F2.
+It's declared here so we can use it, and the function C is declared there so we can use it.
+But now when I print A and B, you would expect to get 12 and 13.
+But it looks like this file has its own copy of B, and so instead I get 12 and 7.
+So this A changes to 12, but this B doesn't change to 13.
+It still says 7, so I get 127.
+Then I call D again.
+E is set to that.
+It looks like F is set to 6.
+I print A, B, E, and F, but instead of getting 12, 7, 5, 6, I get 12, 7, 5, 7.
+So apparently this F++ kept this variable in the past.
+So let me explain what is happening here.
+Variables and functions have what we call external linkage and file scope.
+So all these variables, all these functions are visible from here down to here.
+File scope, external linkage, static duration.
+Now, local variables like E has block scope.
+It's visible only from here to the end of the function.
+F has block scope visible from there to the end of the duration.
+However, for these variables, this has automatic duration,
+meaning it comes into existence on the stack and is destroyed when the function ends.
+Because of this keyword static here, we're saying F is going to be stored in the static storage area,
+not on the stack, which is why when I increment it after calling the function once,
+the next time we come around, it's not reset to 6 here.
+It has the value 7 down there.
+It has the value 7.
+That leaves only one thing left to explain,
+and that is why is this word static in front of this variable and this function?
+We saw what it meant here with this local variable.
+It means it still cannot be used anywhere other than the function.
+It has block scope.
+Yeah, it has block scope.
+It only can be seen here.
+Even though it's stored the whole time your program is running, unlike E in this case.
+The static in front of a function or a global variable means that it has internal linkage.
+So this B will always and only be this B.
+It will never be this B over here.
+It will never be that B over here.
+These are two separate B's that are only visible inside their own function,
+or only exist inside their own function.
+So when I set B equal to 13 here, I get this B, not this B.
+When I set A equal to 12 here, I get this A.
+Now, why can I use this A inside this function?
+Because it's obviously not in scope.
+I brought it into scope by declaring it.
+So I declared A, I declared C, we now know the name, and I can use A and C in that function.
+So we had some exercises we're going to do with this and some questions.
+So I want to see what will happen in line 1 if I remove the word extern from this.
+What if I just change that to int A?
+Do I get an error now when I try and do make run?
+So make run.
+Yes, I get an error.
+So now, when the linker comes along, it sees two copies of A.
+Both of them could be used in either file, but you can't have two things that have the same name.
+So I have multiple definitions of A.
+It's a linker error.
+So I'm going to come over here and I'm just going to put my answer here.
+Oops. Save the wrong thing.
+Copy that.
+Again, that copy didn't work, did it?
+From the thing.
+So I'm going to do that.
+Right click.
+Can't seem to get a copy of the terminal.
+So I'm just going to type in multiple definitions of A.
+It's only one definition of each object in an executable.
+That's called the one definition rule or the ODR, the one definition rule.
+I still want to see if I can copy that.
+Doesn't look like it.
+Weird.
+Okay, so we're going to put extern back to that.
+Okay, let's look at the second one here.
+Now we're going to remove the word static from the definition of B on F1.
+Does the program still compile and link?
+Does the program run differently?
+Does the change to B on F2.cpp line 9 have any effect since B now has external linkage in file 1?
+So I'm going to remove the static from B on line 5 in F1.
+And I'm going to do make run.
+Now, 3756, 12757 runs exactly the same.
+So the answer is no difference.
+Runs the same.
+Can you remove the static from both definitions of B?
+Let's remove it over here.
+Let's do make run.
+Oops, no, multiple definitions of B.
+Okay, I've discovered how to copy.
+It looks like you just select the text, right click.
+Apparently it's copied here.
+And I can go error, multiple definitions of B.
+We're breaking the ODR rule.
+So again, we can't have two variables B with external linkage just like we can't have two A's.
+So let's turn them back to internal linkage.
+Right where we left off.
+Okay, now in F1 we have a declaration for C.
+Let's add a call to the declaration for D.
+So just like I have the function C here, I have a declaration for C here and I can call C here.
+Can I do the same thing for D?
+So can I write void D and then call the function D from here?
+Let's see.
+So make run.
+No, we have an undefined reference to D.
+That's because in a function if you have static in front of it, it means give this function internal linkage.
+The function D can only be called from F1.
+It cannot be called from FT.
+So let's copy our error message there.
+So function has internal linkage and only be used in file F1.cpp.
+Okay, so let's remove that.
+So that didn't work.
+Now, can we add an extern declaration?
+So notice that I could use the variable A over here by adding an extern over there.
+Can I use an extern to allow me to use the variables E and F?
+So let's do extern int E, extern int F.
+Let's do E equals 4, F equals 12.
+And let's compile that and try it.
+So make run.
+Now we've got two things here.
+Notice I have an undefined.
+Copy both those.
+And here's what happens.
+Both variables are locals so they have no linkage.
+Can't be used outside of function D.
+So that's the explanation for what happens there.
+Okay, so that doesn't work.
+Let's see what other questions we had.
+If I remove the static from the definition of the local variable F, what happens?
+So first let's make run.
+So 37, 37, 56, 127, 127, 57.
+I'm going to remove static.
+I'm going to do make run.
+Notice now that the variable F doesn't retain this F++.
+Now this variable has automatic duration.
+It's stored on the stack.
+Before it was stored in the static storage area and it didn't move.
+So each time we come into this function we get a new copy of F here.
+Before we did not.
+So notice the 57 and the 56.
+This is where it's stored in the static storage area.
+This is where it's stored on the stack.
+So we can say F no longer retains its value between function calls
+because it now has automatic storage instead of static storage.
+Okay, so we looked at linkage.
+We looked at changing duration.
+Put that back the way it was before.
+Now let's just change the order of these two functions here in F1.
+I'm just going to grab C.
+And I'm going to move it up above D here.
+And I'm going to do make run.
+And this is the first time I've got a red error here.
+Red error says D was not declared in this scope.
+D was not declared in this scope.
+So I see D right here.
+Why isn't it declared in this scope?
+Well, remember this has to do with scope.
+So this is a scope problem.
+So notice that C has file scope.
+It's visible from there to there.
+It's visible from its point of declaration to the end of the file.
+D also has file scope.
+It's visible from its point of declaration to there.
+But I'm trying to use D up here.
+So I'm using D before it's defined or declared.
+So it is out of scope.
+So using D before defined or declared.
+So it is out of scope.
+And let me, it says show me, so let me.
+And I'm just right clicking.
+Even though there's no symbol that anything happened.
+And I'm pasting in what I just real clicked there.
+All right, so a little bit of exploration with memory.
+So let's go explore a little bit more about variables, sizes, and addresses.
+So all variables have three addresses.
+So if I want to put something in a variable, I use its name.
+I don't say put something in that storage location that's at address 3000.
+I don't use its memory address.
+I use its name.
+All variables have a type that determines what I can store in the variable.
+I can't store an integer in a string.
+I can't store a string in an integer variable.
+It also determines what valid operations can happen to that data.
+And finally, inside that storage location, we have some data or some state or some value.
+We call that the value.
+Now, when you have a variable, you can also, instead of using the name, find out exactly where it is located.
+And so that operator is called the address of operator.
+It's the ampersand, and it's used in front of a variable instead of after a type.
+So after a type, we're saying int ref n.
+n is a reference to an integer.
+Before a variable, cout ampersand n says give me the address of n.
+So the address of operator returns the location of the object.
+And the size of operator returns its storage size in bytes.
+So we can see more technical details about how data is actually stored in memory, not just the logical details.
+So let's do that in our next exercise.
+Let's print the address and size of each variable by saying n lives at-- this is the address-- and uses xx bytes.
+So let me close F1 and F2.
+Let me close that terminal, throw it away.
+Let's come down here to C and open up variables.cpp.
+I actually need to open a terminal so we can run it.
+Let me right-click on C, open a terminal.
+OK, so here I've created a variable with file scope, static storage duration.
+It's a constant, pi.
+It's a global.
+And here I have created a variable n, an int, a string, and an employee object.
+So a structured variable.
+And here I've printed out the various names.
+Now obviously I have to have an overloaded operator for me to be able to print out the waiter, but I do.
+So now what we want to do is we want to print out the address and size of each one using this.
+So I'm going to say cl n lives at-- and to get where n lives, I'm going to take the address of n.
+And to get the number of bytes that n uses, I'm going to use size of n.
+OK, so there's n.
+Let's look at some of the other variables.
+I'll just copy that.
+So how about pi?
+So I take the address of pi.
+See how many bytes that uses.
+Let's take name.
+So I take the address of name and the size of name.
+And finally, how about the waiter?
+So I take the address of that variable waiter, where it lives, and the amount of space it uses.
+OK, let's run it.
+Do make run.
+So here's the name of this variable.
+Here's the value it stores.
+Here is where it lives.
+Now this is a hexadecimal address.
+And since it's an int, it uses four bytes.
+Pi lives at an entirely different address.
+Now you notice that this address is much smaller than this address.
+It's 0x5, meaning it's closer to zero.
+It's at the bottom of memory.
+This is at the top of memory.
+This is on the stack, as is this, as is this.
+And these are next to each other in the stack if we looked at these values in something other than hexadecimal.
+Pointers are always printed in hexadecimal or base 16 numbers.
+So my integer uses four bytes.
+My double uses eight bytes.
+My name uses 32 bytes.
+Now this will vary from compiler to compiler.
+We're on GCC, on a Unix operating system, and we use 32 byte strings.
+And waiter, which is a structure, uses 40 bytes for the parts that are inside the waiter.
+Now, let's talk about pointers.
+So we've seen how we can print out the address of a variable.
+Could we store that in another variable?
+Yes. These variables are called pointers.
+So pointers don't hold integers or hold doubles.
+They hold addresses of other variables.
+So that's how they got their name, because since the address is another variable,
+we say that variable points to another variable.
+We create a pointer like this.
+The kind of thing we're pointing to, the point E, a star, and the name of the pointer.
+So here's an example with int pointer.
+So iPointer is a pointer to an integer.
+You read this from the right to the left.
+You find the name. iPointer is a pointer to an integer.
+Now, you might wonder about the space before or after the star. It doesn't matter.
+I could write int star and put the star next to the int, put the star next to the iPointer.
+It's entirely irrelevant.
+However, you need to make sure that every pointer variable has its own star.
+So if I were to write this, int star iPointer, comma, i, i is not a pointer.
+i is an int.
+So iPointer is a pointer to an int. i is an int, not a pointer to an int.
+Now, unless you initialize a pointer, it just points to a random address in memory.
+It's uninitialized.
+And that is very, very, very bad.
+So you can initialize a pointer using no pointer, that keyword,
+or you can put in just zero.
+That signifies that the pointer is unused.
+Now, you might wonder, could I initialize a pointer with this address, that number, like that?
+And the answer is no, you cannot.
+In early versions of C, you could, but now you cannot.
+No other literal integer value is permitted.
+Now, you can return, you can call the address of operator,
+which is what we just used to print out the addresses,
+so that address operator returns an address,
+and we can use that to initialize a pointer.
+We could use the new operator,
+which we're going to look at in our section on dynamic memory,
+and initialize a pointer with the new operator, memory on the heap,
+or we could use a function that uses one of these techniques,
+or one of the C functions, that sort of thing.
+So let's complete part two of variables.cpp,
+and add some pointers inside there.
+Now, there's nothing to print for this part,
+but what I'm going to do is I'm going to create some pointers,
+and you can create the pointer like this,
+so int pointer ip, int pointer, equals the address of n.
+We could do it like this, const double pointer dp
+equals the address of pi.
+Could we just say double pointer dp equals the address of pi?
+Let's see what happens if we did make on that.
+Now, it says that's an error,
+because this, the address, pi, is a constant double,
+and taking the address of a constant double
+doesn't lead a double pointer, it leads a const double pointer.
+Now, could we do this?
+We could do that, right?
+So this is going to be initialized with whatever this returns,
+and so we could just use auto for that as well.
+So let's do a string pointer sp equals the address of name,
+and an employee pointer ep equals the address of my waiter.
+So you notice I can put the star in front of the variable.
+I can use auto and skip the star altogether.
+I can put it in front of the type.
+It doesn't make any difference to the syntax there.
+Okay, so a pointer is a variable.
+That means it has a name, a type, and a value.
+The value inside the pointer, we call its explicit value.
+That's, in other words, what's inside the memory.
+That's the address it contains.
+But a pointer has a second value called its indirect value.
+That's the value of the variable that it points to.
+We retrieve that by using the indirection or dereferencing operator, the star,
+just like we did with iterators in vectors.
+So here I have an integer, 3.
+I've got a box in memory.
+I put 3 inside the box.
+I create a second box in memory, pa,
+and inside pa, I put the address of this first box.
+Now, to print out what's in the box,
+print out the 3, I can print out the name of the variable,
+or I can dereference the pointer.
+Dereference a pointer says,
+go to the address that the pointer contains
+and give me back the value that's at that location.
+Now, notice the star I've used twice in these two lines.
+I've used it on line 1 where I'm declaring the pointer, int star pa.
+This star here means pa is a pointer to int.
+It's called the pointer declarator operator.
+This star doesn't have int star in front of it.
+It's just star pa.
+This is a unary operator, and it's the dereferencing operator.
+Now, the star means something different when declaring the pointer
+or when dereferencing it.
+Sometimes students get confused with that.
+Now, the pointer also has an address which could be stored.
+So I could say int star star or int star star star.
+So int star star star pa is a pointer to a pointer to a pointer to an int.
+So let's complete part 3, and we're going to print out
+IP contains, what its explicit value is,
+is stored at, its address, and the value that it points to.
+Okay, so let's print the cout,
+and I'm just going to put quotes around the xxx's
+where we're going to replace it.
+And let's do several of those.
+So there's IP, DP, SP, and EP.
+So this is DP, SP, and EP.
+And for this part, we're going to say IP.
+Right?
+That's what it contains.
+Like any variable, you use its name to get what it contains.
+And DP, and SP, and EP.
+Okay, to get what value it has,
+now I'm going to try and use a trick here in Visual Studio.
+I'm going to click there.
+I'm going to hold down my alt key and click there.
+No, that didn't seem to work.
+I'm going to click there.
+I'm going to hold down my alt key while I drag through.
+Let's see if that works.
+I'm going to try and copy that.
+And I'm going to go here.
+No, it didn't work.
+I'm not quite sure on this editor how to get multi-line cursors.
+Oh, you know how I think I can do?
+I think I can hold down my alt key and the shift key.
+No, didn't work.
+I'm messing up.
+I shouldn't be experimenting while I'm talking.
+Let's just go ahead and do this manually.
+So this is going to be the address of IP.
+This is going to be the address of DP.
+And this is going to be the address of SP.
+And this is going to be the address of EP.
+Now let's bring this one down here like that.
+And that.
+It's going to be easier to see.
+And that.
+And that.
+So the last one is what it points to.
+And it points to star IP.
+And star DP.
+Star SP.
+And star EP.
+So star EP dereferences this variable.
+This gives me the value in the variable.
+This gives me the location of the variable.
+This dereferences gives me its indirect value.
+Okay, let's open a terminal on that.
+And then let's do make run.
+And we can see the output of it.
+So when we did IP, we pointed it to N.
+So N lives at this address.
+Now if we look inside IP, that's the address we find.
+Notice that IP itself is stored at a completely different address.
+But when we dereference IP, we get the same value that N had inside it here.
+N had inside it.
+Alright, so those are pointer basics.
+Now a pointer input parameter should be const.
+So if I have a function, I'm passing a pointer to it.
+And I don't want to change what that pointer points to.
+The pointer should be const.
+If you don't put the const there, it will act like a reference.
+So if I write int F and I pass int P, int star P.
+That means that this pointer can change what P is pointing to.
+It can change what P is pointing to.
+So we're going to do that.
+So this is just an example to show how we can use pointers instead of references for output parameters.
+So we're going to write a function that takes a pointer to int.
+We're going to fill the pointer's indirect value with a random number.
+We're going to call one of the library functions called rand that's in the C standard library.
+In main, we're going to create an int variable that's uninitialized.
+We're going to pass its address to the function.
+So when we call the function, we won't pass the variable name.
+We'll use the address of the operator to pass it.
+And then we're going to print the value both before and calling the function.
+So let's close that terminal.
+Let's close variables.cpp.
+Go down to D.
+So write a function that takes a pointer to int as its only parameter inside the function.
+Fill the pointer's indirect value with a random number.
+So it's not returning anything.
+We'll call it randomize.
+It's going to take a pointer to an int, an int pointer p.
+Now if I assigned to p, I would change the value in the pointer.
+I would point it somewhere else.
+I don't want to do that.
+I want to assign to what p points to.
+Star p equals, and I'm just going to call the rand function from c standard lib.
+That will just give me a random number.
+Now you might wonder about this first line on line 21 here.
+What this does is this gets the time on your hardware clock
+and what we call seeds the random number generator.
+So each time we run this function we'll get a different value.
+If you took this off, you would get the same value each time.
+It would be statistically random, but it would be exactly the same value each time you called the function.
+Okay, so let's create an int variable.
+I'm going to initialize it.
+It says uninitialize.
+I'm going to print the value of my variable.
+See how before n is n.
+I'm going to do that afterwards as well.
+I'm going to change that before to after.
+Now I'm going to call the function.
+I can't simply say randomize n because the function doesn't want an integer.
+It wants a pointer to integer.
+So to call it with a pointer to integer, I can generate one by taking the address of n.
+So this is an output parameter as a pointer.
+So let's try that.
+Let's get a shell here.
+Let me do make run.
+So notice before it had the value I put in it, 42.
+After calling the function randomize with its address, the function took that address, changed the value inside n,
+and when I print out n, it's an entirely different number.
+Now as I said, the code here seeds the random number generator,
+so every time you run this, you should get a different value.
+Let me try it once again.
+Yes, notice I'm getting an entirely different value for the random number here this second time.
+So that's a pointer as an output parameter.
+Alright, that's all we're going to do today.
+And when you come back, we're going to look at using pointers like this and output parameters to modify images.
+Thank you.

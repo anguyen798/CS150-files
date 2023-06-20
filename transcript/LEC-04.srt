@@ -1,0 +1,3624 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, this is Steve Gilbert. Welcome to lecture 4 on functions and decisions.
+
+2
+00:00:00,000 --> 00:00:00,000
+This week we're going to start moving away from writing input processing output programs
+
+3
+00:00:00,000 --> 00:00:00,000
+and start moving towards writing functions.
+
+4
+00:00:00,000 --> 00:00:00,000
+Now a function, you remember, is a named piece of code, like square root.
+
+5
+00:00:00,000 --> 00:00:00,000
+You can think of these, though, like mini IPO programs.
+
+6
+00:00:00,000 --> 00:00:00,000
+In other words, they still have input processing and output,
+
+7
+00:00:00,000 --> 00:00:00,000
+but the input processing and output is somewhat different.
+
+8
+00:00:00,000 --> 00:00:00,000
+So here are the major differences.
+
+9
+00:00:00,000 --> 00:00:00,000
+Instead of prompting the user, "Please tell me the number of boxes that you want,"
+
+10
+00:00:00,000 --> 00:00:00,000
+the input is going to come through the parameter list.
+
+11
+00:00:00,000 --> 00:00:00,000
+There's going to be no prompt and then waiting for the user to type input.
+
+12
+00:00:00,000 --> 00:00:00,000
+And then, instead of printing the output on the screen,
+
+13
+00:00:00,000 --> 00:00:00,000
+the output is going to be returned from the function.
+
+14
+00:00:00,000 --> 00:00:00,000
+Now, of course, you can still use functions to create IPO programs.
+
+15
+00:00:00,000 --> 00:00:00,000
+In fact, you're going to do this in one of the homework assignments.
+
+16
+00:00:00,000 --> 00:00:00,000
+You can have regular input and output,
+
+17
+00:00:00,000 --> 00:00:00,000
+but normally, unless we're writing an input and output function,
+
+18
+00:00:00,000 --> 00:00:00,000
+we won't do IO inside the function itself.
+
+19
+00:00:00,000 --> 00:00:00,000
+So let's look at arguments and parameters.
+
+20
+00:00:00,000 --> 00:00:00,000
+Now, most functions require extra information to do their work.
+
+21
+00:00:00,000 --> 00:00:00,000
+In other words, you couldn't just dial up Domino's or Pizza Hut and say,
+
+22
+00:00:00,000 --> 00:00:00,000
+"Send me a pizza," and not give them any extra information.
+
+23
+00:00:00,000 --> 00:00:00,000
+You'd have to tell them who you are, where to send the pizza to,
+
+24
+00:00:00,000 --> 00:00:00,000
+what size pizza you want, what, you know, toppings you want on the pizza, and so forth.
+
+25
+00:00:00,000 --> 00:00:00,000
+And so think of a function like square root.
+
+26
+00:00:00,000 --> 00:00:00,000
+Square root, when you call the square root function,
+
+27
+00:00:00,000 --> 00:00:00,000
+it doesn't stop and say, "Hello, what number would you like the square root on?"
+
+28
+00:00:00,000 --> 00:00:00,000
+It doesn't prompt you for input.
+
+29
+00:00:00,000 --> 00:00:00,000
+It also doesn't print its output on the screen.
+
+30
+00:00:00,000 --> 00:00:00,000
+Instead, square root gets its input through arguments and parameters.
+
+31
+00:00:00,000 --> 00:00:00,000
+Now, we're going to use these two terms in a very specific way.
+
+32
+00:00:00,000 --> 00:00:00,000
+Sometimes they're confused with each other,
+
+33
+00:00:00,000 --> 00:00:00,000
+and many times they're used in different ways.
+
+34
+00:00:00,000 --> 00:00:00,000
+But we're going to refer to arguments as the values that are supplied when a function is called,
+
+35
+00:00:00,000 --> 00:00:00,000
+not the variables that are created when the function is defined.
+
+36
+00:00:00,000 --> 00:00:00,000
+Those we're going to call parameters.
+
+37
+00:00:00,000 --> 00:00:00,000
+So when a function's defined, we're going to declare variables
+
+38
+00:00:00,000 --> 00:00:00,000
+that will be used inside the function to store the value.
+
+39
+00:00:00,000 --> 00:00:00,000
+Now, we have two kinds of functions.
+
+40
+00:00:00,000 --> 00:00:00,000
+We have fruitful functions or void functions.
+
+41
+00:00:00,000 --> 00:00:00,000
+A fruitful function is a function that produces a value.
+
+42
+00:00:00,000 --> 00:00:00,000
+That means we can call a fruitful function as part of an expression, as part of a calculation.
+
+43
+00:00:00,000 --> 00:00:00,000
+A void function, which is also known as a procedure, needs a side effect.
+
+44
+00:00:00,000 --> 00:00:00,000
+A void function would be something that says, you know, print this value.
+
+45
+00:00:00,000 --> 00:00:00,000
+It doesn't return anything.
+
+46
+00:00:00,000 --> 00:00:00,000
+It just does something.
+
+47
+00:00:00,000 --> 00:00:00,000
+So the does something part we call a side effect.
+
+48
+00:00:00,000 --> 00:00:00,000
+Now, we're going to do our first example here, our first exercise.
+
+49
+00:00:00,000 --> 00:00:00,000
+So make sure that you have gone into, got the lecture exercise document,
+
+50
+00:00:00,000 --> 00:00:00,000
+gone to Fridays, got the lecture exercise document,
+
+51
+00:00:00,000 --> 00:00:00,000
+clicked the link for the starter code,
+
+52
+00:00:00,000 --> 00:00:00,000
+and we'll look at this first problem we're going to do here.
+
+53
+00:00:00,000 --> 00:00:00,000
+So here, what we want to do is write a function called last digit.
+
+54
+00:00:00,000 --> 00:00:00,000
+Now, again, unlike the IPO programs we've written before in class,
+
+55
+00:00:00,000 --> 00:00:00,000
+we're not going to prompt the user, what digit do you want to process?
+
+56
+00:00:00,000 --> 00:00:00,000
+We're just going to pass the digit to the function last digit.
+
+57
+00:00:00,000 --> 00:00:00,000
+So if we give last digit a number like 3,572, the last digit in that number is 2,
+
+58
+00:00:00,000 --> 00:00:00,000
+and so that's the value it should return.
+
+59
+00:00:00,000 --> 00:00:00,000
+We also want it to work for negative numbers.
+
+60
+00:00:00,000 --> 00:00:00,000
+For instance, giving last digit -947 should return 7, not -7.
+
+61
+00:00:00,000 --> 00:00:00,000
+You can use one other function here.
+
+62
+00:00:00,000 --> 00:00:00,000
+You can use the abs function in C standard lib.
+
+63
+00:00:00,000 --> 00:00:00,000
+That's the version of abs that works for integers,
+
+64
+00:00:00,000 --> 00:00:00,000
+but no other library functions, and you can't use string.
+
+65
+00:00:00,000 --> 00:00:00,000
+So we couldn't take the substring at the size -1,
+
+66
+00:00:00,000 --> 00:00:00,000
+or the back function to get the integer.
+
+67
+00:00:00,000 --> 00:00:00,000
+So let's look at how we do this.
+
+68
+00:00:00,000 --> 00:00:00,000
+Let's open up in IC4, let's open up A, and let's open up last digit.cpp,
+
+69
+00:00:00,000 --> 00:00:00,000
+and we're going to write our function here.
+
+70
+00:00:00,000 --> 00:00:00,000
+Notice I've included only this one header we can have.
+
+71
+00:00:00,000 --> 00:00:00,000
+So how do we write a function?
+
+72
+00:00:00,000 --> 00:00:00,000
+Well, you always start with - so this is the function we're writing.
+
+73
+00:00:00,000 --> 00:00:00,000
+You always start with first draft skeleton.
+
+74
+00:00:00,000 --> 00:00:00,000
+The name for the skeleton is called a stub.
+
+75
+00:00:00,000 --> 00:00:00,000
+A stub doesn't actually do all of the work.
+
+76
+00:00:00,000 --> 00:00:00,000
+All it does is get the mechanical parts out of the way.
+
+77
+00:00:00,000 --> 00:00:00,000
+The reason you start with this first draft skeleton
+
+78
+00:00:00,000 --> 00:00:00,000
+is because you want to get the, again, the mechanical parts,
+
+79
+00:00:00,000 --> 00:00:00,000
+the part that you can memorize, you want that to be second nature,
+
+80
+00:00:00,000 --> 00:00:00,000
+just like driving a stick shift.
+
+81
+00:00:00,000 --> 00:00:00,000
+You want the shifting and using the clutch and so forth to be second nature.
+
+82
+00:00:00,000 --> 00:00:00,000
+And so that's what a stub is.
+
+83
+00:00:00,000 --> 00:00:00,000
+So here are the six questions we need to ask.
+
+84
+00:00:00,000 --> 00:00:00,000
+We need to ask first what kind of thing the function returns,
+
+85
+00:00:00,000 --> 00:00:00,000
+and write that down first.
+
+86
+00:00:00,000 --> 00:00:00,000
+In this case, last digit is going to return an int.
+
+87
+00:00:00,000 --> 00:00:00,000
+Secondly, we need to put in the name of the function.
+
+88
+00:00:00,000 --> 00:00:00,000
+Now, if we spell last digit with a lowercase d here,
+
+89
+00:00:00,000 --> 00:00:00,000
+it's not going to work, because our testing, or our client program,
+
+90
+00:00:00,000 --> 00:00:00,000
+is going to be calling the last digit function spelled exactly the way that is.
+
+91
+00:00:00,000 --> 00:00:00,000
+Third, we're going to put the input variable declaration,
+
+92
+00:00:00,000 --> 00:00:00,000
+the parameter declaration, inside parentheses following that.
+
+93
+00:00:00,000 --> 00:00:00,000
+And so these three parts, one, two, and three,
+
+94
+00:00:00,000 --> 00:00:00,000
+is going to create the interface for the function,
+
+95
+00:00:00,000 --> 00:00:00,000
+the part that describes it to the compiler.
+
+96
+00:00:00,000 --> 00:00:00,000
+The next part is going to create the body,
+
+97
+00:00:00,000 --> 00:00:00,000
+or the implementation of the function.
+
+98
+00:00:00,000 --> 00:00:00,000
+So you add braces to surround the function body.
+
+99
+00:00:00,000 --> 00:00:00,000
+Then, don't think at all about what the program is going to do.
+
+100
+00:00:00,000 --> 00:00:00,000
+Don't think at all about what the function is supposed to do.
+
+101
+00:00:00,000 --> 00:00:00,000
+Think about what kind of thing it is going to produce.
+
+102
+00:00:00,000 --> 00:00:00,000
+And so create a variable for the output, the result,
+
+103
+00:00:00,000 --> 00:00:00,000
+and initialize it, just a nothing, to an empty value, to zero.
+
+104
+00:00:00,000 --> 00:00:00,000
+Finally, return the result.
+
+105
+00:00:00,000 --> 00:00:00,000
+Then, once you make sure that compiles it and links,
+
+106
+00:00:00,000 --> 00:00:00,000
+you can test the program, and we can go in and complete it.
+
+107
+00:00:00,000 --> 00:00:00,000
+So let's walk through these steps so you can see them together.
+
+108
+00:00:00,000 --> 00:00:00,000
+So here's our function, lastDigit.
+
+109
+00:00:00,000 --> 00:00:00,000
+The first question is, what kind of thing that returns?
+
+110
+00:00:00,000 --> 00:00:00,000
+Well, it returns an int, so you just write that down.
+
+111
+00:00:00,000 --> 00:00:00,000
+Then we put in the name, lastDigit.
+
+112
+00:00:00,000 --> 00:00:00,000
+Then we put in the parameter.
+
+113
+00:00:00,000 --> 00:00:00,000
+Now this is going to take a digit.
+
+114
+00:00:00,000 --> 00:00:00,000
+It's going to be an int, so it's going to take a number.
+
+115
+00:00:00,000 --> 00:00:00,000
+So I'm going to say int number.
+
+116
+00:00:00,000 --> 00:00:00,000
+Notice this is what a parameter declaration looks like.
+
+117
+00:00:00,000 --> 00:00:00,000
+Just like a regular variable declaration,
+
+118
+00:00:00,000 --> 00:00:00,000
+except we don't put a semicolon there.
+
+119
+00:00:00,000 --> 00:00:00,000
+So int number.
+
+120
+00:00:00,000 --> 00:00:00,000
+So we did step one, two, and three.
+
+121
+00:00:00,000 --> 00:00:00,000
+The return type, what comes out, the name of the function,
+
+122
+00:00:00,000 --> 00:00:00,000
+and what goes into the function, the parameter declarations.
+
+123
+00:00:00,000 --> 00:00:00,000
+Step four is to create the implementation, the body.
+
+124
+00:00:00,000 --> 00:00:00,000
+Step five is to create the output.
+
+125
+00:00:00,000 --> 00:00:00,000
+So this is going to be an int.
+
+126
+00:00:00,000 --> 00:00:00,000
+So we're going to create the result.
+
+127
+00:00:00,000 --> 00:00:00,000
+We're going to initialize it to zero.
+
+128
+00:00:00,000 --> 00:00:00,000
+You can do it like that.
+
+129
+00:00:00,000 --> 00:00:00,000
+You can do it like that.
+
+130
+00:00:00,000 --> 00:00:00,000
+Either one of those is fine.
+
+131
+00:00:00,000 --> 00:00:00,000
+What you can't do is that.
+
+132
+00:00:00,000 --> 00:00:00,000
+If you do that, you have a random result.
+
+133
+00:00:00,000 --> 00:00:00,000
+You don't want to do that.
+
+134
+00:00:00,000 --> 00:00:00,000
+So we'll say int result, set it to zero.
+
+135
+00:00:00,000 --> 00:00:00,000
+And then step six, we're going to return the result.
+
+136
+00:00:00,000 --> 00:00:00,000
+Okay, so now we have our skeleton.
+
+137
+00:00:00,000 --> 00:00:00,000
+Let's test the skeleton to make sure it worked.
+
+138
+00:00:00,000 --> 00:00:00,000
+We're going to go over here.
+
+139
+00:00:00,000 --> 00:00:00,000
+We're going to open an integrated folder on A.
+
+140
+00:00:00,000 --> 00:00:00,000
+So now you notice that is switched to A.
+
+141
+00:00:00,000 --> 00:00:00,000
+I'm going to go here and I'm going to do make test.
+
+142
+00:00:00,000 --> 00:00:00,000
+Now you might be unhappy that you've got no points.
+
+143
+00:00:00,000 --> 00:00:00,000
+You should not be.
+
+144
+00:00:00,000 --> 00:00:00,000
+You should not be unhappy because what you've done is you've done all of the mechanical parts.
+
+145
+00:00:00,000 --> 00:00:00,000
+If it didn't compile at this point,
+
+146
+00:00:00,000 --> 00:00:00,000
+you'd know that you'd made some mistake in your stub, in your skeleton.
+
+147
+00:00:00,000 --> 00:00:00,000
+And you could concentrate on getting that right without worrying about what makes the program work.
+
+148
+00:00:00,000 --> 00:00:00,000
+So that's the whole beauty of this.
+
+149
+00:00:00,000 --> 00:00:00,000
+Create the mechanical part first and then do the stub.
+
+150
+00:00:00,000 --> 00:00:00,000
+So at one point you're concentrating on the syntax, getting that right.
+
+151
+00:00:00,000 --> 00:00:00,000
+The second point you're concentrating on figuring out how to get the program to work.
+
+152
+00:00:00,000 --> 00:00:00,000
+So let's think about how we get this program to work.
+
+153
+00:00:00,000 --> 00:00:00,000
+If we have a number, 35, 7, 67, I want the last digit here.
+
+154
+00:00:00,000 --> 00:00:00,000
+How do I get that 7 right there?
+
+155
+00:00:00,000 --> 00:00:00,000
+Well I get the 7 by taking, dividing the number by 10 and getting the remainder.
+
+156
+00:00:00,000 --> 00:00:00,000
+If I divide the number by 10, I get 356.
+
+157
+00:00:00,000 --> 00:00:00,000
+If I get the remainder, I get the 7 that's left over.
+
+158
+00:00:00,000 --> 00:00:00,000
+So I'm just going to set result equals number, remainder, 10.
+
+159
+00:00:00,000 --> 00:00:00,000
+And I'm going to try that again.
+
+160
+00:00:00,000 --> 00:00:00,000
+OK, let's clear the terminal with control L.
+
+161
+00:00:00,000 --> 00:00:00,000
+Let's do make test.
+
+162
+00:00:00,000 --> 00:00:00,000
+Oh, much better, I got 90.
+
+163
+00:00:00,000 --> 00:00:00,000
+But I have one of these tests that is failing here.
+
+164
+00:00:00,000 --> 00:00:00,000
+It's obvious why it's failing.
+
+165
+00:00:00,000 --> 00:00:00,000
+It's failing because I'm getting -7 here.
+
+166
+00:00:00,000 --> 00:00:00,000
+And so remember I told you that we could use this absolute value function for integers from there.
+
+167
+00:00:00,000 --> 00:00:00,000
+And so we're just going to put the absolute value of number, remainder, 10 into the argument there.
+
+168
+00:00:00,000 --> 00:00:00,000
+And we're going to make test once again.
+
+169
+00:00:00,000 --> 00:00:00,000
+And we have 100%.
+
+170
+00:00:00,000 --> 00:00:00,000
+When you're doing this, try to do it step by step as I've just showed you.
+
+171
+00:00:00,000 --> 00:00:00,000
+Don't start at the top and simply try and type out the answer from the beginning and end.
+
+172
+00:00:00,000 --> 00:00:00,000
+Do it in chunks like this.
+
+173
+00:00:00,000 --> 00:00:00,000
+Build the stub.
+
+174
+00:00:00,000 --> 00:00:00,000
+Make sure the mechanics work.
+
+175
+00:00:00,000 --> 00:00:00,000
+Do the simplest thing that will possibly work.
+
+176
+00:00:00,000 --> 00:00:00,000
+Result equals number, remainder, 10.
+
+177
+00:00:00,000 --> 00:00:00,000
+Then fix up the parts that don't work.
+
+178
+00:00:00,000 --> 00:00:00,000
+Do it incrementally.
+
+179
+00:00:00,000 --> 00:00:00,000
+That will really help you.
+
+180
+00:00:00,000 --> 00:00:00,000
+Now let's start talking about decisions.
+
+181
+00:00:00,000 --> 00:00:00,000
+So if you were writing a programming language, what parts do you need?
+
+182
+00:00:00,000 --> 00:00:00,000
+What features are required?
+
+183
+00:00:00,000 --> 00:00:00,000
+So you can write any programming language using three control structures.
+
+184
+00:00:00,000 --> 00:00:00,000
+This is from a paper that was written back in 1966 by Bohm and Jacopini.
+
+185
+00:00:00,000 --> 00:00:00,000
+So we have been writing programs so far using only one control structure - sequence.
+
+186
+00:00:00,000 --> 00:00:00,000
+That means we did our prompt, then our input, then our processing, then our output.
+
+187
+00:00:00,000 --> 00:00:00,000
+The statements were in order - the first, the second, the third, and so forth.
+
+188
+00:00:00,000 --> 00:00:00,000
+So that's what we've been doing with IPO programs.
+
+189
+00:00:00,000 --> 00:00:00,000
+The second kind of sequence, or the second kind of control structure that we're going to work on now, is called selection.
+
+190
+00:00:00,000 --> 00:00:00,000
+That's conditional execution with an if statement.
+
+191
+00:00:00,000 --> 00:00:00,000
+This is also sometimes called branching.
+
+192
+00:00:00,000 --> 00:00:00,000
+And then we're going to move on and look at iteration.
+
+193
+00:00:00,000 --> 00:00:00,000
+That's while looping.
+
+194
+00:00:00,000 --> 00:00:00,000
+So today we're going to start with selection.
+
+195
+00:00:00,000 --> 00:00:00,000
+Now to make a decision, we first have to think about conditions.
+
+196
+00:00:00,000 --> 00:00:00,000
+So decision making in C++ is based on these three foundations.
+
+197
+00:00:00,000 --> 00:00:00,000
+First, the built-in bool type returns true and false.
+
+198
+00:00:00,000 --> 00:00:00,000
+In Java this is called the boolean type.
+
+199
+00:00:00,000 --> 00:00:00,000
+I think in Python it's called bool as well.
+
+200
+00:00:00,000 --> 00:00:00,000
+Second, but in Python the true and false values are capital true and capital false.
+
+201
+00:00:00,000 --> 00:00:00,000
+In Java they're true and false, lowercase, like this.
+
+202
+00:00:00,000 --> 00:00:00,000
+Secondly, we have a group of operators called relational operators.
+
+203
+00:00:00,000 --> 00:00:00,000
+The relational operators compare values of any type, and they produce a boolean result.
+
+204
+00:00:00,000 --> 00:00:00,000
+Or a true/false result.
+
+205
+00:00:00,000 --> 00:00:00,000
+Finally, we have the logical operators.
+
+206
+00:00:00,000 --> 00:00:00,000
+The logical operators operate not on any kind of value, but only on boolean expressions, or true/false expressions.
+
+207
+00:00:00,000 --> 00:00:00,000
+And they combine them or negate them.
+
+208
+00:00:00,000 --> 00:00:00,000
+So the relational operators are operators like less than, greater than, greater than or equal, less than or equal, and equal.
+
+209
+00:00:00,000 --> 00:00:00,000
+And the logical operators are the operators and, and, or, and, not.
+
+210
+00:00:00,000 --> 00:00:00,000
+Now unfortunately, in C++ truthiness is a little bit more flexible than you might expect if you come from Python or if you come from Java.
+
+211
+00:00:00,000 --> 00:00:00,000
+So here's the problem, and I'm going to walk you through several different pitfalls.
+
+212
+00:00:00,000 --> 00:00:00,000
+Now, as with numbers, C++ has implicit bool conversions.
+
+213
+00:00:00,000 --> 00:00:00,000
+Now, Java has implicit numeric conversions.
+
+214
+00:00:00,000 --> 00:00:00,000
+In other words, it will automatically convert an int to a double, and you don't have to write a cast or anything like that.
+
+215
+00:00:00,000 --> 00:00:00,000
+But C++ will convert a number to a true/false value.
+
+216
+00:00:00,000 --> 00:00:00,000
+Something that Java won't do, and Python won't do.
+
+217
+00:00:00,000 --> 00:00:00,000
+So, if you have a number, and if the expression is false, if the number is anything other than zero, it is true.
+
+218
+00:00:00,000 --> 00:00:00,000
+If the number is zero, it's considered false.
+
+219
+00:00:00,000 --> 00:00:00,000
+So numbers and boolean values are implicitly converted.
+
+220
+00:00:00,000 --> 00:00:00,000
+Suppose I have a number, three, or a variable, a, that is a number.
+
+221
+00:00:00,000 --> 00:00:00,000
+And I want to assign that to a bool.
+
+222
+00:00:00,000 --> 00:00:00,000
+Well, if the number was zero, the bool variable will take on the value false.
+
+223
+00:00:00,000 --> 00:00:00,000
+If it's anything other than zero, a negative number or a positive number, it will be true.
+
+224
+00:00:00,000 --> 00:00:00,000
+Now, suppose I then take that bool variable, and I assign it to a number variable.
+
+225
+00:00:00,000 --> 00:00:00,000
+No matter what the number variable originally was, now if the bool was false, the number will be zero.
+
+226
+00:00:00,000 --> 00:00:00,000
+If the bool was true, the number will be one.
+
+227
+00:00:00,000 --> 00:00:00,000
+Now, in Java, if you print out a boolean variable, you'll get true and false.
+
+228
+00:00:00,000 --> 00:00:00,000
+The same thing is not true in C++.
+
+229
+00:00:00,000 --> 00:00:00,000
+In C++, the default is to print out zero and one.
+
+230
+00:00:00,000 --> 00:00:00,000
+Zero for false, one for true.
+
+231
+00:00:00,000 --> 00:00:00,000
+So if I print out a boolean variable, it will print out zero or one.
+
+232
+00:00:00,000 --> 00:00:00,000
+You can change that by using a manipulator.
+
+233
+00:00:00,000 --> 00:00:00,000
+You remember the manipulators we used for fix and set precision?
+
+234
+00:00:00,000 --> 00:00:00,000
+There's a bool alpha manipulator.
+
+235
+00:00:00,000 --> 00:00:00,000
+If you do that, it will use true and false, just like Java does.
+
+236
+00:00:00,000 --> 00:00:00,000
+So what are the pitfalls of this fact that numbers and boolean values are implicitly convertible?
+
+237
+00:00:00,000 --> 00:00:00,000
+Here's the first pitfall, an embedded assignment.
+
+238
+00:00:00,000 --> 00:00:00,000
+In Java, if we wrote this statement, if area equals zero,
+
+239
+00:00:00,000 --> 00:00:00,000
+now notice that I have the assignment operator there, not the equality operator.
+
+240
+00:00:00,000 --> 00:00:00,000
+In Java, Java would say, "Eh, that's not a boolean value.
+
+241
+00:00:00,000 --> 00:00:00,000
+You've made a mistake in your if statement."
+
+242
+00:00:00,000 --> 00:00:00,000
+In C++, it will actually assign zero to area,
+
+243
+00:00:00,000 --> 00:00:00,000
+and then when the if statement tries to go and evaluate, it'll say,
+
+244
+00:00:00,000 --> 00:00:00,000
+"Oh, I don't have a boolean here, but I have a number,
+
+245
+00:00:00,000 --> 00:00:00,000
+and I can convert that number to a boolean, and so this would be false."
+
+246
+00:00:00,000 --> 00:00:00,000
+If you assign a non-zero, then the condition is considered true.
+
+247
+00:00:00,000 --> 00:00:00,000
+Again, you're not told about this problem.
+
+248
+00:00:00,000 --> 00:00:00,000
+There is no warning.
+
+249
+00:00:00,000 --> 00:00:00,000
+Java, of course, will protect you from this, and C# will protect you from this.
+
+250
+00:00:00,000 --> 00:00:00,000
+They'll protect you from this as long as you're not comparing a boolean value to--
+
+251
+00:00:00,000 --> 00:00:00,000
+or a boolean variable to true and false, in which case you'll have the same problem.
+
+252
+00:00:00,000 --> 00:00:00,000
+So here's a question.
+
+253
+00:00:00,000 --> 00:00:00,000
+Let me ask you this.
+
+254
+00:00:00,000 --> 00:00:00,000
+I'll give you a few seconds.
+
+255
+00:00:00,000 --> 00:00:00,000
+Pause the screen and see if you can answer it, and then I'll talk about it.
+
+256
+00:00:00,000 --> 00:00:00,000
+Okay, so if a equals 3, if a equals 4, a is 4, which is weird,
+
+257
+00:00:00,000 --> 00:00:00,000
+because I just set it to 3, else a is not 4.
+
+258
+00:00:00,000 --> 00:00:00,000
+What prints?
+
+259
+00:00:00,000 --> 00:00:00,000
+a.
+
+260
+00:00:00,000 --> 00:00:00,000
+a is 4, weird.
+
+261
+00:00:00,000 --> 00:00:00,000
+b. a is not 4.
+
+262
+00:00:00,000 --> 00:00:00,000
+That's a syntax error.
+
+263
+00:00:00,000 --> 00:00:00,000
+It won't compile.
+
+264
+00:00:00,000 --> 00:00:00,000
+And d. neither one.
+
+265
+00:00:00,000 --> 00:00:00,000
+So pause for a few seconds and then come back, and we'll answer it.
+
+266
+00:00:00,000 --> 00:00:00,000
+Okay, welcome back.
+
+267
+00:00:00,000 --> 00:00:00,000
+So here I have an embedded assignment instead of a comparison.
+
+268
+00:00:00,000 --> 00:00:00,000
+When you read it, it says if a equals 4, of course it's not 4, it's 3,
+
+269
+00:00:00,000 --> 00:00:00,000
+so I'll go into the else and print a is not 4.
+
+270
+00:00:00,000 --> 00:00:00,000
+In fact, this assigns 4 to a, and then because that is nonzero,
+
+271
+00:00:00,000 --> 00:00:00,000
+the if statement considers it true.
+
+272
+00:00:00,000 --> 00:00:00,000
+And so we go into the truth part, and a prints out.
+
+273
+00:00:00,000 --> 00:00:00,000
+a is 4, weird.
+
+274
+00:00:00,000 --> 00:00:00,000
+So one of the pitfalls of convertibility between bools and numbers in C++.
+
+275
+00:00:00,000 --> 00:00:00,000
+Let me show you a couple other conditional pitfalls.
+
+276
+00:00:00,000 --> 00:00:00,000
+When you use the logical operators and and or,
+
+277
+00:00:00,000 --> 00:00:00,000
+it's possible to have both an impossible and an unavoidable condition.
+
+278
+00:00:00,000 --> 00:00:00,000
+The impossible condition is when you use and.
+
+279
+00:00:00,000 --> 00:00:00,000
+And if you use and, in this case,
+
+280
+00:00:00,000 --> 00:00:00,000
+I'm checking to see if a person is between 13 and 65,
+
+281
+00:00:00,000 --> 00:00:00,000
+but in fact that's not what I've written.
+
+282
+00:00:00,000 --> 00:00:00,000
+This is an impossible condition,
+
+283
+00:00:00,000 --> 00:00:00,000
+because the variable age cannot both be less than 13 and greater than 65.
+
+284
+00:00:00,000 --> 00:00:00,000
+It cannot be both of those.
+
+285
+00:00:00,000 --> 00:00:00,000
+Now we use the term and.
+
+286
+00:00:00,000 --> 00:00:00,000
+Make sure that person is under 13 and greater than 65.
+
+287
+00:00:00,000 --> 00:00:00,000
+We wouldn't say that.
+
+288
+00:00:00,000 --> 00:00:00,000
+However, we do use the term and and or kind of interchangeably in our informal speech.
+
+289
+00:00:00,000 --> 00:00:00,000
+And so you need to make sure every time you use and and or
+
+290
+00:00:00,000 --> 00:00:00,000
+that you double check to make sure you have a condition with and
+
+291
+00:00:00,000 --> 00:00:00,000
+that it's possible for all conditions to be true simultaneously.
+
+292
+00:00:00,000 --> 00:00:00,000
+This condition will always be false.
+
+293
+00:00:00,000 --> 00:00:00,000
+It's impossible.
+
+294
+00:00:00,000 --> 00:00:00,000
+Similarly, if you use or,
+
+295
+00:00:00,000 --> 00:00:00,000
+make sure it's possible for all conditions to be false simultaneously.
+
+296
+00:00:00,000 --> 00:00:00,000
+This condition here,
+
+297
+00:00:00,000 --> 00:00:00,000
+when you read it to yourself,
+
+298
+00:00:00,000 --> 00:00:00,000
+if age is greater than 13 or age is less than 65,
+
+299
+00:00:00,000 --> 00:00:00,000
+do something.
+
+300
+00:00:00,000 --> 00:00:00,000
+We read that kind of informally and it makes sense to us.
+
+301
+00:00:00,000 --> 00:00:00,000
+But we don't realize that every age must be either greater than 13 or less than 65.
+
+302
+00:00:00,000 --> 00:00:00,000
+There is no age that doesn't meet that condition.
+
+303
+00:00:00,000 --> 00:00:00,000
+So it's unavoidable.
+
+304
+00:00:00,000 --> 00:00:00,000
+Finally, because of this implicit conversion to Boolean,
+
+305
+00:00:00,000 --> 00:00:00,000
+it's very, very important to remember to always use complete relational expressions in conditions.
+
+306
+00:00:00,000 --> 00:00:00,000
+This is not a syntax error,
+
+307
+00:00:00,000 --> 00:00:00,000
+and it especially bites people who are Python programmers.
+
+308
+00:00:00,000 --> 00:00:00,000
+So we would read this if age is equal to 12 or 13 or 14,
+
+309
+00:00:00,000 --> 00:00:00,000
+and that would make sense to us when we read it.
+
+310
+00:00:00,000 --> 00:00:00,000
+But the compiler reads it if age equals 12,
+
+311
+00:00:00,000 --> 00:00:00,000
+now that's false,
+
+312
+00:00:00,000 --> 00:00:00,000
+or 13.
+
+313
+00:00:00,000 --> 00:00:00,000
+Well, we're not saying age equals equals 13.
+
+314
+00:00:00,000 --> 00:00:00,000
+We're just saying 13.
+
+315
+00:00:00,000 --> 00:00:00,000
+And remember the Boolean operators and and or operate on Boolean expressions.
+
+316
+00:00:00,000 --> 00:00:00,000
+So 13, even though it's a number here,
+
+317
+00:00:00,000 --> 00:00:00,000
+is treated as a Boolean expression.
+
+318
+00:00:00,000 --> 00:00:00,000
+It's not 0, therefore it's true.
+
+319
+00:00:00,000 --> 00:00:00,000
+So this is if false or true, and it's always true.
+
+320
+00:00:00,000 --> 00:00:00,000
+No matter what you do, no matter what value age it has,
+
+321
+00:00:00,000 --> 00:00:00,000
+this expression will always be true.
+
+322
+00:00:00,000 --> 00:00:00,000
+Let me give you another little quick check here.
+
+323
+00:00:00,000 --> 00:00:00,000
+We have a string grade set to C.
+
+324
+00:00:00,000 --> 00:00:00,000
+If grade equals equals A or A plus or A minus,
+
+325
+00:00:00,000 --> 00:00:00,000
+C out got an A.
+
+326
+00:00:00,000 --> 00:00:00,000
+Else if grade equals B or B plus or B minus,
+
+327
+00:00:00,000 --> 00:00:00,000
+C out got a B.
+
+328
+00:00:00,000 --> 00:00:00,000
+Else if grade equals C or C plus or C minus,
+
+329
+00:00:00,000 --> 00:00:00,000
+C out got a C.
+
+330
+00:00:00,000 --> 00:00:00,000
+What prints, assuming we have all the string includes and everything,
+
+331
+00:00:00,000 --> 00:00:00,000
+does it print got an A, got a B, got a C, or a syntax error?
+
+332
+00:00:00,000 --> 00:00:00,000
+So pause the video here, think about it, write down your answer,
+
+333
+00:00:00,000 --> 00:00:00,000
+and when you come back I'll answer it.
+
+334
+00:00:00,000 --> 00:00:00,000
+OK, welcome back.
+
+335
+00:00:00,000 --> 00:00:00,000
+So this is the same problem we just talked about on the last slide.
+
+336
+00:00:00,000 --> 00:00:00,000
+This is a Boolean expression, a relational expression.
+
+337
+00:00:00,000 --> 00:00:00,000
+So grade equals equals A is false.
+
+338
+00:00:00,000 --> 00:00:00,000
+Now the grade is not equal to A plus,
+
+339
+00:00:00,000 --> 00:00:00,000
+but this is not saying if grade equals equals A plus.
+
+340
+00:00:00,000 --> 00:00:00,000
+That is saying true.
+
+341
+00:00:00,000 --> 00:00:00,000
+It's not zero, it's true.
+
+342
+00:00:00,000 --> 00:00:00,000
+And so this is false or true, that whole expression is true,
+
+343
+00:00:00,000 --> 00:00:00,000
+so this will always print out got an A.
+
+344
+00:00:00,000 --> 00:00:00,000
+Let's look at another pitfall with comparison operators.
+
+345
+00:00:00,000 --> 00:00:00,000
+So here I've called the square root function
+
+346
+00:00:00,000 --> 00:00:00,000
+and stored the result in the variable root.
+
+347
+00:00:00,000 --> 00:00:00,000
+Now I'm taking the square root of 2,
+
+348
+00:00:00,000 --> 00:00:00,000
+and so if I multiply root times root,
+
+349
+00:00:00,000 --> 00:00:00,000
+I should get the square of 2,
+
+350
+00:00:00,000 --> 00:00:00,000
+or the square of the square root of 2,
+
+351
+00:00:00,000 --> 00:00:00,000
+or I should get 2.
+
+352
+00:00:00,000 --> 00:00:00,000
+And so this should print out OK.
+
+353
+00:00:00,000 --> 00:00:00,000
+Now this is syntactically comparable,
+
+354
+00:00:00,000 --> 00:00:00,000
+so I can compare this real number to this real number,
+
+355
+00:00:00,000 --> 00:00:00,000
+but if you simply write it down the way you learned it in mathematics,
+
+356
+00:00:00,000 --> 00:00:00,000
+you will get the wrong answer.
+
+357
+00:00:00,000 --> 00:00:00,000
+This will in fact print out back to Math 30,
+
+358
+00:00:00,000 --> 00:00:00,000
+because these answers will not exactly be 2.
+
+359
+00:00:00,000 --> 00:00:00,000
+And so there is no perfect solution.
+
+360
+00:00:00,000 --> 00:00:00,000
+In general, there's no perfect solution,
+
+361
+00:00:00,000 --> 00:00:00,000
+because real numbers are designed to work with very, very small numbers,
+
+362
+00:00:00,000 --> 00:00:00,000
+like a coronavirus,
+
+363
+00:00:00,000 --> 00:00:00,000
+and very, very large numbers, like the distance to far galaxies.
+
+364
+00:00:00,000 --> 00:00:00,000
+And so we cannot just have some simple value
+
+365
+00:00:00,000 --> 00:00:00,000
+and say if it's this close, it's OK.
+
+366
+00:00:00,000 --> 00:00:00,000
+So in general, you have to decide, based on the problem,
+
+367
+00:00:00,000 --> 00:00:00,000
+what's close enough.
+
+368
+00:00:00,000 --> 00:00:00,000
+We call that the epsilon value.
+
+369
+00:00:00,000 --> 00:00:00,000
+So here's a very common one,
+
+370
+00:00:00,000 --> 00:00:00,000
+1e^-14 is about the biggest difference that can be decided between two doubles.
+
+371
+00:00:00,000 --> 00:00:00,000
+Then you take the two numbers, if you want to see if they're equal,
+
+372
+00:00:00,000 --> 00:00:00,000
+root times root,
+
+373
+00:00:00,000 --> 00:00:00,000
+subtract it from 2.0,
+
+374
+00:00:00,000 --> 00:00:00,000
+and take the absolute value of that.
+
+375
+00:00:00,000 --> 00:00:00,000
+And if the absolute value is less than this epsilon value,
+
+376
+00:00:00,000 --> 00:00:00,000
+then the numbers are equivalently equal.
+
+377
+00:00:00,000 --> 00:00:00,000
+Now this might seem like a lot of work,
+
+378
+00:00:00,000 --> 00:00:00,000
+but it's in fact what you have to do.
+
+379
+00:00:00,000 --> 00:00:00,000
+It's not only what you have to do in C++,
+
+380
+00:00:00,000 --> 00:00:00,000
+it's what you have to do in Java and Python as well.
+
+381
+00:00:00,000 --> 00:00:00,000
+You simply cannot compare real numbers using the relational operators
+
+382
+00:00:00,000 --> 00:00:00,000
+and expect to get back a meaningful answer in every single case.
+
+383
+00:00:00,000 --> 00:00:00,000
+So if you care about correctness,
+
+384
+00:00:00,000 --> 00:00:00,000
+you'll make sure that you do this.
+
+385
+00:00:00,000 --> 00:00:00,000
+OK, so that's the Boolean type and some pitfalls with the Boolean type.
+
+386
+00:00:00,000 --> 00:00:00,000
+Let's go ahead and look at selection, so if statements.
+
+387
+00:00:00,000 --> 00:00:00,000
+Why do we want to use if statements in our code?
+
+388
+00:00:00,000 --> 00:00:00,000
+We use selection to control the flow of data.
+
+389
+00:00:00,000 --> 00:00:00,000
+We want to select a particular value or kind of value from a data flow.
+
+390
+00:00:00,000 --> 00:00:00,000
+For instance, we're getting all the transactions from a gas pump.
+
+391
+00:00:00,000 --> 00:00:00,000
+We want to select the debits or the credits.
+
+392
+00:00:00,000 --> 00:00:00,000
+How much do they owe us? How much did they pay us?
+
+393
+00:00:00,000 --> 00:00:00,000
+We do that with an if statement.
+
+394
+00:00:00,000 --> 00:00:00,000
+Now while this data is going by,
+
+395
+00:00:00,000 --> 00:00:00,000
+we may want to selectively update a counter or an accumulator.
+
+396
+00:00:00,000 --> 00:00:00,000
+We're looking at a string, and we want to count the vowels and the consonants.
+
+397
+00:00:00,000 --> 00:00:00,000
+We need to use an if statement to determine which counter to update.
+
+398
+00:00:00,000 --> 00:00:00,000
+We want to reduce root data to correct part of a program
+
+399
+00:00:00,000 --> 00:00:00,000
+in response to user commands or to input.
+
+400
+00:00:00,000 --> 00:00:00,000
+Oh, I got a credit in.
+
+401
+00:00:00,000 --> 00:00:00,000
+I want to send it to the part of the programs that processes a credit.
+
+402
+00:00:00,000 --> 00:00:00,000
+Oh, they checked three on the menu.
+
+403
+00:00:00,000 --> 00:00:00,000
+I want to go to the action that corresponds to three on the menu.
+
+404
+00:00:00,000 --> 00:00:00,000
+And finally, we use selection to error check data.
+
+405
+00:00:00,000 --> 00:00:00,000
+If the data that comes in is not within the bounds,
+
+406
+00:00:00,000 --> 00:00:00,000
+we would process it to a--we would send it to a place that would correct it.
+
+407
+00:00:00,000 --> 00:00:00,000
+So we'll use error checking.
+
+408
+00:00:00,000 --> 00:00:00,000
+We use selection to control error checking.
+
+409
+00:00:00,000 --> 00:00:00,000
+The important thing to realize about this is that selection produces information.
+
+410
+00:00:00,000 --> 00:00:00,000
+Selection is back to our old friend input, processing, and output.
+
+411
+00:00:00,000 --> 00:00:00,000
+When you come to a selection statement,
+
+412
+00:00:00,000 --> 00:00:00,000
+you have raw information before the selection statement--
+
+413
+00:00:00,000 --> 00:00:00,000
+raw data before the selection statement.
+
+414
+00:00:00,000 --> 00:00:00,000
+After the selection statement, things have changed.
+
+415
+00:00:00,000 --> 00:00:00,000
+You know some more information.
+
+416
+00:00:00,000 --> 00:00:00,000
+You know that I've found one more vowel
+
+417
+00:00:00,000 --> 00:00:00,000
+or that I've added something to the amount that the user has paid.
+
+418
+00:00:00,000 --> 00:00:00,000
+So selection produces information just like an IPO program.
+
+419
+00:00:00,000 --> 00:00:00,000
+Input, processing, and output is the basic function that all computing is based on.
+
+420
+00:00:00,000 --> 00:00:00,000
+Okay, so let's look at the six selection structures we have in C++.
+
+421
+00:00:00,000 --> 00:00:00,000
+We have one-way independent if statements.
+
+422
+00:00:00,000 --> 00:00:00,000
+So if this is true, do that or then do that.
+
+423
+00:00:00,000 --> 00:00:00,000
+We have two-way or either/or actions.
+
+424
+00:00:00,000 --> 00:00:00,000
+So this is--if this is true, do that; otherwise or else, do that.
+
+425
+00:00:00,000 --> 00:00:00,000
+We have sequential dependent if statements.
+
+426
+00:00:00,000 --> 00:00:00,000
+So if this is true, do that; else, if this is true, do that;
+
+427
+00:00:00,000 --> 00:00:00,000
+else, if neither of those are true, do the third thing.
+
+428
+00:00:00,000 --> 00:00:00,000
+We have nested or leveled decisions.
+
+429
+00:00:00,000 --> 00:00:00,000
+If A is true and if B is true, do something;
+
+430
+00:00:00,000 --> 00:00:00,000
+else, if A is true and B is false, do something else;
+
+431
+00:00:00,000 --> 00:00:00,000
+else, if A is false and B is true, do something;
+
+432
+00:00:00,000 --> 00:00:00,000
+else, if A is false and B is false, do something else.
+
+433
+00:00:00,000 --> 00:00:00,000
+Nested or leveled decision making.
+
+434
+00:00:00,000 --> 00:00:00,000
+We have labeled integral tests.
+
+435
+00:00:00,000 --> 00:00:00,000
+This is called the switch structure.
+
+436
+00:00:00,000 --> 00:00:00,000
+And finally, we have a selection expression.
+
+437
+00:00:00,000 --> 00:00:00,000
+This is called the conditional operator.
+
+438
+00:00:00,000 --> 00:00:00,000
+So we do a test.
+
+439
+00:00:00,000 --> 00:00:00,000
+If the test is true, this value is assigned to val.
+
+440
+00:00:00,000 --> 00:00:00,000
+If the test is false, this value is assigned to val.
+
+441
+00:00:00,000 --> 00:00:00,000
+Now, in looking at these six kinds of selection structures,
+
+442
+00:00:00,000 --> 00:00:00,000
+you have to understand that they're not all designed
+
+443
+00:00:00,000 --> 00:00:00,000
+to do exactly the same thing.
+
+444
+00:00:00,000 --> 00:00:00,000
+We have a rubric to decide which one is the right one to use.
+
+445
+00:00:00,000 --> 00:00:00,000
+The first rubric is we want to make sure that
+
+446
+00:00:00,000 --> 00:00:00,000
+whichever selection structure we use,
+
+447
+00:00:00,000 --> 00:00:00,000
+it produces the correct output.
+
+448
+00:00:00,000 --> 00:00:00,000
+That's kind of the non...we can't argue with that.
+
+449
+00:00:00,000 --> 00:00:00,000
+It has to produce the correct output.
+
+450
+00:00:00,000 --> 00:00:00,000
+The second thing we want to do is we want to make sure
+
+451
+00:00:00,000 --> 00:00:00,000
+that whichever selection structure we use,
+
+452
+00:00:00,000 --> 00:00:00,000
+that the code we produce is understandable
+
+453
+00:00:00,000 --> 00:00:00,000
+and it's maintainable, meaning when you come back to it,
+
+454
+00:00:00,000 --> 00:00:00,000
+you can change it and the code still works correctly.
+
+455
+00:00:00,000 --> 00:00:00,000
+You can understand it and maintain it.
+
+456
+00:00:00,000 --> 00:00:00,000
+Thirdly, we want to make sure we use the correct semantics.
+
+457
+00:00:00,000 --> 00:00:00,000
+Each of these statements says something
+
+458
+00:00:00,000 --> 00:00:00,000
+to a programmer who understands programming.
+
+459
+00:00:00,000 --> 00:00:00,000
+And so it's like learning an idiom in a new language.
+
+460
+00:00:00,000 --> 00:00:00,000
+If you're speaking French, there are idioms
+
+461
+00:00:00,000 --> 00:00:00,000
+that are French idioms.
+
+462
+00:00:00,000 --> 00:00:00,000
+You want to learn the idioms so when you say them,
+
+463
+00:00:00,000 --> 00:00:00,000
+the French speakers will understand you.
+
+464
+00:00:00,000 --> 00:00:00,000
+The same way with programming.
+
+465
+00:00:00,000 --> 00:00:00,000
+If you use a one-way independent if statement,
+
+466
+00:00:00,000 --> 00:00:00,000
+you may get all of your code correct.
+
+467
+00:00:00,000 --> 00:00:00,000
+It may be understandable and maintainable,
+
+468
+00:00:00,000 --> 00:00:00,000
+but it's not saying what you think it's saying,
+
+469
+00:00:00,000 --> 00:00:00,000
+even if it produces the correct output.
+
+470
+00:00:00,000 --> 00:00:00,000
+So using the correct semantics means using
+
+471
+00:00:00,000 --> 00:00:00,000
+the correct kind of selection structure
+
+472
+00:00:00,000 --> 00:00:00,000
+for the situation you're in.
+
+473
+00:00:00,000 --> 00:00:00,000
+And only then, after we've done those three,
+
+474
+00:00:00,000 --> 00:00:00,000
+do we want to fall back and think about,
+
+475
+00:00:00,000 --> 00:00:00,000
+"Oh, I want to make sure that this code is efficient
+
+476
+00:00:00,000 --> 00:00:00,000
+as it possibly could be."
+
+477
+00:00:00,000 --> 00:00:00,000
+Okay, so let's look at which one is the correct one
+
+478
+00:00:00,000 --> 00:00:00,000
+to use in each situation.
+
+479
+00:00:00,000 --> 00:00:00,000
+Imagine that you're writing the code that is going to process
+
+480
+00:00:00,000 --> 00:00:00,000
+this dialog box over here.
+
+481
+00:00:00,000 --> 00:00:00,000
+Notice it has these check boxes.
+
+482
+00:00:00,000 --> 00:00:00,000
+These check boxes mean that I could select one
+
+483
+00:00:00,000 --> 00:00:00,000
+or all of them or none of them.
+
+484
+00:00:00,000 --> 00:00:00,000
+So the decisions and what happens
+
+485
+00:00:00,000 --> 00:00:00,000
+based on that decision is truly independent.
+
+486
+00:00:00,000 --> 00:00:00,000
+When this happens, the only way to write these,
+
+487
+00:00:00,000 --> 00:00:00,000
+you can't use if/else, you can't use if/else/if,
+
+488
+00:00:00,000 --> 00:00:00,000
+you must use independent ifs.
+
+489
+00:00:00,000 --> 00:00:00,000
+So if the startup task pane is checked,
+
+490
+00:00:00,000 --> 00:00:00,000
+we're going to do whatever action is required for that.
+
+491
+00:00:00,000 --> 00:00:00,000
+That has nothing to do with whether
+
+492
+00:00:00,000 --> 00:00:00,000
+the layout was checked
+
+493
+00:00:00,000 --> 00:00:00,000
+or any of the other ones were checked.
+
+494
+00:00:00,000 --> 00:00:00,000
+And so independent ifs are the correct way to do this.
+
+495
+00:00:00,000 --> 00:00:00,000
+This is called the "guarded action" idiom.
+
+496
+00:00:00,000 --> 00:00:00,000
+In other words, we're only doing the action
+
+497
+00:00:00,000 --> 00:00:00,000
+if we pass the test at the start of the action.
+
+498
+00:00:00,000 --> 00:00:00,000
+The test condition is guarding
+
+499
+00:00:00,000 --> 00:00:00,000
+the action that we're doing.
+
+500
+00:00:00,000 --> 00:00:00,000
+This is the only case
+
+501
+00:00:00,000 --> 00:00:00,000
+that you should ever use independent ifs.
+
+502
+00:00:00,000 --> 00:00:00,000
+If this situation is not true,
+
+503
+00:00:00,000 --> 00:00:00,000
+using independent ifs is the wrong
+
+504
+00:00:00,000 --> 00:00:00,000
+semantics for that case.
+
+505
+00:00:00,000 --> 00:00:00,000
+So let's look at another one.
+
+506
+00:00:00,000 --> 00:00:00,000
+And beginning programmers, they learn the if statement
+
+507
+00:00:00,000 --> 00:00:00,000
+and they try and use the if statement,
+
+508
+00:00:00,000 --> 00:00:00,000
+the independent if statement, for everything.
+
+509
+00:00:00,000 --> 00:00:00,000
+What happens if you have an either/or decision
+
+510
+00:00:00,000 --> 00:00:00,000
+or a two-way branch?
+
+511
+00:00:00,000 --> 00:00:00,000
+For this, we want to use the
+
+512
+00:00:00,000 --> 00:00:00,000
+else statement. The reason we want to use
+
+513
+00:00:00,000 --> 00:00:00,000
+the else statement is because it covers all
+
+514
+00:00:00,000 --> 00:00:00,000
+possibilities. In other words, for
+
+515
+00:00:00,000 --> 00:00:00,000
+every possible input, you want to put it
+
+516
+00:00:00,000 --> 00:00:00,000
+in bucket A or bucket B.
+
+517
+00:00:00,000 --> 00:00:00,000
+If you try doing this with
+
+518
+00:00:00,000 --> 00:00:00,000
+independent if statements, you will
+
+519
+00:00:00,000 --> 00:00:00,000
+make a mistake when you write the second if statement
+
+520
+00:00:00,000 --> 00:00:00,000
+eventually. And that mistake will
+
+521
+00:00:00,000 --> 00:00:00,000
+either allow you to skip some inputs
+
+522
+00:00:00,000 --> 00:00:00,000
+or it will allow you to put an input
+
+523
+00:00:00,000 --> 00:00:00,000
+in both buckets, which you don't want
+
+524
+00:00:00,000 --> 00:00:00,000
+to do. So think of the situation of
+
+525
+00:00:00,000 --> 00:00:00,000
+paying someone overtime
+
+526
+00:00:00,000 --> 00:00:00,000
+when they get... or paying time
+
+527
+00:00:00,000 --> 00:00:00,000
+and a half when someone gets overtime, more than
+
+528
+00:00:00,000 --> 00:00:00,000
+40 hours a week. If you do it with
+
+529
+00:00:00,000 --> 00:00:00,000
+independent if statements, you're likely to write
+
+530
+00:00:00,000 --> 00:00:00,000
+if hours is less than 40,
+
+531
+00:00:00,000 --> 00:00:00,000
+pay them normal time.
+
+532
+00:00:00,000 --> 00:00:00,000
+Else... or if hours is greater than 40,
+
+533
+00:00:00,000 --> 00:00:00,000
+pay them overtime.
+
+534
+00:00:00,000 --> 00:00:00,000
+Well, you've just skipped the people whose hours were exactly
+
+535
+00:00:00,000 --> 00:00:00,000
+40. If you go back and you realize
+
+536
+00:00:00,000 --> 00:00:00,000
+you've skipped some people,
+
+537
+00:00:00,000 --> 00:00:00,000
+if hours less than or equal
+
+538
+00:00:00,000 --> 00:00:00,000
+to 40, pay them normally. If hours
+
+539
+00:00:00,000 --> 00:00:00,000
+greater or equal to 40, pay them overtime.
+
+540
+00:00:00,000 --> 00:00:00,000
+You've just paid the overtime people twice.
+
+541
+00:00:00,000 --> 00:00:00,000
+So again, if you use if/else,
+
+542
+00:00:00,000 --> 00:00:00,000
+someone will either be in the normal bucket
+
+543
+00:00:00,000 --> 00:00:00,000
+or the overtime bucket, and they will never be
+
+544
+00:00:00,000 --> 00:00:00,000
+in both buckets. And so it will
+
+545
+00:00:00,000 --> 00:00:00,000
+skip you, it will avoid
+
+546
+00:00:00,000 --> 00:00:00,000
+you doing situations where that problem occurs.
+
+547
+00:00:00,000 --> 00:00:00,000
+So let's do an exercise. This is called
+
+548
+00:00:00,000 --> 00:00:00,000
+the double sum exercise.
+
+549
+00:00:00,000 --> 00:00:00,000
+Let's go back to our code space. I need to restart
+
+550
+00:00:00,000 --> 00:00:00,000
+my code space because it stopped while I was
+
+551
+00:00:00,000 --> 00:00:00,000
+talking to you guys.
+
+552
+00:00:00,000 --> 00:00:00,000
+Let's see how long this
+
+553
+00:00:00,000 --> 00:00:00,000
+takes to do it.
+
+554
+00:00:00,000 --> 00:00:00,000
+[silence]
+
+555
+00:00:00,000 --> 00:00:00,000
+Okay, we were in last digit,
+
+556
+00:00:00,000 --> 00:00:00,000
+so I'm going to close last digit. We're going to
+
+557
+00:00:00,000 --> 00:00:00,000
+go into B, and we're going to do
+
+558
+00:00:00,000 --> 00:00:00,000
+the double sum problem.
+
+559
+00:00:00,000 --> 00:00:00,000
+So let's look
+
+560
+00:00:00,000 --> 00:00:00,000
+at the problem here.
+
+561
+00:00:00,000 --> 00:00:00,000
+We're going to write a function, which
+
+562
+00:00:00,000 --> 00:00:00,000
+given two int arguments, returns a sum
+
+563
+00:00:00,000 --> 00:00:00,000
+unless the two values are the same, we're going to return
+
+564
+00:00:00,000 --> 00:00:00,000
+double the sum.
+
+565
+00:00:00,000 --> 00:00:00,000
+Okay, so let's put our
+
+566
+00:00:00,000 --> 00:00:00,000
+name on this one.
+
+567
+00:00:00,000 --> 00:00:00,000
+So this
+
+568
+00:00:00,000 --> 00:00:00,000
+is going to take two int arguments,
+
+569
+00:00:00,000 --> 00:00:00,000
+so it's going to return an int.
+
+570
+00:00:00,000 --> 00:00:00,000
+Its name is double sum.
+
+571
+00:00:00,000 --> 00:00:00,000
+It's going to take two parameters,
+
+572
+00:00:00,000 --> 00:00:00,000
+so int a and
+
+573
+00:00:00,000 --> 00:00:00,000
+int b.
+
+574
+00:00:00,000 --> 00:00:00,000
+We're going to put the body on it.
+
+575
+00:00:00,000 --> 00:00:00,000
+We're going to create the result.
+
+576
+00:00:00,000 --> 00:00:00,000
+[typing]
+
+577
+00:00:00,000 --> 00:00:00,000
+And we're going to return the result.
+
+578
+00:00:00,000 --> 00:00:00,000
+[typing]
+
+579
+00:00:00,000 --> 00:00:00,000
+And we're going to try it out to make sure we got it
+
+580
+00:00:00,000 --> 00:00:00,000
+correctly mechanically working.
+
+581
+00:00:00,000 --> 00:00:00,000
+So, right click, open a new integrated terminal.
+
+582
+00:00:00,000 --> 00:00:00,000
+Do make
+
+583
+00:00:00,000 --> 00:00:00,000
+test.
+
+584
+00:00:00,000 --> 00:00:00,000
+And it compiles
+
+585
+00:00:00,000 --> 00:00:00,000
+and runs correctly.
+
+586
+00:00:00,000 --> 00:00:00,000
+So we know we've got the mechanical parts.
+
+587
+00:00:00,000 --> 00:00:00,000
+Okay, so we want to say
+
+588
+00:00:00,000 --> 00:00:00,000
+two things here.
+
+589
+00:00:00,000 --> 00:00:00,000
+So if
+
+590
+00:00:00,000 --> 00:00:00,000
+a
+
+591
+00:00:00,000 --> 00:00:00,000
+is equal to b
+
+592
+00:00:00,000 --> 00:00:00,000
+I'm going to
+
+593
+00:00:00,000 --> 00:00:00,000
+set the result equal to
+
+594
+00:00:00,000 --> 00:00:00,000
+two times a plus b.
+
+595
+00:00:00,000 --> 00:00:00,000
+Else
+
+596
+00:00:00,000 --> 00:00:00,000
+I'm going to set the result
+
+597
+00:00:00,000 --> 00:00:00,000
+equal to a plus b.
+
+598
+00:00:00,000 --> 00:00:00,000
+Okay, so
+
+599
+00:00:00,000 --> 00:00:00,000
+this is relatively
+
+600
+00:00:00,000 --> 00:00:00,000
+straightforward.
+
+601
+00:00:00,000 --> 00:00:00,000
+It uses the correct semantics, if and else.
+
+602
+00:00:00,000 --> 00:00:00,000
+In other words, something a
+
+603
+00:00:00,000 --> 00:00:00,000
+either is equal to b or it's not equal to b.
+
+604
+00:00:00,000 --> 00:00:00,000
+And it's going to
+
+605
+00:00:00,000 --> 00:00:00,000
+go into one of these or the other.
+
+606
+00:00:00,000 --> 00:00:00,000
+So if we look back to our
+
+607
+00:00:00,000 --> 00:00:00,000
+four
+
+608
+00:00:00,000 --> 00:00:00,000
+rubric that we were looking at
+
+609
+00:00:00,000 --> 00:00:00,000
+to see if we've done it correctly.
+
+610
+00:00:00,000 --> 00:00:00,000
+We've seen that it produces the correct result.
+
+611
+00:00:00,000 --> 00:00:00,000
+And of course I'm going to check here to make sure it does produce the correct result.
+
+612
+00:00:00,000 --> 00:00:00,000
+So I'm going to do make test.
+
+613
+00:00:00,000 --> 00:00:00,000
+And yay,
+
+614
+00:00:00,000 --> 00:00:00,000
+we have 100%.
+
+615
+00:00:00,000 --> 00:00:00,000
+So it's pretty
+
+616
+00:00:00,000 --> 00:00:00,000
+understandable with if else.
+
+617
+00:00:00,000 --> 00:00:00,000
+I can see what's happening.
+
+618
+00:00:00,000 --> 00:00:00,000
+It's semantically correct. It's an either or decision.
+
+619
+00:00:00,000 --> 00:00:00,000
+It's not quite as efficient as I wanted.
+
+620
+00:00:00,000 --> 00:00:00,000
+So we could come back here, even though we have it done
+
+621
+00:00:00,000 --> 00:00:00,000
+correct and we're happy with it.
+
+622
+00:00:00,000 --> 00:00:00,000
+We might come back and say, you know, I don't like the fact that I'm calculating
+
+623
+00:00:00,000 --> 00:00:00,000
+a plus b twice.
+
+624
+00:00:00,000 --> 00:00:00,000
+I'm calculating a plus b twice.
+
+625
+00:00:00,000 --> 00:00:00,000
+And we could change that by
+
+626
+00:00:00,000 --> 00:00:00,000
+simply taking our initial result
+
+627
+00:00:00,000 --> 00:00:00,000
+and putting in a plus b.
+
+628
+00:00:00,000 --> 00:00:00,000
+Now we can
+
+629
+00:00:00,000 --> 00:00:00,000
+get rid of this else part all together.
+
+630
+00:00:00,000 --> 00:00:00,000
+Now I still
+
+631
+00:00:00,000 --> 00:00:00,000
+have an either or condition.
+
+632
+00:00:00,000 --> 00:00:00,000
+This is my else condition
+
+633
+00:00:00,000 --> 00:00:00,000
+and this is my if condition.
+
+634
+00:00:00,000 --> 00:00:00,000
+And so I don't have to say a plus b again.
+
+635
+00:00:00,000 --> 00:00:00,000
+I can say two times result like that.
+
+636
+00:00:00,000 --> 00:00:00,000
+So this is the initial value.
+
+637
+00:00:00,000 --> 00:00:00,000
+This is still an alternative action
+
+638
+00:00:00,000 --> 00:00:00,000
+even though I'm not using the else statement.
+
+639
+00:00:00,000 --> 00:00:00,000
+And it's somewhat more efficient.
+
+640
+00:00:00,000 --> 00:00:00,000
+Right? Somewhat more efficient.
+
+641
+00:00:00,000 --> 00:00:00,000
+It still has a slightly
+
+642
+00:00:00,000 --> 00:00:00,000
+it still has a slight chance
+
+643
+00:00:00,000 --> 00:00:00,000
+of error though. Remember our second
+
+644
+00:00:00,000 --> 00:00:00,000
+thing was to make sure it's maintainable.
+
+645
+00:00:00,000 --> 00:00:00,000
+What would that second chance of error be?
+
+646
+00:00:00,000 --> 00:00:00,000
+Well, because I'm using equals equals here, I'm
+
+647
+00:00:00,000 --> 00:00:00,000
+susceptible to doing that.
+
+648
+00:00:00,000 --> 00:00:00,000
+And if I do that, of course,
+
+649
+00:00:00,000 --> 00:00:00,000
+I break the first rule. Oh, actually I have the
+
+650
+00:00:00,000 --> 00:00:00,000
+warning set up so that
+
+651
+00:00:00,000 --> 00:00:00,000
+this will actually catch that.
+
+652
+00:00:00,000 --> 00:00:00,000
+As in C++ normally
+
+653
+00:00:00,000 --> 00:00:00,000
+it wouldn't catch that. So I have an extra warning set up
+
+654
+00:00:00,000 --> 00:00:00,000
+w error parenthesis
+
+655
+00:00:00,000 --> 00:00:00,000
+to catch that.
+
+656
+00:00:00,000 --> 00:00:00,000
+However, it's possible we couldn't catch that.
+
+657
+00:00:00,000 --> 00:00:00,000
+Right? It's possible we couldn't catch that.
+
+658
+00:00:00,000 --> 00:00:00,000
+And so
+
+659
+00:00:00,000 --> 00:00:00,000
+we might want to do something else.
+
+660
+00:00:00,000 --> 00:00:00,000
+We might want to write this if a not equal to b
+
+661
+00:00:00,000 --> 00:00:00,000
+result equals
+
+662
+00:00:00,000 --> 00:00:00,000
+a plus b
+
+663
+00:00:00,000 --> 00:00:00,000
+and then do the else part.
+
+664
+00:00:00,000 --> 00:00:00,000
+So I'm going to put that back the way I had it.
+
+665
+00:00:00,000 --> 00:00:00,000
+And I'm just going to rely
+
+666
+00:00:00,000 --> 00:00:00,000
+on the fact that my compiler here is catching that
+
+667
+00:00:00,000 --> 00:00:00,000
+so I don't have to worry about it.
+
+668
+00:00:00,000 --> 00:00:00,000
+OK,
+
+669
+00:00:00,000 --> 00:00:00,000
+let's go on to our next
+
+670
+00:00:00,000 --> 00:00:00,000
+kind of decision statement.
+
+671
+00:00:00,000 --> 00:00:00,000
+Our next kind of selection statement.
+
+672
+00:00:00,000 --> 00:00:00,000
+Multiway interdependent tests.
+
+673
+00:00:00,000 --> 00:00:00,000
+Now remember I said you should not
+
+674
+00:00:00,000 --> 00:00:00,000
+use if for
+
+675
+00:00:00,000 --> 00:00:00,000
+anything other than independent tests.
+
+676
+00:00:00,000 --> 00:00:00,000
+And in this case we have an
+
+677
+00:00:00,000 --> 00:00:00,000
+interdependent test. So if
+
+678
+00:00:00,000 --> 00:00:00,000
+percent greater than one
+
+679
+00:00:00,000 --> 00:00:00,000
+we get out of range. If percent is less than one we set
+
+680
+00:00:00,000 --> 00:00:00,000
+the result to a. If percent is less than ninety
+
+681
+00:00:00,000 --> 00:00:00,000
+we set the result to b. Set the result to c.
+
+682
+00:00:00,000 --> 00:00:00,000
+We set our result to 65. We're going to
+
+683
+00:00:00,000 --> 00:00:00,000
+set the result to d because this is true.
+
+684
+00:00:00,000 --> 00:00:00,000
+This one is false so we won't change it to f.
+
+685
+00:00:00,000 --> 00:00:00,000
+This one is also false so we won't change it
+
+686
+00:00:00,000 --> 00:00:00,000
+out of range. So we'll set the result to 65.
+
+687
+00:00:00,000 --> 00:00:00,000
+However, the test order
+
+688
+00:00:00,000 --> 00:00:00,000
+is significant. So notice I've just
+
+689
+00:00:00,000 --> 00:00:00,000
+changed the order of these two tests.
+
+690
+00:00:00,000 --> 00:00:00,000
+I've done 90 then 70 then 80.
+
+691
+00:00:00,000 --> 00:00:00,000
+And so this time
+
+692
+00:00:00,000 --> 00:00:00,000
+65 is less than 90 so I get a b.
+
+693
+00:00:00,000 --> 00:00:00,000
+65 is less than 70 so I get a d.
+
+694
+00:00:00,000 --> 00:00:00,000
+65 is less than 80
+
+695
+00:00:00,000 --> 00:00:00,000
+so I overwrite that d with a c
+
+696
+00:00:00,000 --> 00:00:00,000
+and I end up with a c out of this. Now you might be
+
+697
+00:00:00,000 --> 00:00:00,000
+happy about the fact that I've done this
+
+698
+00:00:00,000 --> 00:00:00,000
+but we've broken our first most important
+
+699
+00:00:00,000 --> 00:00:00,000
+rubric rule. The output
+
+700
+00:00:00,000 --> 00:00:00,000
+is not correct.
+
+701
+00:00:00,000 --> 00:00:00,000
+So this is not the correct way
+
+702
+00:00:00,000 --> 00:00:00,000
+to write interdependent tests.
+
+703
+00:00:00,000 --> 00:00:00,000
+If one test depends on the result
+
+704
+00:00:00,000 --> 00:00:00,000
+of both of the tests that came before it or after it
+
+705
+00:00:00,000 --> 00:00:00,000
+you have, are not supposed to use
+
+706
+00:00:00,000 --> 00:00:00,000
+independent if statements.
+
+707
+00:00:00,000 --> 00:00:00,000
+Instead, when only
+
+708
+00:00:00,000 --> 00:00:00,000
+one condition can be true, then you should
+
+709
+00:00:00,000 --> 00:00:00,000
+use if, else if,
+
+710
+00:00:00,000 --> 00:00:00,000
+else if, else if. These are
+
+711
+00:00:00,000 --> 00:00:00,000
+called ladder style if, else if
+
+712
+00:00:00,000 --> 00:00:00,000
+statements. They're ladder style because you can read
+
+713
+00:00:00,000 --> 00:00:00,000
+on them like the rungs of a ladder and you can
+
+714
+00:00:00,000 --> 00:00:00,000
+look at each condition and pick out the
+
+715
+00:00:00,000 --> 00:00:00,000
+one condition that could possibly
+
+716
+00:00:00,000 --> 00:00:00,000
+be true. And so this is
+
+717
+00:00:00,000 --> 00:00:00,000
+a program that is checking and turning
+
+718
+00:00:00,000 --> 00:00:00,000
+a number, "and" into
+
+719
+00:00:00,000 --> 00:00:00,000
+a word. One, two, three,
+
+720
+00:00:00,000 --> 00:00:00,000
+four billion, two hundred and so forth.
+
+721
+00:00:00,000 --> 00:00:00,000
+So this is obviously correct.
+
+722
+00:00:00,000 --> 00:00:00,000
+The order matters, so you have to be
+
+723
+00:00:00,000 --> 00:00:00,000
+more careful. In other words, because
+
+724
+00:00:00,000 --> 00:00:00,000
+only one of them can be correct, you have to
+
+725
+00:00:00,000 --> 00:00:00,000
+make sure that you select kind of
+
+726
+00:00:00,000 --> 00:00:00,000
+from the left as the problems come in.
+
+727
+00:00:00,000 --> 00:00:00,000
+It's semantically correct. It says there will only
+
+728
+00:00:00,000 --> 00:00:00,000
+be one output, whereas the previous one
+
+729
+00:00:00,000 --> 00:00:00,000
+was not semantically correct. It's efficient
+
+730
+00:00:00,000 --> 00:00:00,000
+once the answer is found, there
+
+731
+00:00:00,000 --> 00:00:00,000
+is no more checking.
+
+732
+00:00:00,000 --> 00:00:00,000
+There is no more checking.
+
+733
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and do that. This will be our
+
+734
+00:00:00,000 --> 00:00:00,000
+last exercise here. And we're going to use these
+
+735
+00:00:00,000 --> 00:00:00,000
+sequential if statements to check
+
+736
+00:00:00,000 --> 00:00:00,000
+on some dates for the
+
+737
+00:00:00,000 --> 00:00:00,000
+four seasons problem. So this is part
+
+738
+00:00:00,000 --> 00:00:00,000
+C.
+
+739
+00:00:00,000 --> 00:00:00,000
+So let me open four seasons. Let me
+
+740
+00:00:00,000 --> 00:00:00,000
+close that dash shell there.
+
+741
+00:00:00,000 --> 00:00:00,000
+Close that dash shell. And let's put our name
+
+742
+00:00:00,000 --> 00:00:00,000
+on the top of it.
+
+743
+00:00:00,000 --> 00:00:00,000
+And let's look at the problem for four seasons.
+
+744
+00:00:00,000 --> 00:00:00,000
+We're going to write a function named
+
+745
+00:00:00,000 --> 00:00:00,000
+season. We're given two integer arguments
+
+746
+00:00:00,000 --> 00:00:00,000
+representing a month and a day.
+
+747
+00:00:00,000 --> 00:00:00,000
+And we're going to
+
+748
+00:00:00,000 --> 00:00:00,000
+return the season for that month and day.
+
+749
+00:00:00,000 --> 00:00:00,000
+Assume that months are specified as an
+
+750
+00:00:00,000 --> 00:00:00,000
+integer between 1 and 12, 1 for January,
+
+751
+00:00:00,000 --> 00:00:00,000
+2 for February. And the day is specified between
+
+752
+00:00:00,000 --> 00:00:00,000
+1 and 31.
+
+753
+00:00:00,000 --> 00:00:00,000
+So we can write the skeleton.
+
+754
+00:00:00,000 --> 00:00:00,000
+So string
+
+755
+00:00:00,000 --> 00:00:00,000
+season
+
+756
+00:00:00,000 --> 00:00:00,000
+int month
+
+757
+00:00:00,000 --> 00:00:00,000
+int day
+
+758
+00:00:00,000 --> 00:00:00,000
+string result
+
+759
+00:00:00,000 --> 00:00:00,000
+Now,
+
+760
+00:00:00,000 --> 00:00:00,000
+when we wrote
+
+761
+00:00:00,000 --> 00:00:00,000
+the, when we had a result
+
+762
+00:00:00,000 --> 00:00:00,000
+that was an integer, we had to give it
+
+763
+00:00:00,000 --> 00:00:00,000
+a starting value. With the string
+
+764
+00:00:00,000 --> 00:00:00,000
+type, because it's a class type, we do not.
+
+765
+00:00:00,000 --> 00:00:00,000
+This will be the empty string.
+
+766
+00:00:00,000 --> 00:00:00,000
+So you don't need to write string result
+
+767
+00:00:00,000 --> 00:00:00,000
+equals quote quote. As a matter of fact,
+
+768
+00:00:00,000 --> 00:00:00,000
+you shouldn't do that.
+
+769
+00:00:00,000 --> 00:00:00,000
+That actually does, requires the compiler
+
+770
+00:00:00,000 --> 00:00:00,000
+or the run time to do some extra work.
+
+771
+00:00:00,000 --> 00:00:00,000
+And we're going to return our result.
+
+772
+00:00:00,000 --> 00:00:00,000
+I'm going to open a shell here.
+
+773
+00:00:00,000 --> 00:00:00,000
+And I'm going to make sure that this
+
+774
+00:00:00,000 --> 00:00:00,000
+compiles and runs.
+
+775
+00:00:00,000 --> 00:00:00,000
+So I'm going to do make test.
+
+776
+00:00:00,000 --> 00:00:00,000
+OK, so you can see that again I got
+
+777
+00:00:00,000 --> 00:00:00,000
+zero, but I don't care about that. All I care about
+
+778
+00:00:00,000 --> 00:00:00,000
+is the fact that this runs.
+
+779
+00:00:00,000 --> 00:00:00,000
+So here, now let's go look at
+
+780
+00:00:00,000 --> 00:00:00,000
+the conditions we want.
+
+781
+00:00:00,000 --> 00:00:00,000
+So we have, are going to return
+
+782
+00:00:00,000 --> 00:00:00,000
+winter, spring, summer, fall
+
+783
+00:00:00,000 --> 00:00:00,000
+or invalid. So we have
+
+784
+00:00:00,000 --> 00:00:00,000
+five possible outputs.
+
+785
+00:00:00,000 --> 00:00:00,000
+So we can go ahead and write the skeleton for that.
+
+786
+00:00:00,000 --> 00:00:00,000
+If something
+
+787
+00:00:00,000 --> 00:00:00,000
+we're going to set
+
+788
+00:00:00,000 --> 00:00:00,000
+the result to that.
+
+789
+00:00:00,000 --> 00:00:00,000
+Else if something else.
+
+790
+00:00:00,000 --> 00:00:00,000
+We're going to set the result to something else.
+
+791
+00:00:00,000 --> 00:00:00,000
+Else if something else.
+
+792
+00:00:00,000 --> 00:00:00,000
+So one, two, three.
+
+793
+00:00:00,000 --> 00:00:00,000
+Else if something else.
+
+794
+00:00:00,000 --> 00:00:00,000
+Four. And
+
+795
+00:00:00,000 --> 00:00:00,000
+if it's none of those, it must be this one
+
+796
+00:00:00,000 --> 00:00:00,000
+down here.
+
+797
+00:00:00,000 --> 00:00:00,000
+OK, so this is the basic structure for
+
+798
+00:00:00,000 --> 00:00:00,000
+an if, else, if.
+
+799
+00:00:00,000 --> 00:00:00,000
+You notice how it looks just like a ladder here
+
+800
+00:00:00,000 --> 00:00:00,000
+that we could climb down. So which of these
+
+801
+00:00:00,000 --> 00:00:00,000
+cases should we handle first?
+
+802
+00:00:00,000 --> 00:00:00,000
+Which of these cases should we handle first?
+
+803
+00:00:00,000 --> 00:00:00,000
+Generally, if there is a
+
+804
+00:00:00,000 --> 00:00:00,000
+error case, you want to handle that first.
+
+805
+00:00:00,000 --> 00:00:00,000
+That means in all the other
+
+806
+00:00:00,000 --> 00:00:00,000
+if statements, you don't have to worry about
+
+807
+00:00:00,000 --> 00:00:00,000
+if the date is valid. So we're going to set
+
+808
+00:00:00,000 --> 00:00:00,000
+the result to invalid here.
+
+809
+00:00:00,000 --> 00:00:00,000
+And for all the rest of these,
+
+810
+00:00:00,000 --> 00:00:00,000
+we're just going to set them to the
+
+811
+00:00:00,000 --> 00:00:00,000
+so this is going to be winter.
+
+812
+00:00:00,000 --> 00:00:00,000
+Spring.
+
+813
+00:00:00,000 --> 00:00:00,000
+Summer.
+
+814
+00:00:00,000 --> 00:00:00,000
+Winter.
+
+815
+00:00:00,000 --> 00:00:00,000
+Spring.
+
+816
+00:00:00,000 --> 00:00:00,000
+Summer.
+
+817
+00:00:00,000 --> 00:00:00,000
+Winter.
+
+818
+00:00:00,000 --> 00:00:00,000
+Summer.
+
+819
+00:00:00,000 --> 00:00:00,000
+And fall.
+
+820
+00:00:00,000 --> 00:00:00,000
+Summer.
+
+821
+00:00:00,000 --> 00:00:00,000
+Sorry.
+
+822
+00:00:00,000 --> 00:00:00,000
+And fall.
+
+823
+00:00:00,000 --> 00:00:00,000
+The nice thing is fall is done.
+
+824
+00:00:00,000 --> 00:00:00,000
+OK, so let's start way back up at
+
+825
+00:00:00,000 --> 00:00:00,000
+the
+
+826
+00:00:00,000 --> 00:00:00,000
+the next one.
+
+827
+00:00:00,000 --> 00:00:00,000
+So let's start our way back up at
+
+828
+00:00:00,000 --> 00:00:00,000
+start our way back up at
+
+829
+00:00:00,000 --> 00:00:00,000
+invalid.
+
+830
+00:00:00,000 --> 00:00:00,000
+So what does it take for a day to be invalid?
+
+831
+00:00:00,000 --> 00:00:00,000
+So we don't have to validate
+
+832
+00:00:00,000 --> 00:00:00,000
+each day to check each year's.
+
+833
+00:00:00,000 --> 00:00:00,000
+But a month of 13 or -1 or a day
+
+834
+00:00:00,000 --> 00:00:00,000
+less than
+
+835
+00:00:00,000 --> 00:00:00,000
+1 or 31
+
+836
+00:00:00,000 --> 00:00:00,000
+would not pass. So basically we have four conditions
+
+837
+00:00:00,000 --> 00:00:00,000
+here. So if
+
+838
+00:00:00,000 --> 00:00:00,000
+month less than 1 or
+
+839
+00:00:00,000 --> 00:00:00,000
+month greater than 12
+
+840
+00:00:00,000 --> 00:00:00,000
+or day less than 1
+
+841
+00:00:00,000 --> 00:00:00,000
+or day
+
+842
+00:00:00,000 --> 00:00:00,000
+greater than 31
+
+843
+00:00:00,000 --> 00:00:00,000
+we know that the day is invalid.
+
+844
+00:00:00,000 --> 00:00:00,000
+We know the day is invalid.
+
+845
+00:00:00,000 --> 00:00:00,000
+So now in all the rest of these I know that the
+
+846
+00:00:00,000 --> 00:00:00,000
+month is valid. So let's look at winter.
+
+847
+00:00:00,000 --> 00:00:00,000
+So if the date
+
+848
+00:00:00,000 --> 00:00:00,000
+falls between 12/16
+
+849
+00:00:00,000 --> 00:00:00,000
+and 13/15
+
+850
+00:00:00,000 --> 00:00:00,000
+so 12/16 is going to
+
+851
+00:00:00,000 --> 00:00:00,000
+be the first day of winter, December 16th
+
+852
+00:00:00,000 --> 00:00:00,000
+and 3/15 is going to be
+
+853
+00:00:00,000 --> 00:00:00,000
+the last day of winter.
+
+854
+00:00:00,000 --> 00:00:00,000
+So we're going to say if
+
+855
+00:00:00,000 --> 00:00:00,000
+month
+
+856
+00:00:00,000 --> 00:00:00,000
+equals 12
+
+857
+00:00:00,000 --> 00:00:00,000
+and
+
+858
+00:00:00,000 --> 00:00:00,000
+the day is greater than 15
+
+859
+00:00:00,000 --> 00:00:00,000
+or
+
+860
+00:00:00,000 --> 00:00:00,000
+if the month is January
+
+861
+00:00:00,000 --> 00:00:00,000
+it's winter, if it's February it's winter,
+
+862
+00:00:00,000 --> 00:00:00,000
+if it's before March 10th. So month
+
+863
+00:00:00,000 --> 00:00:00,000
+less than 3
+
+864
+00:00:00,000 --> 00:00:00,000
+or
+
+865
+00:00:00,000 --> 00:00:00,000
+the month equals
+
+866
+00:00:00,000 --> 00:00:00,000
+3 and day less
+
+867
+00:00:00,000 --> 00:00:00,000
+than or equal to 15 we're in
+
+868
+00:00:00,000 --> 00:00:00,000
+winter. Now when I get down
+
+869
+00:00:00,000 --> 00:00:00,000
+to this next one I have removed
+
+870
+00:00:00,000 --> 00:00:00,000
+all of the invalid dates. I've removed
+
+871
+00:00:00,000 --> 00:00:00,000
+all the winter dates and so I don't have to do
+
+872
+00:00:00,000 --> 00:00:00,000
+any of this checking anymore.
+
+873
+00:00:00,000 --> 00:00:00,000
+All I have to say is
+
+874
+00:00:00,000 --> 00:00:00,000
+if the month
+
+875
+00:00:00,000 --> 00:00:00,000
+is less than 6
+
+876
+00:00:00,000 --> 00:00:00,000
+or
+
+877
+00:00:00,000 --> 00:00:00,000
+the month is 6
+
+878
+00:00:00,000 --> 00:00:00,000
+and the day is less
+
+879
+00:00:00,000 --> 00:00:00,000
+than or equal to 15.
+
+880
+00:00:00,000 --> 00:00:00,000
+Why don't I have to check to see if the
+
+881
+00:00:00,000 --> 00:00:00,000
+month is less than 3? Why don't I have to
+
+882
+00:00:00,000 --> 00:00:00,000
+check for January, February and the early days of
+
+883
+00:00:00,000 --> 00:00:00,000
+March because I already handled them here.
+
+884
+00:00:00,000 --> 00:00:00,000
+They could not get down to this if statement. I've already
+
+885
+00:00:00,000 --> 00:00:00,000
+taken them out for spring.
+
+886
+00:00:00,000 --> 00:00:00,000
+Similarly for summer
+
+887
+00:00:00,000 --> 00:00:00,000
+if
+
+888
+00:00:00,000 --> 00:00:00,000
+the month is
+
+889
+00:00:00,000 --> 00:00:00,000
+less than 9, it's before
+
+890
+00:00:00,000 --> 00:00:00,000
+September or
+
+891
+00:00:00,000 --> 00:00:00,000
+the month equals 9 and the day is
+
+892
+00:00:00,000 --> 00:00:00,000
+less than or equal to 15.
+
+893
+00:00:00,000 --> 00:00:00,000
+Again I'm in summer. For the else one I don't even
+
+894
+00:00:00,000 --> 00:00:00,000
+have to worry about anything. Anything that's left
+
+895
+00:00:00,000 --> 00:00:00,000
+must be fall.
+
+896
+00:00:00,000 --> 00:00:00,000
+So this is how we do
+
+897
+00:00:00,000 --> 00:00:00,000
+sequential if statements.
+
+898
+00:00:00,000 --> 00:00:00,000
+Let's try it out and see if we got it right.
+
+899
+00:00:00,000 --> 00:00:00,000
+I may have made a mistake.
+
+900
+00:00:00,000 --> 00:00:00,000
+So we'll do make test.
+
+901
+00:00:00,000 --> 00:00:00,000
+I didn't make a mistake. We got 100% on that.
+
+902
+00:00:00,000 --> 00:00:00,000
+So you have everything here you need
+
+903
+00:00:00,000 --> 00:00:00,000
+to take your screenshots
+
+904
+00:00:00,000 --> 00:00:00,000
+and I will see you
+
+905
+00:00:00,000 --> 00:00:00,000
+for lecture 5.
+
+906
+00:00:00,000 --> 00:00:00,000
+.
+

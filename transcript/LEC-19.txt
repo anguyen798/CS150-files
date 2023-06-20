@@ -1,0 +1,586 @@
+Hi everyone, this is Steve Gilbert.
+Welcome to Lecture 19, where we're going to talk
+about arrays and pointers.
+Now, an array is like a vector, except it's built in.
+So it's a built in derived type.
+What do we mean by a derived type?
+A derived type is one that is built from another type.
+So a pointer is a derived type.
+You just can't have a raw pointer that is not of any type.
+It has to be a pointer to an integer or a pointer
+to a double, and so forth.
+And an array is the same way.
+We can't just have an array that collects anything.
+We have to have an array of int or an array of double.
+So it's a built in derived type for collecting elements.
+Now, we use the term array in Java as well,
+but arrays are quite, quite different in C++.
+They are much closer to the actual machine type,
+the way that your CPU works and memory works under the hood.
+So like the vector, they're a homogeneous collection.
+All of them has to be the same type.
+And like a vector, we have continuous storage,
+contiguous storage, meaning one element right next
+to each other, and random access,
+direct access to any element.
+So let's see how we define an array.
+So to define an array, we give the base type double,
+the name of the array, and then in brackets afterwards,
+the number of elements inside the array.
+So unlike Java, where you could create an array variable,
+double nums bracket bracket or double bracket bracket nums,
+you cannot create an array variable
+without specifying how many elements you want.
+And that capacity must be a constant,
+and it must be known at compile time.
+Again, this is different than Java.
+In Java, you could ask the user how big an array,
+and then you could create a new array with that size.
+You can't create a regular, what we call a static array,
+that way in C++.
+Now, this array definition will allocate an entire block.
+So int a5, if we put that line inside a function,
+will allocate a block of five integers on the heap.
+There is no separate variable that points to this.
+The address is simply, the name a is simply the address
+of the first element.
+There's no additional, what we would call,
+metadata associated with it.
+Now, the access is sequential.
+One right on top of another on the stack, and contiguous.
+So we can simply go from one to another,
+simply by using addresses.
+So if we want the element at 795,
+we just take the address a,
+and add 795 times the size of whatever the element is.
+So the size of int, in this case.
+And that gives us the address.
+So it's simple, simple arithmetic.
+It's very, very fast.
+And as a matter of fact, it's even faster than it looks like,
+because your CPU has dedicated address circuits that know how
+to do these calculations without having to go
+through the regular addition
+and multiplication part of the CPU.
+So there is really no faster way to store data in memory
+at all than built-in arrays.
+Now, arrays can be initialized in all versions of C++.
+And so I can allocate space for four elements,
+and I can supply values for all four of them.
+Now, notice this is slightly different than what we did
+with vectors, because with vectors,
+we didn't use the equal sign here.
+The equal sign's required as part of the syntax.
+So I've allocated and initialized four elements.
+I can allocate more and only initialize one,
+in which case the remaining elements will be initialized
+to zero as well.
+Now, not because I put zero inside here.
+If I had to put four, the first element would be initialized
+to four, and the remaining elements would be initialized
+to zero.
+What happens if I do this?
+Allocate room for three and provide four initializers.
+Well, C++ won't let you do that,
+and it simply doesn't compile.
+How about if I don't allocate any space?
+I just leave that blank.
+That's fine as well.
+C++ will come along, and it will count the number of elements,
+and it will implicitly fill this three in for you.
+Now, there's one new thing in C++11.
+So all versions of C++ work like this.
+In C++11, you can simply default initialize it just
+by putting braces after it.
+If you do not initialize it, the elements are just random.
+Now, the individual elements are indexed or subscripted,
+just like they would in a vector,
+and you access them using the subscript operator.
+So A and then the subscript.
+That subscript can go from zero to whatever the capacity
+of the array is minus one.
+So if A has four elements, the elements would be zero, one,
+two, three, capacity is five.
+What happens with an array if we go out of bounds?
+We saw with the vector that it was undefined
+if we use the subscript operator,
+but we could use V.at three,
+and we could throw an exception if that happens.
+There's no thing like that for arrays.
+If you go out of bounds, you simply get undefined behavior.
+The program may crash.
+It may access parts of memory it should not.
+It may overwrite other variables inside your program.
+So you don't know what it's going to do.
+What you do know is that it is never an exception.
+It is never an exception.
+C++ does not throw exceptions for out of bounds.
+You may get a segmentation fault, as I said,
+if the area you're reading and writing to is outside the
+segment that the operating system allows you to write to,
+or you may simply overwrite other variables
+in your own program.
+Now, there's no array variable like there is in Java.
+So this is what an array would look like in Java.
+We create an array variable, and then we'd create
+or allocate room for 10 arrays, or 10 ints.
+The 10 ints would be on the heap.
+That would be the array,
+and the variable would be separate from the array.
+That doesn't happen in Java.
+There's not these two parts with a variable and an array.
+Instead, or that doesn't happen in C++.
+Excuse me.
+Instead, in C++, the array name acts
+like a constant pointer or literal.
+Because of that, because there is no array variable,
+you can't assign or compare using array names.
+So here I have two arrays.
+A1 has three elements.
+It's initialized, 2, 3, 4.
+A2 also has three elements of the same type,
+but they're uninitialized.
+Could I initialize A2 by simply assigning A1?
+No, you cannot.
+A2 and A1 are addresses.
+Imagine it's address 1,000 and 2,000.
+That's like writing 2,000 equals 1,000.
+Again, in your code, you can see why that wouldn't compile.
+It is okay, of course, to assign
+to different arrays using the elements
+or the subscripted name.
+So we could say A2 sub 0 equals A1 sub 0.
+And you could write a loop that would go through
+and assign each of those.
+You might think, well, you notice on the first line there,
+I could assign to A1 using these braces,
+what we call an initializer list.
+Can I do that to assign to A2?
+No. You can only do that when you're initializing the thing.
+You cannot use it for assignment later.
+That simply doesn't work.
+Finally, you can do this.
+If A2 equals equals A3, okay, well,
+actually I don't have an A3 here.
+It probably should say if A1 equals equals A2.
+But both of those would be perfectly legal.
+They will compile, but they are really not very smart.
+That's because, again, A1 and A2 are different arrays.
+That means all A1 and A2 are are addresses.
+So we're not comparing what's at those addresses to see
+if they're the same.
+We're comparing the addresses themselves.
+So address 1000 is never, never,
+ever going to be equal to address 2000.
+By definition, that's false.
+So the compiler can't check things
+that simply don't make sense that way.
+It can only check things that are illegal.
+Now, the array does not carry around its size like a vector.
+As I mentioned, there is no metadata associated
+with an array like there is with a vector.
+There is no A dot length data member or field
+as there is with Java arrays.
+Now, the compiler knows the size of an array
+when it's declared, however.
+And so if you're in scope of that declaration,
+the compiler knows that information.
+So I can find out in scope, here I've created an array A,
+I can find the size of this declaration in bytes if I'm
+in the scope of this declaration.
+And if I want to find the number of elements,
+all I do is divide the size of the whole array by the size
+of the first element.
+And since they're all the same size by definition,
+this will give me the number of elements in the array.
+But again, only in scope.
+C++11 added a new way to do that.
+We can take the array and pass it to end and subtract begin
+from it, and that will give us the number of elements.
+And finally, in C++14,
+they had a new function simply called size
+that will also work on arrays.
+So you could pass A to standard size,
+and you could get back the number of elements in the array.
+Again, I want to stress this, this only works
+when the array is in scope,
+not when you've passed the array to a function.
+All right.
+So how -- if we have an array, it doesn't have any metadata,
+it doesn't know how long the function is,
+it doesn't have a size member function,
+it doesn't have a length data member, how does the loop know
+how to stop in your function if when you pass the array
+to a function, the only thing the function gets is the address
+of the first element?
+Well, number first method, we could pass the allocated
+or maximum size along with the address.
+Method two, we could use a sentinel
+to mark the end of the array.
+Number three, we could calculate a pointer to the end,
+and we could pass that pointer to the end as well
+and write an iterator loop.
+We could pass -- use the begin and end iterators
+and pass those instead of the address of the first element.
+Or finally, inside the scope of the array
+where it's declared, we can use a for each loop.
+So we're going to do that in our only exercise today.
+We're going to create some arrays, and we're going
+to loop through them.
+So go ahead and open arrays.cpp in your workspace,
+and then let's create five arrays.
+A three-element int, a four-element char,
+a five-element long, a six-element float,
+and a seven-element double.
+Okay. So I've got arrays.cpp open over here,
+and I want to create my arrays.
+So I can -- first for my three-element int,
+I could do const int iSize -- I'll do it like this --
+k iSize equals three.
+And then I could do int integer array IA equals kSize.
+Now, what would happen -- what would happen if I were
+to take off this const in front of this, if I were to take off
+that const in front of it?
+First, let's do make on this.
+Let me make my shell so I'm over in that folder, of course.
+Okay. So I'm in A, and that's k iSize.
+So that was giving me an error because I had spelled that wrong.
+So make, and I don't have any problems with that at all.
+Okay. Now I'm going to remove the int from this,
+const from that, and try it again.
+And you will probably find that it will compile.
+Okay. That's because most --
+and if we were doing this in Visual Studio,
+it would not compile.
+Visual Studio would be correct in that case.
+What I can do over here is open up my make file
+and add an extra flag on the flags, and say I want
+to make this pedantic, and that will ensure
+that it only uses the C++ standard.
+Now when I do make, notice it says ISO C++ forbids an area --
+a variable length array IA.
+So this needs to be const to be correct,
+even if in some compilers you can get away with it.
+In some compilers you can get away with it.
+But since it's not really correct according
+to the language, you shouldn't do it.
+So we could create an array like this.
+This is uninitialized.
+So let's create an array with four chars.
+So char CA, and put the brackets there
+and initialize it like this.
+Brace brace semicolon.
+C -- hold on, I'm having a hard time getting my fingers
+on the right keys here.
+A P -- and I'm going to put a terminator in here, a sentinel,
+that we're going to look for when we process
+that array, okay?
+A sentinel, okay?
+And notice this time I didn't initialize it.
+We're going to create a five element long.
+So char LA.
+You can put in a literal like that.
+And for our LA we'll do it 10, 20, 30.
+And we'll find out that there won't be a 40 or 50,
+it'll just be zeros and zeros for that last one.
+A six element float.
+[ Typing ]
+Okay, now you might notice
+that these are not floats inside of here, these are doubles.
+But because this is initialization,
+this will require a conversion to convert it
+down to the floats.
+If you didn't want that conversion,
+we could make each one a float.
+[ Typing ]
+Like that.
+That's always a better thing, you know,
+to say in your code exactly what you're trying to do.
+Okay, and finally we had our double, double DA.
+And I'm going to use C++11.
+And just default initialize everything to zero, okay?
+Everything to zero.
+All right, let's do make here again on this.
+And now it compiles without errors.
+So that's initializing and creating five arrays.
+Now we're going to print each array using the array name
+and see what happens.
+So this is one print using the array name.
+So I'm going to C out.
+I'm going to print the array name as well.
+So I'm going to print IA equals IA.
+CA equals CA.
+C out. LA. Oops.
+LA equals LA.
+C out. FA equals FA.
+And C out.
+DA.
+DA didn't turn blue.
+Oh, there it turned blue.
+Okay. So let's go ahead and do make run.
+Nothing ran.
+Oh, I didn't.
+No. Let me save it and do make once again.
+Okay. I'm going to pause this while I figure
+out what's going on right now.
+Because that doesn't make any sense at all.
+Oh, no. I don't need to pause it.
+I just need to look and that my return zero is
+up there before my print.
+Which is a bad thing.
+Okay. So let's do make run.
+Okay. So IA prints out.
+IA is simply the address for where I starts.
+CA doesn't print out the address where the C starts.
+It prints out cat.
+LA. So I apparently made a mistake here.
+LA prints that.
+FA doesn't appear to be -- oh, no.
+There's FA.
+LA prints there and then seems to print a new line at the end.
+I'm not quite sure why.
+What did we do with LA?
+LA we initialized to three elements, right?
+And it's five long.
+So I'm not sure why LA is not printing -- oh, you know.
+I made LA a char.
+I'm supposed to make it a long.
+So again, user error here.
+User error here.
+Okay. Make run.
+Okay. So IA, LA, FA, DA, all of those print the address
+of the first element of the array.
+CA does not.
+So to explain why CA does not, look at this piece of code.
+Okay? What is this quote?
+Is that a string object?
+No, it is not a string object.
+It is an array of characters terminated with a null,
+what we call a C string.
+And so C out has an overloaded operator that looks like this
+or string has an overloaded operator that looks like this.
+O stream ref operator.
+O stream ref out const char star S or CS for C string.
+Okay? So when we pass CA here,
+what we're doing is we're passing a pointer
+to a constant character or a pointer to a char.
+And so it's treating it exactly the same way it treats this.
+So for all arrays, we will get the address IA, LA, FA, and DA.
+But for character arrays, we will actually get the sequence
+of characters that's inside it.
+What do I do if I want to find out where the address
+where CA is?
+What I can do is I can cast this, so static cast void pointer.
+In other words, a raw pointer to nothing, CA.
+And now if I run that, make run, notice we'll get the addresses
+where each of these items are stored in memory.
+These are all stored in the stack because they're
+in the local storage.
+If I had created all of these outside of this function,
+this global variables, they would be
+in the static storage area.
+All right.
+So we've created them.
+We've seen that the name of the array is just an address.
+Now let's print the contents of each array.
+And I'm going to use five different loops,
+the five different loops we had on the previous slide.
+Okay? So let's start.
+Print the arrays, array contents.
+And let's start is a traditional loop with size.
+So I'm going to print IA.
+We have a constant for IA.
+So I'm going to say for I equals zero, IIA less than KI size,
+plus plus I.
+C out IA. Let me go there.
+IA at I. And let me just do space.
+And let me print.
+[ Typing ]
+Okay. So let's print.
+Let's do that first one, make run.
+And here's our first array.
+You can see I have three elements.
+They're uninitialized.
+So they're just random values.
+Now notice I didn't use the fence post algorithm here.
+I used an algorithm where we have a space before
+and after each element here.
+And so I didn't need to print the first one separately.
+I used this fence post for the next ones.
+So now we're going to do 2B, use a sentinel.
+Of course, you saw we could just print out the string.
+But I want to show you how a sentinel works.
+So here I'll use a sentinel.
+So I'll say C out CA equals.
+I use square brackets.
+[ Typing ]
+I'll say for.
+[ Typing ]
+And here we're going to say CA at I not equal
+to the null character.
+So you notice I'm not using size for my bounds at all.
+I'm using the sentinel in there.
+[ Typing ]
+I want actually a space between each one.
+And we'll print that.
+[ Typing ]
+And C out.
+[ Typing ]
+Okay. So here's CA using a sentinel loop.
+Let me clear that.
+Demake run.
+So here's CAT.
+Notice we didn't take the length
+into consideration at all with CA.
+We just took into consideration the fact
+that it contained a terminating character.
+A sentinel character.
+Okay. All right.
+Our third kind of loop.
+Third kind of loop is calculate a pointer to the end.
+Okay. And then we're going to use that.
+[ Typing ]
+To see.
+[ Typing ]
+And we're going to calculate a pointer to the end
+with the size of it.
+So this is going to be -- our third one is going
+to be LA and it's five long.
+[ Typing ]
+And so we're going to --
+[ Typing ]
+LA equals the opening bracket.
+And let's actually on this one since I know --
+[ Typing ]
+We print the first one up there.
+[ Typing ]
+Okay. Now we don't want to go to the size.
+What we want to do is say for I equals zero, LA plus I.
+So actually let's create the pointer to it
+because when we're calling a function we would pass this
+pointer to it.
+So I'll say auto end P equals LA plus the size
+of LA divided by the size of LA sub zero.
+Okay. So I've calculated a pointer to the end.
+Okay. I'm going to use a pointer to the beginning.
+[ Typing ]
+For a long pointer P equals LA, P less than end P, P plus plus.
+[ Typing ]
+LA plus one.
+[ Typing ]
+Oh, not an end.
+Okay. Not an end.
+Okay. So here we're just using pointers, right,
+a pointer to the beginning and a pointer to the end.
+And we calculate that pointer to the end
+by taking the size of LA, its allocated size,
+divided by the size of the first element
+which gives us the number of elements.
+This will give us a pointer right past the end.
+And we'll see how square bracket ends up.
+Okay. Let's try that third one.
+I have end there instead of P end or end P.
+[ Typing ]
+Okay. And then we got our 10, 20, 30.
+And as I mentioned, we only initialized the first three
+so the last two are initialized to zero.
+Unlike this one up here where everything is uninitialized.
+Everything is uninitialized.
+Okay. Okay.
+So that was 2C for 2D.
+[ Typing ]
+We can just use iterators.
+[ Typing ]
+Let's see how FA.
+[ Typing ]
+And we'll do star, begin, FA.
+Print out the first element.
+[ Typing ]
+For auto iter equals begin FA plus 1.
+Iter not equal to end FA plus plus iter.
+[ Typing ]
+And for 2E.
+[ Typing ]
+Now all of these will work inside a function
+if you pass the arguments.
+If you pass up here the size as an argument.
+This you don't need to pass anything.
+If it's got a terminator in it, you're fine.
+A sentinel in it.
+This you would have to pass this second argument, the end pointer.
+This you'd have to pass both begin and end to the function
+to do your calculation.
+And for this one, only works inside a loop.
+This one would not work inside a function.
+So this is the range for loop.
+Okay.
+[ Typing ]
+So this is a little harder.
+If we want to do -- this is going to be DA equals square bracket.
+And we're going to do DA sub zero.
+We're going -- so this one with a range for loop,
+it's kind of hard to do the fence post algorithm.
+And so we're going to have to create a Boolean.
+[ Typing ]
+We're going to have to go for auto E and DA.
+If printing C out comma E. And then that will skip the first one.
+We'll turn on the printing for the second one.
+Okay. So a little hard to do fence post with the range base loop
+because it goes through every element in the array.
+Okay. So that's it.
+Let's go ahead and try these out.
+Do make run.
+And here's our last one.
+This one, remember, we initialized all to zeros like that.
+All to zeros like that.
+Okay. We're going to do one more thing here.
+[ Typing ]
+And that is I'm going to try and read and write outside
+of the array bounds before printing.
+And we want to see what happens to the other arrays.
+So this, like I said, it's undefined.
+You're not sure exactly what's going to happen.
+But I want to show you
+that the compiler won't stop us from doing this.
+So let's come up here.
+After we've printed out those names.
+It's going to be part three.
+[ Typing ]
+So let's say FA sub minus 2 equals 3.
+And let's say LA.
+How big was LA?
+LA was 5.
+LA sub 7 equals 15.
+Okay. So 3 and 15.
+Now let's run it again.
+I want you to see what it looked like before.
+So here's what it looked like before.
+We'll do make run.
+[ Typing ]
+And now look down here at DA.
+At DA. And notice that we have this value put inside here.
+So by changing FA, we actually changed DA.
+Now it doesn't look like the one we did
+in LA actually overwrote any other variables.
+But it could have.
+We could have kept going and changed.
+We were writing at LA 7.
+Let's write it LA 9.
+Let's try it again and see if the LA changes anything.
+So we'll do make run again.
+And okay.
+So this looking at LA, that looks like that's the LA is the
+one I'm changing.
+Looks like the FA, I didn't actually affect any
+of the other variables.
+So we'd have to look at these addresses.
+We'd have to draw ourselves a little memory map.
+And we'd be able to tell what happens
+when we write outside of that.
+But you notice it didn't give me a syntax error.
+It didn't give me a compiler error.
+It simply overwrote parts of my other program.
+Those are very, very hard bugs to find.
+Okay. So that's it for Lecture 19.
+When you come on back for Lecture 20,
+we'll look at some algorithms for arrays.

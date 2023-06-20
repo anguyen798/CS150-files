@@ -1,0 +1,672 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 15 on user-defined data types.
+We're going to start out today by doing a little stream review.
+We're going to read a text file that contains star information.
+This is a star catalog. And so we're going to open and read the input file.
+And so we're going to look at stars.txt. Now in the input file, we'll see several different values.
+Let's just go ahead and do that right now. So we're in lecture 15 and I have opened the starcat.cpp here.
+I'm going to put my name on it. And I'm also going to open up stars.txt so I can see the data file that I'm reading.
+So you notice that I have three doubles starting each line of text.
+And those represent the location in space of that particular star.
+That number is followed by an integer, 28 here in this first case.
+This is called the Draper number. The Draper number. What it is, it's a catalog identifier.
+In a star catalog, kind of like the Dewey Decimal number you'd have on a book in the library.
+Following that, we have a third double. Let me go take a look right here.
+4.61. And this represents the magnitude or brightness of the star.
+Following that, we have another identifier, that integer 3.
+And that represents a different catalog number in a catalog called the Harvard catalog.
+So this number is called the Harvard Revised number.
+Now some stars, like this star on line 6, and this star on line 7, have a string at the end of it. Some kind of name.
+Those are what we call the name stars. If you scroll through them, you may recognize some of the stars.
+Let's see if I can find one I recognize. I don't actually recognize any of those names.
+Here's Polaris. I recognize the North star.
+Now the stars that have a name may actually have two names.
+They may have a Latin name and a common name and so forth.
+Or they may just have a common name. And if they have two names, the first name is ended with a semicolon, like that.
+So our job here today is to read the stars and print only the name stars. Print the primary name, a comma, an X and a Y in space.
+We're going to skip the Z and the magnitude.
+So let's go ahead and do that.
+So let's go to StarCat. As I mentioned, you want to put your name. And I'm going to move that over there just to kind of clear up the screen.
+So the catalog number is coming in as a string and we want to open it.
+We've included fstream here so we know how to open file streams.
+So we're going to create an input file stream. And I have stream. I'll call it in.
+And I'm going to open it with cat name.
+Now, if we can't open the file, then we want to print an error message and exit.
+So if in fail, CR cannot open cat name, capital N on cat name.
+And since this is a void function, I'm just going to return.
+Ok, now let's read the file. So basically, notice that every line has X, Y, Z, a Draper number, a magnitude, and a Harvard number.
+So that means I need to create variables for that, right?
+So I'm going to say double X, Y, Z, magnitude. Those are my four doubles.
+And Harvard and Draper. Or Draper and Harvard. Let me put them in the order they're in.
+And to read the file using streams, I just use formatted input.
+So while in X, Y, Z, Draper number's next, so make sure you don't put magnitude there.
+Then the magnitude. And then the Harvard number.
+Ok, well that's true.
+So this will process some of the file. So let's go to the top of this text file.
+So that would process that line.
+And then, when we read the next line, that would process it. That would process the next line.
+That would process this amount of data in line six.
+But when we came around again, this is what it would read for X.
+And what would happen when it tried to read that? It would stop working.
+So we have to see if there's any extra text at the end of each line.
+So after we've read the numbers off from the line, we're going to have to create a variable.
+So string line. I'll call it rest.
+So string rest and get line in rest.
+So when we finish reading this first line, we've read the three,
+there is still an invisible new line sitting out here waiting to be read.
+And we haven't displayed that yet.
+We could turn on with the editor. I'm sure there's a way to display these hidden files.
+I'm not displaying them right now.
+But there's a new line.
+And so get line reads everything up to, including the new line, to clear off to go to the next line.
+Now that's not important if we don't have a string, but if it is a string, we want to read that.
+Alpha Hertz or cath semicolon space casp beta.
+And so what we want to do now is after we've read the rest of the line, we want to see if it's if it's not empty.
+So if rest if not rest empty.
+That means I have a first name, a name one and possibly a name to possibly a name to.
+So we're going to need to use those. Actually, I'm going to use them only inside here.
+So let me move that down here.
+So because I'm only going to print the name stars, which means that I only need to print inside this if statement.
+If it's if it's not a name star, I'm not going to print it.
+So let me create a couple of variables. String name one, name two.
+Let me find out if there's a semicolon. So size T pause or auto pause equals rest.
+Find a semicolon.
+Now, two possibilities. One possibility is that it is set to string in pause.
+So if pause is equal to string colon colon and pause.
+In other words, it wasn't found. That means we have one name.
+So name one equals rest substring.
+Why? Why substring one? Because in this case where I have one, notice when I do get line, that'll be space alpha hertz.
+Right. Because there's always a space at the end of the Harvard number.
+And so name two will just be the empty string.
+If that's not the case, I have two names. So name one equals rest substring starting at position one and going up to pause.
+And name two equals rest substring starting at pause plus one.
+No, no, actually starting at pause plus two. If we started at pause plus one.
+So here's pause, right? We started at pause plus one. I'd have a space in front of the second name.
+And I don't want that. So I'm starting at pause plus two. So I only have CAS beta inside there.
+OK, so we know that this is extracted the name part of it. Now we're going to print the primary name. Name one.
+X and a Y and the magnitude.
+So I'm going to say C out. Name one. Comma space parenthesis.
+X comma space or comma space. Y.
+Right print. A comma, a space and the magnitude.
+Print a new line. We might want to bring that down to two lines.
+I don't know where you want to split it. Maybe right there.
+Maybe that'll look a little bit better.
+Now if we do make run, it'll just call our function star cat and pass in stars dot text.
+So let's just do alt L.
+Oh, you can't do alt L. This is the new version of the IDE. So we have to come over here to A, open a terminal there.
+And then let's go ahead and do make run.
+And here we have the name. We've read the entire catalog of stars. We have the name, X, Y and the magnitude of each of those stars.
+So make run just does it all. Make test tests to make sure that you've actually done it correctly.
+So if we do make test.
+Notice that it will test several different things. It looks like make test, some of them are failing.
+So if we read that. If you read O zero. Oh, it looks like we're actually getting a semicolon after our name.
+OK, for some of those stars that have two names. So we have some debugging to do on that.
+So name one, pause.
+Does this look like pause minus one?
+I think it does, because if we want to pause, we're not counting for the fact that we're starting here from one.
+So that's what testing is for, to make sure that you got all of them correct.
+And I have some inputs here that in fact should have been Polaris, but in fact was Polaris semicolon.
+Should have been Ruchba, in fact was Ruchba with a semicolon.
+Let's try it again.
+OK, so that passes all of the tests. That looks OK.
+All right, so let's go on now and get to today's topic.
+So what we have here is each line in stars.txt consists of related information, related information.
+The X and the Y and the Z about one particular star.
+And just to print out that data, variables work fine. But what if I wanted to gather up all the information about a star
+and pass it to a bunch of functions that would analyze different characteristics of those stars?
+Well, simple variables aren't flexible enough for this.
+What we need is we need a way to package up all the parts into some kind of more complex structured data of different types.
+So in computer science and in programming languages, we call such structured types records.
+And in C++, records are called structures or the keyword is struct we'll use to create them.
+So basically, it's just a collection of data where each collection represents one item of a particular user defined kind, like a star in this case.
+We say that the data is heterogeneous, meaning that we can have integers and strings and doubles all together wrapped up in one record.
+It doesn't need to be all of the same type like an array does.
+We say that it's accessible, meaning that we can directly access each of the parts.
+So here's the syntax for creating a structure definition.
+It's the keyword struct instead of class.
+The name of the struct, which we call formally a structure tag, but other than me formally telling you this, we'll just call it the structure name.
+Inside the structure, we have named members.
+So members are like variable definitions, but they're not actually variable definitions.
+They're potential variable definitions.
+So notice I've named one PID, the person ID.
+I've named one name.
+I've named one DOB.
+And notice that the structures can be the built-in types, library types, or other structured types.
+Now this might look like creating a class in Java and adding data members or adding instance variables.
+It's very, very similar.
+We don't use the keywords public or private here in front of the things like you would do in Java.
+But there's one difference that's going to trip you up.
+That difference is in C++, we always need to put a semicolon at the end of the structure definition.
+In Java you don't. In C++ you must.
+Now, structures are a new user-defined type.
+They're a definition.
+They're a definition for a type.
+They're not a definition for a variable.
+So since they're a definition for a type, we usually place that definition in a header file.
+Now there's a problem though.
+What if that header file was included twice?
+It's an error if the definition is included twice, is seen twice.
+Your code will not compile.
+And so just like we did with functions, we'll use header guards to prevent that.
+So let's go ahead and add our structure definition to stars.h.
+And this is the definition I'm going to use.
+Struct star. I'm going to put all my doubles together just like I had them in the file.
+My two integers together and my two strings.
+So all of this data will store the data about one star.
+So we're simply going to change this program.
+We're going to add the structure definition in stars.h.
+So I'm going to say struct star.
+I'm going to open and close it and put the semicolon on all at once so I don't forget it.
+I'm going to add the data members, so double, x, y, z, magnitude, int draper, Harvard,
+and standard string, name one and name two.
+So notice my header file already includes this.
+And remember in a header file we cannot use using namespace standard.
+So for a structure, if you want to use a type, just like for a prototype in header file,
+you have to fully qualify the library type.
+So there is our star structure.
+What can we do with that star structure?
+Well, what we can do is we can create variables of that type.
+So if you have a type, its purpose is to create variables.
+These are called structure variables.
+Like primitive types, such variables are uninitialized.
+So star a and b, both of them would be star objects with x, y, z, and so forth.
+But x, y, z, and all the other members would be set to random numbers.
+The two names, name one and name two, would be okay.
+They'd be the empty string.
+So you can initialize such a variable in several ways.
+One, you can give it the default value.
+So just when you create the variable, put the curly braces after it,
+and that will default initialize it.
+In other words, all the x's and y's will be zero.
+You can aggregate initialize it, meaning you supply a value for each of the data members.
+So in this case, x is .873, y is .032, z is .486, magnitude is 2.07.
+The Draper number is .358, the Harvard number is 15, name one is Rigel, name two is Beta.
+Now, notice that the order that you put the data members depends on the order that the data members are defined in the structure.
+Notice that this order is different than what we read the data in.
+Notice that we read x, y, z, then the Draper number,
+but in the structure we put the x, y, z and the magnitude all together.
+And so that's the way you have to initialize it.
+Finally, we can initialize it one third way.
+If we have another star, we can either assign to it or we can copy initialize it.
+In other words, I can create a star E and it will have the same values that star C has.
+Now, structures can contain other structures, so if we create some useful, say, utility structures,
+a point 3D that has x, y, and z, a names structure that contained a couple of names,
+and a catalog structure that contained two catalogs, we could then use these structures inside another structure.
+We could nest them and we could define our star like this.
+So, this might be a little bit more readable.
+You can see what those x, y, and z represent, the location, then the magnitude,
+then the catalog numbers, and then the names of the stars.
+So, this might be a little bit more readable.
+Now, to access the data members, we simply use the dot operator,
+very similar to what you do in Java if you had a public instance variable.
+So, if I want to access the name in the structure variable A, I just say a.name1 or a.name2.
+You can also print it out, of course. So, just the name of the structure variable,
+and then the name of the data member inside the structure variable.
+For a nested structure, you just keep adding dots.
+So, you remember I created a structure, a different star structure that had a location in it.
+So, s.location would bring back a .3D structure, and then I'd select x out of it.
+So, I'm selecting members from a structure using the dot, the member selection operator.
+You can also assign and copy entire structure variables.
+You cannot compare them. You can assign them and copy them.
+So, let's go ahead and modify our star cat to use our structure variable
+instead of the individual variables we used before.
+So, let's come back to star cat.
+First, let's come up here and say I want to include stars.h.
+Notice now my program knows about the user defined type.
+So, instead of these variables on line 21 and 22, I can create a star variable.
+So, I can say star s.
+So, I no longer have individual variables. I have them grouped together in this record.
+Now, when I read them, these parts, these members are inside the variable s.
+So, I'd say sx, sy, sz, sdraper, smagnitude, and sharper.
+Now, notice that when I do this, these are in the order that the members are defined inside the stars.txt file,
+not the order they're defined inside the structure.
+So, this extracts it from the text file and puts it in the structure.
+So, even though x, y, z, and magnitude are together, we don't read the magnitude before the draper number
+because in the text file, the draper number appears first.
+So, we're going to get the rest from the file.
+And if it's not empty, so first, notice we have a name1 and name2,
+but we want to make sure that every time we come through here,
+since I'm not reading into name1 and name2,
+every time I come through here, I reset name1 and name2.
+So, s.name1 = s.name2, and both of those are going to be equal to the empty string.
+Okay, so I no longer need this line on line 32, right there, name1 and name2.
+And so, I'm going to say if I find this semicolon, then s.name1 is that,
+and s.name1 and s.name2.
+And when I print them out, finally, I'm printing out s.name1, s.x,
+s.y, and s.magnitude.
+Okay, so let's try that out.
+And all we're going to do is do make test again.
+Okay, and we still got 100%, so in this case,
+we're not using the individual variables.
+We have encapsulated all of the variables into this single star object right here,
+this single star.
+Now, probably most of you are thinking, "Well, yeah, so what?
+That didn't seem any better."
+But now that we've encapsulated the data inside the structure,
+we can write functions that take and produce structure variables.
+And so that's our next step.
+So for our next step, what we want to do is write functions that take structures.
+Now, in the C language, where structures were developed,
+they were known as second-class types.
+That's because they don't always act the same way as the built-in types.
+The built-in types are the natives.
+The second-class types don't have all the features of the built-in types.
+So if A and B are structure variables, say stars,
+this would be illegal if A and B are structure types.
+But the built-in types get to do this.
+And so we can fix this by writing functions to supply the missing operations.
+So I could write a method called equals, and I could say if equal A, B,
+and get back true and false, and use that instead.
+So we can pass structure variables to functions.
+We can also write a function that returns a structure.
+We're going to use the same rules for variable passing as for strings.
+So structure types we're going to pass by reference or const reference.
+We'll never pass structure types by value.
+So if I wanted to write my equal function that I would use in place of this,
+that the first-class types do, I'd pass a const string ref A and a const string ref B.
+And if they were equal, I'd return true in that case.
+So we're going to do that.
+We're going to write some functions to print and read star objects.
+And so my print function is going to take the stream that I'm going to read from,
+and a write to, and a star that I'm going to display.
+And it's going to return the stream after it's done.
+And my read function is going to take the stream I'm going to read from,
+and a star by reference that I'm going to fill in when I read.
+Now, notice the functions are returning the modified stream so we can test it.
+In other words, I want to be able to do this.
+I want to say I have stream in stars.text, star.s, and I'll read in s.
+So for our next exercise, let's do in B, let's prototype and implement these two functions, print and read.
+Then we'll uncomment the first section of run and do make run.
+So let's close these.
+Let's open B.
+Let me right click it.
+Open it in the integrated terminal there.
+And we'll have stars.h and stars.cpp.
+Put your names in stars.cpp.
+And then in stars.h, notice I already have my struct star.
+I already have my struct star.
+I've included string and iostream.
+So let's just put in the prototypes for those two functions.
+So for my print function, it's an ostream ref.
+But I'm inside a header file.
+I can't use using namespace standard.
+So the compiler is not going to understand that.
+So I have to write standard colon ostream ref.
+Print is the name of the function.
+It's going to take a standard ostream ref for the output.
+And it's going to take a const star ref s for the star.
+And for our input, it's going to take a standard iostream ref.
+We're going to call the function read.
+I'm going to take an iostream ref in as my input stream.
+And this time I'm going to take a star by reference s.
+Okay, so there's my two prototypes.
+Let's copy the two prototypes.
+Let's move them over to stars.cpp.
+Let's put a body on it.
+Remove the semicolon.
+And let's return the output stream and the input stream.
+Okay, now I haven't done any reading or printing in here.
+So what do we need to do to read from output?
+Basically we need to do what we did back up in A.
+So notice I have a star here.
+Now I'm going to print it exactly like we printed it before.
+So I'm going to say out name one, comma, space.
+It's not name one, is it?
+It's s.name one.
+And s.x, a comma and a space, and s.y.
+And a closing parenthesis and a comma and a space.
+And s.magnitude.
+Now we don't want to use a new line like we did when we were printing it out ourselves.
+When you call the print function, they'll use the new line on it at that point.
+They'll use the new line on it at that point.
+Now to read the data, we have a star object here.
+I have start there, of course it should be a star.
+You can see the difference in the coloring here.
+And did I make that mistake over in the header file?
+Yeah, I did.
+So that should be a star, not a start.
+So to read, what we're going to do is we're going to say in s.x, s.y, s.z.
+Even though we're not printing z, we still need to read it.
+s.draper, s.magnitude, and s.harvard.
+We need to set the name one and name two to nothing.
+So s.name1 equals s.name2 equals the empty string.
+Then we need to put exactly the same code we had before.
+So if we need to read, we need to do git line in.
+We need to create a string, I'll call it name.
+So now if that name has something in it, we need to transfer it to our strings.
+So if not name empty, or let me write it the other way, it's probably more easier for you.
+So if name not equal to that, the name's not empty, we're going to say auto pause equals name find.
+Notice this time we used double quotes, you can use double quotes or single quotes there.
+So if pause equals equals string end pause, if it's not found, that means we only have one name.
+So if pause equals equals end pause, it means we only have one name.
+So, and I think I did this wrong in the last exercise we did in A.
+So I'm going to say s.name1 equals name substring.
+Let's put that up here so it's a little easier to read.
+And if that's not the case, name1 equals name substring1 and pause minus 1.
+Again, to count for the space at the beginning of it.
+And whenever I have two lines, I don't like to put two statements on one line.
+I only use one line here when I can fit the whole thing on the side there.
+So name2 equals name substring pause plus 2.
+And we're going to return in.
+So let's come down here and let's uncomment part 1 here.
+So notice we're opening stars.txt, we're creating a star, and we're calling the read function.
+While read in, if not name empty and s magnitude greater than 6, print cout s.
+And we're printing an end out at the end of that.
+So notice that this is, this code right here, is almost the same thing as star cat that we did in part A.
+In other words, because we have functions now, we've been able to compress it down to these two pieces.
+And so it's much easier to read, much more flexible, much easier to use.
+So let's try that. Let's do make run.
+Okay, so name1, so I have a syntax error there, and name2.
+And of course, that's because this is not name1, right?
+It's s.name1 and s.name2.
+Let me clear it and run it again.
+Okay, so these are all the stars that are named that have a magnitude greater than 6.
+So again, writing functions, you can see how easy it is to use them after you've written the function.
+And how easy it is to use it after you've written the function.
+Now, it would be nicer if we could use the regular operators for our output.
+In other words, if there was no difference between a star and printing an int, that's what we're shooting for.
+And so for any user-defined type, you can overload most of the C++ operators to work with that type.
+So we're going to be covering this many, many times in this class.
+This is your first introduction to it.
+So, plus, equals, equals, greater than, all of those are called binary operators.
+Because we have a plus b, the operator plus takes two operands, the a and the b.
+One's on the left-hand side, one's on the right-hand side.
+The same through equals, equals, greater than, and so forth.
+So the syntax is whatever the return type, so greater than returns a bool, equals, equals returns a bool.
+Plus would return whatever type this object type is.
+So it could be an int, it could be a double, it could be a star.
+And so it's the return type, say bool, the operator, and then the symbol used for the operator.
+The symbol used for the operator, so operator greater than, operator equals, equals.
+And then the two arguments that will appear on the left-hand side and the right.
+So LHS here just means the left-hand side, RHS just means the right-hand side.
+And again, we replace the question mark here with the operator symbol.
+So, suppose we wanted to compare star operators by magnitude.
+If we wanted to do that, we'd use the less than operator.
+So notice the function is named operator less than.
+Less than returns a bool, true or false.
+Would take two const stars, so const star ref LHS, const star ref RHS.
+And then would return true if the magnitude of the left-hand side was less than the magnitude on the right-hand side.
+Now, what we'd like to do now is we'd like to overload the input and output operators.
+So the output operators have this prototype.
+Now, that should look familiar to you as well as that one.
+The only difference between read and print and these operators is the name of the function.
+So, almost exactly the same signature as print and read, but with different names.
+And so we can implement those by using read and print to implement them.
+So we're going to go ahead and do that.
+We're going to complete our second exercise here by adding these two member functions,
+or these two overloaded operators to our code.
+So in stars.h, we're going to take, make a copy of these two.
+And I'm simply going to name this one operator output.
+It's an O-string.
+And this one I'm going to name operator input.
+It's an I-string.
+So notice that I used exactly the same prototype, just with a different name.
+I'm going to copy it over to stars.cpp.
+I'm going to paste them up here.
+Remove the semicolon.
+Remove the semicolon here.
+And since we've already implemented that functionality as a function, I can just say return print out s.
+And for this one I can just say return read in s.
+So I'm using these functions up here that we wrote by hand to implement our overloaded operators.
+And if you come down to run, now we can go ahead and comment out the remainder of this.
+The remainder of that. And we should be able to do make run again.
+And notice that the input and output operators work perfectly fine.
+And reading from a string works perfectly fine.
+So we can pass a string stream, you notice, for this third part.
+I've just created an I-string stream with some values in it.
+I pass it to read and it works perfectly fine.
+And the input operators, so notice for part two here, rather than saying while read in s, I'm saying while in arrow s.
+And here I'm saying cout arrow arrow s.
+So I'm using exactly the same syntax.
+So to finish this up, make sure the run part works.
+Go ahead and just do make test.
+And it will test running and looking at several different kinds of stars.
+Testing individually the output operator to make sure that it's correct.
+Testing individually the input operator.
+Again, this is what the input is. Here's one with two names.
+We test it with one name. Test it with one with no name.
+So we can test all those possibilities.
+And this is just testing read and print separately.
+So here's testing read. Here's testing print.
+Here's testing the input operator. Here's testing the output operator.
+Okay, so structured types are things like the date that you see on the right.
+It has January 3rd, 2009.
+It has a string and a couple of integers.
+So that's a structured type.
+We can also create user defined scalar types.
+Ones that have only a single value versus the structured type or the record that adds multiple values together.
+With scalar values, we can enumerate, meaning we can list or count each possible value.
+For instance, if I want to create a type that represents the weekdays,
+it's Monday, Tuesday, Wednesday, Thursday, and Friday.
+Saturday and Sunday wouldn't be one of the weekdays.
+We can write this two ways.
+In C++11, we use the words "anum" followed by "class".
+So anum, class, weekday.
+These are called scoped enumerations.
+They were introduced again in C++11.
+C++ and C, the older version of C++, that's what's called a plain enumeration.
+You generally want to use the scoped enumerations because they have less opportunities for errors.
+So let's look at defining an enumerated type.
+So an enumerated type is a set of related integer values which act like a type.
+You provide a name for each value.
+For example, the suit values for a deck of cards would include the clubs, the spades, the diamonds, and the hearts.
+Now notice the names are separated by commas.
+There's no ending semicolon. There's an ending semicolon at the end of the definition of the type.
+But there's no semicolon after the word "hearts".
+So no ending semicolon.
+You should use lowercase or propercase. Avoid using uppercase.
+Here are some of the things you can do with a scoped enumeration.
+I could create a suit variable, S, an enumerated type variable.
+I could initialize it. What would I initialize it with?
+I'd initialize it not with hearts, but with its fully qualified name, suit colon colon hearts.
+I could compare it to another enumerated type.
+I couldn't compare it to an integer, but I could compare it to suit clubs using not equals and equals.
+Now greater than and less than also kind of works, but it's not very, very useful.
+So generally we'll use equals or not equals.
+We can use that variable as a switch selector.
+So switch S, case suit clubs, return clubs. Case suit hearts, return hearts.
+So this is converting a suit type into a string type.
+If it wasn't one of the four clubs, which are the only things it could possibly be,
+would return some kind of error or have an assertion there or throw an exception, something like that.
+So why do we want to use enumerated types?
+Consider a playing card.
+A playing card has two things.
+It has a suit and a rank.
+We could represent that suit and that rank like ace, king, queen, jack is the rank,
+and diamonds, hearts, spades, and clubs are the suits.
+We could represent those by using strings or integers or something else.
+So imagine if we represented the rank and the suit using strings.
+There should be a comma between rank and suit here,
+and I will probably fix that on the slides that you'll see if you click the slides.
+Then I go and create a card object.
+And I create a card A and I pass it ace and clubs.
+Well, what's the problem?
+Well, cubs is the wrong spelling for the clubs,
+so instead of the ace of clubs, I get something that doesn't make any sense.
+In other words, my type is not very resilient.
+The compiler can't check the fact that I've passed the wrong values.
+Suppose instead I decide to make rank and suit integers.
+And then I create some constants like this, ace 101 and clubs 1001.
+So I start all the ranks at 1 and I start all the suits at 1000.
+And then I try and create a card B, clubs ace.
+Well, what's the problem?
+Again, my structure has rank and suit.
+What I've passed in is 1001 for the rank and 101 for the suit.
+Both of those are invalid values, and I would have to do some extra checking.
+Again, the compiler can't check to see that I have switched my rank and suit,
+where it's supposed to be rank suit, and I've passed in clubs.
+I've passed in suit and rank.
+Again, the compiler can't change that.
+Suppose, however, that I created an enumerated type for the rank,
+an enumerated type for the suit.
+Then I would create it like this, card rank ace, rank clubs.
+If I switch those, the compiler would tell me.
+I would know the moment I tried to compile my code, I've made a mistake.
+I would not have to ever worry about creating a card object with invalid values.
+It would be impossible.
+And so that's really why we want to use enumerated types.
+We say that we're creating strong types for our arguments and our parameters.
+Now, there is no built-in input/output with enumerated types.
+You may write a two-string function.
+You may want to convert it to a string for output with a function.
+So here's a two-string function that takes a rank.
+We'll switch on the rank, and then case rank ace, we'll return ace.
+Case rank two, we'll return two. Case rank three, we'll return three.
+So let's go ahead and do that.
+So for our exercise here with enumerated types,
+we're going to take the coin type and we're going to complete the two-string function for the coin type.
+So let me close that.
+Let me close this. Let me close this.
+Let's go down to C.
+And this will be in enumH.
+So here's our enumerated type.
+And we're going to write the two-string function.
+And let's see if we want to do the two-string and the value of function.
+So actually we're going to write two functions in this.
+And so this is in enumOps.cpp.
+So let's put your name in here.
+Notice I've included enum.h right here.
+I'm going to put my name at the top of this just to get the practice.
+So I'm going to put summer22 for this.
+Okay, let's go grab those two prototypes.
+And we'll see how we would add our implementation for that right here.
+Okay, so if I want to convert a coin object to string, I'm going to have to use a switch statement.
+So I'm going to have to say switch on C.
+Now I'm going to have to say case coin colon colon and then what the coin types are.
+So what are my coin types?
+I'll just copy them right here.
+So case coin penny colon.
+So that's the structure.
+The colon colon and the colon is kind of confusing here.
+I'm going to return penny.
+And this will be case coin dime, case coin quarter, case coin nickel.
+Let's put the colons on the end of each of those case labels.
+So here we're going to return nickel.
+Here we're going to return a dime.
+Here I'm going to return a quarter.
+And here I'm going to return half dollar.
+Okay, what if it is none of those?
+Well, technically it has to be one of those.
+I believe the code will compile without us putting a default in it.
+Let's just try it.
+Let's open up a shell on that.
+Let's just do make on it.
+Okay, value of, okay, control reaches end of non-void function.
+So it does require us to do something.
+And so what we could do here is we could just add an assert or a throw or just a return.
+Or you could add a throw statement.
+A throw would work fine.
+And we could put this, of course, inside the default.
+In which case we don't need it here.
+It's maybe a little more obvious over there that that is an error in that case.
+Okay, so now we've got a coin and we want to get its value.
+Now we could do a switch like this, case coin penny, return one.
+Case coin nickel, return two.
+But notice when I created my enumerated type,
+I provided an underlying value for each of the types that represents the type of the value.
+Now we want to return it as a double.
+And so what we're going to need to do is we're going to need to cast this to its underlying type.
+So I'm going to say static return static cast double C divided by 100.
+And this actually should be, you should cast it to an int, not a double.
+So static cast int divided by 100 will give us a double.
+And that should, in fact, pass all our tests.
+Make works, so make test.
+And to string, oh, it wanted half dollar to look slightly different, so let's fix that.
+It wants it to look like that.
+So let's say make test.
+Okay, so all of these work.
+Okay, so this was converting a type, an enumerated type to a two string,
+so we could do output on it and a value of,
+so we could use it in a calculation, a coin type rather than an integer.
+I could use it with other types.
+Okay, the last thing we want to look at today in this lecture is we want to look at I/O operators.
+So I've already seen these I/O operators for stars.
+We have const star ref.
+We can use them for any user defined types, including for enumerated types.
+So we're going to use the two string for rank and suit.
+Card, of course, is a structure in this case,
+so we can use the output operators for our cards just like we did with our stars.
+The input operator looks like this, just like the ones we used for stars.
+Our input is going to be in the form of AS for ace of spades, TH for ten of hearts,
+JC for jack of clubs, and so forth.
+So this is our last exercise. We're going to write the card I/O operators down in,
+let's close that,
+down in D.
+So let's open a shell on that.
+And let's close the previous shells.
+And so I only have one shell open on D.
+Let's open card I/O dot CVP. This is the one we're going to change.
+Cards dot H, I believe, already has our prototypes inside there.
+So we can just copy those prototypes, that's what we're going to write.
+It has these functions already written, the two string for the suit and the two string for the rank.
+So the output one is pretty easy.
+The output one, we're simply going to say out, two string, C dot rank.
+Then we're going to put of, and two string, C dot suit.
+And then we're going to return out.
+So that's pretty easy. We're taking two string, and again, that's already defined for us here.
+And here are the types for suits and ranks.
+So we don't need to use a switch statement for that.
+This is our structure for our card. It has a rank and a suit.
+So the output is pretty easy. The input is a little more difficult.
+So we're going to return in at the end of this.
+We're going to need to read two characters.
+So I'm going to call those R and C.
+So char R and C.
+And we're going to need to read in R and C.
+Now there is no easy way to compute, convert R to C, other than writing a switch.
+So we're going to write switch R, and then switch C.
+Now the parts that make up a rank, let's just go copy them over here.
+There's our suit.
+So let me just copy both of those over here.
+Okay, so here's our ranks.
+Now that's our suits.
+Let's paste them in there and comment them out.
+Here's our ranks.
+And I should have called this R and S, right? Rank and suit.
+Okay, so there's my ranks.
+Here's my suit.
+Okay, so let's put the syntax in there.
+So case rank colon colon ace.
+What we're going to say is C rank equals.
+Of course, let me put this. I'm really messing this up.
+Case ace, then C.rank equals rank.ace and break.
+Okay, so we're going to do the same thing. I'm just going to copy that code there.
+Let's put in all the ranks.
+Two, three, four, five, six, seven, eight, nine.
+Can't put ten as a character, so we're going to use T.
+Jack, queen, and one more.
+King.
+So this is going to be.
+So that's going to be two. Three. Four. Five. Six. Seven. Eight.
+Oops.
+Eight. Nine. Ten. Jack. Queen. King.
+And let's put a default.
+Let's throw an exception.
+Throw a string.
+Throw a bad rank.
+Okay, now let me copy one of these lines here.
+We'll use the same thing for the suit.
+Although, of course, it's much closer. It's very shorter.
+So the suits are going to be spades, clubs, C suit.
+That should be C, right?
+And this is going to be suit clubs.
+And we can just make. I'm not quite sure what I did.
+So here's spades, diamonds, hearts.
+And this, of course, is S, D, and H.
+And we'll do the same thing for the default.
+I'll just throw a bad suit instead of a bad rank.
+Okay, let's try it here.
+So let's do make.
+And let's do make test.
+Okay, so here's my output operator. I created this car with rank of ace.
+It prints out ace of spades.
+Queen of hearts. Jack of diamonds.
+Now I've created a, I've got in seven of clubs.
+If you want to see what I'm processing, I'm processing this file.
+Seven of clubs, two of diamonds, ten of diamonds, ten of clubs, queen of hearts.
+And if we look at the output,
+what we got is seven of clubs, two of diamonds, ten of diamonds, ten of clubs, queen of hearts.
+So that worked just perfectly.
+Okay, so we went a little over an hour today.
+But we covered structured types and enumerated types.
+And you were introduced to overloaded operators.
+I'll see you in lecture 16.

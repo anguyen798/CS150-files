@@ -1,0 +1,658 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 22 on C-style strings.
+So let's talk about C-style strings.
+A C-string is a character array that was used for traditional or built-in strings in C.
+These were inherited by C++.
+So if I create an array, I can actually initialize it, a char array,
+I can initialize it with what we call a string literal, with just "hello" in double quotes.
+That will initialize or create an array that has six elements in it.
+So notice the different ways we could do that.
+We could allocate it by saying "greeting6 = hello" or we could do it the same way we do all the other arrays.
+We could say "greeting =" and then put in the "h" and the "e" and the "l" and the "l" and the "o"
+along with one additional value.
+Now notice when we initialize a C-style string or a character array,
+we don't need to use braces or commas as with the additional array.
+We don't need to use this third style right here.
+We can just do it by putting in the string itself.
+Now the array that's created when we do this occupies six bytes, not five.
+It has one byte for each of the characters, the "h" and the "e" and the "l" and the "l" and the "o."
+That's followed by a binary zero, the zero character.
+It's not the integer zero, it's the character with the ASCII value zero.
+We call this the null terminator.
+You notice I've spelled null with a single "l" there.
+So null is the name of the character with the ASCII value zero.
+If you look at an ASCII character set, let's go see if we can find one in our web browser here.
+Let's look up ASCII table.
+If we look up an ASCII table, you'll notice that these characters have names.
+So the character that has the decimal value zero has the name "nul."
+And so that was just the ASCII name for the character that had the value zero, the ASCII character zero.
+Sometimes students get that confused with "null."
+An "null" is something different.
+It also has the value zero, but it's the C representation of a pointer with the value zero.
+We actually don't use "null" in C++. We use "nullpointer" instead, which is an entirely different type.
+Now, let's look at two examples of C-style strings.
+Here's the one I just showed you, "pet1 = dog."
+That is the equivalent to this.
+"char pet1 [] =" and then embraces initializing the D, the O, the G.
+And even though in this top one we don't see the null character, that null character is actually there.
+So the memories are allocated for four characters in user space.
+That means in your space that you can make a change to.
+So "pet1" is, its type is an array of four characters.
+It's a block of four characters, and if we created this in the static storage area,
+in other words, outside any function, it would be in the static area.
+If we created it on the stack, in other words, inside a function, it would be on the stack.
+This is slightly different.
+So "pet2" is a pointer. "pet2" is a pointer, and it points to the first character of an array of four characters.
+So there is still a "cat" null character out there, but that "cat" null character is not stored in your space.
+It's not stored on the stack. It's not stored on the static storage area.
+It's stored in a section of read-only memory, a special part of the static storage area.
+Now, in C, this is allowed. In C++, this is actually not really correct.
+In C++, because this is stored in a read-only memory section, C++ said,
+"Well, we should allow the compiler to know that, and so we should write it as const char*."
+So in C++, if you write this, you'll probably get some kind of warning or error.
+Now, notice that I can take this pointer, char*pet2=cat, and I can reassign it to "pet1."
+I can say "pet2=pet1," because "pet2" is a pointer. That pointer can be changed, but I could not do the opposite.
+I could not say "pet1=pet2." "pet1" is fixed.
+It is a constant address of the first character here.
+So the standard library inherited a collection of functions in the header called "cstring."
+Now, C and older C++ implementations will use the header called "string.h."
+All of the headers in C++ that start with "c," like "cstring," are inherited from the C language, and the C standard library.
+So let's look first at how we find the size of a string, if we want to loop through it.
+With a C++ string, like "a" here, we get the length by calling "a.length" or "a.size."
+We call a member function because a C++ string is an object of a class.
+"b" is a C string. In other words, it's an array of 1, 2, 3, 4, 5, 6, 7, 8 characters.
+And it's stored in this array on the stack, in this case.
+And we will get the size by passing the array "b" to a function called "strlen."
+So "strlen" is in this header file "cstring."
+Now, if we want to loop through the string, with a C string, we have to use the traditional "for" loop.
+You'd have to do "i < len b."
+With a C++ string, we can still do this, but we can do this as well.
+You can't do this with a C-style string.
+So, again, C strings and C++ strings are different kinds of things.
+Now, to assign or copy a string in C++, you do it exactly the same way that an integer does.
+You say "string a = hello."
+And to make a copy of "a," you do "string b = a."
+So that means that we have two copies of the word "hello."
+How do we do that in C?
+Well, in C, we have one string here.
+Now, notice I'm using the second time, where I have a constant character.
+And this is in read-only memory.
+I have an array that I'm going to copy that into, "b."
+I've allocated enough space to hold it.
+And I'm going to call the function in C string called "strcpy."
+S-T-R-C-P-Y.
+And I'm going to copy into "b" this array all the characters from "a."
+Now, how this works is the loop inside the function strcpy simply copies the first character into "b."
+Then it copies the second character following that, the third character, the fourth character, the fifth character.
+And then it copies the null character, and then it stops.
+Now, because of that, you have to make sure that the destination, here "b" is the destination where we're going to put the characters,
+has sufficient space to store all of the characters plus the null byte.
+Let's look at string concatenation.
+So C++ string concatenation works like this.
+You create a string "a," and then you add "a" to another string, "beautiful" in this case, and we create another string.
+So we have one string "a" that has "hello" in it, and "b" that has "hello, beautiful."
+If we want to do the same thing in C, what we have to do is create the C string we're going to copy from.
+We create the C string we're going to copy to, and initialize it with the value that we're starting with.
+And then we use a function called "string cat," or "strcat."
+So this is string concatenation.
+And it will concatenate into "b."
+Now here, it's going to do the same thing.
+It's going to start copying from "a" into "b," but before it does that, it's going to loop all the way down here until it finds the null byte.
+And so when it copies this space, it's going to overwrite the null byte here.
+And then it's going to copy the "b" and the "e" and the "a" and the "t" and so forth until it gets to the null byte here.
+It will copy there, and then "b" will contain "hello, beautiful."
+Again, it's entirely up to you to make sure the destination, in this case "b," has sufficient space to store all the characters from "hello"
+and all the characters from "beautiful" and the null byte at the end of it.
+Now, for string comparison, with C++ strings, you treat them just like integers.
+If string "a" is "hello" and "b" is something that's unknown, you just say if "a" equals equals "b," just like you would with integers.
+If "a" is less than "b" to see if it appears before "b" in the dictionary.
+If "a" is greater than "b" to see if it falls later than "a" in the dictionary.
+In C, you cannot use the relational operators.
+You could use the equals equals sign, but as we saw with arrays, using equals equals with arrays is legal.
+In other words, it compiles, but it's stupid. It doesn't work.
+So, if we have two C strings, "a" is "hello" and "b" is whatever,
+then we call the function strcmp and pass "a" and "b" to it.
+If "a" and "b" have the same characters in the same order, it returns zero. There is no difference.
+If "a" would appear less than "b," or in other words, it would appear before "b" in the dictionary,
+then it returns a number that is less than zero.
+And if "a" would appear after "b" in the dictionary, it returns greater than zero.
+Now, notice strcmp is not a predicate or Boolean function.
+It doesn't return true and false. It returns three values, zero, less than zero, or greater than zero.
+And so it's very common to forget that. It's a common bug to think that it is a Boolean function.
+And of course, because of the way C++ works, it will take that zero or non-zero and turn it into true and false.
+You generally will not get the answer that you expect.
+So remember when you call strcmp to test the value that's returned from strcmp.
+Okay, so let's go ahead and open our first exercise.
+This is a function called mincat.
+We're going to use the standard C-string functions to write a function that concatenates two C-string literals.
+So s1 and s2 are the two strings.
+Out is an array of characters where the answer goes.
+Now remember, we cannot return arrays, so we could not return a C-string.
+So this is an output parameter.
+Maxlen is the size of the output array.
+And so we have to make sure that we don't overstep the size of that.
+So here's how we're going to do that.
+We're going to find the length of the shorter string and put it in the variable called len.
+Then when we concatenate, we're going to concatenate only the last len characters from the longer string.
+So in the problem you'll see several examples.
+So let's switch over to our IDE here.
+And I've already opened ic22a mincat.cpp.
+I'm going to move that down a little bit and we'll look at it.
+So we're going to write a function named mincat.
+We're going to be given two C-string literals.
+We're going to append them together.
+And we're going to return the results in the third argument, a non-constant array of char.
+The fourth parameter is the size of the array.
+If the input strings are different lengths, then we'll omit the leading characters from the longer string
+so it's the same length as the shorter string.
+So if we try to concatenate "hello" and "hi", the shorter string has only two characters.
+And so we're only going to use the two last characters from "hello".
+And so that will concatenate as "low" and "hi".
+Now the strings can be of any length.
+Now if the combined string output is larger than the space available,
+then we're going to divide the available space in half, after leaving room for the terminator of course,
+and concatenate the last n characters from each string.
+So we're going to use the functions from the C-string header.
+We're not going to use any of the C++ string library.
+So let's write that here.
+Now notice it's not going to return anything as a function.
+It's going to be really a procedure.
+So we're going to call it "mincat".
+It's going to take a const char * s1, const char * s2,
+a char out that is going to have, we don't know how many lengths,
+and a size t for max length.
+Okay, so that's all we need to do to stub that out.
+Let's open a terminal on that window by right clicking and open an integrated terminal.
+And then let's just do "make" to make sure that it compiles.
+It should, right? We haven't really done anything other than put in the parameters and everything.
+Okay, so I need to know the lengths of these.
+How do I find the length of s1 and s2?
+So I'm going to say
+size t, or int if you want,
+len1 = strlen s1.
+So call the function strlen.
+So size t, len2 = strlen s2.
+Now I need to create the length that's going to be the shorter of it.
+So size t, len =
+and here I'm going to use the conditional operator.
+So len1 < len2
+question mark, I'm going to use len1.
+Otherwise I'm going to use len2.
+You could use an if statement, but it would be a little bit longer and take a little bit more time.
+Now, what we want to do
+is we want to concatenate into out
+s1 and s2
+but only the len characters.
+So we're going to say str
+the last len characters.
+So we're going to say strcopy
+our first thing.
+We're going to copy into out.
+We're going to take len
+s1
+plus len1.
+Now remember s1 is a pointer.
+It's an address.
+We add len1 to it and what are we pointing to?
+We're pointing to the null byte in s2.
+Now if I subtract len from that
+what I have is the number of characters
+for the first item.
+Now I'm going to concatenate s2.
+So I'm going to say strcap
+not strcopy. I'm going to concatenate into out.
+I'm going to copy s2
+plus len2.
+So move that pointer down to the end
+and remove it back, len characters.
+Okay, let's go ahead and try that.
+Let's do make test.
+And it looks like it worked except for three of them.
+And that is because this only has five characters available.
+So it works fine if we have an unlimited number of characters
+available in the answer or out parameter.
+But if we don't have an unlimited number of characters
+we have a problem.
+So we haven't done this second part here.
+We haven't done this part right here if the combined output
+is larger than the space available.
+So let's do that right here.
+We'll say if
+if len times two
+is greater than
+maxlen plus one
+that means it won't fit, right?
+And if that's the case we have to set len
+equal to maxlen
+minus one. So allow to the null byte
+divided by two. So each character, each string can only use
+that amount of space.
+Okay, let's try it again.
+Let's clear that with control L and do make test.
+And we got all of them working correctly.
+I'm going to show you in a second something else about C style strings.
+Many people say, well, you know, this is all good and fine
+but why would I want to do this when I already have the C++ string class?
+What can I do with this that I can't do with the C++ string class?
+Well, the reason that we want to learn to use the C
+string type in addition to the C++ string type
+is because we want to interact with things like
+the operating system. So all operating systems
+from the newest, Mac OS X, Windows,
+Linux, all of them are written in the C language.
+And if you want to talk to the operating system,
+if you want to write a Windows program, you must use
+the C programming language to do that. Or some other
+higher level language that translates it to C for you, like C#.
+So let's look at something in B here.
+PNV
+and let's bring that down there, that's too high.
+And let's open a terminal on B.
+Open an integrated terminal so we have a fresh terminal down there. I can close the other ones.
+And what we want to do
+is in the operating system, this is true for Windows,
+for the Mac, for Linux of course, which we're working on,
+variables that are used among
+different programs can be set in an area of memory called the environment.
+So this is not global inside your program, it's global
+outside your program. So for instance, if I want to know
+actually I'll just show you what all the variables are.
+So if I do printenv in Unix,
+in Windows the command would just be set and hit enter,
+it goes and it prints a list of those variables
+and tells me what the values of those variables are.
+So notice that there's a variable called githubapiurl.
+There's a variable called workdeer.
+There's a variable called gemhome and so forth.
+And so these variables are set into
+the environment. We set several of these variables when we configured
+our IDE. Remember when you configure your IDE
+or when you reset your IDE,
+it will set things like your CS150 username
+and so forth. Those are in the environment.
+Well this command printenv is just a program
+and it's a program that reads a global array
+of character pointers and so that is written
+as char star
+a bracket or environ bracket
+or we can write it as using simply two stars like that.
+And so we are going to write a program
+that does the same thing as this. And I want to show you how easy this is to do
+but you have to know about C style strings.
+So this variable is declared
+in the operating system, is defined in the operating system
+and we want to use it in our program.
+So how do you use a variable in one program
+that's declared in another or defined in another? You make it
+external. So we're going to declare this variable.
+We're not going to define it. We're going to say extern
+char star star environment.
+So now we can use that variable.
+That variable has been declared or defined elsewhere.
+We have declared it in our program and so we can use that
+to connect to the operating system.
+So if I dereference environment
+what I get is a pointer to a character.
+In other words what I get is a C style string.
+And so what I want to say
+is while
+actually I want to create a variable. I'll call it p.
+So auto p equals
+environment.
+In other words I don't want to change
+environment.
+And you might wonder why don't you put const there if you don't want to change it.
+That's because in C, which the operating system was written in,
+they didn't have const. They didn't use const like that.
+So we're going to say auto p equals environment
+while star p
+while
+while star p is not equal to the null pointer
+we're going to print out
+that variable.
+Okay now this actually won't quite work
+correctly. If you notice the end of this it tells us
+the name of the program. This environmental variable underscore
+is the name of the program we're actually running.
+So we're going to compile this. The name is p_env
+So we're going to say make p_env
+and then we're going to run
+p_env dash p_env
+and we did not get what we wanted
+oops, let me control c to stop it. Ah!
+It crashed. So what did I forget here? I forgot the fact
+that the first time we're going to be pointing to the first string but we're going to continue
+to be pointing to the same string each time. So we have an endless loop
+that is just pointing to the first environmental variable and
+printing it over and over and over again. So
+to go to the next one, what do we have to do? We have to increment the
+pointer. Okay, let's build that
+again
+and let's run it again.
+Okay, so now notice we got exactly
+the same thing we had before.
+My github user is sgilbertstudent
+and so we have written
+a program that has exactly the
+same output as a
+built in piece of code.
+We couldn't do this with C++ strings
+you have to use C style strings and pointers
+to do this.
+Now to process
+C style strings, what you do is you treat them
+exactly like an array, except
+you're not worried about the length of it. You assume that there's a
+terminating null character in the array. And so
+instead of counter controlled loops, we're going to use a sentinel
+loop, like this example of the strlen function.
+So strlen here is returning an int, the actual version
+of strlen returns a size T. And it's
+going to create a counter i, and while
+s at i is not equal to the null character, it's
+going to increment i. At the end of that, i will have
+the count of the number of characters in the
+string. So the traditional C library string functions
+all depend on that null character at the end
+of the string. Now you can write your
+code using array syntax. There's no loss of
+efficiency, if you're more comfortable with that it's perfectly fine, but
+it's more common to use pointer syntax. So here's a version
+of strlen that uses pointer syntax. Notice
+s is a const char star, or a pointer
+to a const character. We have length, and
+while star s is not equal to the null byte,
+we dereference the pointer s, it's not equal to the null byte,
+we increment s to go to the next character,
+and we also increment the length. So we get a pointer
+to a constant character, while s doesn't point to the terminating null
+byte, we move s and we count the character.
+So this is much more common to use pointers
+with C style strings than it is with arrays. As I
+mentioned though, there is no loss of efficiency if you use
+array syntax. So if you're more comfortable with that, you're perfectly
+fine using that.
+Now, it's also very common to use a much more
+concise syntax when processing C strings
+with pointers. So notice this just has three lines,
+the length is zero, while star s plus plus
+len plus plus return len. So this is
+a very, very common C string idiom.
+You should recognize it and understand it. I don't necessarily encourage you to
+write this kind of code. It is no more efficient than the
+more understandable code on the previous page. It just took
+a little bit of fewer typing. So let me just go
+through why that works so you understand it.
+So star s will dereference the pointer
+s. Dereference the pointer s. However
+this is not star s, it's star s plus plus.
+And so plus plus and
+star have the same precedence.
+So the s has to know whether to do the plus plus first or the
+star first. And because the precedence is the
+same, that won't help it decide. And so it has to fall
+back on what we call the tiebreaker rule, associativity, and
+decide does this go left to right, star s, and then
+increment it, which would mean incrementing the value
+that was at s, or does it mean plus plus s
+and then dereference the plus plus s.
+And these are right associative.
+Most operators, arithmetic operators, are less
+associated. These are right associative, so the plus plus goes first
+with the tiebreaker rule. Now the value
+returned from s plus plus is not
+the pointer s after it's been changed
+it's the pointer s before it's changed, because
+this is post-increment. So we take the value
+that s had before it was changed, we change s
+move it to the second character, return the value of s
+that it had before it was changed, dereference that
+and if that is not the null character
+if it's the null character, this is false. If it
+is the null character, then we increment
+length, and finally we return length. So this stops
+when it dereferences the null character.
+Now again, if we look at the previous
+example, here we're explicitly saying
+while star s is not equal to the null character. Here
+we're implicitly saying that. And so I think it's
+better always to be explicit. I would prefer that you write code that is
+a little clearer and easier to understand. But if you don't understand
+what this does, when you actually read C code, and you
+see this very common idiom, you'll be confused.
+Okay, so we are going
+to finish up this lecture by looking at
+an example. This is from the online
+C-String practice problems in, not coding
+bat, in Code Step-by-Step. There's
+a link on the home page. But the online version wants to use
+the library functions. The version we're going to use is not going to use any
+library function. It's very similar to what you'll be asked to do for
+PEO8. So we're going to open
+countmatches.cpp. We're going to look through an array
+of C-style strings, just like we did with PN.
+We're going to count the number of strings that contain the first string.
+And so this is the really tricky part right here that you need to learn
+to understand to do well on PEO8. How do
+you see if one string is contained inside another
+string? So I'm going to solve it two ways. I'm going to solve it first using
+array notation, and then I'll do it using pointer notation.
+It's a little easier actually with pointer notation, I think.
+But you may prefer it with array notation.
+So let's pop that up. Let's go ahead and
+close the things we had previously.
+[typing]
+[typing]
+Okay, so
+countmatches.cpp. Let's close those
+two and let's open a shell on that one.
+Yes, we have a shell open on C.
+Okay, now notice
+I'm going to put my name inside here.
+You can put your name and section and date at the top
+if you want. You don't have to, but this is the one that is important. So we're writing
+a function called countmatches, and it accepts a string
+to match, a const char char, an array of characters. So you can
+really see it here. That's how it's called.
+So if we know that, we know what to write here. And it's going to return the number
+of times that it matches. So we'll say int countmatches
+const char
+star str
+str
+Let's call that, it has it as strs
+up there, but let's call this one arrays.
+So
+that's our
+array.
+And then we're going to have a size T.
+This is the length
+of the array.
+So that's pretty easy to loop through this array.
+So let's go ahead and run this.
+So we'll go for size
+T, i = 0
+i < n++i
+And then what we want is
+arr sub i and see if it contains the string.
+Now instead of actually doing that,
+I'm going to write a function. So I'm going to write my function
+right up here, because the function is the guts of what we want.
+So I'm going to say if
+if contains
+arr sub i
+str
+Here's what I want to write.
+if arr
+i contains str
+So figuring out how to put that in a function is
+hard.
+Or is in
+if is in
+contains is nicer.
+It's hard to know whether to put the arr first or the string,
+but I would want to say if arr i contains the string,
+then what I want to do is update my result.
+So result++
+Of course we haven't created our result, so int result
+equals 0
+and return result
+So that's simple enough that that looks like it should work okay.
+So the hard part of this is figuring out how to write
+contains. So we're going to have
+two strings. It's going to be a boolean
+contains const char
+star s1 and const
+char star s2
+and let's just return
+false here.
+And if we find it, we'll return true.
+Okay, so we actually have enough here. We have enough to
+stub it. We've stubbed it out. And so we can try it. So we can say
+make test
+and we see none of those
+fail because it returns 0 in each case, right? It doesn't find any.
+And so now
+we're ready to think about contains. So contains
+is going to be arr sub i and if we look at
+this example right here, we'll see arr sub i is going to be
+rainbow. So does rainbow contain o?
+It does. So
+imagine, and I said I was going to
+do this two ways, right? I was going to do it with an array
+and a string and so
+let's do it first with an array.
+Okay, so
+we need to have a couple of variables.
+One variable is going to go through s1.
+So I'm going to do size t for these.
+You can do int. It's fine.
+And I'll call that i1.
+And so we're going to say while
+s1
+at i1 is not equal to the
+null character
+i1++
+That will walk us
+through this string. That will walk us through this string.
+Now we want to
+at each point in here, we want to see if
+s2 is at that point. So we're going to create
+another variable, i2.
+So size p i2
+and we're going to say
+while
+s2
+i2
+is equal to
+s1
+i1
+plus i2
+because we're going to have to look at the first character here
+the first character here, the second character here
+the second character here, and so we're going to have to offset s1
+by not only its index, but the index
+of the second character.
+So while those are the same
+and s2
+i2 is not equal to
+the null character and
+s1 i1 plus i2
+is not equal to the
+null character
+we're going to increment i2
+i2++
+That means that at some point
+we're either going to read all of s2
+and this is going to fail or
+the characters are not going to match
+like that will immediately not match when we try to compare the o here to the r there
+will drop out. So after we drop out
+in other words this while loop is guaranteed to drop out
+it's guaranteed to drop out
+and after we drop out, if we are looking at the null
+character after the end of this ow
+in other words if
+s2 i2 is equal to the null character
+then we have found our character. So if
+s2 sub i2
+equals the null character
+then
+got a parenthesis in the wrong place there
+then we're just going to return true
+ok so this is doing contains
+now we have actually one problem here and you'll see it here
+in a minute. It actually works for most of the
+characters but not for all of them. So we'll go make tests
+and you can see it doesn't work for this one
+and this one. So what is s2
+in these two cases? It's the null string
+it's the empty string and notice we have this little
+sentence here. The empty string is a substring of any string
+you may assume, so an empty string is a substring
+of any string. So what that means is we have to say
+if star
+if s2 sub 0 equals
+the null string, or the null byte
+then it's the empty string so we're going to return
+true. That means it matches any string. So we have this
+special case here for this sentence right in here
+and that should take us from 67%
+to 100%
+so that does
+take us to 100%. Now let's do one more
+let's do one more and that is
+I want to, I'm going to leave this here so you can
+see it. I'm going to change its name
+to xcontains. So we won't
+actually be calling it. And I'm going to
+write a version of contains that only uses pointers
+so bool
+contains const char star
+s1 const char star s2
+I'm going to
+say file
+star
+s1 is not equal to the null character
+and of course you know we could write this as file
+star s1. I mean that would be the same
+thing.
+s1++
+If we get down here we're going to return false
+if
+star s2
+equals the null character or if not
+star s2 we're going to return true
+and here we're going to try and do the same thing we did before
+so I'm going to create a couple of pointers. I'm going to say
+auto p1 equals s1
+auto p2 equals s2
+while star p1 equals
+star p2 and
+star p1 is not equal to the
+null character or while star p1
+and star p2 is not
+equal to the null character
+hold on I'm having a hard time
+finding that character there
+null character
+we're going to do p1++ p2++
+now when we get
+out of this if p2
+which is pointing to s2 if that is pointing
+to the null byte in other words if we got out of this loop because
+that was true then the
+character is there so if
+star p2 is equal to the null byte
+return true
+I find this a little bit easier mainly
+because when I'm using pointers I don't have to do this addition
+here of the offsets to get the value and that
+part kind of always confuses me here so I find this a little bit
+clearer and cleaner
+in your text this algorithm is shown at the last
+part of this chapter and so it's important that you learn and
+memorize this algorithm so let's go ahead and copy
+that or test it let's do make test
+and we got 100% once
+again. Okay so that's it for lecture
+22 I will see you guys next time
+Thank you.

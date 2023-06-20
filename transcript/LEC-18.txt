@@ -1,0 +1,414 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 18 where we're going to talk about pointers in graphics.
+Now C++, unlike Java, has no built-in graphics support. You need to use an external library.
+That's because in C++, rather than trying to be the lowest common denominator, they expect the libraries to work with the platform that you're on.
+So we are going to use a library to process images. When I say images, I mean image files, like PNG files or GIF files or JPEG files.
+And the image, the library we're going to use is called the STB or the Sean T. Bartlett libraries. Those libraries are written in the C programming language.
+And this is going to be really, really common when you work with C++, that you want to go out and use a library, and the library will be written in C.
+So we're going to look at how we use this C graphics library to read and write images and use pointers to manipulate the image data.
+So first we want to look at pointers as output parameters to load the picture into memory.
+And so there is a function in this library called load, and we will use that. But to get the output, we can't use references because C doesn't have references.
+We need to use pointers. We're going to look at opening a file, and with that we're going to have to pass C strings.
+In our program we're going to have a string object, and so that's going to be a problem. When we open the file, rather than checking for fail, like we've done with C in and C out,
+with C libraries it's very common to check to see if the pointer is null or not. So we're going to check for null pointer instead of fail.
+Because we're going to process the data, we don't know how big the data is, we're going to use address arithmetic instead of size.
+In other words, we're not going to have a vector, we're going to have a raw buffer of memory, a raw chunk of memory loaded somewhere,
+and all we're going to have are addresses to the beginning and end of it.
+To get through those, we're going to use iterator loops using pointers, and we're going to call these pointers begin and end, just like we use begin and end on our iterators.
+And finally we're going to look at pointer increment and dereferencing.
+So go ahead and in the images folder of chapter 18, you can load your own picture or you can choose one of the pictures that I have.
+So here's Austin Powers, Dr. Evil, here is Vermeer, and here is Wayne.
+So a lot of that guy.
+Or you can just drop your own picture inside here and try posterizing one of your own.
+I'm actually going to go get a picture here while I'm talking to you.
+I'm going to go over to one of my folders.
+Let's look at some of my folders down on the web.
+Let's see what I have. I want only a little photo.
+So let's look at one of the ones I have from one of my syllabi.
+And so here's a small picture of me. Let's see if I have a bigger one more recently.
+Here's Steve P&G. I'm going to use that one. So I'm just going to drag it over there.
+I'm going to drop it on the images folder.
+And so this is the picture that I'm going to posterize. You can drop your own inside there if you want.
+And what we're going to do is we're going to posterize it. So this is an example of posterization.
+We are going to use the library called STBI Load.
+Let's go over here and let's go into posterize.cpp and I'll talk a little bit about how this works.
+So the library we're using is called STBI Image for reading and writing.
+These are called header only C libraries. In other words, you only need to include the header.
+But we've said before that header files should usually only contain prototypes, not actually code.
+Well, with a header only library, you actually have to put the code inside there.
+But if you need to use the code in multiple files, you don't want to have two copies of the code.
+Your code would actually not link if you did that.
+And so when we are using it in one file like this, we use these two special defines.
+These are required for the image and the image write one.
+And that's just to tell the compiler when it sees this that it's not only going to use the declarations out of this,
+but the definitions out of it as well.
+And you're free to look through these files. There's documentation at the top of it.
+And you might find it actually kind of interesting.
+So what we're going to do is we're going to just follow this code right here.
+So I'm going to ask the user CL file to open.
+And I'm going to create a string, FNAME, and I say CNFNAME.
+So just like our IPO programs, nothing different there.
+Now I'm going to load the image into memory.
+And to do that I'm going to call this function called STBI_LOAD.
+So let's look at the prototype for that function.
+So STBI_LOAD takes not a string, but a CONT_CHAR_STAR file name.
+This is called a C style string.
+It doesn't take an int for the width and the height and the bits.
+This is bytes per pixel or the channels. Channels it does take an int.
+But these it takes a pointer to an int and a pointer to height
+and a pointer to an int for bytes per pixel.
+And it returns a pointer to an unsigned char.
+So this function is a C function.
+And file name is a C style string.
+So we have a string, FNAME.
+We cannot pass that in place of the C style string.
+But we can call one of the functions in the C++ string class
+to return a C style string.
+So the first argument we're going to need to pass to STBI_LOAD is that.
+Now first I'm going to need to add images to the file name to look for
+because we'll put our images in an images folder.
+So I'm going to say FNAME = images/ + FNAME
+And actually let's not do that. Let's create another string variable.
+I'll call it path =
+because I actually want to use the FNAME later.
+Now I'm also going to create variables for height, width, and bits per pixel.
+I'm going to make those int.
+So int width, height, and bytes per pixel.
+In other words we can have 2 bytes per pixel, 1 byte per pixel, 4 bytes per pixel, and so forth.
+And then I'm going to call STBI_LOAD.
+So I'm going to call STBI_LOAD
+And I'm going to pass my path, but I'm going to convert it to a C string.
+Now, because we cannot pass variables by reference, C has no references,
+we need to create address output parameters.
+So I've already put the variables, width, height, and bytes per pixel,
+but I need to then pass the addresses.
+So the address of width, the address of height, and the address of BPP.
+And I think we're going to create a variable for channels here as well.
+And set that to 4.
+So when we read this data in, we're going to read it in 4 bytes per pixel.
+Sorry, I'm recording this at work and I just had the janitors come in,
+so I had to shut everything down and come back and try and remember where I left off.
+So we're looking at loading the images.
+We pass this address of the width, the height, and the bytes per pixel.
+And those are filled in in the function when you call the function.
+Now we had one additional argument here, the channels, so that's not filled in.
+That's just passed as normal, rather than an output parameter.
+So I'm going to pass the channels.
+And that's just saying we want 4 bytes per pixel,
+regardless of how many bytes per pixel were used in the original image.
+Now this is going to return a pointer to the image data.
+The image data is going to be stored on the heap if this function succeeds.
+And so we're going to store that in an unsigned char pointer,
+but we're going to make that pointer const.
+If it can't open the file, it will return null pointer.
+And we need to make the pointer const because we need to free the memory later,
+and I don't want to take a chance that I accidentally change this pointer,
+which would crash my whole program.
+So let's finish that last part there.
+So I'm going to say unsigned char, so that's just an 8-bit value,
+an 8-bit numeric value, pointer, I'll call it data,
+and I'm going to make the pointer const, and I'll load the image there.
+And let me just move this comment up above the line that I actually did that with.
+So I'm saving the value in an unsigned pointer, and notice I made it const.
+Now, how am I going to tell if my code succeeded?
+I'm going to tell if my code succeeded because I'll get null pointer if it can't open the file.
+So let's process that here.
+So we'll say if data equals null pointer, then I am going to print an error message,
+"Sierra cannot open path," and I'll simply return.
+I think this is a void function.
+No, no, it's main, so I'm going to return minus 1.
+Okay, now we're ready to process the data.
+Now we're ready to process the image data.
+So I've got a chunk of data loaded out somewhere on the heap.
+I've got a pointer to the first byte of that data,
+and I have the width and the height and the bytes per pixel filled in in calling the function right here.
+So first I'm going to create a pointer to the first byte of data.
+I've already got one data, but I can't change that.
+So I need to create a pointer. I'll call it "beg" and I'll initialize it with "data."
+Then I'll create a second pointer named "n" and I'll use address arithmetic.
+What's address arithmetic?
+Well, if I add an integer, "n," to an address, what I end up with is a new address.
+So I'm going to use width times height times the bytes per pixel for "n."
+Actually, I'm just going to use the channels rather than bytes per pixel in that.
+So I'm going to create a pointer beginning.
+So I'm going to say "unsigned char pointer beg equals data."
+And then I'm going to say "unsigned char pointer end equals beg plus width times height times the channels."
+And that will give me the total number of bytes.
+And this pointer end will be pointing to the byte that would be right after this chunk of data.
+Right after that chunk of data.
+Now, I've got those two pointers, and I'm going to use the pointer beg and an iterator loop to visit each element.
+So each pixel in the image contains four unsigned char values.
+A pixel contains a red part, a byte, a green part, a byte, a blue part, a byte.
+And since we requested that this be a four channel or a four component color, it will also contain an "a" or an "alpha" or a transparency channel.
+So even if the original one didn't have transparency, we added it to the image here.
+So that means we can write a loop that looks like this.
+While beg is not equal to end, that will be our loop. That will be our iterator loop.
+We're going to remember that the first byte is red, the second byte is green, and the third byte is blue.
+The last byte is alpha.
+So you'll increment, so we want to process red, green, blue, and the alpha channel.
+Now for the alpha channel, we're not going to do anything to process it, so we're just going to say beg++ and skip it.
+For the red channel, what we're going to do is we're going to pass it to a function called "posterized".
+So what I'm going to do is I'm going to write a function up here at the top.
+It's going to be a void function.
+And I'm going to take an unsigned char by reference, and I'll just call it "c".
+And we'll do something to it inside here.
+So I want to take my red pixel, I want to pass that unsigned char, and so I'm going to say "poster"
+and I'm going to dereference the pointer to modify that part of the pixel.
+Then I'm going to go look at the next color, or the next component.
+So beg++.
+For green, I'm going to say "poster *beg"
+and then I'm going to move the pointer so it's pointing at the next one, beg++.
+Then I'm going to point blue, "poster *beg"
+I'm going to point it to the next one, so now it's pointing to the alpha.
+I don't want to do anything for the alpha, so I'm just going to skip it.
+So notice we're taking each of these four parts, the red, the green, the blue, and the alpha
+and we are passing it to this poster function, the rgb and a.
+So in the image, we're going to use this rule to posterize it.
+So notice that this is an unsigned char, so it can have the values between 0 and 255.
+0 meaning there's no color, 255 meaning it's fully saturated with that red or that green or the blue.
+So we're going to put in our rule, and we're going to say "if c < 64, let's set c to 31."
+Now notice that this is an output parameter, or input/output, it's coming in with one value, somewhere under 64.
+We're setting it to 31.
+So "else if c < 128, we'll set c = 95. Else if c < 192, we'll set c to 159.
+And if it's none of those, we'll set c = 223.
+So basically, we're changing the original image inside there.
+So we passed each pixel to the poster function and we skipped the alpha.
+Now we're going to save the image data with another function from the library, stb_write, so we've only used two functions so far, stb_load, stb_iload, and stb_write.
+We're going to save ours as a png, no matter which of those styles you originally read.
+And then we're going to free the data by passing data to stb_image_free.
+So this is an example of dynamic memory.
+When we called load, we borrowed memory from the operating system and put this image on the heap.
+Now that we're done, we want to free that memory up so it can be used for other things, for strings and vectors and so forth.
+So there's our processing. Now let's save it under a new name.
+This is the prototype, and so that's going to return true if it worked, false if it didn't.
+So we'll say if stb_iwrite
+And actually let's say string modified equals
+images
+plus
+Well, let's think about it. So I have, let's see, my original file is ap.png.
+My path is ap.png.
+So I'll say
+posterized dash
+plus fname
+Okay, so that's the, I'll say modified file.
+So that's the data we're going to save it in.
+Now it's a string, so notice my first argument is not a string, it's a const char star, a C style string.
+So when I call write, I have to pass modified file
+C_str to turn it into a C string.
+I need to pass the width, the height, the channels,
+the data,
+remember that pointer we didn't change,
+and for this png files we need to pass the stride in bytes.
+In other words, how long is a row?
+And the row is, each row will be width long times the number of channels.
+So times four in this case.
+Okay, so if that's true, if that's true,
+we're going to write out cout, saved file, saved posterized file,
+saved modification in modified file.
+Else, Sierre did not write data in modified file.
+Okay, regardless of whether we saved it, regardless of whether we saved it,
+we're going to need to free the memory.
+To free the memory, use the function stbiImageFree,
+and we pass in the original pointer we originally got from using the memory.
+Okay, you ready to try it?
+Let's go ahead and open a shell.
+I'm going to do make run,
+and it didn't compile, so I've made some syntax errors.
+Let's go fix those first.
+Okay, so I'm going to guess that these aren't a problem.
+I'm going to hope they're not a problem.
+Okay, so these probably only showed up because of my problem here.
+So in line 38, when you have errors like this, just scroll down until you find some code that you've actually written,
+like posterize.cpp on line 38,
+and that problem is because I put the pointer in the wrong place.
+So it's a const data is a const pointer to a char,
+and the pointer cannot go to the other half.
+Okay, let's save that and do make again, just make sure it compiles.
+Oh, a bunch more errors.
+And if these errors occur in...
+Okay, I'm going to pause this right now while I go look this up, because I don't expect you to have this problem.
+Okay, folks, I'm back.
+We had a problem on the make file. I'm doing this in late spring, just before the summer starts,
+and apparently they changed one of the versions of the files we're using, so I had to change the make file.
+So I'm going to do make run again.
+You guys will never see this when you actually do it, because I will change the make file before you get the starter code.
+And it's going to ask me...
+STBI write 3. Okay, I'm stopping again. I'm going to try and fix that.
+Okay, that was an error with my code. It should not be STBI write. That's probably the reason I got all the errors.
+It's STBI write PNG.
+I should have just copied it from up here instead of just typing it myself.
+Okay, so now let's try it.
+Make run.
+So I'm going to open Steve.png.
+And it saved my modification in images.
+Posterized Steve.png.
+So here was the original Steve that I showed you before.
+And here's the posterized version of it.
+So here's posterized Steve.
+So Steve and posterized Steve.
+Okay, so that worked.
+Boy, that was kind of frustrating. It took me a little bit of time to figure out what was actually going on there.
+Okay.
+So pretty neat. Can I go ahead and flip this as...
+Yeah, so I can see them side by side there. That's kind of neat.
+Alright, so let's go on.
+Again, that was all caused by user error. My problem.
+So we're going to do a second one in B.
+We're going to convert an image to its grayscale value.
+And with STBI load. So let's look at B here.
+So notice we have the same starter here.
+I have a type alias so I don't have to keep typing unsigned char.
+I've loaded the image instead of width, height, and bytes per pixel, I've used W and H.
+And I'm loading the specific image here and I'm hard coding in the channels.
+So I'm doing this part that we did in the last one by hand.
+And at the bottom I've got the right part and that's working okay.
+And I'm freeing the data down here already.
+So I want to convert this image to a grayscale value.
+And with the way we did the previous problem, we were processing it a character at a time.
+So let's go back and just look at that code just briefly.
+So I'm going to look in A at posterize. Not the images.
+Posterize.cpp
+And you'll notice in here when I'm processing that, I'm processing all four pieces one piece at a time.
+Wouldn't it be nice if I could process this whole thing as one pixel instead of the red part of pixel one, the blue part of pixel one, the green part of pixel one, and so forth.
+And we can actually do that and that's what we're going to do in grayscale.
+So when we call STBI load we get a pointer to an unsigned char.
+We can store all that data in a pixel by creating a pixel structure.
+So let's go ahead and do that here.
+We'll create a pixel structure here. So struct pixel.
+And it's going to take a Uchar red, green, blue, and alpha.
+So we can cut and remember the semicolon at the end of the structure definition.
+Now I can create a pixel pointer.
+So I'm going to create a pixel pointer here.
+Pointer beg equals data.
+Now when we try and compile this, let me go ahead and open a shell on B.
+When I try and compile this with make
+I'm still getting my missing field initializers here.
+Ok, so what I'm going to do is I'm going to change the makefile on this one as well.
+And again this will be fixed before you guys get to it.
+So 18 A and B need to be fixed.
+I get this error.
+So this error tells me I cannot convert an unsigned char pointer to a pixel pointer when I initialize it.
+And so what we need to do is we need to use a special cast called a reinterpret cast
+to tell the compiler to look at data four pixels at a time instead of one pixel at a time.
+Four pixels at a time instead of one pixel at a time.
+And so what I'm going to do is I'm going to say reinterpret that pointer as a pixel pointer.
+And now my code will compile.
+Now my code will compile.
+Now you remember address arithmetic is how we got the end pointer.
+Address arithmetic is a pointer plus an integer gives me a new address.
+The end is expressed now not in terms of bytes but pixel in our case.
+That means we don't need to use the bytes per pixel to create a new pointer named end.
+We can just do it directly.
+So pixel pointer end equals beg plus, now notice not data.
+It has to be beg because we want to add to this pointer beg plus width times height.
+Notice we don't need to multiply it like we did in the previous program.
+So now we're going to use an iterator loop to process each pixel.
+So while beg not equal to end just like we did in the previous one.
+And at the end we're going to do beg plus plus.
+So that's going to process a pixel at a time.
+I don't need four beg plus pluses to go through that.
+So this will process each pixel.
+We're going to increment the pointer to go to the next pixel.
+Now we're going to take that image and we're going to grayscale it.
+So I'm going to write two functions.
+I'm going to copy this 38, line 38 and 39.
+And I'm going to go up here.
+It doesn't actually tell me where to write those functions so I'm going to write those here.
+So my average function is going to take a pixel by reference.
+So void average pixel reference p.
+And my luminance function, and I've spelled luminance wrong.
+I'm going to try and correct that before you guys see that.
+My luminance function is going to take a pixel pointer p.
+So I just want you to see how these two functions work.
+So we've already incremented the beg pointer to point to the next pixel.
+The type of the pointer determines how far the pointer moves.
+An unsigned char moves only one byte.
+And pixel pointer moves the size of a pixel or four bytes.
+Now if we have a pointer to a pixel, we access the structure members using pointer to member.
+So beg arrow red not star beg red.
+So we're going to pass each pixel to our two grayscale functions, average and luminance.
+First one by reference and the second one by address.
+And then I'm going to write one using average and one using luminance.
+And I'm going to manually change the name of the files so you can compare.
+So the average is going to look like this.
+Int average, I'll call it ADG, equals p red plus p blue plus p green.
+Doesn't make any difference which order I put them in.
+All divided by three.
+That's the average.
+Now what I want to do is I want to set those back to the average.
+So p red equals p green equals p blue equals the average.
+So we're assigning average to p blue.
+We're assigning the result of that to p green and the result of that to p red.
+So that's going to be the average.
+So let's go ahead and for each pixel let's just say average.
+And I want the pixel so I'm going to get the pixel by star beg.
+Star beg, that's a pixel pointer.
+I'm going to get the average by star beg.
+Ok, let's run it.
+So let me open a terminal again on it.
+I guess I closed my terminal.
+Let me close the other terminals I have open here.
+And we'll do make run.
+Ok, variable or field average declared void.
+My problem there, of course, is that I put my two functions here
+when they needed to go after my structure.
+Let's say make run.
+Ok, so images grayscale.png.
+And so let's look in images.
+Here's our original picture, billiards.
+And here's the grayscale version of that.
+So let's rename this.
+So just right click and do rename.
+Or you can press F2.
+And let's change that to average.png.
+Ok, now let's go back to our code.
+And for the luminance we're going to use these values.
+Now this is to make sure that the color averages reflect the sensitivity of our eyes.
+And so we're going to say int average equals static cast int.
+And then p, notice we have a pointer, p arrow red times .299 plus p arrow green times .587 plus p arrow blue times .114.
+And now we're simply going to do the same thing that we did on line 27.
+But instead of using the dot, because p is a pointer in this one, we're going to use the arrow here to do this.
+Ok, so there's the luminance version.
+Ok, now let's just run it once again.
+So make run.
+It's going to save the image in grayscale.png.
+So in images, grayscale.png.
+We're going to select it, press F2 or right click and rename.
+I'm going to name this luminance.
+And here's the luminance version.
+So let's look at the luminance and look at the average.
+And right click.
+So there's the average.png and let's look at the luminance.png.
+Ok, and what you'll notice is that the colors that were red and, actually both those look exactly the same, don't they?
+Oh, you know why they look the same?
+Because I'm calling average in both cases.
+So let's go back to our code here now.
+And comment out where to call the average.
+And now call luminance.
+Spell it right here.
+And let's pass in big this time.
+So notice this time we don't dereference it because the luminance function takes a pointer.
+Let's run it. Let's delete our luminance.png before because it was really the wrong one.
+Let's run it again. Make run.
+Let's go over and rename this.
+And let's open up a terminal there.
+And let's open up average.
+So I have the average and the luminance.
+So here's what I want you to see.
+Actually, let's look at the billiards.png.
+Maybe we can open it in three things.
+So there's the billiards.
+Let's open this one and change that to average.
+Ok, so that's nice.
+Let's close that so we can see them a little better.
+Let's move that over there so we can see them a little better.
+What we want to look at is our eyes are more sensitive to green light than they are to red light.
+So you notice in the color pictures, notice that these green balls, 14 and I can't see what the other number is, right in the middle there,
+appear lighter than the red ones over here or the blue ones.
+The blue ones appear darkest.
+And when we average them, notice how the blue ones become light and the two green ones become very, very dark.
+And so by adjusting to the sensitivity of our light, we get a picture that is more like the luminance over here, the picture over here.
+Notice how the blue appears relatively dark, the green appears light, just like it normally appears to our eyes.
+Ok, so this kind of took a long time. I hope when you guys do it, it actually won't take you that much time
+because I don't think you're going to run into the same problems I had because I'm going to go right now
+and I'm going to fix the starter code so you don't end up with those problems.
+Ok, I'll see you next time for lecture 19.

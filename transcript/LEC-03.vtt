@@ -1,0 +1,3758 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:00.000
+ >> Hello folks, this is Steve Gilbert and welcome
+
+00:00:00.000 --> 00:00:00.000
+ to lecture three on numbers and calculations.
+
+00:00:00.000 --> 00:00:00.000
+ Before you start, make sure you've gone
+
+00:00:00.000 --> 00:00:00.000
+ into the Thursday tab here on calculations in week one.
+
+00:00:00.000 --> 00:00:00.000
+ You've clicked the link for the lecture exercise.
+
+00:00:00.000 --> 00:00:00.000
+ When lecture three exercise comes up, click the link
+
+00:00:00.000 --> 00:00:00.000
+ for the starter form, save a local copy
+
+00:00:00.000 --> 00:00:00.000
+ and make sure you rename it so you can find it later
+
+00:00:00.000 --> 00:00:00.000
+ when you get started.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so let's go ahead and talk a little bit more
+
+00:00:00.000 --> 00:00:00.000
+ about type concepts.
+
+00:00:00.000 --> 00:00:00.000
+ So in the last lecture we talked about variables.
+
+00:00:00.000 --> 00:00:00.000
+ A variable is a name storage location that holds a value.
+
+00:00:00.000 --> 00:00:00.000
+ Variables and values both have types.
+
+00:00:00.000 --> 00:00:00.000
+ And types have three characteristics.
+
+00:00:00.000 --> 00:00:00.000
+ They have the domain, the operations
+
+00:00:00.000 --> 00:00:00.000
+ and the representation of that type.
+
+00:00:00.000 --> 00:00:00.000
+ So the domain simply means all values contained in that type.
+
+00:00:00.000 --> 00:00:00.000
+ The domain for the type bool, for instance, is true and false.
+
+00:00:00.000 --> 00:00:00.000
+ There are no other values maintained in that type.
+
+00:00:00.000 --> 00:00:00.000
+ The domain for the type int is all the whole numbers
+
+00:00:00.000 --> 00:00:00.000
+ within the range of the type.
+
+00:00:00.000 --> 00:00:00.000
+ So the type for int is roughly plus or minus 2 billion
+
+00:00:00.000 --> 00:00:00.000
+ for a 32-bit int or plus or minus 127 for an 8-bit int.
+
+00:00:00.000 --> 00:00:00.000
+ Again, depending on the size.
+
+00:00:00.000 --> 00:00:00.000
+ So all the values contained in that type.
+
+00:00:00.000 --> 00:00:00.000
+ We could not put for an int, for an 8-bit int.
+
+00:00:00.000 --> 00:00:00.000
+ We could not put a number that was larger.
+
+00:00:00.000 --> 00:00:00.000
+ It would be outside of the domain.
+
+00:00:00.000 --> 00:00:00.000
+ And we could not put a number
+
+00:00:00.000 --> 00:00:00.000
+ that contained a fractional portion.
+
+00:00:00.000 --> 00:00:00.000
+ Now the second thing with a type, so the values
+
+00:00:00.000 --> 00:00:00.000
+ that can be contained in the type is the domain.
+
+00:00:00.000 --> 00:00:00.000
+ The operations are what you can do with that value.
+
+00:00:00.000 --> 00:00:00.000
+ So for the built-in types, these are specified
+
+00:00:00.000 --> 00:00:00.000
+ by the C++ language.
+
+00:00:00.000 --> 00:00:00.000
+ So for instance, in Java, we can use the remainder operator
+
+00:00:00.000 --> 00:00:00.000
+ on the floating point or real number types.
+
+00:00:00.000 --> 00:00:00.000
+ In C++, we cannot.
+
+00:00:00.000 --> 00:00:00.000
+ The language prohibits that.
+
+00:00:00.000 --> 00:00:00.000
+ So the language specifies what operations are available.
+
+00:00:00.000 --> 00:00:00.000
+ Now for the library types, like the string type,
+
+00:00:00.000 --> 00:00:00.000
+ things that are built into the C++ standard library,
+
+00:00:00.000 --> 00:00:00.000
+ those are specified by the language specification.
+
+00:00:00.000 --> 00:00:00.000
+ So the language standard
+
+00:00:00.000 --> 00:00:00.000
+ and the language specification specifies the operations
+
+00:00:00.000 --> 00:00:00.000
+ for that type.
+
+00:00:00.000 --> 00:00:00.000
+ Of course, for user-defined types, the operations are
+
+00:00:00.000 --> 00:00:00.000
+ defined by the person who wrote the class.
+
+00:00:00.000 --> 00:00:00.000
+ Finally, the representation determines what bits,
+
+00:00:00.000 --> 00:00:00.000
+ given a block of memory and a particular bit pattern,
+
+00:00:00.000 --> 00:00:00.000
+ what does that mean?
+
+00:00:00.000 --> 00:00:00.000
+ So if I say int, how many bytes are required
+
+00:00:00.000 --> 00:00:00.000
+ and how are the bits inside that byte interpreted to be an int?
+
+00:00:00.000 --> 00:00:00.000
+ The same thing if I say char or double or whatever.
+
+00:00:00.000 --> 00:00:00.000
+ So in C++, unlike Java, the representation, in other words,
+
+00:00:00.000 --> 00:00:00.000
+ how the bits are interpreted and the size, how many bytes are used
+
+00:00:00.000 --> 00:00:00.000
+ for each type, differs by implementation.
+
+00:00:00.000 --> 00:00:00.000
+ And we'll talk about that.
+
+00:00:00.000 --> 00:00:00.000
+ Now, why aren't they all the same?
+
+00:00:00.000 --> 00:00:00.000
+ Why don't they do the same thing as Java and make a byte type,
+
+00:00:00.000 --> 00:00:00.000
+ which is 8-bit, a short byte, a short type,
+
+00:00:00.000 --> 00:00:00.000
+ which is 16-bit and so forth?
+
+00:00:00.000 --> 00:00:00.000
+ That's because different computer hardware is more
+
+00:00:00.000 --> 00:00:00.000
+ efficient with different sizes.
+
+00:00:00.000 --> 00:00:00.000
+ So this allows C++ to run to the best effect
+
+00:00:00.000 --> 00:00:00.000
+ on the hardware you have.
+
+00:00:00.000 --> 00:00:00.000
+ So these are the three characteristics
+
+00:00:00.000 --> 00:00:00.000
+ that make up a type.
+
+00:00:00.000 --> 00:00:00.000
+ We have several categories of types in C++.
+
+00:00:00.000 --> 00:00:00.000
+ We have the built-in, primitive, or fundamental types.
+
+00:00:00.000 --> 00:00:00.000
+ All of those worlds kind of mean the same thing.
+
+00:00:00.000 --> 00:00:00.000
+ The things that are built into the language itself,
+
+00:00:00.000 --> 00:00:00.000
+ not the library.
+
+00:00:00.000 --> 00:00:00.000
+ That includes things like the integer types,
+
+00:00:00.000 --> 00:00:00.000
+ the whole number types, the floating point
+
+00:00:00.000 --> 00:00:00.000
+ or real number types, the character types,
+
+00:00:00.000 --> 00:00:00.000
+ and the bool type.
+
+00:00:00.000 --> 00:00:00.000
+ Now, very few of them, right?
+
+00:00:00.000 --> 00:00:00.000
+ With those types, and actually with other types,
+
+00:00:00.000 --> 00:00:00.000
+ we can derive new types.
+
+00:00:00.000 --> 00:00:00.000
+ So these are called derived types or compound types.
+
+00:00:00.000 --> 00:00:00.000
+ So I can take an array, I can take a char,
+
+00:00:00.000 --> 00:00:00.000
+ and I can create an array of char.
+
+00:00:00.000 --> 00:00:00.000
+ So an array of char is a different type than just char.
+
+00:00:00.000 --> 00:00:00.000
+ It's derived from char, but it's a derived type.
+
+00:00:00.000 --> 00:00:00.000
+ I can make a pointer to a double.
+
+00:00:00.000 --> 00:00:00.000
+ I can make a reference to an integer.
+
+00:00:00.000 --> 00:00:00.000
+ So arrays, pointers, and references are not their own
+
+00:00:00.000 --> 00:00:00.000
+ independent types.
+
+00:00:00.000 --> 00:00:00.000
+ They're based on or derived from other types.
+
+00:00:00.000 --> 00:00:00.000
+ Thirdly, we have user-defined types.
+
+00:00:00.000 --> 00:00:00.000
+ Types that are created in the library.
+
+00:00:00.000 --> 00:00:00.000
+ Types that are created by you, the programmer.
+
+00:00:00.000 --> 00:00:00.000
+ Types that interact with the rest of C++
+
+00:00:00.000 --> 00:00:00.000
+ as if they were built-in types.
+
+00:00:00.000 --> 00:00:00.000
+ And for these, we have enumerated types,
+
+00:00:00.000 --> 00:00:00.000
+ that is single value, numbered, or scalar types.
+
+00:00:00.000 --> 00:00:00.000
+ That's the enum type.
+
+00:00:00.000 --> 00:00:00.000
+ We have struct for structured or record data types.
+
+00:00:00.000 --> 00:00:00.000
+ And then we have classes for object-oriented programming.
+
+00:00:00.000 --> 00:00:00.000
+ Finally, some of these types are used to build the things
+
+00:00:00.000 --> 00:00:00.000
+ that are in the standard library.
+
+00:00:00.000 --> 00:00:00.000
+ So we refer to these types as library types,
+
+00:00:00.000 --> 00:00:00.000
+ even though they're structures or enumerations or classes.
+
+00:00:00.000 --> 00:00:00.000
+ So types such as string and vector are not built
+
+00:00:00.000 --> 00:00:00.000
+ into the C++ language.
+
+00:00:00.000 --> 00:00:00.000
+ Instead, they're built into the standard library
+
+00:00:00.000 --> 00:00:00.000
+ that comes with C++.
+
+00:00:00.000 --> 00:00:00.000
+ Now, C++ is what we call statically typed.
+
+00:00:00.000 --> 00:00:00.000
+ That means the types of the variables,
+
+00:00:00.000 --> 00:00:00.000
+ the types of the functions are indicated in the source code.
+
+00:00:00.000 --> 00:00:00.000
+ And so to show you exactly what that means, I have to kind
+
+00:00:00.000 --> 00:00:00.000
+ of compare it to other languages.
+
+00:00:00.000 --> 00:00:00.000
+ So Python, for instance, uses what's called dynamic typing.
+
+00:00:00.000 --> 00:00:00.000
+ So this is the definition for a function named add
+
+00:00:00.000 --> 00:00:00.000
+ that takes two arguments, A and B. What kind of value,
+
+00:00:00.000 --> 00:00:00.000
+ if any, does add return?
+
+00:00:00.000 --> 00:00:00.000
+ What kind of things are A and B?
+
+00:00:00.000 --> 00:00:00.000
+ Well, you don't know when you're writing your code.
+
+00:00:00.000 --> 00:00:00.000
+ When you run your code, A will be given a value.
+
+00:00:00.000 --> 00:00:00.000
+ It will be a number.
+
+00:00:00.000 --> 00:00:00.000
+ It will be a string.
+
+00:00:00.000 --> 00:00:00.000
+ It will be a real number, an integer number.
+
+00:00:00.000 --> 00:00:00.000
+ Similarly, you don't know
+
+00:00:00.000 --> 00:00:00.000
+ until the program runs what the function will return.
+
+00:00:00.000 --> 00:00:00.000
+ So this is called dynamic typing.
+
+00:00:00.000 --> 00:00:00.000
+ A is not a specific kind of variable.
+
+00:00:00.000 --> 00:00:00.000
+ B is not a specific kind of variable.
+
+00:00:00.000 --> 00:00:00.000
+ It's given a value when the program runs,
+
+00:00:00.000 --> 00:00:00.000
+ and its type is determined at that time.
+
+00:00:00.000 --> 00:00:00.000
+ Static typing is what Pascal and Java and C++ use.
+
+00:00:00.000 --> 00:00:00.000
+ That is, the types are determined explicitly
+
+00:00:00.000 --> 00:00:00.000
+ when we declare or define the variables.
+
+00:00:00.000 --> 00:00:00.000
+ So here is a function in C++.
+
+00:00:00.000 --> 00:00:00.000
+ It would look very similar in Java.
+
+00:00:00.000 --> 00:00:00.000
+ And notice that this specifically says
+
+00:00:00.000 --> 00:00:00.000
+ that this function is going to return an integer.
+
+00:00:00.000 --> 00:00:00.000
+ Notice the Python version does not say what kind
+
+00:00:00.000 --> 00:00:00.000
+ of function that is.
+
+00:00:00.000 --> 00:00:00.000
+ It also says that the two arguments, A and B,
+
+00:00:00.000 --> 00:00:00.000
+ are both going to be integers.
+
+00:00:00.000 --> 00:00:00.000
+ And so the types with static typing are determined
+
+00:00:00.000 --> 00:00:00.000
+ when the program is compiled.
+
+00:00:00.000 --> 00:00:00.000
+ Now we have a similar term that's often confused,
+
+00:00:00.000 --> 00:00:00.000
+ and this is called strong typing.
+
+00:00:00.000 --> 00:00:00.000
+ So strong typing means
+
+00:00:00.000 --> 00:00:00.000
+ that a variable can only hold one kind of value.
+
+00:00:00.000 --> 00:00:00.000
+ And so you might think, well, if I have a double value,
+
+00:00:00.000 --> 00:00:00.000
+ and I try and assign -- if I have a double variable,
+
+00:00:00.000 --> 00:00:00.000
+ and I try and assign --
+
+00:00:00.000 --> 00:00:00.000
+ I'm actually going to open up our editor here,
+
+00:00:00.000 --> 00:00:00.000
+ and I'm going to just create a new file here.
+
+00:00:00.000 --> 00:00:00.000
+ I'll call it example.
+
+00:00:00.000 --> 00:00:00.000
+ That's CPD.
+
+00:00:00.000 --> 00:00:00.000
+ And so if I try and create a variable --
+
+00:00:00.000 --> 00:00:00.000
+ and that is actually not very big.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to -- I'm not quite sure why my font is so small
+
+00:00:00.000 --> 00:00:00.000
+ when it's bigger over here.
+
+00:00:00.000 --> 00:00:00.000
+ No, I guess it's about the same size.
+
+00:00:00.000 --> 00:00:00.000
+ So double X equals 3.
+
+00:00:00.000 --> 00:00:00.000
+ Now this works in both C++ and Java,
+
+00:00:00.000 --> 00:00:00.000
+ but this is not an example of strong typing,
+
+00:00:00.000 --> 00:00:00.000
+ because the value on the right, 3, is a whole number.
+
+00:00:00.000 --> 00:00:00.000
+ The value variable on the left, where I'm putting that,
+
+00:00:00.000 --> 00:00:00.000
+ is the wrong kind of thing to put it in.
+
+00:00:00.000 --> 00:00:00.000
+ This is not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ This is an integer.
+
+00:00:00.000 --> 00:00:00.000
+ And if we had strong typing only,
+
+00:00:00.000 --> 00:00:00.000
+ then this would not compile, because we're trying
+
+00:00:00.000 --> 00:00:00.000
+ to put the wrong kind of value in the wrong kind of box,
+
+00:00:00.000 --> 00:00:00.000
+ the wrong kind of variable.
+
+00:00:00.000 --> 00:00:00.000
+ And so what both Java and C++ do is they convert this 3
+
+00:00:00.000 --> 00:00:00.000
+ to behind the scenes, invisibly, a 3.0.
+
+00:00:00.000 --> 00:00:00.000
+ And so the 3.0 is what's put inside of that.
+
+00:00:00.000 --> 00:00:00.000
+ This is called a promotion or a widening conversion.
+
+00:00:00.000 --> 00:00:00.000
+ Now in Java, if we did this, int y equals 3.15,
+
+00:00:00.000 --> 00:00:00.000
+ we would get a syntax error.
+
+00:00:00.000 --> 00:00:00.000
+ So that's because this is too big.
+
+00:00:00.000 --> 00:00:00.000
+ It's 64 bits.
+
+00:00:00.000 --> 00:00:00.000
+ This is a 32-bit bucket.
+
+00:00:00.000 --> 00:00:00.000
+ And the bits are arranged in a different pattern,
+
+00:00:00.000 --> 00:00:00.000
+ because remember, the value is the set
+
+00:00:00.000 --> 00:00:00.000
+ of bits interpreted according to its type.
+
+00:00:00.000 --> 00:00:00.000
+ And so the bits that make up 3.15 are not the same
+
+00:00:00.000 --> 00:00:00.000
+ as the bits that would go into the integer X. And so in Java,
+
+00:00:00.000 --> 00:00:00.000
+ this is illegal, but in C++, it is not illegal.
+
+00:00:00.000 --> 00:00:00.000
+ So in C++, we have strong typing,
+
+00:00:00.000 --> 00:00:00.000
+ but we have implicit conversions,
+
+00:00:00.000 --> 00:00:00.000
+ conversions that are not allowed in other languages.
+
+00:00:00.000 --> 00:00:00.000
+ So in C++, this is okay.
+
+00:00:00.000 --> 00:00:00.000
+ It's exactly as if we had written convert this 3.5
+
+00:00:00.000 --> 00:00:00.000
+ to an int, throw away the .5 and store it into A.
+
+00:00:00.000 --> 00:00:00.000
+ We won't get any errors.
+
+00:00:00.000 --> 00:00:00.000
+ Now because of that, and because of the experience people have
+
+00:00:00.000 --> 00:00:00.000
+ had with Java and C# in the last 10 or 15 years,
+
+00:00:00.000 --> 00:00:00.000
+ people have realized that that leads to some kind of errors.
+
+00:00:00.000 --> 00:00:00.000
+ And so in C++ now, if we want to make sure that we're doing,
+
+00:00:00.000 --> 00:00:00.000
+ if we're not inadvertently losing data,
+
+00:00:00.000 --> 00:00:00.000
+ we could do it like this instead of that.
+
+00:00:00.000 --> 00:00:00.000
+ We could just put braces around this.
+
+00:00:00.000 --> 00:00:00.000
+ And now, just like Java would get an error,
+
+00:00:00.000 --> 00:00:00.000
+ which is what we expect, right?
+
+00:00:00.000 --> 00:00:00.000
+ We would expect this narrowing conversion not to succeed.
+
+00:00:00.000 --> 00:00:00.000
+ But in C++, if you use the traditional assignment,
+
+00:00:00.000 --> 00:00:00.000
+ these narrowing conversions succeed.
+
+00:00:00.000 --> 00:00:00.000
+ So sometimes people complain and say, "No,
+
+00:00:00.000 --> 00:00:00.000
+ C++ is not strongly typed because I can put a double inside
+
+00:00:00.000 --> 00:00:00.000
+ an int and it didn't tell me I made a mistake."
+
+00:00:00.000 --> 00:00:00.000
+ Well, it is strongly typed,
+
+00:00:00.000 --> 00:00:00.000
+ but it has these implicit conversions exactly
+
+00:00:00.000 --> 00:00:00.000
+ like Java has the implicit conversions,
+
+00:00:00.000 --> 00:00:00.000
+ but it will do a narrowing conversion.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, losing data, whereas Java will not.
+
+00:00:00.000 --> 00:00:00.000
+ And again, if you want to avoid that,
+
+00:00:00.000 --> 00:00:00.000
+ which I strongly recommend,
+
+00:00:00.000 --> 00:00:00.000
+ what you should do is you should make sure
+
+00:00:00.000 --> 00:00:00.000
+ that you use the curly braces when you do the assignment.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so let's go ahead and look at the types now
+
+00:00:00.000 --> 00:00:00.000
+ that are built in.
+
+00:00:00.000 --> 00:00:00.000
+ So the first type we have, like Java, is a integer,
+
+00:00:00.000 --> 00:00:00.000
+ which is a signed whole number.
+
+00:00:00.000 --> 00:00:00.000
+ When we say a number is signed, we mean that the number
+
+00:00:00.000 --> 00:00:00.000
+ or the variable can represent negative and positive numbers.
+
+00:00:00.000 --> 00:00:00.000
+ Now in Java, ints are signed 32-bit whole numbers.
+
+00:00:00.000 --> 00:00:00.000
+ In C++, that's not the case.
+
+00:00:00.000 --> 00:00:00.000
+ I have worked on C++ compilers where integers were 16 bits,
+
+00:00:00.000 --> 00:00:00.000
+ and the largest integer we could have was 32,767.
+
+00:00:00.000 --> 00:00:00.000
+ Today, 32 is most common, just like Java,
+
+00:00:00.000 --> 00:00:00.000
+ but 16-bit is still used in the microprocessor world,
+
+00:00:00.000 --> 00:00:00.000
+ especially for embedded systems.
+
+00:00:00.000 --> 00:00:00.000
+ So it must be at least 16 bits, or it can't be an int.
+
+00:00:00.000 --> 00:00:00.000
+ That's what the language requires,
+
+00:00:00.000 --> 00:00:00.000
+ but it could be 32 bits.
+
+00:00:00.000 --> 00:00:00.000
+ In fact, an int could be 64 bits, and I expect to see
+
+00:00:00.000 --> 00:00:00.000
+ that soon as processors get larger.
+
+00:00:00.000 --> 00:00:00.000
+ We can modify the type int with a modifier
+
+00:00:00.000 --> 00:00:00.000
+ that specifies the size.
+
+00:00:00.000 --> 00:00:00.000
+ So we can write a long int, and we can leave off the word int
+
+00:00:00.000 --> 00:00:00.000
+ and use long, just like Java does,
+
+00:00:00.000 --> 00:00:00.000
+ and that must be at least 32 bits.
+
+00:00:00.000 --> 00:00:00.000
+ Now in Java, a long must be 64 bits.
+
+00:00:00.000 --> 00:00:00.000
+ Now in C++, that is not the case, and so many platforms,
+
+00:00:00.000 --> 00:00:00.000
+ Visual C++, for instance,
+
+00:00:00.000 --> 00:00:00.000
+ longs and ints are exactly the same size.
+
+00:00:00.000 --> 00:00:00.000
+ They're 32 bits.
+
+00:00:00.000 --> 00:00:00.000
+ Shorts, again, this is shorthand for short int,
+
+00:00:00.000 --> 00:00:00.000
+ but you can just write short if you want, must be at least 16
+
+00:00:00.000 --> 00:00:00.000
+ bits like they are in Java, but they can be 32 bits as well.
+
+00:00:00.000 --> 00:00:00.000
+ So it would be possible for ints, longs,
+
+00:00:00.000 --> 00:00:00.000
+ and shorts all to be the same size on a given platform.
+
+00:00:00.000 --> 00:00:00.000
+ They usually aren't all the same size,
+
+00:00:00.000 --> 00:00:00.000
+ but often several of them are.
+
+00:00:00.000 --> 00:00:00.000
+ The platform we're going to be using, our Unix platform,
+
+00:00:00.000 --> 00:00:00.000
+ is going to have 32-bit ints, 64-bit longs, 16-bit shorts,
+
+00:00:00.000 --> 00:00:00.000
+ and all platforms now have long, long.
+
+00:00:00.000 --> 00:00:00.000
+ This is an extension before C++11,
+
+00:00:00.000 --> 00:00:00.000
+ but now all platforms have the ability to do a long, long,
+
+00:00:00.000 --> 00:00:00.000
+ which is the equivalent to a long in Java.
+
+00:00:00.000 --> 00:00:00.000
+ And again, in C++, we can write this as a long, long int.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? Now, with all of these types that specify the size
+
+00:00:00.000 --> 00:00:00.000
+ of the bytes, we can also specify how they're interpreted.
+
+00:00:00.000 --> 00:00:00.000
+ So you can combine the word unsigned with any of these
+
+00:00:00.000 --> 00:00:00.000
+ above to specify that we want to take the whole bit pattern
+
+00:00:00.000 --> 00:00:00.000
+ and apply it to positive numbers.
+
+00:00:00.000 --> 00:00:00.000
+ So let me just give you a quick example.
+
+00:00:00.000 --> 00:00:00.000
+ If I take a 16-bit number, a short, if I write short,
+
+00:00:00.000 --> 00:00:00.000
+ I can represent numbers from minus 32,768 to plus 32,767.
+
+00:00:00.000 --> 00:00:00.000
+ The zero is right in the middle of the positive
+
+00:00:00.000 --> 00:00:00.000
+ and negative numbers if you put it
+
+00:00:00.000 --> 00:00:00.000
+ on a timeline or a number line.
+
+00:00:00.000 --> 00:00:00.000
+ If I put unsigned short, I cannot store any negative
+
+00:00:00.000 --> 00:00:00.000
+ numbers, but I get twice as many positive numbers.
+
+00:00:00.000 --> 00:00:00.000
+ I can store from zero to 65,535 numbers.
+
+00:00:00.000 --> 00:00:00.000
+ And it's the same for all the types.
+
+00:00:00.000 --> 00:00:00.000
+ Now, Java has a byte type to represent an 8-bit
+
+00:00:00.000 --> 00:00:00.000
+ signed integers.
+
+00:00:00.000 --> 00:00:00.000
+ C++ uses the type char both for characters
+
+00:00:00.000 --> 00:00:00.000
+ and for small integers.
+
+00:00:00.000 --> 00:00:00.000
+ So for characters, you just use a plain char.
+
+00:00:00.000 --> 00:00:00.000
+ For byte integers, you do a signed char
+
+00:00:00.000 --> 00:00:00.000
+ if you want the numbers minus 128 to 127,
+
+00:00:00.000 --> 00:00:00.000
+ or you use an unsigned char if you want
+
+00:00:00.000 --> 00:00:00.000
+ to represent the numbers zero to 255.
+
+00:00:00.000 --> 00:00:00.000
+ We'll actually use these byte integers later
+
+00:00:00.000 --> 00:00:00.000
+ because they're very useful when we process images.
+
+00:00:00.000 --> 00:00:00.000
+ C++ has three floating point types,
+
+00:00:00.000 --> 00:00:00.000
+ unlike Java, which has only two.
+
+00:00:00.000 --> 00:00:00.000
+ Those of you coming from Python are familiar
+
+00:00:00.000 --> 00:00:00.000
+ with the type float, but the float
+
+00:00:00.000 --> 00:00:00.000
+ in type Python is called a double in Java.
+
+00:00:00.000 --> 00:00:00.000
+ Python actually doesn't have the same float type,
+
+00:00:00.000 --> 00:00:00.000
+ which is around four bytes long.
+
+00:00:00.000 --> 00:00:00.000
+ The double type is typically eight bytes long.
+
+00:00:00.000 --> 00:00:00.000
+ And the long double may be the same as the double.
+
+00:00:00.000 --> 00:00:00.000
+ It is on Visual C++, or it may be larger.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? So we will not use long double generally.
+
+00:00:00.000 --> 00:00:00.000
+ It's not actually that useful in C++.
+
+00:00:00.000 --> 00:00:00.000
+ And we will generally not use float unless we happen
+
+00:00:00.000 --> 00:00:00.000
+ to use them in an array for images or something like that.
+
+00:00:00.000 --> 00:00:00.000
+ So for floating point types, we'll almost always use double.
+
+00:00:00.000 --> 00:00:00.000
+ For integer types, we'll almost always use int,
+
+00:00:00.000 --> 00:00:00.000
+ unless we need very small integers,
+
+00:00:00.000 --> 00:00:00.000
+ in which case we'll use signed or unsigned char.
+
+00:00:00.000 --> 00:00:00.000
+ Now, literals mean you literally write out a number.
+
+00:00:00.000 --> 00:00:00.000
+ And when you write out a number, we assume you're working
+
+00:00:00.000 --> 00:00:00.000
+ with decimal numbers, that is base 10.
+
+00:00:00.000 --> 00:00:00.000
+ So with a decimal literal, we can preface it
+
+00:00:00.000 --> 00:00:00.000
+ to change the base.
+
+00:00:00.000 --> 00:00:00.000
+ So if I start a number with the digit zero,
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to assume I'm going to be in base 8 or octal.
+
+00:00:00.000 --> 00:00:00.000
+ So 073 means three ones in seven eights, not seven tens.
+
+00:00:00.000 --> 00:00:00.000
+ If I preface it with 0x, and that x could be capital
+
+00:00:00.000 --> 00:00:00.000
+ or lowercase, it means I'm assuming that the base is 16,
+
+00:00:00.000 --> 00:00:00.000
+ and the number is in hexadecimal.
+
+00:00:00.000 --> 00:00:00.000
+ And so 0x73 is not the decimal number 73,
+
+00:00:00.000 --> 00:00:00.000
+ it's three ones in seven sixteens.
+
+00:00:00.000 --> 00:00:00.000
+ And if I have the -- start with the preface OB, or 0B, not OB,
+
+00:00:00.000 --> 00:00:00.000
+ 0B, it's assumed that the numbers are binary.
+
+00:00:00.000 --> 00:00:00.000
+ Now, I can also add a modifier after the literal.
+
+00:00:00.000 --> 00:00:00.000
+ If I do a U, this can be uppercase or lowercase,
+
+00:00:00.000 --> 00:00:00.000
+ it's more common to do capital.
+
+00:00:00.000 --> 00:00:00.000
+ That means that we want to interpret
+
+00:00:00.000 --> 00:00:00.000
+ that number as an unsigned number.
+
+00:00:00.000 --> 00:00:00.000
+ If I do an L, it means we want to use long storage.
+
+00:00:00.000 --> 00:00:00.000
+ If I do two L's, it means we want to use long, long storage.
+
+00:00:00.000 --> 00:00:00.000
+ And of course, I combine the unsigned,
+
+00:00:00.000 --> 00:00:00.000
+ which determines how we view the representation
+
+00:00:00.000 --> 00:00:00.000
+ with the size modifiers.
+
+00:00:00.000 --> 00:00:00.000
+ So I could have 123 ULL.
+
+00:00:00.000 --> 00:00:00.000
+ C++14, we're using C++17 in this class, also allows you
+
+00:00:00.000 --> 00:00:00.000
+ to use the apostrophe to act as a separator for long numbers.
+
+00:00:00.000 --> 00:00:00.000
+ So if you have a very large decimal number,
+
+00:00:00.000 --> 00:00:00.000
+ we commonly separate out the thousands
+
+00:00:00.000 --> 00:00:00.000
+ with a comma, the comma won't work in C++,
+
+00:00:00.000 --> 00:00:00.000
+ but you can use the apostrophe,
+
+00:00:00.000 --> 00:00:00.000
+ so you still get the same visual separation.
+
+00:00:00.000 --> 00:00:00.000
+ For floating point literals, you can type them
+
+00:00:00.000 --> 00:00:00.000
+ as simply 243 dot, notice that'll be type double.
+
+00:00:00.000 --> 00:00:00.000
+ Notice we don't need a trailing zero for that,
+
+00:00:00.000 --> 00:00:00.000
+ but we do need the dot.
+
+00:00:00.000 --> 00:00:00.000
+ The literal 234 is a type int, 234 point is of type double.
+
+00:00:00.000 --> 00:00:00.000
+ If you add an L to the end of your number,
+
+00:00:00.000 --> 00:00:00.000
+ like 7.5432L, it's of type long double, the literal.
+
+00:00:00.000 --> 00:00:00.000
+ And finally, you can do it in scientific notation here,
+
+00:00:00.000 --> 00:00:00.000
+ adding an E with a plus or minus for the exponent.
+
+00:00:00.000 --> 00:00:00.000
+ The E can be capitalized or lowercase.
+
+00:00:00.000 --> 00:00:00.000
+ This'll be type double, using scientific notation.
+
+00:00:00.000 --> 00:00:00.000
+ And if we wanted type float, we would use the letter F. Again,
+
+00:00:00.000 --> 00:00:00.000
+ this can be lower or uppercase, I've used uppercase here.
+
+00:00:00.000 --> 00:00:00.000
+ You should not use lowercase for the L,
+
+00:00:00.000 --> 00:00:00.000
+ because people are going to confuse it with a one,
+
+00:00:00.000 --> 00:00:00.000
+ you're going to confuse it with a one.
+
+00:00:00.000 --> 00:00:00.000
+ Now, we can actually, since we can use literals
+
+00:00:00.000 --> 00:00:00.000
+ to specify a type, and we can use variable names,
+
+00:00:00.000 --> 00:00:00.000
+ or type names like int or double to declare the type,
+
+00:00:00.000 --> 00:00:00.000
+ we can actually use only the literal
+
+00:00:00.000 --> 00:00:00.000
+ to infer or deduce the type.
+
+00:00:00.000 --> 00:00:00.000
+ When you do that, instead of specifying a type name,
+
+00:00:00.000 --> 00:00:00.000
+ you use the keyword auto, and then you don't use braces.
+
+00:00:00.000 --> 00:00:00.000
+ And so, when I say auto A,
+
+00:00:00.000 --> 00:00:00.000
+ notice I haven't specified what kind of thing A is.
+
+00:00:00.000 --> 00:00:00.000
+ The compiler comes along and says, well,
+
+00:00:00.000 --> 00:00:00.000
+ what's going into that?
+
+00:00:00.000 --> 00:00:00.000
+ Well, 23U is an unsigned int,
+
+00:00:00.000 --> 00:00:00.000
+ so the type for A would be an unsigned int.
+
+00:00:00.000 --> 00:00:00.000
+ Similarly, I've done the same thing for the variable B.
+
+00:00:00.000 --> 00:00:00.000
+ I haven't yet specified that it's a float,
+
+00:00:00.000 --> 00:00:00.000
+ but I've written over here that it's type auto,
+
+00:00:00.000 --> 00:00:00.000
+ and so it will induce, deduce, or infer from the 3F
+
+00:00:00.000 --> 00:00:00.000
+ that B is a float.
+
+00:00:00.000 --> 00:00:00.000
+ Now, a lot of modern C++ experts recommend this style called
+
+00:00:00.000 --> 00:00:00.000
+ almost always auto, or AAA,
+
+00:00:00.000 --> 00:00:00.000
+ because first it eliminates uninitialized variables.
+
+00:00:00.000 --> 00:00:00.000
+ If we're going to get the type from the initializer,
+
+00:00:00.000 --> 00:00:00.000
+ we don't have to worry about variables.
+
+00:00:00.000 --> 00:00:00.000
+ It also improves maintenance.
+
+00:00:00.000 --> 00:00:00.000
+ That means if you change the initializer,
+
+00:00:00.000 --> 00:00:00.000
+ suppose you had, you know, int x equals 3, and you came along
+
+00:00:00.000 --> 00:00:00.000
+ and you realized, oh, you know, that really should start
+
+00:00:00.000 --> 00:00:00.000
+ with 3.5, and you forgot to change the int,
+
+00:00:00.000 --> 00:00:00.000
+ then your code would be kind of out of sync.
+
+00:00:00.000 --> 00:00:00.000
+ You wouldn't get an error message,
+
+00:00:00.000 --> 00:00:00.000
+ and so maintenance works easier if you're using always auto,
+
+00:00:00.000 --> 00:00:00.000
+ because the types track as the initializers will change.
+
+00:00:00.000 --> 00:00:00.000
+ And finally, performance.
+
+00:00:00.000 --> 00:00:00.000
+ If you use explicit types like int B equals 3.5F,
+
+00:00:00.000 --> 00:00:00.000
+ we have to do an implicit conversion there
+
+00:00:00.000 --> 00:00:00.000
+ that wouldn't have to happen if we didn't do that.
+
+00:00:00.000 --> 00:00:00.000
+ And so this eliminates these initial conversions.
+
+00:00:00.000 --> 00:00:00.000
+ So if you look on the slides, I have some links
+
+00:00:00.000 --> 00:00:00.000
+ that you can watch and read several things about here.
+
+00:00:00.000 --> 00:00:00.000
+ Watch this video on almost always audio,
+
+00:00:00.000 --> 00:00:00.000
+ or almost always auto if you're interested in that.
+
+00:00:00.000 --> 00:00:00.000
+ Let's go ahead and do an exercise, and let's go ahead
+
+00:00:00.000 --> 00:00:00.000
+ and see if we can do the work of the compiler and infer
+
+00:00:00.000 --> 00:00:00.000
+ from the literals what type would be there.
+
+00:00:00.000 --> 00:00:00.000
+ Now, of course, if we were using auto, we'd put auto there,
+
+00:00:00.000 --> 00:00:00.000
+ but here we're simply going to infer
+
+00:00:00.000 --> 00:00:00.000
+ from the compiler what type would go there.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? So I'm going to make this slightly larger
+
+00:00:00.000 --> 00:00:00.000
+ so it's easier to see on the video.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to look at this program, and we're going
+
+00:00:00.000 --> 00:00:00.000
+ to provide the correct explicit variable types for each
+
+00:00:00.000 --> 00:00:00.000
+ of the variable declarations.
+
+00:00:00.000 --> 00:00:00.000
+ You can assume that ints are 32 bits, that shorts are 16 bits.
+
+00:00:00.000 --> 00:00:00.000
+ Now, to make this a little trickier, what we want
+
+00:00:00.000 --> 00:00:00.000
+ to do is use the smallest legal type
+
+00:00:00.000 --> 00:00:00.000
+ that will correctly store the subsequent value.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? Okay.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to take a picture.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to click here.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to go in and look at this program.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to make this a little larger again so you can see it.
+
+00:00:00.000 --> 00:00:00.000
+ So notice I could say auto A equals this, but I instead,
+
+00:00:00.000 --> 00:00:00.000
+ in which case it would be an int, right, an unsigned int,
+
+00:00:00.000 --> 00:00:00.000
+ .25 is an unsigned int.
+
+00:00:00.000 --> 00:00:00.000
+ Instead, what I want to do is think
+
+00:00:00.000 --> 00:00:00.000
+ about using the smallest correct explicit type for that.
+
+00:00:00.000 --> 00:00:00.000
+ So the question really we're asking is,
+
+00:00:00.000 --> 00:00:00.000
+ what is the smallest type that will store minus 25?
+
+00:00:00.000 --> 00:00:00.000
+ So an int obviously would.
+
+00:00:00.000 --> 00:00:00.000
+ We could put a double inside there,
+
+00:00:00.000 --> 00:00:00.000
+ but all of those would need to convert.
+
+00:00:00.000 --> 00:00:00.000
+ And so the smallest type is an assigned char.
+
+00:00:00.000 --> 00:00:00.000
+ So chars are what we use for values that are 8 bits.
+
+00:00:00.000 --> 00:00:00.000
+ An 8-bit assigned char can hold the numbers
+
+00:00:00.000 --> 00:00:00.000
+ from minus 128 to plus 127.
+
+00:00:00.000 --> 00:00:00.000
+ So B, we could put that as assigned char,
+
+00:00:00.000 --> 00:00:00.000
+ but 249 is outside the range of assigned char.
+
+00:00:00.000 --> 00:00:00.000
+ It's outside the domain.
+
+00:00:00.000 --> 00:00:00.000
+ So it wouldn't fit.
+
+00:00:00.000 --> 00:00:00.000
+ What if instead, though, we made it an unsigned character?
+
+00:00:00.000 --> 00:00:00.000
+ If it was an unsigned char or an unsigned byte, it would fit
+
+00:00:00.000 --> 00:00:00.000
+ because the value for unsigned bytes is 0 to 255.
+
+00:00:00.000 --> 00:00:00.000
+ So this would be an unsigned char.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, C obviously is bigger than we can store in assigned char
+
+00:00:00.000 --> 00:00:00.000
+ or an unsigned char.
+
+00:00:00.000 --> 00:00:00.000
+ How about the next larger number, the short?
+
+00:00:00.000 --> 00:00:00.000
+ That's 16 bits.
+
+00:00:00.000 --> 00:00:00.000
+ Could we store minus 1725 in that?
+
+00:00:00.000 --> 00:00:00.000
+ Well, if it was an unsigned number, we could not,
+
+00:00:00.000 --> 00:00:00.000
+ of course, because we can only have positive ones.
+
+00:00:00.000 --> 00:00:00.000
+ So how about a signed short?
+
+00:00:00.000 --> 00:00:00.000
+ Well, with 16 bits, we can store roughly plus or minus 32,000,
+
+00:00:00.000 --> 00:00:00.000
+ and that will certainly fit.
+
+00:00:00.000 --> 00:00:00.000
+ So this would be unsigned or signed short int.
+
+00:00:00.000 --> 00:00:00.000
+ And with this type, because the default for all
+
+00:00:00.000 --> 00:00:00.000
+ of integers is signed, we can leave off the word signed.
+
+00:00:00.000 --> 00:00:00.000
+ And because with the shorts and longs,
+
+00:00:00.000 --> 00:00:00.000
+ you can actually leave off the word int.
+
+00:00:00.000 --> 00:00:00.000
+ We could write that simply as a short.
+
+00:00:00.000 --> 00:00:00.000
+ Now, D obviously won't fit in plus or minus 32,000,
+
+00:00:00.000 --> 00:00:00.000
+ but how about if we make that short unsigned?
+
+00:00:00.000 --> 00:00:00.000
+ Well, then instead of plus or minus 32,000,
+
+00:00:00.000 --> 00:00:00.000
+ we get 0 to roughly 65,000.
+
+00:00:00.000 --> 00:00:00.000
+ And 49,000 would certainly fit in there.
+
+00:00:00.000 --> 00:00:00.000
+ So this would be an unsigned short int.
+
+00:00:00.000 --> 00:00:00.000
+ And again, we can leave off the word int if we want.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so this number is 2.
+
+00:00:00.000 --> 00:00:00.000
+ There's hundreds.
+
+00:00:00.000 --> 00:00:00.000
+ Here's thousands.
+
+00:00:00.000 --> 00:00:00.000
+ Here's millions.
+
+00:00:00.000 --> 00:00:00.000
+ It's 2,252,000, right?
+
+00:00:00.000 --> 00:00:00.000
+ So obviously, that won't fit in a short.
+
+00:00:00.000 --> 00:00:00.000
+ Will it fit in an int?
+
+00:00:00.000 --> 00:00:00.000
+ Obviously, we have a negative number, so it has to be signed.
+
+00:00:00.000 --> 00:00:00.000
+ It cannot be unsigned.
+
+00:00:00.000 --> 00:00:00.000
+ And remember, the default is signed.
+
+00:00:00.000 --> 00:00:00.000
+ We only have to put the unsigned keyword in there.
+
+00:00:00.000 --> 00:00:00.000
+ We only have to put the signed keyword with chars.
+
+00:00:00.000 --> 00:00:00.000
+ And if you just want to be pedantic,
+
+00:00:00.000 --> 00:00:00.000
+ you can put it inside there.
+
+00:00:00.000 --> 00:00:00.000
+ So an integer is 32 bits.
+
+00:00:00.000 --> 00:00:00.000
+ That means we can store roughly plus or minus 2 billion numbers.
+
+00:00:00.000 --> 00:00:00.000
+ So this is fine for int.
+
+00:00:00.000 --> 00:00:00.000
+ Now, for the last three of these,
+
+00:00:00.000 --> 00:00:00.000
+ I want to do something slightly different.
+
+00:00:00.000 --> 00:00:00.000
+ I want to pretend that I am the compiler.
+
+00:00:00.000 --> 00:00:00.000
+ And I want to put in what auto would put in here with 3u.
+
+00:00:00.000 --> 00:00:00.000
+ And so for 3u, that would be an unsigned int.
+
+00:00:00.000 --> 00:00:00.000
+ For minus 9ll, that would be a signed long long.
+
+00:00:00.000 --> 00:00:00.000
+ Or just long long.
+
+00:00:00.000 --> 00:00:00.000
+ Again, you can put signed long long int.
+
+00:00:00.000 --> 00:00:00.000
+ That would be perfectly fine.
+
+00:00:00.000 --> 00:00:00.000
+ So long long.
+
+00:00:00.000 --> 00:00:00.000
+ And this one is an unsigned long long.
+
+00:00:00.000 --> 00:00:00.000
+ For these exercises, we're using something called code check.
+
+00:00:00.000 --> 00:00:00.000
+ So once you've typed your answer in there, you can go ahead
+
+00:00:00.000 --> 00:00:00.000
+ and just click the code check button.
+
+00:00:00.000 --> 00:00:00.000
+ And it will check it to see if you, in fact, got it correct.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? And so notice it's telling us
+
+00:00:00.000 --> 00:00:00.000
+ that we have the correct values.
+
+00:00:00.000 --> 00:00:00.000
+ And you're going to take a little picture.
+
+00:00:00.000 --> 00:00:00.000
+ And so I'm going to actually make this a little smaller here.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to go ahead and take my picture.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to do Windows shift s because I'm
+
+00:00:00.000 --> 00:00:00.000
+ on a Windows machine.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to take my picture.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to go over to my document here.
+
+00:00:00.000 --> 00:00:00.000
+ And for exercise one, I'm going to go ahead
+
+00:00:00.000 --> 00:00:00.000
+ and paste in those answers.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? If it gets too big, you can make it smaller
+
+00:00:00.000 --> 00:00:00.000
+ so that it fits.
+
+00:00:00.000 --> 00:00:00.000
+ We could have actually shot less,
+
+00:00:00.000 --> 00:00:00.000
+ shot less for that picture.
+
+00:00:00.000 --> 00:00:00.000
+ I shot kind of a lot for that picture.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so let's go back to talking about.
+
+00:00:00.000 --> 00:00:00.000
+ So that's types and inferred typing.
+
+00:00:00.000 --> 00:00:00.000
+ Let's talk about binary numbers.
+
+00:00:00.000 --> 00:00:00.000
+ I want to talk about how data is stored internally
+
+00:00:00.000 --> 00:00:00.000
+ in these numbers.
+
+00:00:00.000 --> 00:00:00.000
+ So internally, all numbers are stored in binary.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, base two.
+
+00:00:00.000 --> 00:00:00.000
+ So when we talk about the base of a number,
+
+00:00:00.000 --> 00:00:00.000
+ what we're talking about is the number of digits that are used
+
+00:00:00.000 --> 00:00:00.000
+ to represent that number in human readable form.
+
+00:00:00.000 --> 00:00:00.000
+ When we talk about the base of a number, we're talking about,
+
+00:00:00.000 --> 00:00:00.000
+ again, the human readable form.
+
+00:00:00.000 --> 00:00:00.000
+ So base two uses two digits.
+
+00:00:00.000 --> 00:00:00.000
+ Those digits are zero and one.
+
+00:00:00.000 --> 00:00:00.000
+ Base eight, or octal, uses eight digits.
+
+00:00:00.000 --> 00:00:00.000
+ Those digits are zero, one, two, three, four, five, six, and seven.
+
+00:00:00.000 --> 00:00:00.000
+ Base ten, or decimal numbers, uses ten digits.
+
+00:00:00.000 --> 00:00:00.000
+ And the digits are zero through nine.
+
+00:00:00.000 --> 00:00:00.000
+ And base 16, or hexadecimal, uses 16 digits.
+
+00:00:00.000 --> 00:00:00.000
+ So we use the ten digits from decimal, zero through nine.
+
+00:00:00.000 --> 00:00:00.000
+ And then we borrow the first six letters, A, B, C, D, E, and F.
+
+00:00:00.000 --> 00:00:00.000
+ And so that's how we represent human readable
+
+00:00:00.000 --> 00:00:00.000
+ hexadecimal numbers.
+
+00:00:00.000 --> 00:00:00.000
+ So let's talk about how we interpret the bits internally,
+
+00:00:00.000 --> 00:00:00.000
+ how we convert a number that's written
+
+00:00:00.000 --> 00:00:00.000
+ in human readable form, zero, one, two, three, and so forth,
+
+00:00:00.000 --> 00:00:00.000
+ to the actual value that's stored in the number.
+
+00:00:00.000 --> 00:00:00.000
+ What does it mean when we write out the number 123?
+
+00:00:00.000 --> 00:00:00.000
+ Well, in base ten, you learned this in grammar school.
+
+00:00:00.000 --> 00:00:00.000
+ What we mean by 123, or one twenty three,
+
+00:00:00.000 --> 00:00:00.000
+ is simply one times the base.
+
+00:00:00.000 --> 00:00:00.000
+ Let me start at the right here.
+
+00:00:00.000 --> 00:00:00.000
+ So whatever the base is, we take it to the zeroth power.
+
+00:00:00.000 --> 00:00:00.000
+ So any number raised to the zeroth power is one.
+
+00:00:00.000 --> 00:00:00.000
+ So that's three times one.
+
+00:00:00.000 --> 00:00:00.000
+ Then we take the next digit, two times, and this is ten
+
+00:00:00.000 --> 00:00:00.000
+ to the first power, or ten.
+
+00:00:00.000 --> 00:00:00.000
+ So two times ten, plus one, that's the third digit
+
+00:00:00.000 --> 00:00:00.000
+ over here, times ten to the second power,
+
+00:00:00.000 --> 00:00:00.000
+ or ten times ten, or a hundred.
+
+00:00:00.000 --> 00:00:00.000
+ And so in grammar school, you learned
+
+00:00:00.000 --> 00:00:00.000
+ that is this is the ones place, this is the tens place,
+
+00:00:00.000 --> 00:00:00.000
+ this is the hundreds place,
+
+00:00:00.000 --> 00:00:00.000
+ the next one would be the thousands place.
+
+00:00:00.000 --> 00:00:00.000
+ But this is what you're really doing under the hood.
+
+00:00:00.000 --> 00:00:00.000
+ And if you understand that, then binary numbers,
+
+00:00:00.000 --> 00:00:00.000
+ or base eight numbers, or base sixteen numbers, are easy.
+
+00:00:00.000 --> 00:00:00.000
+ So here is a binary number.
+
+00:00:00.000 --> 00:00:00.000
+ Because it's binary, we only have two digits, zero and one.
+
+00:00:00.000 --> 00:00:00.000
+ And the way we interpret that, the way we get the value
+
+00:00:00.000 --> 00:00:00.000
+ out of that, is by taking the base, which is two,
+
+00:00:00.000 --> 00:00:00.000
+ raised to the powers, two to the zero, two to the first,
+
+00:00:00.000 --> 00:00:00.000
+ two to the second, two to the third,
+
+00:00:00.000 --> 00:00:00.000
+ two to the fourth, and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ And simply adding them together.
+
+00:00:00.000 --> 00:00:00.000
+ So our right most digit here is one,
+
+00:00:00.000 --> 00:00:00.000
+ and we take one times two to the power,
+
+00:00:00.000 --> 00:00:00.000
+ two to the zeroth, or one times one.
+
+00:00:00.000 --> 00:00:00.000
+ Then one times two to the first, or one times two.
+
+00:00:00.000 --> 00:00:00.000
+ Then zero times two to the third, which of course is zero.
+
+00:00:00.000 --> 00:00:00.000
+ Then one times two to the third, which is eight.
+
+00:00:00.000 --> 00:00:00.000
+ Then one times two to the fourth, which is sixteen.
+
+00:00:00.000 --> 00:00:00.000
+ Then one times two to the fifth, and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ And so that is simply one plus two, plus eight, plus sixteen,
+
+00:00:00.000 --> 00:00:00.000
+ plus thirty-two, plus sixty-four,
+
+00:00:00.000 --> 00:00:00.000
+ which gives me the same value.
+
+00:00:00.000 --> 00:00:00.000
+ So one twenty-three, and this binary number,
+
+00:00:00.000 --> 00:00:00.000
+ are exactly the same value.
+
+00:00:00.000 --> 00:00:00.000
+ They're just represented in human different terms.
+
+00:00:00.000 --> 00:00:00.000
+ We're representing them in different bases
+
+00:00:00.000 --> 00:00:00.000
+ when we write them out.
+
+00:00:00.000 --> 00:00:00.000
+ Now we will normally use base ten,
+
+00:00:00.000 --> 00:00:00.000
+ but you should know algorithms to convert
+
+00:00:00.000 --> 00:00:00.000
+ to these different bases.
+
+00:00:00.000 --> 00:00:00.000
+ And so this gives you enough information to figure out how
+
+00:00:00.000 --> 00:00:00.000
+ to convert to a different base.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, suppose we had this number,
+
+00:00:00.000 --> 00:00:00.000
+ and we said it was base eight.
+
+00:00:00.000 --> 00:00:00.000
+ Well that would be eight to the zeroth,
+
+00:00:00.000 --> 00:00:00.000
+ plus one times eight to the first,
+
+00:00:00.000 --> 00:00:00.000
+ plus zero times eight to the third, second.
+
+00:00:00.000 --> 00:00:00.000
+ And then eight to the third, and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ We just simply replace these two to the sixth, two to the fifth,
+
+00:00:00.000 --> 00:00:00.000
+ two to the fourth, by eight to the sixth, eight to the fifth,
+
+00:00:00.000 --> 00:00:00.000
+ eight to the fourth.
+
+00:00:00.000 --> 00:00:00.000
+ Or in base three, we do the same thing.
+
+00:00:00.000 --> 00:00:00.000
+ So the conversion is essentially relatively simple.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to do a second exercise.
+
+00:00:00.000 --> 00:00:00.000
+ For this one, we're going to use our CS50 IDE.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to go close that little thing I just typed there.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to do this first exercise,
+
+00:00:00.000 --> 00:00:00.000
+ which shows the representation of different values.
+
+00:00:00.000 --> 00:00:00.000
+ This is in part B over here, in IC03.
+
+00:00:00.000 --> 00:00:00.000
+ And you're going to open up represent.cpp.
+
+00:00:00.000 --> 00:00:00.000
+ You don't have to put your name on this, because we're just going
+
+00:00:00.000 --> 00:00:00.000
+ to do some exercises and print
+
+00:00:00.000 --> 00:00:00.000
+ out what the internal representation
+
+00:00:00.000 --> 00:00:00.000
+ of these should be.
+
+00:00:00.000 --> 00:00:00.000
+ Now to do that internal representation,
+
+00:00:00.000 --> 00:00:00.000
+ what we're going to do is we're going
+
+00:00:00.000 --> 00:00:00.000
+ to call a function called two bits.
+
+00:00:00.000 --> 00:00:00.000
+ To do that, we've included this file called represent.h,
+
+00:00:00.000 --> 00:00:00.000
+ that has the definition for the two bits function.
+
+00:00:00.000 --> 00:00:00.000
+ Now most of you won't understand this right now.
+
+00:00:00.000 --> 00:00:00.000
+ By the end of this semester, you will understand this.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to look at that, and we're going to print
+
+00:00:00.000 --> 00:00:00.000
+ out here what that means for each of those representations.
+
+00:00:00.000 --> 00:00:00.000
+ So if I want the representation of the character A,
+
+00:00:00.000 --> 00:00:00.000
+ what I'm going to print out is two bits, and I'm going to print
+
+00:00:00.000 --> 00:00:00.000
+ out the literal character A. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ Now if I want the literal representation, in other words,
+
+00:00:00.000 --> 00:00:00.000
+ what do the bits look like for the unsigned char B,
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to have to -- or the unsigned char 65,
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to have to make a variable of that type.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to say unsigned char B equals 65,
+
+00:00:00.000 --> 00:00:00.000
+ and then I'm just going to print out two bits B. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ So you notice when I did A, I put the quotes around it.
+
+00:00:00.000 --> 00:00:00.000
+ I passed the literal inside here.
+
+00:00:00.000 --> 00:00:00.000
+ Here I'm passing in the variable.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. We've got the short value.
+
+00:00:00.000 --> 00:00:00.000
+ So the signed short value, 32,768.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to have short C equals 32,768.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to have unsigned -- I'll do it.
+
+00:00:00.000 --> 00:00:00.000
+ I'll do it between them next time.
+
+00:00:00.000 --> 00:00:00.000
+ And so let's do two things here.
+
+00:00:00.000 --> 00:00:00.000
+ Let's do two bits C. And then let's put
+
+00:00:00.000 --> 00:00:00.000
+ out a comma and say C equals -- or I'll use the arrow -- C. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ And let's do a D for the unsigned short.
+
+00:00:00.000 --> 00:00:00.000
+ So unsigned short D equals 32,768.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to do exactly the same thing I did here.
+
+00:00:00.000 --> 00:00:00.000
+ I'm just going to copy that.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to paste it over here.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to print out D, D, and D. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Here we want the int value, 15.
+
+00:00:00.000 --> 00:00:00.000
+ So two bits, 15.
+
+00:00:00.000 --> 00:00:00.000
+ Now 15, of course, literally is an int.
+
+00:00:00.000 --> 00:00:00.000
+ We want the int value minus 15.
+
+00:00:00.000 --> 00:00:00.000
+ Two bits minus 15.
+
+00:00:00.000 --> 00:00:00.000
+ We want the float, 15F.
+
+00:00:00.000 --> 00:00:00.000
+ And the double 15F -- or double 15.
+
+00:00:00.000 --> 00:00:00.000
+ I'm having a hard time putting my fingers on the right keys.
+
+00:00:00.000 --> 00:00:00.000
+ Two bits, 15.0, or just 15 point.
+
+00:00:00.000 --> 00:00:00.000
+ All right?
+
+00:00:00.000 --> 00:00:00.000
+ If we just did 15, we'd have an integer.
+
+00:00:00.000 --> 00:00:00.000
+ If we did 15.0, we'd have something else.
+
+00:00:00.000 --> 00:00:00.000
+ But the float -- notice I don't need the floating point.
+
+00:00:00.000 --> 00:00:00.000
+ If I put the F on the end of it, it knows it's float.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to hope that's right.
+
+00:00:00.000 --> 00:00:00.000
+ We'll find out when we compile it.
+
+00:00:00.000 --> 00:00:00.000
+ Now then I'm going to be two bits,
+
+00:00:00.000 --> 00:00:00.000
+ and I'm going to do a minus 15.0.
+
+00:00:00.000 --> 00:00:00.000
+ All right?
+
+00:00:00.000 --> 00:00:00.000
+ Because we did minus 15 with no point zero,
+
+00:00:00.000 --> 00:00:00.000
+ and we got the int minus 15 here.
+
+00:00:00.000 --> 00:00:00.000
+ Here we have the double minus 15.
+
+00:00:00.000 --> 00:00:00.000
+ Now to compile this, we're going to have to right click
+
+00:00:00.000 --> 00:00:00.000
+ on the folder that's in, open it in an integrated terminal,
+
+00:00:00.000 --> 00:00:00.000
+ and notice that it does the change directory
+
+00:00:00.000 --> 00:00:00.000
+ to move us over there.
+
+00:00:00.000 --> 00:00:00.000
+ And then I'm simply going to say make run.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? Now I had an error.
+
+00:00:00.000 --> 00:00:00.000
+ I do need the period on the 15F.
+
+00:00:00.000 --> 00:00:00.000
+ I told you the compiler would tell us if we made
+
+00:00:00.000 --> 00:00:00.000
+ that mistake, and I did make that mistake.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to put a period in the 15F.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, let's try it again.
+
+00:00:00.000 --> 00:00:00.000
+ I'll clear the terminal with control L. And make run.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so this is what we talked about originally with types.
+
+00:00:00.000 --> 00:00:00.000
+ Notice that the character A,
+
+00:00:00.000 --> 00:00:00.000
+ because I said it was a character, represents A.
+
+00:00:00.000 --> 00:00:00.000
+ If I printed out the character A, I would get A.
+
+00:00:00.000 --> 00:00:00.000
+ And actually, let's just do that.
+
+00:00:00.000 --> 00:00:00.000
+ Let's go back here and do the same thing like we did for C
+
+00:00:00.000 --> 00:00:00.000
+ and D. So I'm going to print out A. And here, oh,
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to say -- oh, actually,
+
+00:00:00.000 --> 00:00:00.000
+ let's make a variable of that.
+
+00:00:00.000 --> 00:00:00.000
+ So char A equals A. And put a semicolon there.
+
+00:00:00.000 --> 00:00:00.000
+ And we'll do A. And then we'll print out comma A is --
+
+00:00:00.000 --> 00:00:00.000
+ print out A. And then a new line.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? And we'll do the same thing to here.
+
+00:00:00.000 --> 00:00:00.000
+ We'll add the -- oops.
+
+00:00:00.000 --> 00:00:00.000
+ The comma B equals or B is B. And that will make it a little
+
+00:00:00.000 --> 00:00:00.000
+ clearer when we build this and run it again.
+
+00:00:00.000 --> 00:00:00.000
+ So let me clear the console and do make run again.
+
+00:00:00.000 --> 00:00:00.000
+ [ Background Sounds ]
+
+00:00:00.000 --> 00:00:00.000
+ Well, I didn't like that.
+
+00:00:00.000 --> 00:00:00.000
+ [ Background Sounds ]
+
+00:00:00.000 --> 00:00:00.000
+ I must have made a mistake in my code, which I did.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to go -- oh, I said two bits one instead
+
+00:00:00.000 --> 00:00:00.000
+ of two bits A. Okay.
+
+00:00:00.000 --> 00:00:00.000
+ Third time, hopefully this is the charm.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So notice this bit pattern has a value.
+
+00:00:00.000 --> 00:00:00.000
+ What's its value?
+
+00:00:00.000 --> 00:00:00.000
+ The letter A. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ This bit pattern is the unsigned character 65.
+
+00:00:00.000 --> 00:00:00.000
+ Now, when we print it out, it says it's A, but it's really 65.
+
+00:00:00.000 --> 00:00:00.000
+ So depending on what we determined it was,
+
+00:00:00.000 --> 00:00:00.000
+ notice the value changes.
+
+00:00:00.000 --> 00:00:00.000
+ It was our determination that this was an int or a char.
+
+00:00:00.000 --> 00:00:00.000
+ Right? So unsigned char 65 and int A have the same value
+
+00:00:00.000 --> 00:00:00.000
+ or have the same bit pattern, but they have a different value
+
+00:00:00.000 --> 00:00:00.000
+ because they represent different numbers.
+
+00:00:00.000 --> 00:00:00.000
+ If we look at the short 32768, we get this bit pattern,
+
+00:00:00.000 --> 00:00:00.000
+ 16 bits, and we have the value 32768.
+
+00:00:00.000 --> 00:00:00.000
+ If we look at unsigned short 32768,
+
+00:00:00.000 --> 00:00:00.000
+ I'm obviously making some kind of mistake here.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to pause this while I correct my mistake.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. I'm back.
+
+00:00:00.000 --> 00:00:00.000
+ I'm sure many of you saw my errors.
+
+00:00:00.000 --> 00:00:00.000
+ I said I want the short 32768, and I typed the short 32678.
+
+00:00:00.000 --> 00:00:00.000
+ So 768 and 768.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to print this as an int.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So let me try it.
+
+00:00:00.000 --> 00:00:00.000
+ I said last time three times the charm.
+
+00:00:00.000 --> 00:00:00.000
+ We'll hope that four times is the charm.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to do an A print.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So here we have the character A
+
+00:00:00.000 --> 00:00:00.000
+ and the unsigned character 65.
+
+00:00:00.000 --> 00:00:00.000
+ If we take that value, this value, and we represent it
+
+00:00:00.000 --> 00:00:00.000
+ as a character, it's A. If we represent it
+
+00:00:00.000 --> 00:00:00.000
+ as an integer, it's 1.
+
+00:00:00.000 --> 00:00:00.000
+ If we take this value and we represent it as a short,
+
+00:00:00.000 --> 00:00:00.000
+ notice it won't fit inside a short.
+
+00:00:00.000 --> 00:00:00.000
+ It does what we call an overflow.
+
+00:00:00.000 --> 00:00:00.000
+ And so the value that's stored in there is -32768.
+
+00:00:00.000 --> 00:00:00.000
+ If we store it in an unsigned short, which can store from 0
+
+00:00:00.000 --> 00:00:00.000
+ to 65,000, we can store that value.
+
+00:00:00.000 --> 00:00:00.000
+ So this does what we say overflows the domain.
+
+00:00:00.000 --> 00:00:00.000
+ If we look at the integer 15, we have this bit pattern.
+
+00:00:00.000 --> 00:00:00.000
+ And if we look at the value -15, we get some insight
+
+00:00:00.000 --> 00:00:00.000
+ as how negative and positive numbers are stored differently
+
+00:00:00.000 --> 00:00:00.000
+ as to their bit patterns.
+
+00:00:00.000 --> 00:00:00.000
+ If we look at the float 15,
+
+00:00:00.000 --> 00:00:00.000
+ so here's the integer 15 right here.
+
+00:00:00.000 --> 00:00:00.000
+ And here's the float 15.
+
+00:00:00.000 --> 00:00:00.000
+ Notice they're using the same amount of storage,
+
+00:00:00.000 --> 00:00:00.000
+ but the bits are arranged entirely differently.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, the interpretation
+
+00:00:00.000 --> 00:00:00.000
+ of the bits is different just
+
+00:00:00.000 --> 00:00:00.000
+ because we said it was a different type.
+
+00:00:00.000 --> 00:00:00.000
+ And if you look at the difference between the float
+
+00:00:00.000 --> 00:00:00.000
+ and the double, you'll see
+
+00:00:00.000 --> 00:00:00.000
+ that they arrange somewhat similarly.
+
+00:00:00.000 --> 00:00:00.000
+ You can see the actual data right there for 15
+
+00:00:00.000 --> 00:00:00.000
+ and the data for 15 right there.
+
+00:00:00.000 --> 00:00:00.000
+ And the data for 15 right here.
+
+00:00:00.000 --> 00:00:00.000
+ You can see that they're somewhat the same,
+
+00:00:00.000 --> 00:00:00.000
+ although a little bit differently.
+
+00:00:00.000 --> 00:00:00.000
+ And you notice -15 and positive 15.
+
+00:00:00.000 --> 00:00:00.000
+ So look at the difference between negative and positive here
+
+00:00:00.000 --> 00:00:00.000
+ for integers, the same number.
+
+00:00:00.000 --> 00:00:00.000
+ And look at the difference between negative
+
+00:00:00.000 --> 00:00:00.000
+ and positive for doubles.
+
+00:00:00.000 --> 00:00:00.000
+ Only one bit has changed.
+
+00:00:00.000 --> 00:00:00.000
+ And so what you can take away from this, I don't expect you
+
+00:00:00.000 --> 00:00:00.000
+ to understand this decoding.
+
+00:00:00.000 --> 00:00:00.000
+ What I do expect you to understand is
+
+00:00:00.000 --> 00:00:00.000
+ that the value is a set of bits interpreted according
+
+00:00:00.000 --> 00:00:00.000
+ to its type.
+
+00:00:00.000 --> 00:00:00.000
+ The size of each representation of a type is based
+
+00:00:00.000 --> 00:00:00.000
+ on the individual platform, the individual implementation.
+
+00:00:00.000 --> 00:00:00.000
+ And that we can have two patterns
+
+00:00:00.000 --> 00:00:00.000
+ that are exactly the same.
+
+00:00:00.000 --> 00:00:00.000
+ But if their type is different,
+
+00:00:00.000 --> 00:00:00.000
+ so notice these two patterns are the same.
+
+00:00:00.000 --> 00:00:00.000
+ And these two patterns are the same.
+
+00:00:00.000 --> 00:00:00.000
+ But because their type was different,
+
+00:00:00.000 --> 00:00:00.000
+ their values are different.
+
+00:00:00.000 --> 00:00:00.000
+ All right?
+
+00:00:00.000 --> 00:00:00.000
+ So the value is the set of bits interpreted according
+
+00:00:00.000 --> 00:00:00.000
+ to its type.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So that's exercise B. You're going to take a picture
+
+00:00:00.000 --> 00:00:00.000
+ of this.
+
+00:00:00.000 --> 00:00:00.000
+ And you're going to take a picture of this part here
+
+00:00:00.000 --> 00:00:00.000
+ for the in-class exercise.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Let's go on to the next topic,
+
+00:00:00.000 --> 00:00:00.000
+ which is conversions and casts.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? So C++ automatically converts between types
+
+00:00:00.000 --> 00:00:00.000
+ of numbers on initialization or assignment.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? It does this silently.
+
+00:00:00.000 --> 00:00:00.000
+ It doesn't warn you that it's happening.
+
+00:00:00.000 --> 00:00:00.000
+ It just does it.
+
+00:00:00.000 --> 00:00:00.000
+ So in C++11, we can use the curly braces called
+
+00:00:00.000 --> 00:00:00.000
+ "list assignment" to give you a little bit greater control.
+
+00:00:00.000 --> 00:00:00.000
+ So if you had an int variable and you assigned a double to it,
+
+00:00:00.000 --> 00:00:00.000
+ maybe the variable should have been a double,
+
+00:00:00.000 --> 00:00:00.000
+ but you don't notice.
+
+00:00:00.000 --> 00:00:00.000
+ In Java, you get an error.
+
+00:00:00.000 --> 00:00:00.000
+ In C++, you won't unless you use this list assignment.
+
+00:00:00.000 --> 00:00:00.000
+ Now, you may get a compiler warning on an error
+
+00:00:00.000 --> 00:00:00.000
+ or conversion, but there's no guarantee
+
+00:00:00.000 --> 00:00:00.000
+ that that will actually happen because it's not illegal.
+
+00:00:00.000 --> 00:00:00.000
+ So if you mean to explicitly convert between different types,
+
+00:00:00.000 --> 00:00:00.000
+ you should use what's called a static cast.
+
+00:00:00.000 --> 00:00:00.000
+ And see, in Java, you did something similar --
+
+00:00:00.000 --> 00:00:00.000
+ simpler in Python as well, if you wanted to cast.
+
+00:00:00.000 --> 00:00:00.000
+ This shows that the conversion is intentional.
+
+00:00:00.000 --> 00:00:00.000
+ So for instance, if I want to store the whole part
+
+00:00:00.000 --> 00:00:00.000
+ of a number pi, I can assign it to a static underscore cast.
+
+00:00:00.000 --> 00:00:00.000
+ In angle brackets, I put the type I want
+
+00:00:00.000 --> 00:00:00.000
+ to create my temporary of.
+
+00:00:00.000 --> 00:00:00.000
+ So I want to convert pi to an int,
+
+00:00:00.000 --> 00:00:00.000
+ and I put that in parentheses here.
+
+00:00:00.000 --> 00:00:00.000
+ So this is the syntax for a static cast.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so let's go and look at expressions.
+
+00:00:00.000 --> 00:00:00.000
+ Let's go and look at expressions.
+
+00:00:00.000 --> 00:00:00.000
+ So an expression is a calculation
+
+00:00:00.000 --> 00:00:00.000
+ that produces a value.
+
+00:00:00.000 --> 00:00:00.000
+ And to do that, we use operators and operands.
+
+00:00:00.000 --> 00:00:00.000
+ These are terms from mathematics.
+
+00:00:00.000 --> 00:00:00.000
+ So operands are the data that we operate on.
+
+00:00:00.000 --> 00:00:00.000
+ And operands can be literal.
+
+00:00:00.000 --> 00:00:00.000
+ So 3 plus 5 is an expression.
+
+00:00:00.000 --> 00:00:00.000
+ 3 and 5 are literally values.
+
+00:00:00.000 --> 00:00:00.000
+ We can say use variables in expression.
+
+00:00:00.000 --> 00:00:00.000
+ A minus 3.
+
+00:00:00.000 --> 00:00:00.000
+ A is not a value, but it contains a value.
+
+00:00:00.000 --> 00:00:00.000
+ So we can use it in an expression.
+
+00:00:00.000 --> 00:00:00.000
+ We can use a function call.
+
+00:00:00.000 --> 00:00:00.000
+ So func a is not a value, but it produces a value when I call it,
+
+00:00:00.000 --> 00:00:00.000
+ and I can use that in an expression, 2 times func a.
+
+00:00:00.000 --> 00:00:00.000
+ And we can have a sub-expression.
+
+00:00:00.000 --> 00:00:00.000
+ So a plus 3 produces a value.
+
+00:00:00.000 --> 00:00:00.000
+ That's an expression.
+
+00:00:00.000 --> 00:00:00.000
+ And I can use that sub-expression as part
+
+00:00:00.000 --> 00:00:00.000
+ of the expression a plus 3 times 5.
+
+00:00:00.000 --> 00:00:00.000
+ Now the operators are the plus, the minus,
+
+00:00:00.000 --> 00:00:00.000
+ the multiply in this situation.
+
+00:00:00.000 --> 00:00:00.000
+ And all of these operators have three characteristics.
+
+00:00:00.000 --> 00:00:00.000
+ First is the term arity.
+
+00:00:00.000 --> 00:00:00.000
+ Arity simply means how many operands are needed.
+
+00:00:00.000 --> 00:00:00.000
+ So 3 plus 5 is called a binary operator
+
+00:00:00.000 --> 00:00:00.000
+ because two operands are needed.
+
+00:00:00.000 --> 00:00:00.000
+ Minus 5 is a unary operator because only one operand
+
+00:00:00.000 --> 00:00:00.000
+ is needed.
+
+00:00:00.000 --> 00:00:00.000
+ Finally, we have one operator called the tertiary operator
+
+00:00:00.000 --> 00:00:00.000
+ or the conditional operator that requires three operands.
+
+00:00:00.000 --> 00:00:00.000
+ What the condition is, what the true value is,
+
+00:00:00.000 --> 00:00:00.000
+ what the false value is.
+
+00:00:00.000 --> 00:00:00.000
+ Secondly, we have what's called precedence.
+
+00:00:00.000 --> 00:00:00.000
+ Precedence determines which operators bind more tightly
+
+00:00:00.000 --> 00:00:00.000
+ to data than another operator.
+
+00:00:00.000 --> 00:00:00.000
+ Now you probably learned P-E-M-D-A-S,
+
+00:00:00.000 --> 00:00:00.000
+ PEMDAS in algebra.
+
+00:00:00.000 --> 00:00:00.000
+ That's not exactly correct here.
+
+00:00:00.000 --> 00:00:00.000
+ First, we don't have any E.
+
+00:00:00.000 --> 00:00:00.000
+ There's no exponential operator.
+
+00:00:00.000 --> 00:00:00.000
+ The P stands for the parenthesis.
+
+00:00:00.000 --> 00:00:00.000
+ The M stands for the multiplicative operators,
+
+00:00:00.000 --> 00:00:00.000
+ which means multiplication and division.
+
+00:00:00.000 --> 00:00:00.000
+ Neither one of them binds more tightly.
+
+00:00:00.000 --> 00:00:00.000
+ They're just at the same level.
+
+00:00:00.000 --> 00:00:00.000
+ And the last level, the additive operators,
+
+00:00:00.000 --> 00:00:00.000
+ includes addition and subtraction.
+
+00:00:00.000 --> 00:00:00.000
+ Finally, associativity determines whether we go
+
+00:00:00.000 --> 00:00:00.000
+ from right to left or left to right.
+
+00:00:00.000 --> 00:00:00.000
+ And this is called the tie-breaking rule.
+
+00:00:00.000 --> 00:00:00.000
+ We only use associativity when we have two operators
+
+00:00:00.000 --> 00:00:00.000
+ at the same level of precedence.
+
+00:00:00.000 --> 00:00:00.000
+ So let's look at an example.
+
+00:00:00.000 --> 00:00:00.000
+ Here is an expression, 7 times 2 divided by 3.
+
+00:00:00.000 --> 00:00:00.000
+ So each of these is a binary operator.
+
+00:00:00.000 --> 00:00:00.000
+ Notice that multiplication
+
+00:00:00.000 --> 00:00:00.000
+ and division have the same level of precedence.
+
+00:00:00.000 --> 00:00:00.000
+ So the 2 and 3 bind at the same level as the 7 and 2.
+
+00:00:00.000 --> 00:00:00.000
+ So what should we do?
+
+00:00:00.000 --> 00:00:00.000
+ Well, we don't have a way to evaluate this.
+
+00:00:00.000 --> 00:00:00.000
+ We have to fall back on rule 3, associativity.
+
+00:00:00.000 --> 00:00:00.000
+ All binary operators are left associative,
+
+00:00:00.000 --> 00:00:00.000
+ meaning we go from the left to the right.
+
+00:00:00.000 --> 00:00:00.000
+ So this is 7 by 2 times 2, which is 14,
+
+00:00:00.000 --> 00:00:00.000
+ divided by 3, which is 3.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? 3 or 4?
+
+00:00:00.000 --> 00:00:00.000
+ 4. 4. Okay.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So if it was the other way, right,
+
+00:00:00.000 --> 00:00:00.000
+ if we did the 2 divided by 3, we'd get 0 times 7,
+
+00:00:00.000 --> 00:00:00.000
+ which would be 0.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Now let's look at the arithmetic operators.
+
+00:00:00.000 --> 00:00:00.000
+ We looked at the basic types.
+
+00:00:00.000 --> 00:00:00.000
+ We've looked at the vocabulary for calculations.
+
+00:00:00.000 --> 00:00:00.000
+ Let's look at the operators.
+
+00:00:00.000 --> 00:00:00.000
+ There are five basic arithmetic operators.
+
+00:00:00.000 --> 00:00:00.000
+ There is not an operator for exponentiation, okay,
+
+00:00:00.000 --> 00:00:00.000
+ even though there is a math.
+
+00:00:00.000 --> 00:00:00.000
+ There is not in C++.
+
+00:00:00.000 --> 00:00:00.000
+ Now all five of these don't modify their operands.
+
+00:00:00.000 --> 00:00:00.000
+ So you can use all five of these operators
+
+00:00:00.000 --> 00:00:00.000
+ with an expression or a literal.
+
+00:00:00.000 --> 00:00:00.000
+ So addition and subtraction is the plus and the minus token.
+
+00:00:00.000 --> 00:00:00.000
+ These can also be the unary plus
+
+00:00:00.000 --> 00:00:00.000
+ and the unary minus operators.
+
+00:00:00.000 --> 00:00:00.000
+ So we use the same token depending on the context
+
+00:00:00.000 --> 00:00:00.000
+ as to which operator it means.
+
+00:00:00.000 --> 00:00:00.000
+ We have multiplication, which is the star,
+
+00:00:00.000 --> 00:00:00.000
+ like it is in most programming languages, division,
+
+00:00:00.000 --> 00:00:00.000
+ which is the forward slash, and remainder.
+
+00:00:00.000 --> 00:00:00.000
+ So these last two require a little bit of explanation.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Integer division in C++ works like integer division
+
+00:00:00.000 --> 00:00:00.000
+ in Java, but unlike integer division in Python.
+
+00:00:00.000 --> 00:00:00.000
+ In Python, when you divide two integers, you get real division.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, 2 divided by 3 is .666.
+
+00:00:00.000 --> 00:00:00.000
+ In Java and C++, 2 divided by 3 is 0, right?
+
+00:00:00.000 --> 00:00:00.000
+ And so look at this little girl standing
+
+00:00:00.000 --> 00:00:00.000
+ at the board dividing 80 by 9.
+
+00:00:00.000 --> 00:00:00.000
+ We have the thing we're dividing by --
+
+00:00:00.000 --> 00:00:00.000
+ the thing we're dividing, the thing we're dividing by,
+
+00:00:00.000 --> 00:00:00.000
+ and on the top of this little house,
+
+00:00:00.000 --> 00:00:00.000
+ what we've done is we've put the quotient.
+
+00:00:00.000 --> 00:00:00.000
+ So 9 -- 80 divided by 9 in C++ is 8.
+
+00:00:00.000 --> 00:00:00.000
+ We discard this 8 down here in the basement.
+
+00:00:00.000 --> 00:00:00.000
+ So it's not 8, 8, and 8/9.
+
+00:00:00.000 --> 00:00:00.000
+ It's just 8.
+
+00:00:00.000 --> 00:00:00.000
+ So the quotient's calculated.
+
+00:00:00.000 --> 00:00:00.000
+ The remainder is discarded.
+
+00:00:00.000 --> 00:00:00.000
+ The result is an integer.
+
+00:00:00.000 --> 00:00:00.000
+ So 8, 8, and 8/9 is, of course, closer to 9, right?
+
+00:00:00.000 --> 00:00:00.000
+ Because 81 would be 9.
+
+00:00:00.000 --> 00:00:00.000
+ If we divided 81 by 9, we'd get 9.
+
+00:00:00.000 --> 00:00:00.000
+ But it's not rounded up to 9.
+
+00:00:00.000 --> 00:00:00.000
+ It's just 8 in that case.
+
+00:00:00.000 --> 00:00:00.000
+ If we want the part down here in the basement,
+
+00:00:00.000 --> 00:00:00.000
+ the part the little girl is drawing right now,
+
+00:00:00.000 --> 00:00:00.000
+ we can use the remainder operator.
+
+00:00:00.000 --> 00:00:00.000
+ This percent sign is not the --
+
+00:00:00.000 --> 00:00:00.000
+ this doesn't have anything to do with percents.
+
+00:00:00.000 --> 00:00:00.000
+ It also is not exactly the modulus operator.
+
+00:00:00.000 --> 00:00:00.000
+ Modulus is a slightly different operation than the remainder.
+
+00:00:00.000 --> 00:00:00.000
+ But it's close to that, okay?
+
+00:00:00.000 --> 00:00:00.000
+ So 12 remainder 5 is 2.
+
+00:00:00.000 --> 00:00:00.000
+ That's because when I divide 12 by 5, I get 2 for the quotient.
+
+00:00:00.000 --> 00:00:00.000
+ There are two 5s in 12, but there's 2 left over, okay?
+
+00:00:00.000 --> 00:00:00.000
+ So that's the remainder operator.
+
+00:00:00.000 --> 00:00:00.000
+ Now, the last operators I want to look
+
+00:00:00.000 --> 00:00:00.000
+ at are called side effect operators.
+
+00:00:00.000 --> 00:00:00.000
+ And side effect operators include assignment,
+
+00:00:00.000 --> 00:00:00.000
+ the shorthand assignment, plus equals,
+
+00:00:00.000 --> 00:00:00.000
+ and increment and decrement.
+
+00:00:00.000 --> 00:00:00.000
+ So increment and decrement, plus plus and minus minus.
+
+00:00:00.000 --> 00:00:00.000
+ Those add 1 or subtract 1 to a variable.
+
+00:00:00.000 --> 00:00:00.000
+ However, like all expressions, they produce a value.
+
+00:00:00.000 --> 00:00:00.000
+ So the secondary side effect is to change the operand.
+
+00:00:00.000 --> 00:00:00.000
+ So plus plus a adds 1 to a.
+
+00:00:00.000 --> 00:00:00.000
+ Minus minus b subtracts 1 from b. It changes a and b.
+
+00:00:00.000 --> 00:00:00.000
+ Thus, because it changes a and b, they only work
+
+00:00:00.000 --> 00:00:00.000
+ with modifiable l values.
+
+00:00:00.000 --> 00:00:00.000
+ That means you cannot write plus plus 7.
+
+00:00:00.000 --> 00:00:00.000
+ Plus plus 7 is not equal to 7 plus 1.
+
+00:00:00.000 --> 00:00:00.000
+ Plus plus 7 is illegal.
+
+00:00:00.000 --> 00:00:00.000
+ You're trying to change the value 7.
+
+00:00:00.000 --> 00:00:00.000
+ So the side effect is always to change 1 or subtract 1
+
+00:00:00.000 --> 00:00:00.000
+ from the variable's values.
+
+00:00:00.000 --> 00:00:00.000
+ So it's just a simpler way of saying x equals x plus 1.
+
+00:00:00.000 --> 00:00:00.000
+ Or x equals x minus 1, right?
+
+00:00:00.000 --> 00:00:00.000
+ You can simply say x plus plus or x minus minus.
+
+00:00:00.000 --> 00:00:00.000
+ Or plus plus x or minus minus x. Now, the value
+
+00:00:00.000 --> 00:00:00.000
+ of the whole expression, however,
+
+00:00:00.000 --> 00:00:00.000
+ depends on where you place the operator.
+
+00:00:00.000 --> 00:00:00.000
+ If you put it in front of the variable plus plus a,
+
+00:00:00.000 --> 00:00:00.000
+ that changes a, and then it returns the variable
+
+00:00:00.000 --> 00:00:00.000
+ that is changed.
+
+00:00:00.000 --> 00:00:00.000
+ So plus plus a means change a and return a
+
+00:00:00.000 --> 00:00:00.000
+ as the value of the expression.
+
+00:00:00.000 --> 00:00:00.000
+ Postfix, writing a plus plus, saves the value
+
+00:00:00.000 --> 00:00:00.000
+ that a had before we changed it, changes a,
+
+00:00:00.000 --> 00:00:00.000
+ and then returns its own old saved value as a temporary.
+
+00:00:00.000 --> 00:00:00.000
+ So let me give you a couple examples, short examples here
+
+00:00:00.000 --> 00:00:00.000
+ so you can see that.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to close represent, and I'm going to open
+
+00:00:00.000 --> 00:00:00.000
+ up my example here.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to just put some simple code in here,
+
+00:00:00.000 --> 00:00:00.000
+ include iostream using namespace standard int main.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to say int a equals 6, okay?
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to say int b equals a plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ And then I'm going to print out a and b.
+
+00:00:00.000 --> 00:00:00.000
+ So what would you expect to get out of this?
+
+00:00:00.000 --> 00:00:00.000
+ Now, I'm going to have to open up a terminal here
+
+00:00:00.000 --> 00:00:00.000
+ on my CS150 folder.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to have to do make example.
+
+00:00:00.000 --> 00:00:00.000
+ So I don't have a make file for it,
+
+00:00:00.000 --> 00:00:00.000
+ so I have to use its name of the program.
+
+00:00:00.000 --> 00:00:00.000
+ To run it, I have to do dot slash example.
+
+00:00:00.000 --> 00:00:00.000
+ So if you watched in lecture one,
+
+00:00:00.000 --> 00:00:00.000
+ if you watched the CS50 video on using the command line,
+
+00:00:00.000 --> 00:00:00.000
+ you'll realize how to build and make a program.
+
+00:00:00.000 --> 00:00:00.000
+ So when I run example, that prints out 7 and 6.
+
+00:00:00.000 --> 00:00:00.000
+ So notice a plus plus changed a to 7, right?
+
+00:00:00.000 --> 00:00:00.000
+ This changed a to 7.
+
+00:00:00.000 --> 00:00:00.000
+ However, the value of this expression is the temporary
+
+00:00:00.000 --> 00:00:00.000
+ value that a had, and that's what's copied over into b, okay?
+
+00:00:00.000 --> 00:00:00.000
+ So notice b is 6 and a is 7 in this example.
+
+00:00:00.000 --> 00:00:00.000
+ Now, there's some pitfalls with this.
+
+00:00:00.000 --> 00:00:00.000
+ So here are the things to avoid.
+
+00:00:00.000 --> 00:00:00.000
+ Notice here, I'm calling a function.
+
+00:00:00.000 --> 00:00:00.000
+ I'm passing as an argument n,
+
+00:00:00.000 --> 00:00:00.000
+ and then the expression n times n plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ Well, the problem here is that n plus plus changes n.
+
+00:00:00.000 --> 00:00:00.000
+ So I don't know if the n over here on the left or the n
+
+00:00:00.000 --> 00:00:00.000
+ in the middle have the value before
+
+00:00:00.000 --> 00:00:00.000
+ or after it's changed.
+
+00:00:00.000 --> 00:00:00.000
+ You don't know.
+
+00:00:00.000 --> 00:00:00.000
+ Similarly, this.
+
+00:00:00.000 --> 00:00:00.000
+ I have an expression with n divided by 2 plus 5 times 1 plus
+
+00:00:00.000 --> 00:00:00.000
+ n plus plus, I'm not sure if this n has been changed or not.
+
+00:00:00.000 --> 00:00:00.000
+ Now, it doesn't look like it when you look at it.
+
+00:00:00.000 --> 00:00:00.000
+ You look at it and you think, well,
+
+00:00:00.000 --> 00:00:00.000
+ obviously it hasn't been changed.
+
+00:00:00.000 --> 00:00:00.000
+ It appears after it.
+
+00:00:00.000 --> 00:00:00.000
+ It's always left to right.
+
+00:00:00.000 --> 00:00:00.000
+ That's not the case, okay?
+
+00:00:00.000 --> 00:00:00.000
+ That is not the case, okay?
+
+00:00:00.000 --> 00:00:00.000
+ Finally, look at that expression.
+
+00:00:00.000 --> 00:00:00.000
+ Y equals n plus plus plus n plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ Again, you don't know what that means.
+
+00:00:00.000 --> 00:00:00.000
+ So some rules to remember.
+
+00:00:00.000 --> 00:00:00.000
+ Don't use a variable that's part of more than one argument.
+
+00:00:00.000 --> 00:00:00.000
+ Don't use if a variable appears more than once
+
+00:00:00.000 --> 00:00:00.000
+ in an expression, n and n plus plus over here.
+
+00:00:00.000 --> 00:00:00.000
+ The parenthesis won't help you in this case.
+
+00:00:00.000 --> 00:00:00.000
+ You cannot put parenthesis around it to make it safer.
+
+00:00:00.000 --> 00:00:00.000
+ It's unsafe, okay?
+
+00:00:00.000 --> 00:00:00.000
+ So here, this is an expression, n plus plus plus n plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ Don't use if the variable n appears more
+
+00:00:00.000 --> 00:00:00.000
+ than once in an expression.
+
+00:00:00.000 --> 00:00:00.000
+ This also applies to the assignment operator.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, don't write something like this.
+
+00:00:00.000 --> 00:00:00.000
+ Y equals y plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ Well, y plus plus is the value y had before it changed.
+
+00:00:00.000 --> 00:00:00.000
+ So if y was 3, that would assign to y 3,
+
+00:00:00.000 --> 00:00:00.000
+ but this changes y to 4.
+
+00:00:00.000 --> 00:00:00.000
+ So what does that expression even mean?
+
+00:00:00.000 --> 00:00:00.000
+ It's impossible to parse.
+
+00:00:00.000 --> 00:00:00.000
+ This is what we call undefined behavior.
+
+00:00:00.000 --> 00:00:00.000
+ Now, one of my favorite ones is this.
+
+00:00:00.000 --> 00:00:00.000
+ So here's a is 6.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to print out a plus plus, a plus plus, a plus plus.
+
+00:00:00.000 --> 00:00:00.000
+ Now, again, this is undefined behavior.
+
+00:00:00.000 --> 00:00:00.000
+ We're using the same variable in part of this whole expression.
+
+00:00:00.000 --> 00:00:00.000
+ This is all one expression.
+
+00:00:00.000 --> 00:00:00.000
+ And if we were to run that, I'm going to make example.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so I actually -- on our IDE here, we could do this
+
+00:00:00.000 --> 00:00:00.000
+ in one of the online IDEs here.
+
+00:00:00.000 --> 00:00:00.000
+ In our IDE, I'm actually treating that as an error.
+
+00:00:00.000 --> 00:00:00.000
+ I could change this instead of doing make example.
+
+00:00:00.000 --> 00:00:00.000
+ I could do g plus plus example dot cpp dot o example.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm skipping all of the error checking that I have turned on.
+
+00:00:00.000 --> 00:00:00.000
+ And then if I run example, in this case, I get 6, 7, 8.
+
+00:00:00.000 --> 00:00:00.000
+ Many of you would think that's what it will always print.
+
+00:00:00.000 --> 00:00:00.000
+ If I do clang plus plus, just another compiler.
+
+00:00:00.000 --> 00:00:00.000
+ Clang is not going to let me do that
+
+00:00:00.000 --> 00:00:00.000
+ because it has all the warnings turned on.
+
+00:00:00.000 --> 00:00:00.000
+ And basically, it's telling me that this is undefined.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? And so I have an online compiler.
+
+00:00:00.000 --> 00:00:00.000
+ I've tried it with Visual Studio, C++.
+
+00:00:00.000 --> 00:00:00.000
+ It gives me 666.
+
+00:00:00.000 --> 00:00:00.000
+ One of them gives me 678 in SalvaG++.
+
+00:00:00.000 --> 00:00:00.000
+ Another one will give me 876.
+
+00:00:00.000 --> 00:00:00.000
+ So the upshot of all of that is you should not ever,
+
+00:00:00.000 --> 00:00:00.000
+ ever do any of these things.
+
+00:00:00.000 --> 00:00:00.000
+ These are pitfalls that you're going to need to look out for.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, we're going to finish this up with the last part
+
+00:00:00.000 --> 00:00:00.000
+ of our exercise.
+
+00:00:00.000 --> 00:00:00.000
+ Each time, I'm going to try and do a larger problem that puts
+
+00:00:00.000 --> 00:00:00.000
+ into, you know, into practice what we've been talking about
+
+00:00:00.000 --> 00:00:00.000
+ and what we've been learning about.
+
+00:00:00.000 --> 00:00:00.000
+ We have been working with IPO programs.
+
+00:00:00.000 --> 00:00:00.000
+ And so down here, we're going to write this basic IPO program.
+
+00:00:00.000 --> 00:00:00.000
+ And so we're going to do, this time I'm going
+
+00:00:00.000 --> 00:00:00.000
+ to do something a little bit faster.
+
+00:00:00.000 --> 00:00:00.000
+ In the last lecture, I went through this step by step.
+
+00:00:00.000 --> 00:00:00.000
+ This time, we're going to do it really, really quickly.
+
+00:00:00.000 --> 00:00:00.000
+ So let me bring this over.
+
+00:00:00.000 --> 00:00:00.000
+ Let me close example.
+
+00:00:00.000 --> 00:00:00.000
+ Let me go down to C. Let's do nets.cpp.
+
+00:00:00.000 --> 00:00:00.000
+ Let's put our name on the top of it.
+
+00:00:00.000 --> 00:00:00.000
+ I'm not going to put the date in because I might want
+
+00:00:00.000 --> 00:00:00.000
+ to use it another semester.
+
+00:00:00.000 --> 00:00:00.000
+ So, lecture three.
+
+00:00:00.000 --> 00:00:00.000
+ I am going to put my full Canvas ID there.
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so I'm going to go to my problem.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to get the instructions out.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to put those inside here.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to convert the comments.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to select that and comment it, slash, and then tab.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to figure out what the inputs,
+
+00:00:00.000 --> 00:00:00.000
+ outputs, and so forth are.
+
+00:00:00.000 --> 00:00:00.000
+ So, input, I have weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ This one, I'll use snake case.
+
+00:00:00.000 --> 00:00:00.000
+ I used camel case in the last one.
+
+00:00:00.000 --> 00:00:00.000
+ The number of nets for an activity
+
+00:00:00.000 --> 00:00:00.000
+ and the number of minutes.
+
+00:00:00.000 --> 00:00:00.000
+ Okay? Okay, so three inputs.
+
+00:00:00.000 --> 00:00:00.000
+ Output, calories, calories, calories.
+
+00:00:00.000 --> 00:00:00.000
+ Burn. Okay?
+
+00:00:00.000 --> 00:00:00.000
+ And what's given on this?
+
+00:00:00.000 --> 00:00:00.000
+ Well, I'm given one kilogram is 2.2 pounds.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ I'm given anything else in the problem statement.
+
+00:00:00.000 --> 00:00:00.000
+ Oh, I have a conversion formula.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So, that's also given.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ That conversion factor is that.
+
+00:00:00.000 --> 00:00:00.000
+ And finally, I have my algorithm or processing.
+
+00:00:00.000 --> 00:00:00.000
+ And again, I was given that in the problem.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Although not exactly in the form I want to use.
+
+00:00:00.000 --> 00:00:00.000
+ And so, I'm going to print that in there.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Okay, so I can get rid of this.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ And we can write our code here.
+
+00:00:00.000 --> 00:00:00.000
+ Now, what's the first step we're always going to do for the code?
+
+00:00:00.000 --> 00:00:00.000
+ The first step is always mock up the output.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'm going to go copy this code here.
+
+00:00:00.000 --> 00:00:00.000
+ What I want the output to look like.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to paste it in there.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to separate it.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to put quotes around it like we did before.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Around the parts that are going to stay the same.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to put C outs and output operators.
+
+00:00:00.000 --> 00:00:00.000
+ So, C out.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Copy that so I can just put it here multiple times.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Oops, no, that's not right.
+
+00:00:00.000 --> 00:00:00.000
+ I have operator there, but not that.
+
+00:00:00.000 --> 00:00:00.000
+ So, 250 and L. Six and NL.
+
+00:00:00.000 --> 00:00:00.000
+ 90 and NL.
+
+00:00:00.000 --> 00:00:00.000
+ And output operators here and here.
+
+00:00:00.000 --> 00:00:00.000
+ Make them go the right way.
+
+00:00:00.000 --> 00:00:00.000
+ And an NL.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Okay, now I'm going to open a terminal on that.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to right click that and open an integrated terminal.
+
+00:00:00.000 --> 00:00:00.000
+ So, now notice I'm in folder C.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to do make run.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ And I'm going to make sure I haven't made any syntax errors.
+
+00:00:00.000 --> 00:00:00.000
+ And that the output looks pretty much like my,
+
+00:00:00.000 --> 00:00:00.000
+ like the code that I copied over there.
+
+00:00:00.000 --> 00:00:00.000
+ And so, you can see that it, in fact,
+
+00:00:00.000 --> 00:00:00.000
+ does look pretty similar.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Okay, so that was step one.
+
+00:00:00.000 --> 00:00:00.000
+ Our step two is we're going to now add the input,
+
+00:00:00.000 --> 00:00:00.000
+ output, and processing sections.
+
+00:00:00.000 --> 00:00:00.000
+ So, here's my input section.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Here is my processing section.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ And here is my output section.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So, for the input, I need variables, right?
+
+00:00:00.000 --> 00:00:00.000
+ So, I need my weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ I need the number of mets for that activity.
+
+00:00:00.000 --> 00:00:00.000
+ And then I need the met conversion factor.
+
+00:00:00.000 --> 00:00:00.000
+ And then I'm going to send the minutes next exercising.
+
+00:00:00.000 --> 00:00:00.000
+ So, let's make these first two doubles.
+
+00:00:00.000 --> 00:00:00.000
+ So, double weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ And let's do CN weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ [ Typing ]
+
+00:00:00.000 --> 00:00:00.000
+ Let's remove this dummy value and the dummy inline there.
+
+00:00:00.000 --> 00:00:00.000
+ And I have my first line done.
+
+00:00:00.000 --> 00:00:00.000
+ And make sure I spell pounds right.
+
+00:00:00.000 --> 00:00:00.000
+ I like the fact that the editor will color that to make sure
+
+00:00:00.000 --> 00:00:00.000
+ that I spelled it right and give me a syntax thing.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So, this is the number of mets for this activity.
+
+00:00:00.000 --> 00:00:00.000
+ That might be an int as well, but we're multiplying.
+
+00:00:00.000 --> 00:00:00.000
+ It was just a factor times 0.75.
+
+00:00:00.000 --> 00:00:00.000
+ So, let me make it a double.
+
+00:00:00.000 --> 00:00:00.000
+ Let's write double mets and CN mets.
+
+00:00:00.000 --> 00:00:00.000
+ And let me remove the dummies here.
+
+00:00:00.000 --> 00:00:00.000
+ And minutes, I'm going to go ahead
+
+00:00:00.000 --> 00:00:00.000
+ and make this one an integer.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'll move the dummy to start with.
+
+00:00:00.000 --> 00:00:00.000
+ I will have int minutes CN minutes.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So, I've got the input part done.
+
+00:00:00.000 --> 00:00:00.000
+ Now, let's go ahead and do the processing part.
+
+00:00:00.000 --> 00:00:00.000
+ So, the output is going to be calories.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'm going to create a double value for that.
+
+00:00:00.000 --> 00:00:00.000
+ So, double calories.
+
+00:00:00.000 --> 00:00:00.000
+ Equals. And I'm going to put in this formula.
+
+00:00:00.000 --> 00:00:00.000
+ And notice the formula isn't exactly in the right format.
+
+00:00:00.000 --> 00:00:00.000
+ So, this is a formula for calories per minute.
+
+00:00:00.000 --> 00:00:00.000
+ And so, I want to divide calories by minute.
+
+00:00:00.000 --> 00:00:00.000
+ I want to, calories by minute, I want to multiply both sides
+
+00:00:00.000 --> 00:00:00.000
+ by the minute to get this.
+
+00:00:00.000 --> 00:00:00.000
+ So, that would be this factor times mets times, oops,
+
+00:00:00.000 --> 00:00:00.000
+ times weighted kilograms times minutes.
+
+00:00:00.000 --> 00:00:00.000
+ Alright. In other words, if it's calorie divided by minutes,
+
+00:00:00.000 --> 00:00:00.000
+ I need to multiply both sides by minutes to get the minutes
+
+00:00:00.000 --> 00:00:00.000
+ on the right-hand side.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. Now, we actually don't have these two variables.
+
+00:00:00.000 --> 00:00:00.000
+ And factor was given up to us here.
+
+00:00:00.000 --> 00:00:00.000
+ It's this value.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'm going to create a constant for that.
+
+00:00:00.000 --> 00:00:00.000
+ So, const double K factor equals .0175.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'm going to replace this factor with K factor.
+
+00:00:00.000 --> 00:00:00.000
+ And mets, we read inside here, but we don't have weights
+
+00:00:00.000 --> 00:00:00.000
+ in kilogram, but I do have another given,
+
+00:00:00.000 --> 00:00:00.000
+ which is the kilogram.
+
+00:00:00.000 --> 00:00:00.000
+ So, const double K pounds per kilogram.
+
+00:00:00.000 --> 00:00:00.000
+ Equals 2.2, 2.2 pounds per kilogram.
+
+00:00:00.000 --> 00:00:00.000
+ And so, given that constant, I can figure
+
+00:00:00.000 --> 00:00:00.000
+ out what the weight in kilograms is.
+
+00:00:00.000 --> 00:00:00.000
+ Because here's the weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ So, double weight in kilograms equals weight in pounds.
+
+00:00:00.000 --> 00:00:00.000
+ Weight in pounds divided by K pounds per kilogram.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. So, that looks pretty good.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to have to test it to make sure it's correct.
+
+00:00:00.000 --> 00:00:00.000
+ For the output here, we want to put our calories.
+
+00:00:00.000 --> 00:00:00.000
+ That's what we want for the output.
+
+00:00:00.000 --> 00:00:00.000
+ And we probably want, looks like two decimal places
+
+00:00:00.000 --> 00:00:00.000
+ in the output.
+
+00:00:00.000 --> 00:00:00.000
+ So, I'm going to do CL fix set precision 2,
+
+00:00:00.000 --> 00:00:00.000
+ like I did before.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to make sure I have IOMINIP up here, which I do.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. That looks pretty good.
+
+00:00:00.000 --> 00:00:00.000
+ So, let's go ahead and try it with make run and put
+
+00:00:00.000 --> 00:00:00.000
+ in the same input we had before.
+
+00:00:00.000 --> 00:00:00.000
+ So, make run.
+
+00:00:00.000 --> 00:00:00.000
+ So, 250 kilograms.
+
+00:00:00.000 --> 00:00:00.000
+ Mets for the activity, 6.
+
+00:00:00.000 --> 00:00:00.000
+ Minutes spent exercising, 90.
+
+00:00:00.000 --> 00:00:00.000
+ You burned an estimated 1073.86.
+
+00:00:00.000 --> 00:00:00.000
+ It looks okay.
+
+00:00:00.000 --> 00:00:00.000
+ So, let's try it with some different inputs.
+
+00:00:00.000 --> 00:00:00.000
+ Let's just do make test.
+
+00:00:00.000 --> 00:00:00.000
+ And here I've tested with the same 256 and 90.
+
+00:00:00.000 --> 00:00:00.000
+ Then an input weight of zero.
+
+00:00:00.000 --> 00:00:00.000
+ Obviously, I'm burning no calories.
+
+00:00:00.000 --> 00:00:00.000
+ An input weight of 125 pounds.
+
+00:00:00.000 --> 00:00:00.000
+ An input weight of 175 pounds.
+
+00:00:00.000 --> 00:00:00.000
+ Okay. It shows the different calories that we've burned.
+
+00:00:00.000 --> 00:00:00.000
+ So, this will be our picture for the test part.
+
+00:00:00.000 --> 00:00:00.000
+ And here's the picture for the code part.
+
+00:00:00.000 --> 00:00:00.000
+ Again, I want you to do more and more of these
+
+00:00:00.000 --> 00:00:00.000
+ to get practice doing these kinds
+
+00:00:00.000 --> 00:00:00.000
+ of input/output processing programs.
+
+00:00:00.000 --> 00:00:00.000
+ And to get some practice with calculations.
+
+00:00:00.000 --> 00:00:00.000
+ That's it for me today.
+
+00:00:00.000 --> 00:00:00.000
+ I'll see you in lecture four.
+
+00:00:00.000 --> 00:00:00.000
+ Thank you.
+

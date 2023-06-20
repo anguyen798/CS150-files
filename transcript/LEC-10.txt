@@ -1,0 +1,549 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 10, where we're going to talk about recursion.
+Before we talk about recursion though, I want to look at the previous lecture, lecture 9, where we talked about writing functions.
+So programming exam 4, which you'll take next week, will ask you to write a function.
+And that function will have both input and output parameters, and so you need to be perfectly clear on that.
+Also, as a second problem, you'll be asked to write a group of prototypes.
+And you'll have to deduce the correct prototype based on the way that the function is called.
+And this will check your ability to apply the data flow checklists.
+Do you understand how data flows into a function, and how data flows out of a function?
+And if you understand that, do you understand how to write the prototypes so that they are correct?
+And so we're going to start with a review exercise before we get into recursion to test that.
+And so make sure that you have gone over to week 3, and on week 3 that you've gone to the recursion tab and clicked the lecture exercise tab.
+On the lecture exercise tab, make a copy of the starters, probably name it something rather than copy.
+And then we'll start by filling up this link.
+Ok, so I've been signed out, so it's going to ask me to sign in here for a second.
+And it signed me back in.
+Ok, so we're going to follow this link.
+Ok, I've made it a little larger.
+And so as you can see, we have a main function down here, the file called prototype_tester.cpp.
+And it calls five different functions.
+Your job is just to put the prototypes in the header file.
+So let's just look at the first one.
+Here on line 13, we're calling the function crypt.
+We're passing it false and a.
+As you can see on line 12, a is an int variable.
+Now my comment tells you what that's going to print. It's going to print 5.
+So that's going to tell us what's coming out of the function.
+And afterwards, it says that a, although it's an int, is going to be changed.
+It went in with the value 5 and it's coming out with the value 5.
+So let's prototype that, seeing that the first argument to crypt is an input parameter,
+because a literal must be an input parameter.
+The value false cannot be a reference or an output parameter.
+But a is an input. It goes in with 5 and it comes out with 10.
+And so this is an input/output parameter.
+And so the return type for this is crypt.
+The argument is bool.
+And the type of a is int.
+And since it's an input/output parameter, it's a primitive type.
+It's going to be changed in the function. It's passed by reference.
+Now you can give it name.
+Int reference t or something like that.
+But you don't have to give them names.
+Then each time you do each one, go ahead and check it.
+And so we're going to check that.
+And for each one, it will tell you whether it's syntactically correct.
+So we're checking the crypt prototype. We're checking the output.
+We're checking to see if it is syntactically correct and semantically correct.
+Now notice, you do not put on a body.
+We're not defining these. We're just implementing them.
+Now let's look at the second one. The second one is called ORD.
+It takes a string as its argument.
+It prints 3.0 so I can see the output is double.
+And notice the string went in with one value and out with another value.
+So ORD. It's going to return a double.
+The function is named ORD.
+And it takes a string as its parameter.
+Now let's try this.
+I'm doing things wrong to show you a couple of errors.
+And you will see that that doesn't even compile.
+It doesn't even compile. String was not declared in this scope.
+So I don't know why we're getting the error on line 32.
+But on line 7, we're getting an error. String was not declared.
+So because it's in the header file, all regular types, all library types, must be fully qualified.
+So we cannot use using namespace standard there. We have to put in the fully qualified name.
+So let's try it now.
+Okay, so now it compiled.
+Notice that it is syntactically correct, that type string was correct, but we didn't get the semantic part about it.
+Whether it's an input or output parameter.
+So we are passing our string here by value, when in fact we need to pass it by reference.
+So for all string types, we'll always pass them by reference.
+And when we just make that change and we test it again, you can see that it now is not only syntactically correct,
+but it is now semantically correct as well.
+So let's do the other ones real quick. ReadLink has no return value.
+It takes a literal for the first argument, so that's double.
+This literal again, that is bool.
+And this is a literal, so that is a const string reference.
+So it doesn't return anything, so it's void.
+This function is named ReadLink.
+It's a double const standard string reference and bool.
+The fourth one, dbclose, prints okay, so it's going to return a standard string.
+It takes a string literal, so that's a constant string ref.
+So const standard string reference.
+And it takes 42, again another literal, and its type is int.
+And finally require takes two arguments.
+S is a string down here, and okay is a bool.
+But notice that okay is not initialized, and so this must be an output parameter.
+So that must be a bool ref.
+This string sam goes in. Is it going to be an input parameter?
+No, afterwards S has sam, sam, sam, all proper case.
+And so it's an input/output parameter, and so that is a reference.
+So this returns a standard string.
+The function is named require.
+It takes a standard string by reference, and it takes a bool by reference.
+Okay, now I've done all three of them, just so that we don't spend a lot of time in the video here.
+But you should do them one at a time and make sure you get them correct.
+If one of them doesn't work, just skip that one.
+Comment it out, especially if you get syntax errors on this.
+Especially if you get syntax errors.
+Okay, so here is all of our tests working correctly.
+And you can shoot your screenshot for that.
+Okay, so let's go now and talk about recursion.
+What's recursion?
+So recursion is a mathematical concept.
+In math, a recursive function is one that's defined in terms of itself.
+Like the factorial function.
+The factorial function, f factorial, the definition for it is 3 factorial is 3 times 2 times 1 factorial.
+And 4 factorial is 4 times 3 times 2 times 1.
+And since we can see that 4 factorial is just 4 times what 3 factorial is, we can generalize that.
+So that for any n, like 3 or 4 or 12 or whatever, n factorial is n times n minus 1 factorial.
+So let's try that with n equals 2.
+So 2 factorial is 2 times 2 minus 1 factorial.
+And 2 minus 1 factorial is 1 times 1 minus 1 factorial or 0 factorial.
+And 0 factorial is and so forth and so on.
+You can see that if we just use this definition, n equals n times n minus 1 factorial, we have a problem.
+We have a circular definition.
+And so what we always have to do with a recursive mathematical function is we have to find the qualification.
+The qualification for this is that 0 factorial is 1.
+0 factorial is 1.
+Because otherwise when we got this 1 times 1 factorial, 1 times 1 times 1 factorial, and that would be 0 factorial.
+Now if we didn't know what 0 factorial is, we would have to put it through this formula again.
+And we would get minus 1, minus 2, minus 3, which just wouldn't work.
+So in programming, however, a recursive function is a function that calls itself.
+So when a function calls itself, it's a recursive function.
+So let's look at a recursive function, elevator.cpp, and examine it.
+So again, make sure that you have stopped my code space.
+I'm going to start my code space again.
+Restart my code space.
+And so again, make sure that you have opened up the Week 10 in your IDE.
+So that is in IC, IC10, a elevator.
+So here's our elevator problem right here.
+Let me pause that while I clear this up.
+Okay, I'm back, and I'm probably not going to edit that out.
+So here's the elevator.cpp.
+And so notice we've prototyped the function called elevator that takes a floor.
+In the main function, we're calling elevator sub 0.
+Now the elevator function gets one argument, its floor, and then it prints out the floor that you're on.
+And it says going up.
+So going up, floor, and it prints out floor 0.
+Then it calls itself again, elevator floor plus 1.
+And so now it's going to say going up floor 1.
+And then of course it's going to call itself again, and it's going to say going up floor 2.
+So let's go ahead and run that.
+Right click and open a terminal there.
+And then let's do make run.
+And you can see it does in fact look like an endless loop.
+An endless loop effect, except something is different here.
+And so what happens is that we get an endless loop effect, but unlike an endless loop effect, the program eventually crashes.
+That's because each time elevator is called, a new variable is created, a new copy of the floor variable with a new value.
+And it's placed in an area of memory here called the stack.
+Now as more and more floor variables are created, eventually that fills up and we run out of memory and the stack collides with the heap.
+And this specific kind of error is called a stack overflow.
+And that's very, very frequent in recursive programs actually.
+It's probably the only way you can create a stack overflow.
+You notice unlike Java, we didn't get a nice error message, stack overflow.
+Java inspects this with its Java virtual machine.
+C++ does not. It relies on the operating system to notice when your program has started overflowing the memory that was allocated for it and starts using the memory that it's not supposed to use.
+And so a segmentation fault is simply an error message from the operating system, not from C++ itself.
+So basically that says your program crashed because you did something the operating system wouldn't let you do.
+So how do we fix that?
+Well how do we fix an endless loop?
+We fix an endless loop by providing a loop bounds.
+Recursive functions need the same thing. They need a way to stop.
+In a recursive function this is called the base case.
+Now it's very similar to a loop bounds.
+What you do is you add an if statement.
+Every recursive function will have an if statement.
+And the if statement determines when a function is called again.
+If the if statement is false, we don't call it again.
+So this creates the loop-like effect that you saw, but remember it is not a loop.
+You're not inside the same function. You're in a copy of the function.
+And we'll see how that works shortly.
+So let's do that. Let's put in a base case to stop at the penthouse floor 25.
+So here's our code.
+Let me just minimize that here. Here's our code.
+We'll create a constant here. So constant penthouse k penthouse equals 25.
+And so before we call the function, we're going to check to see if it's okay.
+And so we're going to say if floor is less than the penthouse,
+then we're going to go ahead and go up to the next floor.
+If it's not, we're not. If it's not, we're not.
+So this is the idea of the base case, the terminator for a recursive function.
+So let's try it again.
+And let's do make run again.
+And notice we go up floor 1, 2, 3, 4, just like we had a loop.
+When we get to floor 25, though, we end.
+Now look at the format of the code.
+Look at that our call to the function is inside this guarded if statement.
+So this is a guarded action.
+What happens if we put code that's outside of that if statement?
+Well, if it appears after the guarded action, for instance, if we take this statement
+and we print it again, change it to going down,
+this code will execute after we have executed all of the copies of going up.
+Only when we're going up, when we're at floor 25, will we start going down.
+And even though it looks like we would only have going down floor 25 and then the function would end,
+only one copy of the function ends.
+And so when we do this and we run it again, notice we go up to floor 25
+and then we go down to floor 24, floor 23, floor 22, floor 21, and so forth.
+And so this is called unwinding the stack.
+So as we go up, we put the variables on the stack.
+When we leave, we remove them off the stack and we can use those variables again.
+So that's kind of confusing the first time you see it.
+So let me show you an example so you'll see exactly what happens.
+So in this case, here's the factorial function we're going to look at.
+So remember the n factorial is n times n minus 1 factorial with the convention.
+That's the recursive case. With the base case, the 0 factorial or 1 factorial is 1.
+So let's do a simulation of that.
+Here's a little animation with a little terminal like a Macintosh terminal.
+We're going to print out enter n.
+The user is going to type in a value like 5.
+We're going to save that in a local variable n inside the main function.
+And then we're going to print out n factorial equals the factorial of n.
+In this case, the factorial of 5.
+Well, to do that, we first have to figure out what the factorial of 5 is.
+And to do that, we call the function.
+And when we call the function, it creates what's called a stack frame.
+And this stack frame will have its own variables.
+So when we called the factorial of 5, we passed 5 to this local variable, a copy of the n here.
+And we put it in a local variable inside the function, specifically the parameter variable.
+And now we start running this function.
+If n equals 0, we're going to return 1.
+It's not 0, so we're going to return n or 5 times the factorial of n minus 1.
+What's the problem?
+We don't know what the factorial of n minus 1 is.
+How do we solve that problem?
+We call the factorial function again.
+We create another stack frame.
+This time, the local variable is 4, because that's what we passed to it.
+Notice we passed factorial of n minus 1.
+So the local variable in this frame is 4.
+And we just keep doing that until we hit the base case.
+So in this case, n is 0, and so we're going to return 1.
+Where do we turn the 1 to?
+We return the 1 to the function that called it.
+And so now we know what the expression, the compiler, can calculate.
+1 times 1, and it can return that to the previous stack frame.
+And now it can calculate 1 times 2, return that to the previous stack frame.
+2 times 3, return that.
+6 times 4, return that.
+And finally, we've got rid of all the calls to factorial n,
+and we're returning 5 times 24.
+And we can complete or execute that statement.
+So 5 factorial is 120.
+So it helps to keep this in mind, keep this little animation in mind,
+when you're thinking about how recursive functions work.
+So we can write problems, we can write functions, that solve recursive problems
+by following this simple pattern.
+If we know what the answer is, if n equals 0,
+we simply directly return the solution.
+So every recursive function will have this if else inside there.
+Now it's very common in recursive functions just to skip the else,
+because we'll just return the answer, and that way anything after the if
+basically is the else part.
+Then we'll call the function again.
+We'll split it up into simpler, smaller problems of the same structure.
+So we'll call it with a simpler value and get that out.
+We'll keep doing that until we get to the base case.
+Then we'll combine all those results by walking back up the stack,
+unwinding the stack, and combine the results to get the overall solution.
+Now that sounds much more complex than it is,
+so let me give you an example.
+You'll see that it is relatively simple.
+So we're going to look at this situation where you have children's blocks,
+and you want to build pyramids with those blocks.
+I want to know how many blocks do I need to build a pyramid of height or base,
+height and base are the same in all these things,
+height or base of 10.
+So a height or base of 1 obviously needs 1 block.
+A height or base of 2 needs 3 blocks.
+A height or base of 3 needs 6 blocks.
+And a height or base of 4 needs 10 blocks.
+So these are called triangle numbers.
+How do we write a function that figures out how many I need for a height of 10?
+Do I need 20? Do I need 50?
+How many do I need?
+And so to solve this, we'll figure out what the recursive definition is.
+Now the total blocks in the base, or the height,
+is the base plus the blocks in the next smaller triangle.
+So here's a base 4, and that's equal to 4 plus all the blocks in triangle 3.
+So that intrinsically gives me a recursive definition.
+A triangle of n is n plus the triangle of n minus 1.
+And the first triangle, base 1, we solve as 1.
+What if there are no blocks?
+Well, that's an area of 0. No blocks.
+So width of 0 has an area of 0.
+So this is our base case, or terminator.
+So let's go ahead and try that in our IDE now.
+We're going to complete the triangle function.
+It is B, I believe.
+So let's go ahead and close that one down, open up the thing over here.
+Close A, open B, and open up triangle.cpp.
+Let me close the elevator.
+Let me also open a terminal on it.
+Let's open an integrated terminal.
+So we're writing the recursive function triangle.
+You have a pair of no blocks.
+The topmost row has one block.
+Row belief has two.
+The next has three, and so forth.
+We're going to compute recursively, no loops or multiplication,
+the total number of blocks in such a triangle with the number of rows.
+Notice there are no blocks.
+Your function should return 0.
+So let's put our name on this.
+So the function is going to return an int.
+It's going to take an int.
+I'm going to call it base, or height would be fine there.
+So what's the one I know?
+No blocks.
+The simplest one.
+If base is 0, then return 0.
+Now, if base is not 0, I need to figure out n base.
+So I'm going to return base times triangle base minus 1,
+the next smallest one.
+And it's actually not times, it's plus.
+Base plus.
+Let's go back and look at our definition.
+So base plus triangle base minus 1.
+So we started with the base case.
+We wrote an if statement that returned that.
+Now we're going to figure out what the recursive case is.
+It's base plus the base of the next case.
+And then you call the triangle function with an argument
+that moves you closer to the base case.
+So let's try it.
+Let's go ahead and do that.
+Let's do make test.
+And you can see that it first makes sure that you're running
+this recursively.
+That's what this find the base case is.
+If you tried to do this with loops,
+it would say it doesn't appear to be recursive,
+if you didn't do it recursively.
+So you have to think about that paradigm.
+You have to think, solve the smallest thing,
+then call the function again to solve the remainder portion of it.
+OK, so that looks pretty good for triangles.
+Let's try another one.
+How about raising a number by the power?
+So 2 to the second power is 2 times 2.
+2 to the third power is 2 times 2 times 2.
+2 to the fourth power is 2 times 2 times 2 times 2.
+But we can recursively define that as any number to any exponent
+is the number times the number raised to the power
+of the smaller exponent.
+So 2 times 4 is 2 times 2 to the third.
+2 to the fourth is 2 times 2 to the third.
+And 2 to the 100th is 2 times 2 to the 99th power.
+So that's the recursive idea with the power function.
+So let's open up that one.
+Let me close the triangle.
+Let me close these different BASH shells I have here.
+Let's go down to C.
+Let's put our name on it.
+And so again, we want the power of a function
+that takes a number and an exponent.
+We know that the power of anything to the first power is that number.
+We also know that any number to the zeroth power is 1.
+So that's a simpler one.
+So we're going to use that for our base case.
+So if exponent is 0, we're going to return 1.
+If the exponent is not 0, we're going to return the number
+times the power of that number to the less smaller exponent.
+So this is 2 times the power of 2 to...
+So if I want 2 to the fourth, it would be 2 times the power of 2 to the third.
+And this just calls itself over and over again.
+So let's open a shell on that. Right click.
+Open an integrated terminal.
+Let's do make test.
+And again, I'm checking to make sure this is recursive.
+If you write this without recursion, by writing a loop,
+or simply writing a whole bunch of if statements, it won't give you the correct answer.
+It will tell you that it's not recursive.
+Let's do one fourth one here, or one third one here,
+just to get an idea of how you write these simple recursive functions.
+We're going to write a function changeX to Y
+that will take in a string and produce a new string.
+But for every lowercase x in the first string,
+we're going to replace it with a lowercase y.
+So let's close the power.
+Let's go down here to D.
+ChangeX to Y.
+Put our name on it.
+OK, so this is going to return a new string.
+The function is named changeX to Y.
+It's going to take a string that is not modified,
+so const string reference str.
+Now, if the string has one character, do we need to change it?
+Only if it's x, right?
+Then we need to change it to y.
+If it has no characters, do we need to change it?
+No, if it has no characters, we don't have to do any other thinking about it.
+We know that that's the answer.
+So if string size is less than one,
+then return the empty string.
+Or return quote, quote would be fine.
+Now we know I have at least one character.
+So if that one character is an x, I need to change it to a y.
+So let's save that in a variable.
+I'll use string here.
+Equals str. substring 0 and 1.
+So if front, I want to change it to y.
+And then I want to recursively call it, so I've handled one character.
+But I haven't handled the rest of the characters.
+How am I going to handle the rest of the characters?
+I'm going to call changeX to y.
+So this is going to return front, which has now been changed.
+Plus changeX to y.
+And I'm going to call it with the string.
+substring 1.
+I've already handled the first characters,
+and now I'm passing the second character, the third character, the fourth character,
+and so forth.
+So let's get one more terminal here.
+Right click, open an integrated terminal.
+And then let's do make test.
+And there that changes X to Y with those four lines of code.
+All right. Now let's talk a little bit about efficiency.
+So here is a function from your textbook to check to see if a string is a palindrome.
+So if a string has one character, it is a palindrome.
+So we don't need to check it at all if it is one character or less.
+However, if it is two characters or less,
+we have to make sure both the characters are the same,
+the one at the beginning and the one at the end.
+And so if the length is greater than one,
+we check to see if string 0 equals string length 1,
+in other words, the first and the last,
+we could have said str.front, called the front function, and str.back.
+That would have worked fine as well.
+And if the string is only two characters long, it's a palindrome.
+Then we check if it's not.
+If it's larger, we have to check if the rest of it,
+the part inside the first and last characters,
+if it's larger than two characters, is a palindrome.
+And so we do that by calling isPalindrome again
+with the string with the first character removed
+and the last character removed right here.
+Now this function is correct, but it's inefficient.
+It's inefficient because when I call this substring function,
+I have to create a new string object and put it on the stack.
+And so each time I call, each time I recursively call the function,
+I put a new string on the stack, which is expensive.
+It would be nicer if I could skip that.
+And so what I can do is instead of calling,
+instead of recursively going through the string with isPalindrome,
+I can call another function that is itself recursive.
+We call that other function that is self-recursive a helper,
+and then palindrome is not recursive, but it calls a recursive function,
+so we say it's a recursive wrapper.
+And what we would do in isPalindrome is we'd call helper
+with the original string, and then we would pass two additional arguments,
+the index to the beginning and the index to the end.
+If you want to see how this is implemented, you can look at
+the function on page 7 of your reading in this chapter.
+So that's one reason a function might be inefficient if it is recursive,
+if it creates using substring, like our last example did, additional copies.
+A function can also be inefficient because it calls itself too many times.
+So most of you are familiar with the Fibonacci sequence 0, 1, 1, 2, 3, 5, 8,
+13, 21, and 23.
+This sequence is created by simply for each term,
+in other words for the second term here, adding the two terms,
+the fourth, the zeroth, and the first term.
+We usually index these according to zero.
+You may have seen the Fibonacci sequence starting with 1, 1.
+That's perfectly fine. We're just starting at a different place.
+But the point is each term is a sum of the two preceding terms.
+So you can solve this recursively by using a function like this.
+Here's the Fibonacci sequence.
+If n is less than 2, in other words if it's 1 or 0, we return n, 0 or 1.
+Otherwise we return the sum of the previous two
+by calling the Fibonacci function recursively again.
+So notice each time I call this function I'm calling it twice.
+Now it turns out that that is very, very inefficient.
+So each time we increase the number from Fibonacci 6 to Fibonacci 7,
+we take this whole tree of recursive calls and double it.
+And so this is called an exponential explosion.
+And we can fix this also with a helper function
+and turning Fib into a wrapper.
+So let's look at our last exercise here.
+So this is E.
+And we're going to look at efficiency.
+And so what I've done here is I've created two versions of the Fibonacci sequence.
+Both of these are the same as the ones I had on the slide.
+So they're both identical now.
+And we're going to modify this to see if it's faster.
+What the main function does is it simply uses some of the C++11 timekeeping functions
+to see how many nanoseconds it takes to compute this Fibonacci number.
+So I'm calling Fibonacci 10, then 25, then 35, then 45.
+So let's go ahead and get a terminal on this.
+I didn't create a terminal before I did that.
+So let's open an integrated terminal on that.
+Let's maximize this and let's do make run.
+So you can see it's pretty fast for the first couple, right?
+Although 25 and 35 took a few seconds.
+So 5,200 nanoseconds for 10 to 2,000.
+So that's because the code is already in memory.
+We say it's cached when we call it again.
+So notice it was much less time.
+But when we go increase the time by 10, we go from 2,000 to 5,000 to about a million.
+And so both these are about a million.
+One's 600,000 and one's 800,000.
+And when we increase it only 10 more.
+So I increased it 15 and went up to a million nanoseconds.
+Now I've got about 195 million nanoseconds,
+195 million nanoseconds versus 1 million.
+So that's quite a change to increase by 10.
+And when I increase it 10 more, I go up to, let's see,
+there's thousands, hundreds of thousands, millions, up to about 23, 24 billion times.
+So you can see this exponential explosion of adding additional function calls.
+So let's see how we would solve that.
+Let's see how we would fix that.
+And the solution is to avoid making these additional functional calls.
+And so we'll write a function here.
+We'll call it helper.
+It's going to take the number n.
+And it's going to remember when we call the function what the previous two were.
+And so I'm going to call these int t0.
+And I'm going to call this one int t1.
+For term 0 and term 1.
+Now we have two possibilities here.
+If n equals 0, we're going to return whatever term 0 was.
+If n is 1, we're going to return whatever t1 is.
+If it's neither of those, we're simply going to return the helper.
+With n minus 1, a smaller n.
+Instead of t0, we're going to change t0 to t1.
+In other words, we're going to add those together.
+And t1 is going to become t1 plus t0.
+So notice how we're remembering what happens each time we call.
+So we don't have to go back down and find out what the previous one is.
+So this is our helper.
+This is going to be our wrapper.
+And what we're going to do with our wrapper is we're going to return helper with n.
+And we're going to put in what our t0 and t1 is.
+And our t0 here is going to be 0.
+And our t1 is going to be 1.
+The beginning of the sequence for the Fibonacci sequence.
+Okay, so let's try that again.
+Now, notice fib is going to take just as long as it did before.
+But fib2 is going to take almost no time at all.
+Almost no time at all.
+Even 35. Look at the difference between 35.
+Now, 45 for fib is still going to take our 25 billion nanoseconds.
+So roughly 25 seconds, right?
+24, 25 seconds.
+Okay, so it again took 24, 25 seconds.
+And again, when we did it with the helper, fib2, it was almost instantaneous.
+So recursive functions are not inherently inefficient.
+But you have to think about what function calls are being made
+and what data structures are being created when you do this.
+Okay, so you have enough stuff to turn in your exercises.
+And I will see you back here for lecture 11.
+[END]

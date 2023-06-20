@@ -1,0 +1,668 @@
+Hello everyone, welcome back to lecture 16 on vectors, iterators, and the standard template library.
+If you're wondering about the illustration on the front page here, those are two characters named vector.
+That's Vector the Crocodile from Sonic the Hedgehog, and Vector Perkins from Despicable Me, a thinly disguised younger Bill Gates.
+So we're going to start today by doing a little review of structures and overloaded output operators.
+So you remember for any user defined type, you can overload most of the C++ operators so that the operators will work with your new type.
+The syntax for a binary operator looks like this. Whatever the return type, here I've used T, the operator and the symbol, plus, minus, greater than, equal, equal, whatever.
+Then a const Tref for the left hand side and a const Tref for the right hand side.
+Now the output operator is a binary operator, but it requires a specific value on the left hand side, not a Tref.
+And so the overloaded output operator syntax, it returns an OstreamRef.
+It takes as its first argument an OstreamRef, the output stream that you're going to print to,
+and then it takes only one const Tref, the argument that you're going to print to the output.
+Now when the overloaded output operator ends, you return the Ostream argument after you've written to it, after you've changed it.
+So we're going to start today, rather than me talking a whole bunch, by doing an exercise.
+We're going to write an output operator for the car type.
+We want to print the data as manufacturer, a comma, a space, the model, a comma, a space, the miles per gallon, a space, and then the literal MPG.
+So let's go ahead and do that. So make sure that you have gone to week four, and in week four it's this last tab on vectors and exercise.
+Click the lecture exercise, and the lecture size opens. Click the link for the starter form, and here's the starter form for the overloaded output operator.
+Then make sure you've opened up your VS code, and gone to lecture 16, IC 16, and we're going to modify cars.h.
+So cars.h has the manufacturer and the model, and we're going to prototype the output operator.
+So you notice I've already included Iostream. If we didn't already include that, this wouldn't work.
+And because we're in the header, our car structure actually has a mistake in it.
+Because we're in a header, we can't use using namespace standard, so we have to make sure that all standard types are fully qualified.
+So we have to change it to standard, colon, colon, string, manufacturer.
+The same thing with the Iostream operator. So the output operator is standard, colon, colon, Iostream, ref. That's what we're going to return.
+It's operator, output, that direction, and it's a standard Iostream, ref. We generally call it out. And then a const car, ref, car for the argument.
+So that's the prototype for the output argument. We can add a little documentation to it.
+Car, model, mpg, mpg.
+I'm not going to put the rest of the documentation inside there. So let's copy that over.
+Let's go to cars.cpp. Drop it in there. Put our ID on top here.
+Now when you bring a prototype over to the implementation file, we have included using namespace standard over here. That's legal here.
+And so if you like, you can go remove the standard if you don't like it. Generally it's just as easy to leave it there.
+But if you want, you can go ahead and remove it like that.
+Now the output operator is always going to return the stream that it takes as its input.
+As its first argument. And we're going to print the manufacturer, model, and mpg. So that is called mfg, model, and mpg are the names of our fields.
+So we're going to say out car manufacturer. Notice I've called my variable car lowercase. You could call it c or something like that if you wanted.
+Car manufacturer. We want a comma space. Car model. Comma space. Car mpg.
+And then we want space and mpg for the output. Now you never put a new line when you're writing an overloaded operator like this. Don't put a new line at the end.
+That's kind of a hard habit to get out of.
+Okay, let's open a shell on this. Right click it. Open an integrated terminal.
+Let's maximize that so we can see it on the whole page. I'll close the earlier one so we're not using up that space.
+And let's do make to check the syntax. Okay, no errors. So make test.
+And let's see what our mistake is.
+Expected. Okay, it looks like the expected output wants braces around it, which we didn't put and it wasn't shown on the slide.
+So we'll go ahead and add that fix to it. It looks like everything else is okay.
+So we'll put a brace around it there.
+And we'll put a brace around it there.
+And we'll go check our program again.
+So make test.
+Okay, so that looks like our overloaded output operator works the way we were expecting it in this case.
+Now again, the format I did, there's nothing special about this. I just made it up myself. I decided what I wanted the format to look like.
+Okay, so now let's look at our next topic, which is vectors.
+So a vector is a standard library list-like container, a sequential container, meaning that you have items in order.
+It is a homogeneous collection. That means it only stores items of the same type versus a structure, which is heterogeneous,
+meaning that it has fields or data members of different types.
+So this sounds like an array. It is kind of like an array, but unlike an array, it's not fixed size.
+It will grow and shrink as you need to make it larger or smaller.
+Now like all the things in the standard library, it is not automatically included. You need to include it.
+The name of the header is, not surprisingly, vector.
+Now to create a vector variable, you need to specify what kind of thing you're going to store inside it.
+We call this the base type. So here I've said that I want to create a vector variable v1, and I want to store integers inside it.
+Usually we'll pronounce this when you're reading the code to yourself as vector of int or vector int.
+So v1 automatically is constructed. It's not uninitialized. It's a constructed vector of int, and it is empty.
+It doesn't have anything inside of it.
+You can, when you create it, specify how many elements you want.
+When you create it with elements like that, all of the elements are automatically initialized.
+So they are not left uninitialized. They will all be initialized to zero in this case, and v2 is a vector of double.
+Now if you wanted to initialize the vector to a specific set of values, that was relatively difficult to do before C++11.
+What you had to do was you had to initialize an array. The syntax looks almost exactly the same as Java, if you're familiar with Java.
+And then you would pass to the vector the array as the first argument, and then add to the array the number of elements you wanted to read.
+Now when we look at addresses in the next lecture, we'll see what this actually is doing.
+A is actually the address of the one, and A+3 is the address right beyond the three, and the vector constructor takes that.
+Now that's relatively clunky. It requires us to create an extra array.
+Wouldn't it be nice if we could do it in line? Just plainly initialize the vector with an initializer list like this,
+and of course in C++11, that's exactly what we can do. We can use an initializer list to do this.
+So we're going to look at these different versions of initialization. We're going to do our first exercise in VInit.
+I believe this is B, so I'm going to go look at it and see if it is B over here.
+So let's close A. Let's look at B.
+Ok, so put your name on top of it, or your ID.
+We're going to create some vectors of short, int, long, and float, each containing five elements of the Fibonacci sequence.
+So V1 is going to be a short, and we're going to initialize it from an array.
+The first five sequences are 0, 1, 1, 2, and 3.
+So I'm going to say int A, bracket bracket, means that's an array, equals 0, 1, 1, 2, 3.
+Now I want to copy those elements into a vector, V1.
+So I'm going to say vector, the type is short, the base type is short, V1.
+And I'm going to pass it A, and A plus, I have five elements, so A plus 5.
+Ok, so that will initialize V1.
+Now in C++11, this will be V2, which is an int.
+We can use a simpler syntax, I can just say vector, int, V2, and I can just supply 5, 8, 13, 21, 34.
+So much less work, doesn't require us to create two objects in memory to create an initialized vector.
+Now V3, we're going to use a sized vector, meaning I'm going to allocate the size when I create the vector.
+So V3 is a long, so vector, long, V3, I have five elements.
+Now I want to go through and create, use the algorithm here for the Fibonacci sequence.
+So I'm going to create the first two terms, so long, LT1, long term 1, equals 55, and LT2 equals 89.
+So there are our first two terms.
+Now we'll use a traditional for loop, for size T, I equals 0, len equals V3 size, I less than len, plus plus I.
+So your fingers should just type that automatically, you shouldn't really have to think about it.
+Okay, so now we want to say V at I equals LT1.
+Long term equals LT1.
+LT1 equals LT2, and LT2 equals temp plus LT2.
+Or we could write it like LT2 plus equals temp.
+Okay, so that should move us to 144, 233, and 377 when we do that.
+Okay, so remember this algorithm we're going to use in the next two.
+Okay, so V4 is a sized vector filled with a range-based loop.
+So we're going to do vector, this one's a float, V4, 5.
+And we'll say long float term 1 equals 16.
+And float term 2 equals 987.
+Okay, we don't, and this of course is a float, not a long.
+Okay, so this is a different loop here.
+Up here we used a traditional loop.
+We're going to do 4, auto, ref, E. For each element in V4,
+we're going to set E equal to FT1. Let's say auto temp equals FT1.
+FT1 equals FT2. And FT2 plus equals temp.
+Okay, so pretty much the same algorithm we used here.
+Finally we're going to use the same algorithm a third time with an unsized vector.
+So let's try that. We'll do vector double V5.
+No size on it. While V5 size is less than 5, we'll do something in here.
+Okay, so let's create our terms. We had double DT1 equals 6765.0. DT2 equals 10946.0.
+So while V5 size is less than 5, we'll do V5 pushback.
+DT1, auto temp equals DT1 equals DT2. And DT2 plus equals temp.
+So same algorithm, this time we're expanding V5 as we go.
+Okay, so this is the four kinds of initialization we looked at.
+Let's go ahead and create a terminal on this. Open an integrated terminal.
+Let's expand it up there and let's do make test.
+And I got V at on line 35, so I have a syntax error.
+And this should be V3 at.
+V4, V5.
+That looks like the only one we made a syntax error on.
+Okay, all five of the vectors were initialized correctly there.
+Alright, let's look at accessing the vector elements. You already saw me access them there.
+So just like string, we can access the individual elements with the @ member function or the square brackets.
+If you use the @ member function and you go out of bounds, it will throw an exception.
+So it's safe. It's range checked. If you use the square brackets, it's not range checked.
+Your program may crash, but not because it throws an exception. There's no range checking on that.
+So other operations on vector objects. We have size. You just saw it in the last exercise.
+Just like string, the type is vector size type, but we'll of course use size T just because it's shorter and less typing.
+You can add elements to the end of the vector, which you just saw us do.
+So we can do V1.pushback(3) and that increases the elements by one.
+We can remove the last element. Now this doesn't return the last element. It just removes it. This is a void member function.
+That pops back and it shrinks the vector by one.
+And we have some aggregate operations. Unlike structures, we can compare vectors without a loop.
+So if V1 == V2 works perfectly fine.
+And you can assign using equals. Again, you don't need a loop for this. These aggregate operations are built in.
+Now, when you write a function that takes a vector, you'll first always want to pass by reference or const reference.
+So I'm going to compute the average of this vector of double.
+Since I'm not going to change any of the elements, it's a const vector double ref V.
+So pass by reference or const reference. Never ever pass a vector by value.
+Two, use size to get the number of elements and store it in a size T object. Again, not in an int.
+Now in this example, I've checked, for instance, if the length of the vector is empty.
+It doesn't really have an average. Its average is not zero. The average is the number of elements.
+The sum of the elements divided by the number of elements. And of course we can't divide by zero.
+Now if you use floating point, you divide 0.0 divided by 0.0, you get the special value, not a number.
+So our function average here does the same thing the square root function does when it's passed an invalid input.
+Really, if you think about it, if we pass an empty vector here, what we're doing is violating the precondition for the average function.
+You can't compute the average of an empty vector.
+You can also call the built-in standard not a number function, NAN, and pass an additional message if you want that would display as an error message.
+So if we didn't have an error, if we check the preconditions, and again I'm not throwing exceptions in this case,
+I'm just doing the same thing most numeric functions do,
+I used the range-based for loop whenever you can.
+Range-based for loops just make the code much simpler.
+And now I can safely return sum divided by len because I know that len is at least one in this case.
+Now, imagine that we want to write a print function for vector.
+So I'm going to call it just print, I'm not going to return anything.
+I'm going to pass in the stream I'm going to print through so we can print a vector to a file or a string stream or whatever.
+And of course my argument is going to be a const vector.
+That would not be too hard to write, but the problem is it wouldn't work for other vector types.
+I have this perfect print function that prints my vector of double just like I want,
+and I have to duplicate the code for vectors of shorts or vectors of ints.
+So to work for vectors of any type, what you do is you use templates.
+So the template definition goes in the header file.
+You have to remember to fully qualify all library types with standard.
+So you cannot simply put using namespace standard.
+And so that template would look like this.
+Template type name any type or type name T.
+Void print standard ostream ref, fully qualified it, and const standard vector any type ref V.
+So we're going to do that in exercise C, vprint.cpp and vprint.h.
+So let's put away B and let's go take a look at C.
+So vprint.h is where we're going to put our function.
+vprint.cpp is only going to have our name inside there.
+So I'm going to go ahead and take this comment that I've put inside here.
+I'm going to move it over to my header file.
+And I'm going to write my generic print function here.
+So template type name T or any name you want for T.
+Void print standard ostream ref out and const standard vector T, not vector double, vector T ref back.
+Okay, now we want the output to look like this.
+Notice there's no space before the one.
+There is a comma and a space before the other items.
+There's no space after the four.
+And we have brackets after it.
+This algorithm is called the fence post algorithm.
+It's one of those algorithms you should memorize until it becomes second nature.
+So we're going to print to out the opening bracket.
+Then if vec size is greater than zero, we're going to print the stuff inside it.
+At the end, we're going to print to out and put the closing bracket.
+These are called the delimiters.
+Okay, so if vector size is greater than zero, we're going to do out vec at zero or vec sub zero.
+If you like, that's perfectly fine.
+You know it's there. It's safe.
+And then we're going to do for size T i equals.
+Make sure you don't do zero here.
+If you do zero, you repeat the first element.
+One, len equals vec size.
+I less than len plus plus i.
+And so each one of the remaining elements, we want a comma space.
+And then we want vec at i.
+Again, we won't put a new line on this print function.
+So here is our template function that will work for any kind of vector as long as we can print the elements.
+If we have an overloaded operator for a user defined type, that will work perfectly fine.
+So this is a generic print function for any vector.
+Let's try it out. Let's go ahead and get a terminal there.
+And then let's do make. Make sure syntax is correct.
+And make test.
+So there's v1. v1 is the one we created in the last exercise.
+And v2, v3, v4.
+And all of those are printing correctly.
+Now there's no formatting on the numbers, so we're not seeing that this is a float and this is a double and so forth.
+All right. Pretty impressive.
+So let's look now at operators and vectors.
+Okay. So vector doesn't define an output operator.
+We just wrote the print function to print, but it would be nice to do it with an overloaded output operator.
+And again, we want it to work with any vector type, so we're going to use a template.
+So really the only difference between print is we're changing the name of it to operator arrow arrow.
+Now remember a template is not a function.
+Instead it generates a function when it's called.
+And again, we should place this in a header file.
+So we're going to do d.
+Leave c open if you've already got it open.
+Because we're going to use exactly the same code.
+So I've got print open here.
+I'm going to go open d.
+And in vecout.cpp, I'm going to put my name on it.
+That's all I'm going to put in vecout.cpp.
+And in vecout.h, what I'm going to do is come over to vprint.h.
+I'm going to copy this code I had inside here.
+And I'm going to make two changes to it.
+I'm going to make two changes to it.
+First I'm going to change the name.
+Three changes to it.
+So I'm going to change it to operator.
+I'm going to change the return type to standard ostream ref.
+And I'm going to return out at the end of this.
+Now again, this only works if we know how to print vector objects.
+And if we look at cars.h here,
+notice that we already have the output operator.
+We wrote that in our first exercise today.
+So let's open up a shell on D.
+And let's do make on that.
+And then do make test.
+And okay, so almost the same code.
+Oh yeah, it's perfect.
+Yeah, 100% of those pass.
+100% of them pass.
+So C and D were very, very similar using templates to process a vector of a built-in type
+and then a vector of a user-defined type.
+We didn't have to change the code almost at all.
+The first one was print.
+And the second one, what we did is turned it into an overloaded operator.
+With that, we had to make three changes.
+Now, there are several common algorithms that you should memorize.
+You should know about counting for a selection.
+Count how many vowels are in this string.
+Count how many positive numbers are in this array.
+Count how many cars get more than 35 miles per gallon.
+Accumulation is adding things up.
+So and averaging, of course, and standard deviation, all of those,
+those are called cumulative algorithms.
+You should know about how to find the extreme values,
+how to find the largest and smallest, how to process adjacent elements.
+So the algorithm we just did was a form of adjacent elements.
+Look at the one in front of it, look at the one behind it, that sort of thing,
+and how to add separators, which we just did with the fence post algorithm.
+Now, different loops are best for different kinds of algorithms.
+If you need to visit every element, there's no reason to use a counter-controlled loop.
+Use a range-for loop. It's much faster, it's easier.
+If you need to keep track of the position, however, then use a traditional for loop.
+Don't use a range loop and add an additional counter for it.
+The traditional for loop is ideal for that.
+If you need to move or sort or shuffle items, you can't do that with a range loop.
+Use a traditional for loop.
+And if you need to grow or shrink the elements in an array, use an iterator or a while loop.
+Now, alternatively, you can more and more just skip using loops altogether.
+I can hear those of you who hate loops thinking, "Yay!"
+How do you do that? You use the standard library algorithms.
+This is part of the standard template library, which was included in the standardization of C++ in C++98.
+So, let's look at counting elements.
+To count elements which match a condition, first you create a counter for each type you want to count.
+So, don't use the regular loop counter.
+Create a separate counter that represents the data that you're collecting as you visit each of these items.
+You may have more than one counter.
+I may want to count the number of cats and dogs I have in an array of pet objects.
+Then write a loop that processes every element.
+And then, if the element matches the condition, count it and update the counter variable that you have for that.
+So, we're going to do our first exercise like that, which is divisible by n.
+So, we're going to pass a vector n.
+n is the number we're going to do, and we're going to get the numbers that are divisible by n.
+So, write a loop that processes every element.
+What does that sound like?
+The range for loop.
+Okay, let's look at that.
+That's in D.
+No, that's in E.
+So, let's put our name on it, S. Gilbert.
+So, we will write, we're going to count, so we're going to get an int back.
+Divisible by, and we want a vector of, it doesn't tell what type it is, but I'm assuming it's a vector of int.
+Oh, actually in the instructions it probably does.
+Then the vector int v, which are evenly divisible by n.
+Okay, now remember when we pass arguments, the library types are never passed by value.
+So, this is a const vector int reference v.
+And then int n.
+So, we want the numbers that are evenly divisible by n.
+So, we're going to go for int e n n.
+Now, I frequently will do auto e, just so I don't have to remember what type it is.
+So, for n, also then if I decide, oh I want it to work with a vector of double, I can change it.
+I don't need to change my code.
+But I'll put int here for right now.
+For int e in n, so that visits every element.
+If e remainder 2, no if e remainder n equals 0.
+If e divided by n has no remainder, then we're going to count it.
+And let me first create my counter.
+So, int divisible.
+And so, we'd say divisible plus plus.
+Of course, we could use any name for this.
+So, that's the basic counting algorithm.
+Let's open that in a terminal.
+Let's do make.
+No, it didn't work.
+For e in n, that of course is wrong.
+So, I need to say for each element v in v, my vector.
+Even if e remainder n, I think that's the only error I have there.
+Make, good.
+And make test.
+Good.
+So, in this vector there are 3 that are divisible by 10.
+In this vector there are 5 that are divisible by 2.
+In this vector there are 6 that are divisible by 2.
+In this vector there are none that are divisible by 5.
+In this vector there's one that's divisible by 9.
+And when you run it, you'll get a different randomized vector in your case.
+Alright, let's throw that terminal away.
+And let's go talk about how we would do this with the standard library.
+So, the standard library already includes this algorithm.
+As I mentioned, this is part of the standard template library, or the STL.
+The STL has containers, the vector is part of the STL, the deck, the list, the map, the set, and so forth.
+And it contains iterators.
+So, it contains algorithms, containers, and iterators.
+Iterators allow you to access any container type.
+But you have to know about iterators to use the algorithms.
+So, let me explain what an iterator is.
+Different containers store data in different ways.
+So, a vector has elements right next to each other.
+They're contiguous in memory.
+A list stores elements like this.
+So, both vector and list are sequential containers.
+But with the list, you'll notice the elements are not next to each other.
+Thus, they are not indexed.
+They are any random place in memory with pointers connecting each one.
+So, again, this is sequential.
+We start at the beginning, and we go through this maze until we get to the end.
+This is sequential.
+So, we start at the beginning, we go through this maze at the end.
+So, iterators are objects which ignore the physical order
+and allow us to select elements from any kind of container.
+They're kind of like the claw in an arcade game like this.
+Now, we can use iterators with sequential containers instead of indexes.
+And we can use iterators with lists instead of pointers.
+And so, that means we can write a function, an algorithm,
+that works and counts no matter what kind of container I pass it to.
+So, how do you get the elements?
+Well, you move the claw to the first element, beginC,
+calling beginC, where C is the container object that you want to position your claw over.
+And so, you'd write that code as auto iterator equals begin list.
+Now, we could actually not use auto here,
+but it's actually relatively complex, the declaration for that.
+You'll learn about it in 250 if you take 250.
+Now, we're positioned over this first little space creature.
+We want to move it to the second space creature.
+How do we do that?
+We use the increment operator, use prefix on this.
+So, we move to the next element, and now we're positioned on the next one.
+How do you know when to stop?
+Well, you stop when you reach endC.
+Now, endC is not the last element in the collection.
+It's one past the last collection.
+So, you can say while iterator not equal to endC.
+Now, generally, we don't use that with numeric arrays.
+We'd use less than, right, less than size.
+But with iterators, you always use not equals.
+Now, that's for moving the claw through the collection.
+How do we pick up an item?
+Well, we pick up an item by dereferencing it.
+Dereferencing it simply uses the same symbol we've used for multiplication,
+but as a unary operator in front of an iterator.
+We'll also use this operator, the dereferencing operator, in front of pointers
+when we get to that.
+So, this picks up the item and puts it in the variable value here.
+So, we're going to write the same function we just wrote, divisible by,
+but instead of using a loop, we'll use iterators.
+Instead of using a for each loop, we'll use iterators to do that.
+Okay, so let's close counting in E and let's go to F
+and put our name on top of it.
+Okay, so this time we're writing it using an iterator loop.
+I've already written the header here.
+So, what we want to do is we want to create a counter.
+So, int divisible equals zero and return divisible.
+So, that's the skeleton for the structure of the stub.
+Now, we want to loop through using an iterator.
+So, for auto iter equals begin v,
+iter not equal to end v, plus plus iter.
+So, again, we're not doing an index, we're moving this little claw.
+Now, the element is star iter, right?
+That's how we pick up the item.
+So, if star iter divide by n equals zero,
+or star iter remainder n equals zero,
+then divisible plus plus.
+So, this is an iterator loop.
+By the way, the for each loop just writes an iterator loop behind the scenes.
+This is writing an iterator loop manually showing the code.
+So, let's test that. Let's open a terminal.
+Let's do make test.
+And this one still works just as well.
+So, there's one seven, one eight, no tens, two fours, and so forth in these arrays.
+And again, these are randomly generated, so you'll have different values there.
+So, here is our iterator based version of divisible by.
+Now, most of you are probably thinking, "Oh, great, another way to do exactly the same thing."
+That's not actually very useful.
+Actually, I'm going to talk about that in a second.
+Let me talk about constant iterators first.
+Iterators permit you to change the items they refer to.
+A constant iterator, i.e., vector const iterator, does not.
+Begin will return a const iterator when the container is const, and a regular iterator when it is not.
+Now, beginning in C++14, you can actually use cbegin and cend to explicitly state that your iterator won't change the items.
+So, you can use that when you don't want the container elements changed,
+although, generally, I have to say, most of the time, just using begin and end is perfectly fine.
+Okay, now let me talk about algorithms.
+The STL has a collection, or several collections, of pre-built algorithms.
+So, there's a collection in the header algorithm, there's another collection in the header iterator,
+there's a collection of numeric algorithms in the header numeric.
+And so, here is how we would use the count algorithm from the library.
+We'd create a vector v, and we'd count from begin v to end v, or in this case, we could use cbegin v and cend v.
+It wouldn't make any difference for 3.
+And that would tell us the number of 3's that are inside there, and we would not have to write a loop at all.
+Now, how do we write, though, and how do we call the count function when what we want to count for is a condition?
+Well, first, you have to write a function that represents that condition.
+This is called a predicate function.
+A predicate function is a function that returns true or false.
+So, isEven takes the integer n and returns n remainder 2 equals 0.
+Now, and then, once you've written the function, you would pass the name of the function instead of 3 or 4
+to the function called countIf.
+You don't pass it to count, this is a separate function.
+So, countIf beginC endC is even, and that would return you the number of even values.
+Now, that's not quite what we want to do, though.
+We don't want to check to see if it's even.
+We want to pass in a value for this 2 right here.
+We want to pass in a value for that 2.
+So, that requires us to use an anonymous function rather than a predicate function like this.
+This anonymous function is called a lambda.
+A lambda starts with a set of square brackets like this.
+The argument list, just like we'd have in isEven, and the comparison here.
+So, this countIf does the same thing as this countIf, but doesn't require you to create a separate isEven function.
+We've just written the function right inside the argument list.
+This function does not have a name like isEven.
+Now, suppose we want to write our divisible by function using countIf.
+Well, I could countIf e remainder 2 equals 0, but how do I countIf e remainder n equals 0?
+Well, I do that by capturing here in the square brackets any additional variables I want to use in the body of this function.
+So, I'm going to show you how to do it.
+We're not going to do this a lot in this class, but I just want to introduce you to it.
+So, you can get a picture of the fact that you can write C++ code without really using a lot of loops.
+So, we're going to write for our next exercise divisible by using an algorithm instead.
+And then you'll have three different versions of this in E, F, and G of the same function using it three different ways.
+So, this is S Gilbert.
+So, here I'm not going to create a counter. I'm not going to do anything.
+I'm just going to return countIf beginV.
+Or you can actually write this.
+There is a member as well, so I can write v begin if you want.
+I actually like beginV and endV instead.
+And then on the next line I'm going to put this beginning of the lambda expression.
+And inside that I'm going to put what I want to capture.
+So, I'm going to capture the variable n.
+And this function is going to take one argument.
+So, I'll call it the element in E for each element.
+Inside the body of this I'm going to say return E remainder n equals zero.
+So, notice this function is just an argument inside that function.
+Now we need to end the function here.
+So, you might find this less readable.
+But it actually makes your code much simpler.
+Notice we don't have any loops inside here at all.
+Okay, let's try that out with g.
+Let's do make.
+Make test.
+Notice it still works exactly the same.
+But the code is somewhat simpler.
+And you don't have to format that.
+You can format it just like you would a regular function.
+And then put that over there.
+So, you can make your functions easy to read in other words.
+Easy to read.
+So, this is called a lambda or an anonymous function that can be passed around as an argument.
+It can also be stored in a variable.
+So, we can use vectors to return a collection of items.
+Suppose we have a vector with duplicates.
+And I want to write a function that removes all of the duplicates or only keeps the unique names.
+So, I'll write a function named unique.
+The returns of a new vector with only the unique values.
+So, here's the unique algorithm.
+We're going to create an empty vector result.
+We're going to visit each element in the input vector.
+Then we're going to check to see if that element is in the result.
+If it's not, we're going to add it.
+And then we're going to return the result.
+Now, this algorithm is relatively slow because we aren't assuming the vector is sorted.
+If the vectors are sorted, it would actually be relatively fast to do it if the vector was sorted.
+Okay, so let's write unique using loops.
+So, let me open that up.
+Close counting.
+Close these bash shells here.
+Okay, so this one now is going to return a vector.
+So, vector int unique const vector int ref v.
+So, here's my result.
+Vector int result.
+And, of course, I'm going to return the result.
+Okay, so I have a stub, something that would compile, and something I could test.
+Now, we want to visit each element in that.
+So, I'm going to say for auto e1 in v.
+Now, I want to see if it is inside result.
+So, found equals false.
+I'll say add.
+Bool add.
+Bool add equals true.
+For auto e2 in result.
+If e1 equals e2, then it has already been seen.
+It's a duplicate.
+And, add equals false.
+And, actually, once we know the answer, once we know it's a duplicate, let's just break out of that loop.
+Make it a little bit easier.
+Then, after the inner loop, now remember what we're doing.
+I just created an empty vector result.
+Visited each element in the input vector.
+Now, I'm looking to see if it's not in the result, then I'm going to add it.
+Okay, not in the result, then I'm going to add it.
+So, how do I add it?
+I say, if add, result pushback e1.
+So, this is creating a new vector, going through and seeing if it's in the result.
+Okay, let's try a shell on that one.
+And, let's do make test.
+Okay.
+So, here's my original vector, here's the unique ones inside that.
+Here's my original vector, here's the unique ones inside that.
+Here's my original vector, here's my original vector, original vector, original vector, and the unique ones inside each case.
+And, you can see, like this one has two fives there, skip the five, it has two fours, one four there.
+Alright, so one last thing we're going to look at today
+is how do I insert and delete items, or how do I insert and erase items.
+So, if you insert something into a vector, the vector has to expand.
+So, if I want to put six where this three was, I have to move the items to the right and add the six inside it.
+And, the vector gets larger by one.
+Now, to do this, to call these functions insert or erase, you have to use iterators.
+Indexes don't work.
+However, iterators have an interesting property.
+If you add a number to an iterator, you essentially get the iterator that would represent the index.
+So, when I say v_begin, I'm representing, it's pointing to v at zero.
+v_end is pointing to the element that would be at v_size, which of course is beyond the end of the vector.
+If I take v_begin, or begin v, and I add one to it, however, I'm no longer pointing at the element zero, I'm pointing at the element one.
+If I take v_end and I subtract one to it, I'm pointing at the last item.
+Now, there's one other complication you need to think about when you're inserting and deleting.
+That complication is the size of the vector changes,
+and any iterators that were already pointing to things are invalidated.
+So, as you can imagine, if I had an iterator that was pointing to this three, and I inserted the six,
+now it would be pointing to the six instead of pointing to the three, so it would be invalidated.
+So, often students will try this.
+This is trying to erase all elements.
+So, we're going to see if cppShell opens here.
+It did. It opened in another browser I have, so I'm going to bring it over here.
+So, here I have, here's my print function that we wrote earlier today.
+And so here I have an array with one, two, three, four, five, six, seven.
+And I'm going through the array with a counter-controlled loop,
+and at each element I'm trying to erase the item in it.
+Now, the intention of this programmer was to erase every item.
+That's not what happens.
+And you'll see if you run this, that we have seven items.
+We try and erase the first item, and it does in fact go away.
+We have that.
+And then we try and erase the item at position one, because our index has gone forward here.
+And so, notice we skip over the two, because our index is now pointing to this three.
+And so we delete the three, then we delete that, and so we end with these three elements left in the array.
+Not really what we intended to do.
+Oops.
+So you have to remember, when you erase something, the items kind of under your feet are going to change.
+So we're writing one last exercise here.
+This is a modified version of Unique.
+It's going to remove all the elements from the existing vector v.
+And I'm going to give you a little bit more practice, or show you a little bit more about using iterators instead of loops.
+So let's use Unique.
+Put our canvas ID on it.
+Okay, so this is going to return the number of duplicates removed.
+So int.
+Again, is not required to be sorted.
+We're going to keep the last, not the first element that we find.
+Of course, that will determine how the output is sorted.
+It's called Unique.
+It's a vector.
+Oh, it's not a constant vector. It's a vector.
+Int.
+And it's changed.
+Okay.
+So first we want the number of dupes.
+So int dupes equals zero.
+And we're going to return the dupes.
+Now we don't create a separate vector.
+What we're simply going to do is we're going to use an iterator to look at each item.
+And the easiest way to do this for erasing is to use a while loop.
+So we'll say auto iter equals begin vec.
+And we'll say while iter is not equal to end vec.
+Okay.
+So now I have to see if -- so I'm looking at the first item.
+Does that item appear anywhere else?
+So the pseudocode.
+Yes, erase it.
+No.
+Look at the next -- look at the next element.
+Okay.
+So that's my pseudocode.
+So I need to say for auto -- I'm going to call this iter two.
+Auto iter two equals iter plus one.
+Iter two not equal to end vec.
+Iter two plus plus.
+If star iter equals star iter two.
+That means I found it.
+So I'm going to erase it.
+I'm actually just going to set found and break.
+So bool.
+And let's not even have a break in it.
+Let's just put that condition here.
+Not found.
+Okay.
+So this was -- does the current item appear elsewhere?
+Yes.
+If found, then erase the item.
+Now v vec erase that iterator.
+Else iter plus plus.
+Okay.
+Or plus plus iter.
+We kind of don't want to use -- we don't want to use the negative one on that.
+So notice that this iterator is looking, starting at the next one after it.
+It's looking to see if it's found inside of that.
+If it finds it in the else one, it deletes the current one.
+It deletes the current one.
+Otherwise it leaves it there and it goes to the next one.
+It goes to the next one.
+And actually, this invalidates the iterator, so we should write it like this.
+And that gets back what that new iterator is pointing at.
+Okay. Let's see if we got it here.
+And let's open up a shell on this.
+Let's bring that up.
+Let's kill the first one.
+Let's do make.
+Make test.
+Okay. It didn't work.
+Oh. You know what I forgot to do is -- so I'm getting the correct outputs.
+V after works.
+So I got plus plus plus.
+I got 50% of the points.
+But every time I find it, when I found it, I want to say dupes plus plus to count the number of duplicates there.
+Okay. There's 100%.
+So before we had this, I remove five of them, and after I have that.
+So notice seven appears last, even though -- if I kept the first one, it would be 57261.
+57261.
+Because I'm keeping the last one, it's 52167.
+All right. So that's it for lecture 16.
+When you come back, we will look at memory and pointers.
+I'll see you then.

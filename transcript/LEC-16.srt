@@ -1,0 +1,2672 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, welcome back to lecture 16 on vectors, iterators, and the standard template library.
+
+2
+00:00:00,000 --> 00:00:00,000
+If you're wondering about the illustration on the front page here, those are two characters named vector.
+
+3
+00:00:00,000 --> 00:00:00,000
+That's Vector the Crocodile from Sonic the Hedgehog, and Vector Perkins from Despicable Me, a thinly disguised younger Bill Gates.
+
+4
+00:00:00,000 --> 00:00:00,000
+So we're going to start today by doing a little review of structures and overloaded output operators.
+
+5
+00:00:00,000 --> 00:00:00,000
+So you remember for any user defined type, you can overload most of the C++ operators so that the operators will work with your new type.
+
+6
+00:00:00,000 --> 00:00:00,000
+The syntax for a binary operator looks like this. Whatever the return type, here I've used T, the operator and the symbol, plus, minus, greater than, equal, equal, whatever.
+
+7
+00:00:00,000 --> 00:00:00,000
+Then a const Tref for the left hand side and a const Tref for the right hand side.
+
+8
+00:00:00,000 --> 00:00:00,000
+Now the output operator is a binary operator, but it requires a specific value on the left hand side, not a Tref.
+
+9
+00:00:00,000 --> 00:00:00,000
+And so the overloaded output operator syntax, it returns an OstreamRef.
+
+10
+00:00:00,000 --> 00:00:00,000
+It takes as its first argument an OstreamRef, the output stream that you're going to print to,
+
+11
+00:00:00,000 --> 00:00:00,000
+and then it takes only one const Tref, the argument that you're going to print to the output.
+
+12
+00:00:00,000 --> 00:00:00,000
+Now when the overloaded output operator ends, you return the Ostream argument after you've written to it, after you've changed it.
+
+13
+00:00:00,000 --> 00:00:00,000
+So we're going to start today, rather than me talking a whole bunch, by doing an exercise.
+
+14
+00:00:00,000 --> 00:00:00,000
+We're going to write an output operator for the car type.
+
+15
+00:00:00,000 --> 00:00:00,000
+We want to print the data as manufacturer, a comma, a space, the model, a comma, a space, the miles per gallon, a space, and then the literal MPG.
+
+16
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and do that. So make sure that you have gone to week four, and in week four it's this last tab on vectors and exercise.
+
+17
+00:00:00,000 --> 00:00:00,000
+Click the lecture exercise, and the lecture size opens. Click the link for the starter form, and here's the starter form for the overloaded output operator.
+
+18
+00:00:00,000 --> 00:00:00,000
+Then make sure you've opened up your VS code, and gone to lecture 16, IC 16, and we're going to modify cars.h.
+
+19
+00:00:00,000 --> 00:00:00,000
+So cars.h has the manufacturer and the model, and we're going to prototype the output operator.
+
+20
+00:00:00,000 --> 00:00:00,000
+So you notice I've already included Iostream. If we didn't already include that, this wouldn't work.
+
+21
+00:00:00,000 --> 00:00:00,000
+And because we're in the header, our car structure actually has a mistake in it.
+
+22
+00:00:00,000 --> 00:00:00,000
+Because we're in a header, we can't use using namespace standard, so we have to make sure that all standard types are fully qualified.
+
+23
+00:00:00,000 --> 00:00:00,000
+So we have to change it to standard, colon, colon, string, manufacturer.
+
+24
+00:00:00,000 --> 00:00:00,000
+The same thing with the Iostream operator. So the output operator is standard, colon, colon, Iostream, ref. That's what we're going to return.
+
+25
+00:00:00,000 --> 00:00:00,000
+It's operator, output, that direction, and it's a standard Iostream, ref. We generally call it out. And then a const car, ref, car for the argument.
+
+26
+00:00:00,000 --> 00:00:00,000
+So that's the prototype for the output argument. We can add a little documentation to it.
+
+27
+00:00:00,000 --> 00:00:00,000
+Car, model, mpg, mpg.
+
+28
+00:00:00,000 --> 00:00:00,000
+I'm not going to put the rest of the documentation inside there. So let's copy that over.
+
+29
+00:00:00,000 --> 00:00:00,000
+Let's go to cars.cpp. Drop it in there. Put our ID on top here.
+
+30
+00:00:00,000 --> 00:00:00,000
+Now when you bring a prototype over to the implementation file, we have included using namespace standard over here. That's legal here.
+
+31
+00:00:00,000 --> 00:00:00,000
+And so if you like, you can go remove the standard if you don't like it. Generally it's just as easy to leave it there.
+
+32
+00:00:00,000 --> 00:00:00,000
+But if you want, you can go ahead and remove it like that.
+
+33
+00:00:00,000 --> 00:00:00,000
+Now the output operator is always going to return the stream that it takes as its input.
+
+34
+00:00:00,000 --> 00:00:00,000
+As its first argument. And we're going to print the manufacturer, model, and mpg. So that is called mfg, model, and mpg are the names of our fields.
+
+35
+00:00:00,000 --> 00:00:00,000
+So we're going to say out car manufacturer. Notice I've called my variable car lowercase. You could call it c or something like that if you wanted.
+
+36
+00:00:00,000 --> 00:00:00,000
+Car manufacturer. We want a comma space. Car model. Comma space. Car mpg.
+
+37
+00:00:00,000 --> 00:00:00,000
+And then we want space and mpg for the output. Now you never put a new line when you're writing an overloaded operator like this. Don't put a new line at the end.
+
+38
+00:00:00,000 --> 00:00:00,000
+That's kind of a hard habit to get out of.
+
+39
+00:00:00,000 --> 00:00:00,000
+Okay, let's open a shell on this. Right click it. Open an integrated terminal.
+
+40
+00:00:00,000 --> 00:00:00,000
+Let's maximize that so we can see it on the whole page. I'll close the earlier one so we're not using up that space.
+
+41
+00:00:00,000 --> 00:00:00,000
+And let's do make to check the syntax. Okay, no errors. So make test.
+
+42
+00:00:00,000 --> 00:00:00,000
+And let's see what our mistake is.
+
+43
+00:00:00,000 --> 00:00:00,000
+Expected. Okay, it looks like the expected output wants braces around it, which we didn't put and it wasn't shown on the slide.
+
+44
+00:00:00,000 --> 00:00:00,000
+So we'll go ahead and add that fix to it. It looks like everything else is okay.
+
+45
+00:00:00,000 --> 00:00:00,000
+So we'll put a brace around it there.
+
+46
+00:00:00,000 --> 00:00:00,000
+And we'll put a brace around it there.
+
+47
+00:00:00,000 --> 00:00:00,000
+And we'll go check our program again.
+
+48
+00:00:00,000 --> 00:00:00,000
+So make test.
+
+49
+00:00:00,000 --> 00:00:00,000
+Okay, so that looks like our overloaded output operator works the way we were expecting it in this case.
+
+50
+00:00:00,000 --> 00:00:00,000
+Now again, the format I did, there's nothing special about this. I just made it up myself. I decided what I wanted the format to look like.
+
+51
+00:00:00,000 --> 00:00:00,000
+Okay, so now let's look at our next topic, which is vectors.
+
+52
+00:00:00,000 --> 00:00:00,000
+So a vector is a standard library list-like container, a sequential container, meaning that you have items in order.
+
+53
+00:00:00,000 --> 00:00:00,000
+It is a homogeneous collection. That means it only stores items of the same type versus a structure, which is heterogeneous,
+
+54
+00:00:00,000 --> 00:00:00,000
+meaning that it has fields or data members of different types.
+
+55
+00:00:00,000 --> 00:00:00,000
+So this sounds like an array. It is kind of like an array, but unlike an array, it's not fixed size.
+
+56
+00:00:00,000 --> 00:00:00,000
+It will grow and shrink as you need to make it larger or smaller.
+
+57
+00:00:00,000 --> 00:00:00,000
+Now like all the things in the standard library, it is not automatically included. You need to include it.
+
+58
+00:00:00,000 --> 00:00:00,000
+The name of the header is, not surprisingly, vector.
+
+59
+00:00:00,000 --> 00:00:00,000
+Now to create a vector variable, you need to specify what kind of thing you're going to store inside it.
+
+60
+00:00:00,000 --> 00:00:00,000
+We call this the base type. So here I've said that I want to create a vector variable v1, and I want to store integers inside it.
+
+61
+00:00:00,000 --> 00:00:00,000
+Usually we'll pronounce this when you're reading the code to yourself as vector of int or vector int.
+
+62
+00:00:00,000 --> 00:00:00,000
+So v1 automatically is constructed. It's not uninitialized. It's a constructed vector of int, and it is empty.
+
+63
+00:00:00,000 --> 00:00:00,000
+It doesn't have anything inside of it.
+
+64
+00:00:00,000 --> 00:00:00,000
+You can, when you create it, specify how many elements you want.
+
+65
+00:00:00,000 --> 00:00:00,000
+When you create it with elements like that, all of the elements are automatically initialized.
+
+66
+00:00:00,000 --> 00:00:00,000
+So they are not left uninitialized. They will all be initialized to zero in this case, and v2 is a vector of double.
+
+67
+00:00:00,000 --> 00:00:00,000
+Now if you wanted to initialize the vector to a specific set of values, that was relatively difficult to do before C++11.
+
+68
+00:00:00,000 --> 00:00:00,000
+What you had to do was you had to initialize an array. The syntax looks almost exactly the same as Java, if you're familiar with Java.
+
+69
+00:00:00,000 --> 00:00:00,000
+And then you would pass to the vector the array as the first argument, and then add to the array the number of elements you wanted to read.
+
+70
+00:00:00,000 --> 00:00:00,000
+Now when we look at addresses in the next lecture, we'll see what this actually is doing.
+
+71
+00:00:00,000 --> 00:00:00,000
+A is actually the address of the one, and A+3 is the address right beyond the three, and the vector constructor takes that.
+
+72
+00:00:00,000 --> 00:00:00,000
+Now that's relatively clunky. It requires us to create an extra array.
+
+73
+00:00:00,000 --> 00:00:00,000
+Wouldn't it be nice if we could do it in line? Just plainly initialize the vector with an initializer list like this,
+
+74
+00:00:00,000 --> 00:00:00,000
+and of course in C++11, that's exactly what we can do. We can use an initializer list to do this.
+
+75
+00:00:00,000 --> 00:00:00,000
+So we're going to look at these different versions of initialization. We're going to do our first exercise in VInit.
+
+76
+00:00:00,000 --> 00:00:00,000
+I believe this is B, so I'm going to go look at it and see if it is B over here.
+
+77
+00:00:00,000 --> 00:00:00,000
+So let's close A. Let's look at B.
+
+78
+00:00:00,000 --> 00:00:00,000
+Ok, so put your name on top of it, or your ID.
+
+79
+00:00:00,000 --> 00:00:00,000
+We're going to create some vectors of short, int, long, and float, each containing five elements of the Fibonacci sequence.
+
+80
+00:00:00,000 --> 00:00:00,000
+So V1 is going to be a short, and we're going to initialize it from an array.
+
+81
+00:00:00,000 --> 00:00:00,000
+The first five sequences are 0, 1, 1, 2, and 3.
+
+82
+00:00:00,000 --> 00:00:00,000
+So I'm going to say int A, bracket bracket, means that's an array, equals 0, 1, 1, 2, 3.
+
+83
+00:00:00,000 --> 00:00:00,000
+Now I want to copy those elements into a vector, V1.
+
+84
+00:00:00,000 --> 00:00:00,000
+So I'm going to say vector, the type is short, the base type is short, V1.
+
+85
+00:00:00,000 --> 00:00:00,000
+And I'm going to pass it A, and A plus, I have five elements, so A plus 5.
+
+86
+00:00:00,000 --> 00:00:00,000
+Ok, so that will initialize V1.
+
+87
+00:00:00,000 --> 00:00:00,000
+Now in C++11, this will be V2, which is an int.
+
+88
+00:00:00,000 --> 00:00:00,000
+We can use a simpler syntax, I can just say vector, int, V2, and I can just supply 5, 8, 13, 21, 34.
+
+89
+00:00:00,000 --> 00:00:00,000
+So much less work, doesn't require us to create two objects in memory to create an initialized vector.
+
+90
+00:00:00,000 --> 00:00:00,000
+Now V3, we're going to use a sized vector, meaning I'm going to allocate the size when I create the vector.
+
+91
+00:00:00,000 --> 00:00:00,000
+So V3 is a long, so vector, long, V3, I have five elements.
+
+92
+00:00:00,000 --> 00:00:00,000
+Now I want to go through and create, use the algorithm here for the Fibonacci sequence.
+
+93
+00:00:00,000 --> 00:00:00,000
+So I'm going to create the first two terms, so long, LT1, long term 1, equals 55, and LT2 equals 89.
+
+94
+00:00:00,000 --> 00:00:00,000
+So there are our first two terms.
+
+95
+00:00:00,000 --> 00:00:00,000
+Now we'll use a traditional for loop, for size T, I equals 0, len equals V3 size, I less than len, plus plus I.
+
+96
+00:00:00,000 --> 00:00:00,000
+So your fingers should just type that automatically, you shouldn't really have to think about it.
+
+97
+00:00:00,000 --> 00:00:00,000
+Okay, so now we want to say V at I equals LT1.
+
+98
+00:00:00,000 --> 00:00:00,000
+Long term equals LT1.
+
+99
+00:00:00,000 --> 00:00:00,000
+LT1 equals LT2, and LT2 equals temp plus LT2.
+
+100
+00:00:00,000 --> 00:00:00,000
+Or we could write it like LT2 plus equals temp.
+
+101
+00:00:00,000 --> 00:00:00,000
+Okay, so that should move us to 144, 233, and 377 when we do that.
+
+102
+00:00:00,000 --> 00:00:00,000
+Okay, so remember this algorithm we're going to use in the next two.
+
+103
+00:00:00,000 --> 00:00:00,000
+Okay, so V4 is a sized vector filled with a range-based loop.
+
+104
+00:00:00,000 --> 00:00:00,000
+So we're going to do vector, this one's a float, V4, 5.
+
+105
+00:00:00,000 --> 00:00:00,000
+And we'll say long float term 1 equals 16.
+
+106
+00:00:00,000 --> 00:00:00,000
+And float term 2 equals 987.
+
+107
+00:00:00,000 --> 00:00:00,000
+Okay, we don't, and this of course is a float, not a long.
+
+108
+00:00:00,000 --> 00:00:00,000
+Okay, so this is a different loop here.
+
+109
+00:00:00,000 --> 00:00:00,000
+Up here we used a traditional loop.
+
+110
+00:00:00,000 --> 00:00:00,000
+We're going to do 4, auto, ref, E. For each element in V4,
+
+111
+00:00:00,000 --> 00:00:00,000
+we're going to set E equal to FT1. Let's say auto temp equals FT1.
+
+112
+00:00:00,000 --> 00:00:00,000
+FT1 equals FT2. And FT2 plus equals temp.
+
+113
+00:00:00,000 --> 00:00:00,000
+Okay, so pretty much the same algorithm we used here.
+
+114
+00:00:00,000 --> 00:00:00,000
+Finally we're going to use the same algorithm a third time with an unsized vector.
+
+115
+00:00:00,000 --> 00:00:00,000
+So let's try that. We'll do vector double V5.
+
+116
+00:00:00,000 --> 00:00:00,000
+No size on it. While V5 size is less than 5, we'll do something in here.
+
+117
+00:00:00,000 --> 00:00:00,000
+Okay, so let's create our terms. We had double DT1 equals 6765.0. DT2 equals 10946.0.
+
+118
+00:00:00,000 --> 00:00:00,000
+So while V5 size is less than 5, we'll do V5 pushback.
+
+119
+00:00:00,000 --> 00:00:00,000
+DT1, auto temp equals DT1 equals DT2. And DT2 plus equals temp.
+
+120
+00:00:00,000 --> 00:00:00,000
+So same algorithm, this time we're expanding V5 as we go.
+
+121
+00:00:00,000 --> 00:00:00,000
+Okay, so this is the four kinds of initialization we looked at.
+
+122
+00:00:00,000 --> 00:00:00,000
+Let's go ahead and create a terminal on this. Open an integrated terminal.
+
+123
+00:00:00,000 --> 00:00:00,000
+Let's expand it up there and let's do make test.
+
+124
+00:00:00,000 --> 00:00:00,000
+And I got V at on line 35, so I have a syntax error.
+
+125
+00:00:00,000 --> 00:00:00,000
+And this should be V3 at.
+
+126
+00:00:00,000 --> 00:00:00,000
+V4, V5.
+
+127
+00:00:00,000 --> 00:00:00,000
+That looks like the only one we made a syntax error on.
+
+128
+00:00:00,000 --> 00:00:00,000
+Okay, all five of the vectors were initialized correctly there.
+
+129
+00:00:00,000 --> 00:00:00,000
+Alright, let's look at accessing the vector elements. You already saw me access them there.
+
+130
+00:00:00,000 --> 00:00:00,000
+So just like string, we can access the individual elements with the @ member function or the square brackets.
+
+131
+00:00:00,000 --> 00:00:00,000
+If you use the @ member function and you go out of bounds, it will throw an exception.
+
+132
+00:00:00,000 --> 00:00:00,000
+So it's safe. It's range checked. If you use the square brackets, it's not range checked.
+
+133
+00:00:00,000 --> 00:00:00,000
+Your program may crash, but not because it throws an exception. There's no range checking on that.
+
+134
+00:00:00,000 --> 00:00:00,000
+So other operations on vector objects. We have size. You just saw it in the last exercise.
+
+135
+00:00:00,000 --> 00:00:00,000
+Just like string, the type is vector size type, but we'll of course use size T just because it's shorter and less typing.
+
+136
+00:00:00,000 --> 00:00:00,000
+You can add elements to the end of the vector, which you just saw us do.
+
+137
+00:00:00,000 --> 00:00:00,000
+So we can do V1.pushback(3) and that increases the elements by one.
+
+138
+00:00:00,000 --> 00:00:00,000
+We can remove the last element. Now this doesn't return the last element. It just removes it. This is a void member function.
+
+139
+00:00:00,000 --> 00:00:00,000
+That pops back and it shrinks the vector by one.
+
+140
+00:00:00,000 --> 00:00:00,000
+And we have some aggregate operations. Unlike structures, we can compare vectors without a loop.
+
+141
+00:00:00,000 --> 00:00:00,000
+So if V1 == V2 works perfectly fine.
+
+142
+00:00:00,000 --> 00:00:00,000
+And you can assign using equals. Again, you don't need a loop for this. These aggregate operations are built in.
+
+143
+00:00:00,000 --> 00:00:00,000
+Now, when you write a function that takes a vector, you'll first always want to pass by reference or const reference.
+
+144
+00:00:00,000 --> 00:00:00,000
+So I'm going to compute the average of this vector of double.
+
+145
+00:00:00,000 --> 00:00:00,000
+Since I'm not going to change any of the elements, it's a const vector double ref V.
+
+146
+00:00:00,000 --> 00:00:00,000
+So pass by reference or const reference. Never ever pass a vector by value.
+
+147
+00:00:00,000 --> 00:00:00,000
+Two, use size to get the number of elements and store it in a size T object. Again, not in an int.
+
+148
+00:00:00,000 --> 00:00:00,000
+Now in this example, I've checked, for instance, if the length of the vector is empty.
+
+149
+00:00:00,000 --> 00:00:00,000
+It doesn't really have an average. Its average is not zero. The average is the number of elements.
+
+150
+00:00:00,000 --> 00:00:00,000
+The sum of the elements divided by the number of elements. And of course we can't divide by zero.
+
+151
+00:00:00,000 --> 00:00:00,000
+Now if you use floating point, you divide 0.0 divided by 0.0, you get the special value, not a number.
+
+152
+00:00:00,000 --> 00:00:00,000
+So our function average here does the same thing the square root function does when it's passed an invalid input.
+
+153
+00:00:00,000 --> 00:00:00,000
+Really, if you think about it, if we pass an empty vector here, what we're doing is violating the precondition for the average function.
+
+154
+00:00:00,000 --> 00:00:00,000
+You can't compute the average of an empty vector.
+
+155
+00:00:00,000 --> 00:00:00,000
+You can also call the built-in standard not a number function, NAN, and pass an additional message if you want that would display as an error message.
+
+156
+00:00:00,000 --> 00:00:00,000
+So if we didn't have an error, if we check the preconditions, and again I'm not throwing exceptions in this case,
+
+157
+00:00:00,000 --> 00:00:00,000
+I'm just doing the same thing most numeric functions do,
+
+158
+00:00:00,000 --> 00:00:00,000
+I used the range-based for loop whenever you can.
+
+159
+00:00:00,000 --> 00:00:00,000
+Range-based for loops just make the code much simpler.
+
+160
+00:00:00,000 --> 00:00:00,000
+And now I can safely return sum divided by len because I know that len is at least one in this case.
+
+161
+00:00:00,000 --> 00:00:00,000
+Now, imagine that we want to write a print function for vector.
+
+162
+00:00:00,000 --> 00:00:00,000
+So I'm going to call it just print, I'm not going to return anything.
+
+163
+00:00:00,000 --> 00:00:00,000
+I'm going to pass in the stream I'm going to print through so we can print a vector to a file or a string stream or whatever.
+
+164
+00:00:00,000 --> 00:00:00,000
+And of course my argument is going to be a const vector.
+
+165
+00:00:00,000 --> 00:00:00,000
+That would not be too hard to write, but the problem is it wouldn't work for other vector types.
+
+166
+00:00:00,000 --> 00:00:00,000
+I have this perfect print function that prints my vector of double just like I want,
+
+167
+00:00:00,000 --> 00:00:00,000
+and I have to duplicate the code for vectors of shorts or vectors of ints.
+
+168
+00:00:00,000 --> 00:00:00,000
+So to work for vectors of any type, what you do is you use templates.
+
+169
+00:00:00,000 --> 00:00:00,000
+So the template definition goes in the header file.
+
+170
+00:00:00,000 --> 00:00:00,000
+You have to remember to fully qualify all library types with standard.
+
+171
+00:00:00,000 --> 00:00:00,000
+So you cannot simply put using namespace standard.
+
+172
+00:00:00,000 --> 00:00:00,000
+And so that template would look like this.
+
+173
+00:00:00,000 --> 00:00:00,000
+Template type name any type or type name T.
+
+174
+00:00:00,000 --> 00:00:00,000
+Void print standard ostream ref, fully qualified it, and const standard vector any type ref V.
+
+175
+00:00:00,000 --> 00:00:00,000
+So we're going to do that in exercise C, vprint.cpp and vprint.h.
+
+176
+00:00:00,000 --> 00:00:00,000
+So let's put away B and let's go take a look at C.
+
+177
+00:00:00,000 --> 00:00:00,000
+So vprint.h is where we're going to put our function.
+
+178
+00:00:00,000 --> 00:00:00,000
+vprint.cpp is only going to have our name inside there.
+
+179
+00:00:00,000 --> 00:00:00,000
+So I'm going to go ahead and take this comment that I've put inside here.
+
+180
+00:00:00,000 --> 00:00:00,000
+I'm going to move it over to my header file.
+
+181
+00:00:00,000 --> 00:00:00,000
+And I'm going to write my generic print function here.
+
+182
+00:00:00,000 --> 00:00:00,000
+So template type name T or any name you want for T.
+
+183
+00:00:00,000 --> 00:00:00,000
+Void print standard ostream ref out and const standard vector T, not vector double, vector T ref back.
+
+184
+00:00:00,000 --> 00:00:00,000
+Okay, now we want the output to look like this.
+
+185
+00:00:00,000 --> 00:00:00,000
+Notice there's no space before the one.
+
+186
+00:00:00,000 --> 00:00:00,000
+There is a comma and a space before the other items.
+
+187
+00:00:00,000 --> 00:00:00,000
+There's no space after the four.
+
+188
+00:00:00,000 --> 00:00:00,000
+And we have brackets after it.
+
+189
+00:00:00,000 --> 00:00:00,000
+This algorithm is called the fence post algorithm.
+
+190
+00:00:00,000 --> 00:00:00,000
+It's one of those algorithms you should memorize until it becomes second nature.
+
+191
+00:00:00,000 --> 00:00:00,000
+So we're going to print to out the opening bracket.
+
+192
+00:00:00,000 --> 00:00:00,000
+Then if vec size is greater than zero, we're going to print the stuff inside it.
+
+193
+00:00:00,000 --> 00:00:00,000
+At the end, we're going to print to out and put the closing bracket.
+
+194
+00:00:00,000 --> 00:00:00,000
+These are called the delimiters.
+
+195
+00:00:00,000 --> 00:00:00,000
+Okay, so if vector size is greater than zero, we're going to do out vec at zero or vec sub zero.
+
+196
+00:00:00,000 --> 00:00:00,000
+If you like, that's perfectly fine.
+
+197
+00:00:00,000 --> 00:00:00,000
+You know it's there. It's safe.
+
+198
+00:00:00,000 --> 00:00:00,000
+And then we're going to do for size T i equals.
+
+199
+00:00:00,000 --> 00:00:00,000
+Make sure you don't do zero here.
+
+200
+00:00:00,000 --> 00:00:00,000
+If you do zero, you repeat the first element.
+
+201
+00:00:00,000 --> 00:00:00,000
+One, len equals vec size.
+
+202
+00:00:00,000 --> 00:00:00,000
+I less than len plus plus i.
+
+203
+00:00:00,000 --> 00:00:00,000
+And so each one of the remaining elements, we want a comma space.
+
+204
+00:00:00,000 --> 00:00:00,000
+And then we want vec at i.
+
+205
+00:00:00,000 --> 00:00:00,000
+Again, we won't put a new line on this print function.
+
+206
+00:00:00,000 --> 00:00:00,000
+So here is our template function that will work for any kind of vector as long as we can print the elements.
+
+207
+00:00:00,000 --> 00:00:00,000
+If we have an overloaded operator for a user defined type, that will work perfectly fine.
+
+208
+00:00:00,000 --> 00:00:00,000
+So this is a generic print function for any vector.
+
+209
+00:00:00,000 --> 00:00:00,000
+Let's try it out. Let's go ahead and get a terminal there.
+
+210
+00:00:00,000 --> 00:00:00,000
+And then let's do make. Make sure syntax is correct.
+
+211
+00:00:00,000 --> 00:00:00,000
+And make test.
+
+212
+00:00:00,000 --> 00:00:00,000
+So there's v1. v1 is the one we created in the last exercise.
+
+213
+00:00:00,000 --> 00:00:00,000
+And v2, v3, v4.
+
+214
+00:00:00,000 --> 00:00:00,000
+And all of those are printing correctly.
+
+215
+00:00:00,000 --> 00:00:00,000
+Now there's no formatting on the numbers, so we're not seeing that this is a float and this is a double and so forth.
+
+216
+00:00:00,000 --> 00:00:00,000
+All right. Pretty impressive.
+
+217
+00:00:00,000 --> 00:00:00,000
+So let's look now at operators and vectors.
+
+218
+00:00:00,000 --> 00:00:00,000
+Okay. So vector doesn't define an output operator.
+
+219
+00:00:00,000 --> 00:00:00,000
+We just wrote the print function to print, but it would be nice to do it with an overloaded output operator.
+
+220
+00:00:00,000 --> 00:00:00,000
+And again, we want it to work with any vector type, so we're going to use a template.
+
+221
+00:00:00,000 --> 00:00:00,000
+So really the only difference between print is we're changing the name of it to operator arrow arrow.
+
+222
+00:00:00,000 --> 00:00:00,000
+Now remember a template is not a function.
+
+223
+00:00:00,000 --> 00:00:00,000
+Instead it generates a function when it's called.
+
+224
+00:00:00,000 --> 00:00:00,000
+And again, we should place this in a header file.
+
+225
+00:00:00,000 --> 00:00:00,000
+So we're going to do d.
+
+226
+00:00:00,000 --> 00:00:00,000
+Leave c open if you've already got it open.
+
+227
+00:00:00,000 --> 00:00:00,000
+Because we're going to use exactly the same code.
+
+228
+00:00:00,000 --> 00:00:00,000
+So I've got print open here.
+
+229
+00:00:00,000 --> 00:00:00,000
+I'm going to go open d.
+
+230
+00:00:00,000 --> 00:00:00,000
+And in vecout.cpp, I'm going to put my name on it.
+
+231
+00:00:00,000 --> 00:00:00,000
+That's all I'm going to put in vecout.cpp.
+
+232
+00:00:00,000 --> 00:00:00,000
+And in vecout.h, what I'm going to do is come over to vprint.h.
+
+233
+00:00:00,000 --> 00:00:00,000
+I'm going to copy this code I had inside here.
+
+234
+00:00:00,000 --> 00:00:00,000
+And I'm going to make two changes to it.
+
+235
+00:00:00,000 --> 00:00:00,000
+I'm going to make two changes to it.
+
+236
+00:00:00,000 --> 00:00:00,000
+First I'm going to change the name.
+
+237
+00:00:00,000 --> 00:00:00,000
+Three changes to it.
+
+238
+00:00:00,000 --> 00:00:00,000
+So I'm going to change it to operator.
+
+239
+00:00:00,000 --> 00:00:00,000
+I'm going to change the return type to standard ostream ref.
+
+240
+00:00:00,000 --> 00:00:00,000
+And I'm going to return out at the end of this.
+
+241
+00:00:00,000 --> 00:00:00,000
+Now again, this only works if we know how to print vector objects.
+
+242
+00:00:00,000 --> 00:00:00,000
+And if we look at cars.h here,
+
+243
+00:00:00,000 --> 00:00:00,000
+notice that we already have the output operator.
+
+244
+00:00:00,000 --> 00:00:00,000
+We wrote that in our first exercise today.
+
+245
+00:00:00,000 --> 00:00:00,000
+So let's open up a shell on D.
+
+246
+00:00:00,000 --> 00:00:00,000
+And let's do make on that.
+
+247
+00:00:00,000 --> 00:00:00,000
+And then do make test.
+
+248
+00:00:00,000 --> 00:00:00,000
+And okay, so almost the same code.
+
+249
+00:00:00,000 --> 00:00:00,000
+Oh yeah, it's perfect.
+
+250
+00:00:00,000 --> 00:00:00,000
+Yeah, 100% of those pass.
+
+251
+00:00:00,000 --> 00:00:00,000
+100% of them pass.
+
+252
+00:00:00,000 --> 00:00:00,000
+So C and D were very, very similar using templates to process a vector of a built-in type
+
+253
+00:00:00,000 --> 00:00:00,000
+and then a vector of a user-defined type.
+
+254
+00:00:00,000 --> 00:00:00,000
+We didn't have to change the code almost at all.
+
+255
+00:00:00,000 --> 00:00:00,000
+The first one was print.
+
+256
+00:00:00,000 --> 00:00:00,000
+And the second one, what we did is turned it into an overloaded operator.
+
+257
+00:00:00,000 --> 00:00:00,000
+With that, we had to make three changes.
+
+258
+00:00:00,000 --> 00:00:00,000
+Now, there are several common algorithms that you should memorize.
+
+259
+00:00:00,000 --> 00:00:00,000
+You should know about counting for a selection.
+
+260
+00:00:00,000 --> 00:00:00,000
+Count how many vowels are in this string.
+
+261
+00:00:00,000 --> 00:00:00,000
+Count how many positive numbers are in this array.
+
+262
+00:00:00,000 --> 00:00:00,000
+Count how many cars get more than 35 miles per gallon.
+
+263
+00:00:00,000 --> 00:00:00,000
+Accumulation is adding things up.
+
+264
+00:00:00,000 --> 00:00:00,000
+So and averaging, of course, and standard deviation, all of those,
+
+265
+00:00:00,000 --> 00:00:00,000
+those are called cumulative algorithms.
+
+266
+00:00:00,000 --> 00:00:00,000
+You should know about how to find the extreme values,
+
+267
+00:00:00,000 --> 00:00:00,000
+how to find the largest and smallest, how to process adjacent elements.
+
+268
+00:00:00,000 --> 00:00:00,000
+So the algorithm we just did was a form of adjacent elements.
+
+269
+00:00:00,000 --> 00:00:00,000
+Look at the one in front of it, look at the one behind it, that sort of thing,
+
+270
+00:00:00,000 --> 00:00:00,000
+and how to add separators, which we just did with the fence post algorithm.
+
+271
+00:00:00,000 --> 00:00:00,000
+Now, different loops are best for different kinds of algorithms.
+
+272
+00:00:00,000 --> 00:00:00,000
+If you need to visit every element, there's no reason to use a counter-controlled loop.
+
+273
+00:00:00,000 --> 00:00:00,000
+Use a range-for loop. It's much faster, it's easier.
+
+274
+00:00:00,000 --> 00:00:00,000
+If you need to keep track of the position, however, then use a traditional for loop.
+
+275
+00:00:00,000 --> 00:00:00,000
+Don't use a range loop and add an additional counter for it.
+
+276
+00:00:00,000 --> 00:00:00,000
+The traditional for loop is ideal for that.
+
+277
+00:00:00,000 --> 00:00:00,000
+If you need to move or sort or shuffle items, you can't do that with a range loop.
+
+278
+00:00:00,000 --> 00:00:00,000
+Use a traditional for loop.
+
+279
+00:00:00,000 --> 00:00:00,000
+And if you need to grow or shrink the elements in an array, use an iterator or a while loop.
+
+280
+00:00:00,000 --> 00:00:00,000
+Now, alternatively, you can more and more just skip using loops altogether.
+
+281
+00:00:00,000 --> 00:00:00,000
+I can hear those of you who hate loops thinking, "Yay!"
+
+282
+00:00:00,000 --> 00:00:00,000
+How do you do that? You use the standard library algorithms.
+
+283
+00:00:00,000 --> 00:00:00,000
+This is part of the standard template library, which was included in the standardization of C++ in C++98.
+
+284
+00:00:00,000 --> 00:00:00,000
+So, let's look at counting elements.
+
+285
+00:00:00,000 --> 00:00:00,000
+To count elements which match a condition, first you create a counter for each type you want to count.
+
+286
+00:00:00,000 --> 00:00:00,000
+So, don't use the regular loop counter.
+
+287
+00:00:00,000 --> 00:00:00,000
+Create a separate counter that represents the data that you're collecting as you visit each of these items.
+
+288
+00:00:00,000 --> 00:00:00,000
+You may have more than one counter.
+
+289
+00:00:00,000 --> 00:00:00,000
+I may want to count the number of cats and dogs I have in an array of pet objects.
+
+290
+00:00:00,000 --> 00:00:00,000
+Then write a loop that processes every element.
+
+291
+00:00:00,000 --> 00:00:00,000
+And then, if the element matches the condition, count it and update the counter variable that you have for that.
+
+292
+00:00:00,000 --> 00:00:00,000
+So, we're going to do our first exercise like that, which is divisible by n.
+
+293
+00:00:00,000 --> 00:00:00,000
+So, we're going to pass a vector n.
+
+294
+00:00:00,000 --> 00:00:00,000
+n is the number we're going to do, and we're going to get the numbers that are divisible by n.
+
+295
+00:00:00,000 --> 00:00:00,000
+So, write a loop that processes every element.
+
+296
+00:00:00,000 --> 00:00:00,000
+What does that sound like?
+
+297
+00:00:00,000 --> 00:00:00,000
+The range for loop.
+
+298
+00:00:00,000 --> 00:00:00,000
+Okay, let's look at that.
+
+299
+00:00:00,000 --> 00:00:00,000
+That's in D.
+
+300
+00:00:00,000 --> 00:00:00,000
+No, that's in E.
+
+301
+00:00:00,000 --> 00:00:00,000
+So, let's put our name on it, S. Gilbert.
+
+302
+00:00:00,000 --> 00:00:00,000
+So, we will write, we're going to count, so we're going to get an int back.
+
+303
+00:00:00,000 --> 00:00:00,000
+Divisible by, and we want a vector of, it doesn't tell what type it is, but I'm assuming it's a vector of int.
+
+304
+00:00:00,000 --> 00:00:00,000
+Oh, actually in the instructions it probably does.
+
+305
+00:00:00,000 --> 00:00:00,000
+Then the vector int v, which are evenly divisible by n.
+
+306
+00:00:00,000 --> 00:00:00,000
+Okay, now remember when we pass arguments, the library types are never passed by value.
+
+307
+00:00:00,000 --> 00:00:00,000
+So, this is a const vector int reference v.
+
+308
+00:00:00,000 --> 00:00:00,000
+And then int n.
+
+309
+00:00:00,000 --> 00:00:00,000
+So, we want the numbers that are evenly divisible by n.
+
+310
+00:00:00,000 --> 00:00:00,000
+So, we're going to go for int e n n.
+
+311
+00:00:00,000 --> 00:00:00,000
+Now, I frequently will do auto e, just so I don't have to remember what type it is.
+
+312
+00:00:00,000 --> 00:00:00,000
+So, for n, also then if I decide, oh I want it to work with a vector of double, I can change it.
+
+313
+00:00:00,000 --> 00:00:00,000
+I don't need to change my code.
+
+314
+00:00:00,000 --> 00:00:00,000
+But I'll put int here for right now.
+
+315
+00:00:00,000 --> 00:00:00,000
+For int e in n, so that visits every element.
+
+316
+00:00:00,000 --> 00:00:00,000
+If e remainder 2, no if e remainder n equals 0.
+
+317
+00:00:00,000 --> 00:00:00,000
+If e divided by n has no remainder, then we're going to count it.
+
+318
+00:00:00,000 --> 00:00:00,000
+And let me first create my counter.
+
+319
+00:00:00,000 --> 00:00:00,000
+So, int divisible.
+
+320
+00:00:00,000 --> 00:00:00,000
+And so, we'd say divisible plus plus.
+
+321
+00:00:00,000 --> 00:00:00,000
+Of course, we could use any name for this.
+
+322
+00:00:00,000 --> 00:00:00,000
+So, that's the basic counting algorithm.
+
+323
+00:00:00,000 --> 00:00:00,000
+Let's open that in a terminal.
+
+324
+00:00:00,000 --> 00:00:00,000
+Let's do make.
+
+325
+00:00:00,000 --> 00:00:00,000
+No, it didn't work.
+
+326
+00:00:00,000 --> 00:00:00,000
+For e in n, that of course is wrong.
+
+327
+00:00:00,000 --> 00:00:00,000
+So, I need to say for each element v in v, my vector.
+
+328
+00:00:00,000 --> 00:00:00,000
+Even if e remainder n, I think that's the only error I have there.
+
+329
+00:00:00,000 --> 00:00:00,000
+Make, good.
+
+330
+00:00:00,000 --> 00:00:00,000
+And make test.
+
+331
+00:00:00,000 --> 00:00:00,000
+Good.
+
+332
+00:00:00,000 --> 00:00:00,000
+So, in this vector there are 3 that are divisible by 10.
+
+333
+00:00:00,000 --> 00:00:00,000
+In this vector there are 5 that are divisible by 2.
+
+334
+00:00:00,000 --> 00:00:00,000
+In this vector there are 6 that are divisible by 2.
+
+335
+00:00:00,000 --> 00:00:00,000
+In this vector there are none that are divisible by 5.
+
+336
+00:00:00,000 --> 00:00:00,000
+In this vector there's one that's divisible by 9.
+
+337
+00:00:00,000 --> 00:00:00,000
+And when you run it, you'll get a different randomized vector in your case.
+
+338
+00:00:00,000 --> 00:00:00,000
+Alright, let's throw that terminal away.
+
+339
+00:00:00,000 --> 00:00:00,000
+And let's go talk about how we would do this with the standard library.
+
+340
+00:00:00,000 --> 00:00:00,000
+So, the standard library already includes this algorithm.
+
+341
+00:00:00,000 --> 00:00:00,000
+As I mentioned, this is part of the standard template library, or the STL.
+
+342
+00:00:00,000 --> 00:00:00,000
+The STL has containers, the vector is part of the STL, the deck, the list, the map, the set, and so forth.
+
+343
+00:00:00,000 --> 00:00:00,000
+And it contains iterators.
+
+344
+00:00:00,000 --> 00:00:00,000
+So, it contains algorithms, containers, and iterators.
+
+345
+00:00:00,000 --> 00:00:00,000
+Iterators allow you to access any container type.
+
+346
+00:00:00,000 --> 00:00:00,000
+But you have to know about iterators to use the algorithms.
+
+347
+00:00:00,000 --> 00:00:00,000
+So, let me explain what an iterator is.
+
+348
+00:00:00,000 --> 00:00:00,000
+Different containers store data in different ways.
+
+349
+00:00:00,000 --> 00:00:00,000
+So, a vector has elements right next to each other.
+
+350
+00:00:00,000 --> 00:00:00,000
+They're contiguous in memory.
+
+351
+00:00:00,000 --> 00:00:00,000
+A list stores elements like this.
+
+352
+00:00:00,000 --> 00:00:00,000
+So, both vector and list are sequential containers.
+
+353
+00:00:00,000 --> 00:00:00,000
+But with the list, you'll notice the elements are not next to each other.
+
+354
+00:00:00,000 --> 00:00:00,000
+Thus, they are not indexed.
+
+355
+00:00:00,000 --> 00:00:00,000
+They are any random place in memory with pointers connecting each one.
+
+356
+00:00:00,000 --> 00:00:00,000
+So, again, this is sequential.
+
+357
+00:00:00,000 --> 00:00:00,000
+We start at the beginning, and we go through this maze until we get to the end.
+
+358
+00:00:00,000 --> 00:00:00,000
+This is sequential.
+
+359
+00:00:00,000 --> 00:00:00,000
+So, we start at the beginning, we go through this maze at the end.
+
+360
+00:00:00,000 --> 00:00:00,000
+So, iterators are objects which ignore the physical order
+
+361
+00:00:00,000 --> 00:00:00,000
+and allow us to select elements from any kind of container.
+
+362
+00:00:00,000 --> 00:00:00,000
+They're kind of like the claw in an arcade game like this.
+
+363
+00:00:00,000 --> 00:00:00,000
+Now, we can use iterators with sequential containers instead of indexes.
+
+364
+00:00:00,000 --> 00:00:00,000
+And we can use iterators with lists instead of pointers.
+
+365
+00:00:00,000 --> 00:00:00,000
+And so, that means we can write a function, an algorithm,
+
+366
+00:00:00,000 --> 00:00:00,000
+that works and counts no matter what kind of container I pass it to.
+
+367
+00:00:00,000 --> 00:00:00,000
+So, how do you get the elements?
+
+368
+00:00:00,000 --> 00:00:00,000
+Well, you move the claw to the first element, beginC,
+
+369
+00:00:00,000 --> 00:00:00,000
+calling beginC, where C is the container object that you want to position your claw over.
+
+370
+00:00:00,000 --> 00:00:00,000
+And so, you'd write that code as auto iterator equals begin list.
+
+371
+00:00:00,000 --> 00:00:00,000
+Now, we could actually not use auto here,
+
+372
+00:00:00,000 --> 00:00:00,000
+but it's actually relatively complex, the declaration for that.
+
+373
+00:00:00,000 --> 00:00:00,000
+You'll learn about it in 250 if you take 250.
+
+374
+00:00:00,000 --> 00:00:00,000
+Now, we're positioned over this first little space creature.
+
+375
+00:00:00,000 --> 00:00:00,000
+We want to move it to the second space creature.
+
+376
+00:00:00,000 --> 00:00:00,000
+How do we do that?
+
+377
+00:00:00,000 --> 00:00:00,000
+We use the increment operator, use prefix on this.
+
+378
+00:00:00,000 --> 00:00:00,000
+So, we move to the next element, and now we're positioned on the next one.
+
+379
+00:00:00,000 --> 00:00:00,000
+How do you know when to stop?
+
+380
+00:00:00,000 --> 00:00:00,000
+Well, you stop when you reach endC.
+
+381
+00:00:00,000 --> 00:00:00,000
+Now, endC is not the last element in the collection.
+
+382
+00:00:00,000 --> 00:00:00,000
+It's one past the last collection.
+
+383
+00:00:00,000 --> 00:00:00,000
+So, you can say while iterator not equal to endC.
+
+384
+00:00:00,000 --> 00:00:00,000
+Now, generally, we don't use that with numeric arrays.
+
+385
+00:00:00,000 --> 00:00:00,000
+We'd use less than, right, less than size.
+
+386
+00:00:00,000 --> 00:00:00,000
+But with iterators, you always use not equals.
+
+387
+00:00:00,000 --> 00:00:00,000
+Now, that's for moving the claw through the collection.
+
+388
+00:00:00,000 --> 00:00:00,000
+How do we pick up an item?
+
+389
+00:00:00,000 --> 00:00:00,000
+Well, we pick up an item by dereferencing it.
+
+390
+00:00:00,000 --> 00:00:00,000
+Dereferencing it simply uses the same symbol we've used for multiplication,
+
+391
+00:00:00,000 --> 00:00:00,000
+but as a unary operator in front of an iterator.
+
+392
+00:00:00,000 --> 00:00:00,000
+We'll also use this operator, the dereferencing operator, in front of pointers
+
+393
+00:00:00,000 --> 00:00:00,000
+when we get to that.
+
+394
+00:00:00,000 --> 00:00:00,000
+So, this picks up the item and puts it in the variable value here.
+
+395
+00:00:00,000 --> 00:00:00,000
+So, we're going to write the same function we just wrote, divisible by,
+
+396
+00:00:00,000 --> 00:00:00,000
+but instead of using a loop, we'll use iterators.
+
+397
+00:00:00,000 --> 00:00:00,000
+Instead of using a for each loop, we'll use iterators to do that.
+
+398
+00:00:00,000 --> 00:00:00,000
+Okay, so let's close counting in E and let's go to F
+
+399
+00:00:00,000 --> 00:00:00,000
+and put our name on top of it.
+
+400
+00:00:00,000 --> 00:00:00,000
+Okay, so this time we're writing it using an iterator loop.
+
+401
+00:00:00,000 --> 00:00:00,000
+I've already written the header here.
+
+402
+00:00:00,000 --> 00:00:00,000
+So, what we want to do is we want to create a counter.
+
+403
+00:00:00,000 --> 00:00:00,000
+So, int divisible equals zero and return divisible.
+
+404
+00:00:00,000 --> 00:00:00,000
+So, that's the skeleton for the structure of the stub.
+
+405
+00:00:00,000 --> 00:00:00,000
+Now, we want to loop through using an iterator.
+
+406
+00:00:00,000 --> 00:00:00,000
+So, for auto iter equals begin v,
+
+407
+00:00:00,000 --> 00:00:00,000
+iter not equal to end v, plus plus iter.
+
+408
+00:00:00,000 --> 00:00:00,000
+So, again, we're not doing an index, we're moving this little claw.
+
+409
+00:00:00,000 --> 00:00:00,000
+Now, the element is star iter, right?
+
+410
+00:00:00,000 --> 00:00:00,000
+That's how we pick up the item.
+
+411
+00:00:00,000 --> 00:00:00,000
+So, if star iter divide by n equals zero,
+
+412
+00:00:00,000 --> 00:00:00,000
+or star iter remainder n equals zero,
+
+413
+00:00:00,000 --> 00:00:00,000
+then divisible plus plus.
+
+414
+00:00:00,000 --> 00:00:00,000
+So, this is an iterator loop.
+
+415
+00:00:00,000 --> 00:00:00,000
+By the way, the for each loop just writes an iterator loop behind the scenes.
+
+416
+00:00:00,000 --> 00:00:00,000
+This is writing an iterator loop manually showing the code.
+
+417
+00:00:00,000 --> 00:00:00,000
+So, let's test that. Let's open a terminal.
+
+418
+00:00:00,000 --> 00:00:00,000
+Let's do make test.
+
+419
+00:00:00,000 --> 00:00:00,000
+And this one still works just as well.
+
+420
+00:00:00,000 --> 00:00:00,000
+So, there's one seven, one eight, no tens, two fours, and so forth in these arrays.
+
+421
+00:00:00,000 --> 00:00:00,000
+And again, these are randomly generated, so you'll have different values there.
+
+422
+00:00:00,000 --> 00:00:00,000
+So, here is our iterator based version of divisible by.
+
+423
+00:00:00,000 --> 00:00:00,000
+Now, most of you are probably thinking, "Oh, great, another way to do exactly the same thing."
+
+424
+00:00:00,000 --> 00:00:00,000
+That's not actually very useful.
+
+425
+00:00:00,000 --> 00:00:00,000
+Actually, I'm going to talk about that in a second.
+
+426
+00:00:00,000 --> 00:00:00,000
+Let me talk about constant iterators first.
+
+427
+00:00:00,000 --> 00:00:00,000
+Iterators permit you to change the items they refer to.
+
+428
+00:00:00,000 --> 00:00:00,000
+A constant iterator, i.e., vector const iterator, does not.
+
+429
+00:00:00,000 --> 00:00:00,000
+Begin will return a const iterator when the container is const, and a regular iterator when it is not.
+
+430
+00:00:00,000 --> 00:00:00,000
+Now, beginning in C++14, you can actually use cbegin and cend to explicitly state that your iterator won't change the items.
+
+431
+00:00:00,000 --> 00:00:00,000
+So, you can use that when you don't want the container elements changed,
+
+432
+00:00:00,000 --> 00:00:00,000
+although, generally, I have to say, most of the time, just using begin and end is perfectly fine.
+
+433
+00:00:00,000 --> 00:00:00,000
+Okay, now let me talk about algorithms.
+
+434
+00:00:00,000 --> 00:00:00,000
+The STL has a collection, or several collections, of pre-built algorithms.
+
+435
+00:00:00,000 --> 00:00:00,000
+So, there's a collection in the header algorithm, there's another collection in the header iterator,
+
+436
+00:00:00,000 --> 00:00:00,000
+there's a collection of numeric algorithms in the header numeric.
+
+437
+00:00:00,000 --> 00:00:00,000
+And so, here is how we would use the count algorithm from the library.
+
+438
+00:00:00,000 --> 00:00:00,000
+We'd create a vector v, and we'd count from begin v to end v, or in this case, we could use cbegin v and cend v.
+
+439
+00:00:00,000 --> 00:00:00,000
+It wouldn't make any difference for 3.
+
+440
+00:00:00,000 --> 00:00:00,000
+And that would tell us the number of 3's that are inside there, and we would not have to write a loop at all.
+
+441
+00:00:00,000 --> 00:00:00,000
+Now, how do we write, though, and how do we call the count function when what we want to count for is a condition?
+
+442
+00:00:00,000 --> 00:00:00,000
+Well, first, you have to write a function that represents that condition.
+
+443
+00:00:00,000 --> 00:00:00,000
+This is called a predicate function.
+
+444
+00:00:00,000 --> 00:00:00,000
+A predicate function is a function that returns true or false.
+
+445
+00:00:00,000 --> 00:00:00,000
+So, isEven takes the integer n and returns n remainder 2 equals 0.
+
+446
+00:00:00,000 --> 00:00:00,000
+Now, and then, once you've written the function, you would pass the name of the function instead of 3 or 4
+
+447
+00:00:00,000 --> 00:00:00,000
+to the function called countIf.
+
+448
+00:00:00,000 --> 00:00:00,000
+You don't pass it to count, this is a separate function.
+
+449
+00:00:00,000 --> 00:00:00,000
+So, countIf beginC endC is even, and that would return you the number of even values.
+
+450
+00:00:00,000 --> 00:00:00,000
+Now, that's not quite what we want to do, though.
+
+451
+00:00:00,000 --> 00:00:00,000
+We don't want to check to see if it's even.
+
+452
+00:00:00,000 --> 00:00:00,000
+We want to pass in a value for this 2 right here.
+
+453
+00:00:00,000 --> 00:00:00,000
+We want to pass in a value for that 2.
+
+454
+00:00:00,000 --> 00:00:00,000
+So, that requires us to use an anonymous function rather than a predicate function like this.
+
+455
+00:00:00,000 --> 00:00:00,000
+This anonymous function is called a lambda.
+
+456
+00:00:00,000 --> 00:00:00,000
+A lambda starts with a set of square brackets like this.
+
+457
+00:00:00,000 --> 00:00:00,000
+The argument list, just like we'd have in isEven, and the comparison here.
+
+458
+00:00:00,000 --> 00:00:00,000
+So, this countIf does the same thing as this countIf, but doesn't require you to create a separate isEven function.
+
+459
+00:00:00,000 --> 00:00:00,000
+We've just written the function right inside the argument list.
+
+460
+00:00:00,000 --> 00:00:00,000
+This function does not have a name like isEven.
+
+461
+00:00:00,000 --> 00:00:00,000
+Now, suppose we want to write our divisible by function using countIf.
+
+462
+00:00:00,000 --> 00:00:00,000
+Well, I could countIf e remainder 2 equals 0, but how do I countIf e remainder n equals 0?
+
+463
+00:00:00,000 --> 00:00:00,000
+Well, I do that by capturing here in the square brackets any additional variables I want to use in the body of this function.
+
+464
+00:00:00,000 --> 00:00:00,000
+So, I'm going to show you how to do it.
+
+465
+00:00:00,000 --> 00:00:00,000
+We're not going to do this a lot in this class, but I just want to introduce you to it.
+
+466
+00:00:00,000 --> 00:00:00,000
+So, you can get a picture of the fact that you can write C++ code without really using a lot of loops.
+
+467
+00:00:00,000 --> 00:00:00,000
+So, we're going to write for our next exercise divisible by using an algorithm instead.
+
+468
+00:00:00,000 --> 00:00:00,000
+And then you'll have three different versions of this in E, F, and G of the same function using it three different ways.
+
+469
+00:00:00,000 --> 00:00:00,000
+So, this is S Gilbert.
+
+470
+00:00:00,000 --> 00:00:00,000
+So, here I'm not going to create a counter. I'm not going to do anything.
+
+471
+00:00:00,000 --> 00:00:00,000
+I'm just going to return countIf beginV.
+
+472
+00:00:00,000 --> 00:00:00,000
+Or you can actually write this.
+
+473
+00:00:00,000 --> 00:00:00,000
+There is a member as well, so I can write v begin if you want.
+
+474
+00:00:00,000 --> 00:00:00,000
+I actually like beginV and endV instead.
+
+475
+00:00:00,000 --> 00:00:00,000
+And then on the next line I'm going to put this beginning of the lambda expression.
+
+476
+00:00:00,000 --> 00:00:00,000
+And inside that I'm going to put what I want to capture.
+
+477
+00:00:00,000 --> 00:00:00,000
+So, I'm going to capture the variable n.
+
+478
+00:00:00,000 --> 00:00:00,000
+And this function is going to take one argument.
+
+479
+00:00:00,000 --> 00:00:00,000
+So, I'll call it the element in E for each element.
+
+480
+00:00:00,000 --> 00:00:00,000
+Inside the body of this I'm going to say return E remainder n equals zero.
+
+481
+00:00:00,000 --> 00:00:00,000
+So, notice this function is just an argument inside that function.
+
+482
+00:00:00,000 --> 00:00:00,000
+Now we need to end the function here.
+
+483
+00:00:00,000 --> 00:00:00,000
+So, you might find this less readable.
+
+484
+00:00:00,000 --> 00:00:00,000
+But it actually makes your code much simpler.
+
+485
+00:00:00,000 --> 00:00:00,000
+Notice we don't have any loops inside here at all.
+
+486
+00:00:00,000 --> 00:00:00,000
+Okay, let's try that out with g.
+
+487
+00:00:00,000 --> 00:00:00,000
+Let's do make.
+
+488
+00:00:00,000 --> 00:00:00,000
+Make test.
+
+489
+00:00:00,000 --> 00:00:00,000
+Notice it still works exactly the same.
+
+490
+00:00:00,000 --> 00:00:00,000
+But the code is somewhat simpler.
+
+491
+00:00:00,000 --> 00:00:00,000
+And you don't have to format that.
+
+492
+00:00:00,000 --> 00:00:00,000
+You can format it just like you would a regular function.
+
+493
+00:00:00,000 --> 00:00:00,000
+And then put that over there.
+
+494
+00:00:00,000 --> 00:00:00,000
+So, you can make your functions easy to read in other words.
+
+495
+00:00:00,000 --> 00:00:00,000
+Easy to read.
+
+496
+00:00:00,000 --> 00:00:00,000
+So, this is called a lambda or an anonymous function that can be passed around as an argument.
+
+497
+00:00:00,000 --> 00:00:00,000
+It can also be stored in a variable.
+
+498
+00:00:00,000 --> 00:00:00,000
+So, we can use vectors to return a collection of items.
+
+499
+00:00:00,000 --> 00:00:00,000
+Suppose we have a vector with duplicates.
+
+500
+00:00:00,000 --> 00:00:00,000
+And I want to write a function that removes all of the duplicates or only keeps the unique names.
+
+501
+00:00:00,000 --> 00:00:00,000
+So, I'll write a function named unique.
+
+502
+00:00:00,000 --> 00:00:00,000
+The returns of a new vector with only the unique values.
+
+503
+00:00:00,000 --> 00:00:00,000
+So, here's the unique algorithm.
+
+504
+00:00:00,000 --> 00:00:00,000
+We're going to create an empty vector result.
+
+505
+00:00:00,000 --> 00:00:00,000
+We're going to visit each element in the input vector.
+
+506
+00:00:00,000 --> 00:00:00,000
+Then we're going to check to see if that element is in the result.
+
+507
+00:00:00,000 --> 00:00:00,000
+If it's not, we're going to add it.
+
+508
+00:00:00,000 --> 00:00:00,000
+And then we're going to return the result.
+
+509
+00:00:00,000 --> 00:00:00,000
+Now, this algorithm is relatively slow because we aren't assuming the vector is sorted.
+
+510
+00:00:00,000 --> 00:00:00,000
+If the vectors are sorted, it would actually be relatively fast to do it if the vector was sorted.
+
+511
+00:00:00,000 --> 00:00:00,000
+Okay, so let's write unique using loops.
+
+512
+00:00:00,000 --> 00:00:00,000
+So, let me open that up.
+
+513
+00:00:00,000 --> 00:00:00,000
+Close counting.
+
+514
+00:00:00,000 --> 00:00:00,000
+Close these bash shells here.
+
+515
+00:00:00,000 --> 00:00:00,000
+Okay, so this one now is going to return a vector.
+
+516
+00:00:00,000 --> 00:00:00,000
+So, vector int unique const vector int ref v.
+
+517
+00:00:00,000 --> 00:00:00,000
+So, here's my result.
+
+518
+00:00:00,000 --> 00:00:00,000
+Vector int result.
+
+519
+00:00:00,000 --> 00:00:00,000
+And, of course, I'm going to return the result.
+
+520
+00:00:00,000 --> 00:00:00,000
+Okay, so I have a stub, something that would compile, and something I could test.
+
+521
+00:00:00,000 --> 00:00:00,000
+Now, we want to visit each element in that.
+
+522
+00:00:00,000 --> 00:00:00,000
+So, I'm going to say for auto e1 in v.
+
+523
+00:00:00,000 --> 00:00:00,000
+Now, I want to see if it is inside result.
+
+524
+00:00:00,000 --> 00:00:00,000
+So, found equals false.
+
+525
+00:00:00,000 --> 00:00:00,000
+I'll say add.
+
+526
+00:00:00,000 --> 00:00:00,000
+Bool add.
+
+527
+00:00:00,000 --> 00:00:00,000
+Bool add equals true.
+
+528
+00:00:00,000 --> 00:00:00,000
+For auto e2 in result.
+
+529
+00:00:00,000 --> 00:00:00,000
+If e1 equals e2, then it has already been seen.
+
+530
+00:00:00,000 --> 00:00:00,000
+It's a duplicate.
+
+531
+00:00:00,000 --> 00:00:00,000
+And, add equals false.
+
+532
+00:00:00,000 --> 00:00:00,000
+And, actually, once we know the answer, once we know it's a duplicate, let's just break out of that loop.
+
+533
+00:00:00,000 --> 00:00:00,000
+Make it a little bit easier.
+
+534
+00:00:00,000 --> 00:00:00,000
+Then, after the inner loop, now remember what we're doing.
+
+535
+00:00:00,000 --> 00:00:00,000
+I just created an empty vector result.
+
+536
+00:00:00,000 --> 00:00:00,000
+Visited each element in the input vector.
+
+537
+00:00:00,000 --> 00:00:00,000
+Now, I'm looking to see if it's not in the result, then I'm going to add it.
+
+538
+00:00:00,000 --> 00:00:00,000
+Okay, not in the result, then I'm going to add it.
+
+539
+00:00:00,000 --> 00:00:00,000
+So, how do I add it?
+
+540
+00:00:00,000 --> 00:00:00,000
+I say, if add, result pushback e1.
+
+541
+00:00:00,000 --> 00:00:00,000
+So, this is creating a new vector, going through and seeing if it's in the result.
+
+542
+00:00:00,000 --> 00:00:00,000
+Okay, let's try a shell on that one.
+
+543
+00:00:00,000 --> 00:00:00,000
+And, let's do make test.
+
+544
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+545
+00:00:00,000 --> 00:00:00,000
+So, here's my original vector, here's the unique ones inside that.
+
+546
+00:00:00,000 --> 00:00:00,000
+Here's my original vector, here's the unique ones inside that.
+
+547
+00:00:00,000 --> 00:00:00,000
+Here's my original vector, here's my original vector, original vector, original vector, and the unique ones inside each case.
+
+548
+00:00:00,000 --> 00:00:00,000
+And, you can see, like this one has two fives there, skip the five, it has two fours, one four there.
+
+549
+00:00:00,000 --> 00:00:00,000
+Alright, so one last thing we're going to look at today
+
+550
+00:00:00,000 --> 00:00:00,000
+is how do I insert and delete items, or how do I insert and erase items.
+
+551
+00:00:00,000 --> 00:00:00,000
+So, if you insert something into a vector, the vector has to expand.
+
+552
+00:00:00,000 --> 00:00:00,000
+So, if I want to put six where this three was, I have to move the items to the right and add the six inside it.
+
+553
+00:00:00,000 --> 00:00:00,000
+And, the vector gets larger by one.
+
+554
+00:00:00,000 --> 00:00:00,000
+Now, to do this, to call these functions insert or erase, you have to use iterators.
+
+555
+00:00:00,000 --> 00:00:00,000
+Indexes don't work.
+
+556
+00:00:00,000 --> 00:00:00,000
+However, iterators have an interesting property.
+
+557
+00:00:00,000 --> 00:00:00,000
+If you add a number to an iterator, you essentially get the iterator that would represent the index.
+
+558
+00:00:00,000 --> 00:00:00,000
+So, when I say v_begin, I'm representing, it's pointing to v at zero.
+
+559
+00:00:00,000 --> 00:00:00,000
+v_end is pointing to the element that would be at v_size, which of course is beyond the end of the vector.
+
+560
+00:00:00,000 --> 00:00:00,000
+If I take v_begin, or begin v, and I add one to it, however, I'm no longer pointing at the element zero, I'm pointing at the element one.
+
+561
+00:00:00,000 --> 00:00:00,000
+If I take v_end and I subtract one to it, I'm pointing at the last item.
+
+562
+00:00:00,000 --> 00:00:00,000
+Now, there's one other complication you need to think about when you're inserting and deleting.
+
+563
+00:00:00,000 --> 00:00:00,000
+That complication is the size of the vector changes,
+
+564
+00:00:00,000 --> 00:00:00,000
+and any iterators that were already pointing to things are invalidated.
+
+565
+00:00:00,000 --> 00:00:00,000
+So, as you can imagine, if I had an iterator that was pointing to this three, and I inserted the six,
+
+566
+00:00:00,000 --> 00:00:00,000
+now it would be pointing to the six instead of pointing to the three, so it would be invalidated.
+
+567
+00:00:00,000 --> 00:00:00,000
+So, often students will try this.
+
+568
+00:00:00,000 --> 00:00:00,000
+This is trying to erase all elements.
+
+569
+00:00:00,000 --> 00:00:00,000
+So, we're going to see if cppShell opens here.
+
+570
+00:00:00,000 --> 00:00:00,000
+It did. It opened in another browser I have, so I'm going to bring it over here.
+
+571
+00:00:00,000 --> 00:00:00,000
+So, here I have, here's my print function that we wrote earlier today.
+
+572
+00:00:00,000 --> 00:00:00,000
+And so here I have an array with one, two, three, four, five, six, seven.
+
+573
+00:00:00,000 --> 00:00:00,000
+And I'm going through the array with a counter-controlled loop,
+
+574
+00:00:00,000 --> 00:00:00,000
+and at each element I'm trying to erase the item in it.
+
+575
+00:00:00,000 --> 00:00:00,000
+Now, the intention of this programmer was to erase every item.
+
+576
+00:00:00,000 --> 00:00:00,000
+That's not what happens.
+
+577
+00:00:00,000 --> 00:00:00,000
+And you'll see if you run this, that we have seven items.
+
+578
+00:00:00,000 --> 00:00:00,000
+We try and erase the first item, and it does in fact go away.
+
+579
+00:00:00,000 --> 00:00:00,000
+We have that.
+
+580
+00:00:00,000 --> 00:00:00,000
+And then we try and erase the item at position one, because our index has gone forward here.
+
+581
+00:00:00,000 --> 00:00:00,000
+And so, notice we skip over the two, because our index is now pointing to this three.
+
+582
+00:00:00,000 --> 00:00:00,000
+And so we delete the three, then we delete that, and so we end with these three elements left in the array.
+
+583
+00:00:00,000 --> 00:00:00,000
+Not really what we intended to do.
+
+584
+00:00:00,000 --> 00:00:00,000
+Oops.
+
+585
+00:00:00,000 --> 00:00:00,000
+So you have to remember, when you erase something, the items kind of under your feet are going to change.
+
+586
+00:00:00,000 --> 00:00:00,000
+So we're writing one last exercise here.
+
+587
+00:00:00,000 --> 00:00:00,000
+This is a modified version of Unique.
+
+588
+00:00:00,000 --> 00:00:00,000
+It's going to remove all the elements from the existing vector v.
+
+589
+00:00:00,000 --> 00:00:00,000
+And I'm going to give you a little bit more practice, or show you a little bit more about using iterators instead of loops.
+
+590
+00:00:00,000 --> 00:00:00,000
+So let's use Unique.
+
+591
+00:00:00,000 --> 00:00:00,000
+Put our canvas ID on it.
+
+592
+00:00:00,000 --> 00:00:00,000
+Okay, so this is going to return the number of duplicates removed.
+
+593
+00:00:00,000 --> 00:00:00,000
+So int.
+
+594
+00:00:00,000 --> 00:00:00,000
+Again, is not required to be sorted.
+
+595
+00:00:00,000 --> 00:00:00,000
+We're going to keep the last, not the first element that we find.
+
+596
+00:00:00,000 --> 00:00:00,000
+Of course, that will determine how the output is sorted.
+
+597
+00:00:00,000 --> 00:00:00,000
+It's called Unique.
+
+598
+00:00:00,000 --> 00:00:00,000
+It's a vector.
+
+599
+00:00:00,000 --> 00:00:00,000
+Oh, it's not a constant vector. It's a vector.
+
+600
+00:00:00,000 --> 00:00:00,000
+Int.
+
+601
+00:00:00,000 --> 00:00:00,000
+And it's changed.
+
+602
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+603
+00:00:00,000 --> 00:00:00,000
+So first we want the number of dupes.
+
+604
+00:00:00,000 --> 00:00:00,000
+So int dupes equals zero.
+
+605
+00:00:00,000 --> 00:00:00,000
+And we're going to return the dupes.
+
+606
+00:00:00,000 --> 00:00:00,000
+Now we don't create a separate vector.
+
+607
+00:00:00,000 --> 00:00:00,000
+What we're simply going to do is we're going to use an iterator to look at each item.
+
+608
+00:00:00,000 --> 00:00:00,000
+And the easiest way to do this for erasing is to use a while loop.
+
+609
+00:00:00,000 --> 00:00:00,000
+So we'll say auto iter equals begin vec.
+
+610
+00:00:00,000 --> 00:00:00,000
+And we'll say while iter is not equal to end vec.
+
+611
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+612
+00:00:00,000 --> 00:00:00,000
+So now I have to see if -- so I'm looking at the first item.
+
+613
+00:00:00,000 --> 00:00:00,000
+Does that item appear anywhere else?
+
+614
+00:00:00,000 --> 00:00:00,000
+So the pseudocode.
+
+615
+00:00:00,000 --> 00:00:00,000
+Yes, erase it.
+
+616
+00:00:00,000 --> 00:00:00,000
+No.
+
+617
+00:00:00,000 --> 00:00:00,000
+Look at the next -- look at the next element.
+
+618
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+619
+00:00:00,000 --> 00:00:00,000
+So that's my pseudocode.
+
+620
+00:00:00,000 --> 00:00:00,000
+So I need to say for auto -- I'm going to call this iter two.
+
+621
+00:00:00,000 --> 00:00:00,000
+Auto iter two equals iter plus one.
+
+622
+00:00:00,000 --> 00:00:00,000
+Iter two not equal to end vec.
+
+623
+00:00:00,000 --> 00:00:00,000
+Iter two plus plus.
+
+624
+00:00:00,000 --> 00:00:00,000
+If star iter equals star iter two.
+
+625
+00:00:00,000 --> 00:00:00,000
+That means I found it.
+
+626
+00:00:00,000 --> 00:00:00,000
+So I'm going to erase it.
+
+627
+00:00:00,000 --> 00:00:00,000
+I'm actually just going to set found and break.
+
+628
+00:00:00,000 --> 00:00:00,000
+So bool.
+
+629
+00:00:00,000 --> 00:00:00,000
+And let's not even have a break in it.
+
+630
+00:00:00,000 --> 00:00:00,000
+Let's just put that condition here.
+
+631
+00:00:00,000 --> 00:00:00,000
+Not found.
+
+632
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+633
+00:00:00,000 --> 00:00:00,000
+So this was -- does the current item appear elsewhere?
+
+634
+00:00:00,000 --> 00:00:00,000
+Yes.
+
+635
+00:00:00,000 --> 00:00:00,000
+If found, then erase the item.
+
+636
+00:00:00,000 --> 00:00:00,000
+Now v vec erase that iterator.
+
+637
+00:00:00,000 --> 00:00:00,000
+Else iter plus plus.
+
+638
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+639
+00:00:00,000 --> 00:00:00,000
+Or plus plus iter.
+
+640
+00:00:00,000 --> 00:00:00,000
+We kind of don't want to use -- we don't want to use the negative one on that.
+
+641
+00:00:00,000 --> 00:00:00,000
+So notice that this iterator is looking, starting at the next one after it.
+
+642
+00:00:00,000 --> 00:00:00,000
+It's looking to see if it's found inside of that.
+
+643
+00:00:00,000 --> 00:00:00,000
+If it finds it in the else one, it deletes the current one.
+
+644
+00:00:00,000 --> 00:00:00,000
+It deletes the current one.
+
+645
+00:00:00,000 --> 00:00:00,000
+Otherwise it leaves it there and it goes to the next one.
+
+646
+00:00:00,000 --> 00:00:00,000
+It goes to the next one.
+
+647
+00:00:00,000 --> 00:00:00,000
+And actually, this invalidates the iterator, so we should write it like this.
+
+648
+00:00:00,000 --> 00:00:00,000
+And that gets back what that new iterator is pointing at.
+
+649
+00:00:00,000 --> 00:00:00,000
+Okay. Let's see if we got it here.
+
+650
+00:00:00,000 --> 00:00:00,000
+And let's open up a shell on this.
+
+651
+00:00:00,000 --> 00:00:00,000
+Let's bring that up.
+
+652
+00:00:00,000 --> 00:00:00,000
+Let's kill the first one.
+
+653
+00:00:00,000 --> 00:00:00,000
+Let's do make.
+
+654
+00:00:00,000 --> 00:00:00,000
+Make test.
+
+655
+00:00:00,000 --> 00:00:00,000
+Okay. It didn't work.
+
+656
+00:00:00,000 --> 00:00:00,000
+Oh. You know what I forgot to do is -- so I'm getting the correct outputs.
+
+657
+00:00:00,000 --> 00:00:00,000
+V after works.
+
+658
+00:00:00,000 --> 00:00:00,000
+So I got plus plus plus.
+
+659
+00:00:00,000 --> 00:00:00,000
+I got 50% of the points.
+
+660
+00:00:00,000 --> 00:00:00,000
+But every time I find it, when I found it, I want to say dupes plus plus to count the number of duplicates there.
+
+661
+00:00:00,000 --> 00:00:00,000
+Okay. There's 100%.
+
+662
+00:00:00,000 --> 00:00:00,000
+So before we had this, I remove five of them, and after I have that.
+
+663
+00:00:00,000 --> 00:00:00,000
+So notice seven appears last, even though -- if I kept the first one, it would be 57261.
+
+664
+00:00:00,000 --> 00:00:00,000
+57261.
+
+665
+00:00:00,000 --> 00:00:00,000
+Because I'm keeping the last one, it's 52167.
+
+666
+00:00:00,000 --> 00:00:00,000
+All right. So that's it for lecture 16.
+
+667
+00:00:00,000 --> 00:00:00,000
+When you come back, we will look at memory and pointers.
+
+668
+00:00:00,000 --> 00:00:00,000
+I'll see you then.
+

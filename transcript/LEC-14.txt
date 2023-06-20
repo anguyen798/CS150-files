@@ -1,0 +1,895 @@
+Hello again everyone, this is Steve Gilbert.
+Welcome to Lecture 14, where we're going to talk
+about exceptions and templates.
+So in Lecture 13, we talked about assumptions.
+Assumptions are things that you believe should be true.
+So when you write a function, you assume certain things
+about the inputs.
+When you write a function, you assume certain things
+about the output.
+We call those preconditions and postconditions.
+So a precondition is something that's true about the inputs,
+and a postcondition is something that should
+be true about the outputs.
+Now, when we write these preconditions
+and postconditions, we use some doxygen tags
+to document them so that people who call your function
+know what to expect.
+So for instance, for the square root function,
+they should know that n should be greater or equal to 0.
+In other words, if you pass a negative number to square root,
+you are not going to get the expected output.
+The postcondition and the @return tags
+are going to tell you what you should expect to return.
+So you can use @return and @post kind of interchangeably
+to talk about the return value.
+You'd use things like @exception.
+Now, you can use @post to tell what
+should happen if the precondition is violated.
+So what is @post for square root?
+Well, @post for square root is it
+will return not a number in that case
+if you violate the precondition.
+So we have five things we can do with a precondition violation.
+First, we could try and fix it.
+So think again about square root.
+If you were writing the square root function,
+you might decide if you get a negative number,
+you'll just return 0 in that case.
+Now, that would fix the problem of getting not a number, which
+is what they actually do in the square root function.
+But it wouldn't really return the right answer.
+In other words, you'd be giving it the wrong answer.
+The square root of minus 1 is not 0.
+And so we generally don't want to do that.
+Although, when you're first programming,
+frequently you're taught to think about what
+will happen if this happens.
+So let's make sure that it doesn't crash and so forth.
+But we really don't want to do that.
+Secondly, we can terminate with an error message.
+So just stop the program when the error occurs
+and stop.
+Now, sometimes we want to do that,
+and sometimes we don't want to do that.
+For instance, we certainly wouldn't
+want to do that if someone types in the wrong URL
+in your web browser.
+You wouldn't want to terminate and say, sorry,
+Chrome's decided you've typed in the wrong URL.
+We're not going to send you to that page.
+But sometimes that's the right thing to do.
+If your program discovers an error that's
+going to propagate further and further and further
+inside your code-- in other words,
+if one of the preconditions is violated,
+the program continuing to run is not really a good idea.
+And so if the problem is caused by a mistake
+that you have made in your programming-- in other words,
+something that you logically believe should be true--
+you do want to terminate.
+And I'll talk about how you do that in a second.
+Thirdly, we could return an error code.
+And that's kind of what square root does.
+Square root returns a non-valid number
+if its precondition is violated.
+It returns a special number called not a number.
+You could throw an exception, which allows the programmer
+to catch it.
+Now, you can't do anything about what square root returns.
+But if a function throws an exception, like s2i,
+you could actually catch it.
+Or finally, we could ignore the problem altogether
+and just hope for the best.
+So we obviously don't want to ignore it.
+We generally don't want to fix it silently,
+unless the fix is just immaterial,
+like for something in the user interface that
+wouldn't be that big a deal.
+So that leaves us with these three--
+terminate with an error message, return an error code,
+throw an exception.
+So as I mentioned in the last lecture,
+if you have a programming error, we
+want to use a statement called assert, which terminates
+and tells you what line the error occurred on.
+So for instance, if I'm writing a function sum
+between lower and upper, any time
+that function is called with a lower that
+is greater than upper, I have an error that won't make sense.
+Now, if I returned 0 from that-- in other words,
+if I kind of fixed it silently, or I wrote my algorithm
+so the function returns 0 when lower was greater than upper--
+I really have a programming error.
+And I haven't found that error.
+In other words, I'm calling the function
+when lower is greater than upper.
+And I really kind of didn't want that to happen.
+So you might decide, this logically can never happen.
+If I call the function with lower greater than upper,
+I've made a mistake.
+And so I would like the program to automatically stop
+when that occurs and tell me, Steve,
+you've made a mistake on line 42 in foo.cpp.
+And so that's what the assert statement does.
+It allows you to put in statements
+that enforce the logic that you're
+trying to put inside your code.
+Commercial code is literally littered with assertions.
+One of the nice things about assertions
+is that when you're developing the code,
+you can put them in, check your bugs,
+when you're testing it and running it.
+And then when you ship your code, you can remove them.
+So you're not having the overhead of the if statements
+that the assert statement generates.
+All right, so let's talk about the other kinds of errors,
+though--
+errors that are not caused by you, the programmer,
+errors caused by exceptional but anticipated circumstances.
+If you live in the Arctic and you live in an igloo,
+you should expect that at some time
+you're going to see a polar bear at your front door.
+You should anticipate that.
+It's exceptional.
+That's not the normal.
+But you should anticipate it.
+What kind of things can we anticipate when programming?
+Well, is the user ever going to type in a file name
+incorrectly?
+Sure.
+Is the disk ever going to be full when
+you're saving a file?
+Sure.
+Now, those kinds of errors, we could just
+return an error code.
+But the problem with an error code
+is the user or the programmer has to check the error code.
+These are a little more serious.
+If the disk is full when saving a file,
+you simply can't go on.
+You'll lose data.
+If the user types a file name incorrectly,
+the program simply won't work.
+And so an exception is for something
+that you want to handle and you want to force yourself
+to handle, or you want to force programmers
+using your class to handle.
+This should be handled by throwing an exception.
+So you all know how functions work.
+Functions take inputs, they process the inputs,
+and they produce an output.
+They return that output.
+But actually, functions have a second way of returning.
+So you can think of the return the normal channel,
+but the exception is a back channel.
+So we can say, if the program normally works--
+and let's use the function called s2i.
+s2i takes a string and returns an integer,
+just like our parseInt function we're going to write today does.
+So we're going to write a version of s2i.
+And if I pass--
+that stands for string to integer.
+If I pass the string that contains the character 1,
+it will convert that string to an integer and return 1.
+If I pass a string that contains the word 1, the English word
+1, instead of returning the integer,
+it returns via this back channel called throwing an exception.
+And that exception is thrown to the function that handled it.
+Actually, it's thrown not necessarily
+to the function that called it, like the return statement is,
+the statement that called it.
+It's thrown to the nearest exception handler.
+So an exception handler is a special kind
+of block of code that we'll look at shortly.
+Now, in C++, the throwing an exception looks like this.
+If I detected an error condition,
+just throw some object.
+Now, again, this is similar to a return statement
+from inside a function, but it doesn't
+return to the calling function, but to an error handler.
+If there is no error handler, then it
+will keep bubbling up to the very main function
+where it'll find a default handler.
+And that default handler will terminate the program,
+and it will look almost exactly like an assertion.
+Look almost exactly like an assertion.
+OK, so you might have seen these in Java.
+You may have had to handle them in Java.
+And in Java, in C++, any kind of object
+may be thrown as an exception.
+Now, Java has a whole class hierarchy
+of exceptions that are rooted in the class called throwable.
+Throwable has two subclasses, error and exception.
+In C++, we could throw an integer
+if we wanted to catch different kinds of error codes.
+So you could catch int, and then you
+could check to see if it's 1, do this.
+If it's 2, do that.
+If it's 3, do that, and so forth.
+You could throw a C++ string.
+Notice the little s after the double quotes.
+We could throw a C string as well.
+That would be a different kinds of things.
+So we could throw a C++ string.
+We could throw one of the standard library exception
+classes.
+So this is similar to Java with its throwable, runtime
+exception, index out of bounds exception, and so forth.
+We could throw an illegal argument
+and construct an illegal argument object
+and say that the illegal argument was A.
+Now, the standard library includes, just like Java,
+a variety of exception classes.
+If you want to include those, you have to include a header.
+They're not automatically included, just
+like everything in C++.
+And the most common ones are things like domain error,
+the parameters outside the valid range, invalid argument,
+the argument was invalid for some reason, or out of range.
+The argument's not in expected range.
+So that's how we throw.
+That's how we signal from our function
+that an error has occurred.
+If we're calling the function, how do we
+intercept and handle that?
+And so to intercept and handle exceptions,
+we do almost the same thing you would do in Java and Python.
+Python has try, except, I think.
+Java has try, catch.
+So you place the code that can fail inside a try block.
+So we're going to call the function parseInt.
+We're going to pass it a string.
+That string may contain the digit 1,
+but it may also contain the word 1.
+And if it contains the word 1, rather than setting x
+to a value at all, what we'll do is we'll throw an exception.
+And any statements that follow this parseInt
+will be jumped over until we get to a catch block.
+So the catch block has to say what kind of exception
+it's going to throw.
+Now, this exception, we're going to decide what it throws.
+So you catch a specific type of exception.
+You always want to catch it by reference.
+So in this case, if we say the argument was invalid
+and we're catching that, we'd say catch invalid argument ref
+e.
+And then it would jump.
+If it failed, it would not do the next statement.
+It would jump from there to this invalid argument.
+Let me close Zoom.
+Keeps popping up, saying it wants me to log in.
+It would jump from this parseInt when it failed.
+It wouldn't assign anything to x.
+And it would jump down here to this catch,
+see if the exception that was thrown was this type.
+If it was, it would set the exception argument,
+and we would go into the exception altogether.
+So let's try a couple of those exercises,
+just so you get a feel for try-catch.
+So these are on part A of our exercises.
+There's an empty try-catch block here,
+which will do the catching.
+But it's up to us to redesign the code to make use of it.
+Now, there's an imaginary roster of students,
+which we'll pretend is dynamic, but for the purpose
+of this exercise, is hard-coded.
+You'll find the names in the source code.
+And the roster's implemented as an unordered map.
+You haven't learned how to use that,
+but you really don't need to know how to use it for that.
+When running the program, you're asked to enter a name.
+After doing so, it will use the map
+to print out the age of that student.
+Unfortunately, if the user enters
+a name that's not on the roster, it
+is not on the roster, an exception is thrown,
+which we don't handle, and the program just terminates.
+So we're going to do two modifications to this.
+We're going to catch the exception so that it can least
+exit gracefully, and write out a nice error telling the user
+that the name they entered doesn't exist.
+We're going to print the actual name they entered back at them.
+So let's do this first exercise.
+So here's our unordered map.
+So a map simply is a key, like the name here, and the age.
+So this is mapping a student's names to their ages.
+So this code is in a bit of a sorry state.
+If we enter a name inside here, and the name
+is Fred, which is not on our list, it will, when we do this,
+this line, student name at, will throw an exception.
+Will throw an exception.
+And so this is the try catch that we want to use.
+That's the necessary syntax.
+So we are going to throw an error.
+We're going to put this code.
+So that part's going to be outside.
+We're going to write try.
+And then I'm going to take this line-- actually,
+let me just copy this part out.
+So it gave us the syntax here.
+I'm just going to bring the catch here.
+And we're going to catch if it's out of range.
+And let me fix that.
+And we're going to say, C error, sorry, comma, name
+was not there.
+I don't know if that's the correct error message.
+OK, so notice the code that may fail
+is placed inside our try block.
+This code cannot fail.
+This code cannot fail.
+It's placed inside a try block.
+So let's try it.
+And I left out a set of arrows there.
+So I had a syntax error.
+Oops, and I put the arrows in the wrong place.
+Still had a syntax error.
+I left off a semicolon.
+I'm all thumbs today.
+OK, enter a name, John.
+John is 16 years old.
+OK, so yeah, so I didn't have-- so it was sorry, comma,
+Jake does not exist.
+So let's look at John.
+John is found, prints out its name,
+and then skips over the catch block.
+Catch block is never executed.
+Jake throws an exception here.
+We skip over the name is age years old.
+We jump from line 24 to line 27, and we print out,
+sorry, name does not exist.
+Same thing with Lawrence.
+Zoltan exists, so that works OK.
+So this is try, catch.
+Now let's do the second one.
+So we want to do it so that the program validates
+by using the try, catch.
+Doesn't just print out an error message,
+and it should do it continuously until they actually
+enter a valid name.
+So we don't have to do much difference here.
+What we're going to do is we're going
+to need to put all this code inside a do while block.
+A do while.
+So do, enter a name.
+Then we're going to put our try block.
+Try block.
+And we'll create a Boolean value.
+So that's going to have to be created
+before the do while loop.
+So Boole equals or done, false.
+If we succeed and don't throw an exception,
+we're going to set done equal to true.
+So now we're going to put in our catch block.
+And exactly the same code we had before.
+Here, sorry, name does not exist.
+And here's the end of our do.
+And here's the while.
+Not done.
+OK.
+So we're going to continue doing that while it's not done.
+We're going to enter in a name, print in the name.
+We're going to try it.
+If we try it and we succeed, if we get down to line 28,
+we're going to set done to true.
+This will fail and we'll be through.
+So let's try it.
+So enter name John.
+That worked fine.
+We just entered the name, set done to true.
+We hit our while loop and we're finished.
+Here we entered a name Jake.
+Nope.
+Sorry, name does not exist.
+It went up and it asked us to enter a name again.
+Now in this case, the code check doesn't
+show what it really looks like.
+So we would not enter Jake, Bill, and Paul.
+We'd enter Jake.
+It would say enter a name.
+We'd enter Bill here.
+Enter a name.
+We'd enter Paul.
+Paul's 31 years old.
+So notice this just repeats until it
+gives us the correct answer.
+It gives us the correct answer.
+OK, let's actually write some code now.
+And so go over and open.
+And open in IC14B, open int helper.h and int helper.cpp.
+I don't know why it's not letting me open both those.
+Maybe because I haven't added any code to it.
+Let me add code to that one and do the cpp.
+OK.
+OK, let's open a terminal on that.
+And then let me close that.
+OK, so these are the two functions we're going to write.
+So let's look at those.
+The first function, parseInt, is going
+to convert a string to an integer.
+So int n equals parseInt 42.
+If it can't succeed, it's going to throw an exception.
+The second function is going to read an int from the console.
+So this is int n equals readInt.
+Enter a number.
+The prompt is optional.
+And just like the last problem we did,
+it's going to keep prompting until integer values are
+entered.
+So we're going to start by documenting
+the functions in the header.
+Then we're going to have invalid input to parseInt
+by throwing an exception.
+And then we're going to validate our logic with assert.
+Now there's a little bit more information
+on this in the handout over here.
+So we're going to include the preconditions, postconditions,
+and exceptions.
+We're going to throw an invalid argument with an error message
+when parseInt fails.
+We use parseInt in an endless loop
+and try catch to implement readInt.
+And we'll use assert to check that we never
+reach the end of readInt.
+And I will just test this.
+I'll break out of my loop to make sure
+that the assertion works.
+Make sure that the assertion works.
+So let's document the function.
+And so parseInt-- we didn't put this in a namespace.
+We could have.
+So converts a string to an integer.
+At param s-- let me change that to str.
+I don't like just using single letter names.
+str is the string-- so str is the string to convert.
+Let's put in our precondition at pre.
+At pre, we'll contain valid digits, optional sign.
+Let's do minus 1, 2, 3 to give the optional sign there.
+So that tells us the precondition.
+That says what we assume is going
+to be true about parseInt at post or at return
+or at exception.
+Let's use at exception because that's a valid argument.
+If invalid argument, if str contains--
+contains invalid characters.
+And we might want to put more about what that possibly is.
+And at return, the integer result.
+So that's pretty good for the documentation.
+So readInt-- it's an integer from the console
+or standard input.
+At param prompt will be displayed
+if passed with a colon.
+OK, at return, and the post condition here
+is keeps prompting.
+So there's our documentation.
+There's our documentation.
+So let's take this.
+Let's go over to inhelper.cpp.
+Let's put your Canvas ID on it.
+Let's write the functions here.
+You can leave the docs inside here if you want.
+You don't have to.
+Let's put the body on it.
+Let's stub it.
+Let's return a value in each case.
+We're stubbing it, just making a skeleton.
+Let's go ahead and try it.
+OK, so number one, we made a syntax error.
+And that is when we have default arguments,
+you need to remove them in the implementation.
+Let's try it again.
+So parseInt is what's being tested here.
+parseInt is what's being tested here.
+So let's actually do something.
+And parseInt didn't work at all.
+So let's go over and look at how we get parseInt to work.
+So what we need to do for parseInt
+is we need a string stream.
+So we're going to take a input string stream.
+And we're going to initialize that with the parameter str.
+Then we're going to create an int n.
+And we're going to read into n.
+OK.
+Now, if n is not failed--
+and you can write that as if not n fail.
+So if not n fail, in other words, if n's still good.
+And n is at EOF, then we're simply going to return n.
+This simply means, did we consume everything
+inside that string?
+We're at end of file.
+That's true.
+This says, well, we didn't read any invalid characters.
+So if both of those are the case, that's true.
+Now, it's possible that someone could enter a string like this.
+So notice that the n will automatically
+skip this whitespace.
+But it will still stop right on this character.
+That means we're not at end of file.
+And so to fix that, we have to read the whitespace again.
+So in whitespace.
+And now we're just going to repeat this statement.
+Now, I'm sure this kind of bothers you.
+And it bothers me a lot, too.
+Because really what I'd like to do is do this.
+I'd like to read the input and the whitespace all
+in one statement.
+That works under the GCC library we're doing.
+It works on Unix.
+Again, the GCC library we're using.
+It works on Windows, the Windows libraries.
+It doesn't work on the Mac libraries.
+And actually, since we're not programming this in Mac,
+I'm just going to use it anyway.
+On the Mac libraries, unfortunately, it fails.
+So we're going to read the number.
+If there's any whitespace, we're going to read it.
+So this one's going to read OK.
+This one-- actually, let me comment that out.
+This one is going to throw an exception.
+That's what we want to happen.
+That should throw an exception.
+And so we're going to throw invalid argument.
+[TYPING]
+Or something else like that.
+Now, let's come down here to run.
+Let's comment out those first two.
+And let's just do make run.
+Make run.
+So I'm going to pull that right there.
+I'm going to clean that and do make run.
+Student testing 125.
+It works.
+Now, if we've done everything correctly,
+this one should throw an exception.
+So make run.
+Terminate after throwing an instance
+of standard invalid argument.
+5.2 is not an integer.
+15.2 is not an integer.
+So that's pretty cool, right?
+So this is the default handler when we didn't catch anything.
+In other words, we didn't put this in a try catch.
+If you don't put it in a try catch, it just terminates.
+So through an instance of standard invalid argument.
+Let's comment out that line again.
+And then let's go to our second one
+up here, which is read int.
+So for read int, we're going to prompt the display
+if it exists.
+So if not prompt empty.
+Or you can write it if prompt not equal to quote, quote.
+This is a little less efficient than-- because prompt empty.
+Prompt not equal to quote, quote has to first convert
+the quote, quote into a string.
+It has to use the relational operator
+to find if it's not equal.
+So prompt empty is just going to return true or false
+immediately.
+So that's probably a little better.
+But this probably is easier for people to understand.
+If the prompt is not empty, we're
+going to see out the prompt.
+And if prompt back is not equal to a space,
+and prompt back is not equal to a colon,
+let's just say a space.
+If that's not the case, then I'm going
+to print out a colon or space.
+In other words, I want to get the input away from the prompt.
+OK.
+Now let's convert the thing.
+So we're going to say return parsing.
+Oh, we need to read the value.
+So string value.
+Oh, we need to--
+yeah.
+Yeah, we're going to use parseInt.
+We're going to return parseInt.
+parseInt value.
+OK.
+So this is the basic structure.
+Let's come down here and uncomment these two lines.
+Let's do make run on it.
+OK.
+Enter a number.
+And notice how it added my colon.
+So notice my prompt is enter a number.
+It adds the colon in this space after it
+and puts my input there.
+I'll enter 245.
+And you enter 245.
+Now let me run it again.
+2.45.
+It threw an exception.
+So we want, if this value is bad,
+that's going to return-- that's going to throw an exception.
+So we're going to put this whole thing in an endless loop.
+File, true.
+So this will return out of the loop.
+Then we'll put this part.
+Enter inside a try.
+Catch.
+And I'm not going to print an error message.
+Oh, maybe I will.
+Maybe I'll print an error message.
+OK.
+I don't know if the testing actually wants this error
+message.
+OK.
+So this is like what we did in the code check exercise.
+So we have a do while or a while true.
+And if we can parse the value, we get out.
+If not, we print out, sorry, that's not an integer.
+And we go back and prompt for it again.
+So let's try that now with our run here.
+So make run.
+Enter a number, 1.
+Sorry, 1 is not an integer.
+Enter a number, 45.2.
+Sorry, 45.2 is not an integer.
+75.
+OK, and we entered 75.
+Now once we've done that, we can check the parse
+in here with the testing.
+So make test.
+So it works perfectly fine.
+So up here, you're going to--
+oh, we want to do one more thing.
+We want to break out of the loop to see
+that our assertion works.
+And we haven't put in an assertion.
+So an assertion is something that is impossible.
+So what's impossible?
+This loop is while true.
+It's impossible for me to get here.
+So I'm just going to say assert false.
+This is saying this is unreachable.
+That is unreachable.
+Now what I'm going to do is I'm going
+to make a mistake in my code.
+Remember, assertions are determined
+to catch mistakes in your code.
+I can say that my intention, my assumption,
+is that I should never, ever be able to get
+to this line of code.
+It's unreachable.
+It's unreachable.
+But what if I inadvertently say break?
+Like that.
+So this is a piece of error in my code now.
+And when I do-- let's do make run again.
+And when I do 1, if I do 42, it works fine.
+But if I do 1, it throws the exception.
+But also, I actually had an assertion.
+So I'd go look at line 55.
+When I looked at line 55, it would say,
+oh, this should be unreachable, or this is unreachable.
+And then I'd look back and try and find my error.
+I'd see, how did I possibly get to that code?
+And maybe I'd put it in the debugger or so forth.
+So I'm going to comment that out.
+So this is the kind of thing you want to put in your statement.
+Now, false normally would put some kind of condition.
+False just means, if you ever get to this line of code,
+throw the exception, or throw the assertion,
+trigger the assertion at that point.
+All right.
+So those were two good exercises to get you
+into throwing exceptions.
+The last topic we're going to talk about today
+is function templates.
+So look at this function.
+So I have a function smaller, takes two integers, a and b,
+and uses the conditional operator,
+return the smaller of a or b.
+So if a is less than b, it returns a.
+Otherwise, it returns b.
+Notice this, actually, the algorithm that she uses
+will return b if they're identical, not a.
+So perhaps it would have been better
+if you wanted to return a if it was the smaller.
+In other words, first or smaller would say a less than
+or equal to b, return a.
+What if we want this function, though,
+to work for something other than an integer?
+Will it work for a double?
+In other words, if we called smaller 1.5, 1.75, well,
+first it would truncate them, right?
+It wouldn't really work for other types.
+So if I wanted smaller of 3.5 and 7.5,
+I'd always get back an int here.
+If I wanted smaller of zebra and ant, it wouldn't work at all.
+So how would we fix that?
+How would we fix it?
+Well, option one is just write an overloaded function
+for each type.
+So here's a smaller for a for double,
+and here's a smaller for string.
+And then our main function on the previous page works.
+The downside, the disadvantage, is
+that you have to write a new version for each type you want.
+When the code in the body is exactly the same,
+both of them say return a less than b, a, b.
+So it's kind of redundant.
+That's where function templates come in.
+So a function template is a set of instructions
+that tell the compiler how to generate a function when
+it is called.
+The functions are only generated if they are called.
+If we write the template for smaller,
+and we pass in-- we don't call it with a string,
+it will never be generated from a string.
+So here's the template function.
+Notice first that every template function always
+starts with template, type name, and then
+some symbol you're going to use as a placeholder for your type.
+T is really common.
+U is really common.
+But you can use larger names or ones that are more descriptive
+if you want.
+So this says the function smaller
+is going to return a type of whatever type T is.
+And it's going to take two arguments, a const T ref for a
+and a const T ref for b.
+And notice the code in here is exactly the same.
+Now, templates have to be seen when your code compiles.
+For that reason, they're generally
+placed in a header file.
+They are not pre-compiled like a regular function.
+Now, there are two ways to call a template function.
+Or specifically, there are two ways
+to generate the function from the template.
+When you call it, you can explicitly specify
+the type to be used for T. So I could
+call that function with smaller.
+And then in angle brackets after the name, I could say string.
+So generate a smaller function that uses string for T,
+and then pass in frog and flea.
+Now, that will write-- when you call the function,
+it will write a version of smaller
+that has the T replaced with string here.
+So it will say string smaller.
+Const string ref a, const string ref b, return a less than b.
+It will write that function for you.
+So that is called a template function.
+This is a function template.
+The function that's generated is called a template function.
+Now, can you simply call it implicitly?
+Yes, you can.
+So if I call the function auto n equals smaller 3.46 and 3.45,
+it will, in fact, give me back 3.45.
+And that generates this function.
+Double, remember, replaces the T with double,
+replaces the a with double, the b with double.
+And actually, it will replace it with const double ref,
+const double ref b.
+The reason we do the const in the template
+is because we don't know what type T is going to be here.
+And so we use the const T ref in case it's a library type.
+It doesn't hurt it if it's a primitive type,
+although it's not as efficient as it could be.
+Now, a couple of problems with that.
+First, the compiler cannot read your mind.
+What if we said auto s equals smaller frog and flea?
+If we do this, the compiler is going
+to deduce type T as a character array instead of string.
+And the code actually will not work.
+So notice earlier-- so notice here
+I'm finding the smaller frog and flea, and it doesn't work.
+But here, I explicitly said, oh, I
+want to use string for that type.
+And it did work.
+So the compiler can't read your mind.
+The solution is to either explicitly instantiate it,
+or you can add an overload of the function.
+If you write an overloaded non-template function that
+exactly matches the arguments here,
+then this version will be used before the other version.
+OK.
+A couple more problems with deduction.
+What happens when we do this?
+Auto n equals smaller 3.46 and 4.
+Well, that doesn't even compile.
+T is supposed to be a double, like argument 1,
+or an n, like argument 2.
+And remember, let's look back at the template.
+We have only one type name here, but two arguments
+that are type T. So it's going to look at this one and say,
+oh, no, it's a double.
+Oh, no, it's an int.
+It doesn't compile.
+It doesn't compile.
+OK.
+So how do we fix that?
+Well, you don't have to make every argument the same type
+parameter.
+So let's say we have a double.
+We don't have to make every argument the same type
+parameter.
+So I could say template.
+I could create a type name named T, another type name named
+U. And in this case, when I called it here,
+A would be double, or T would be double, and U would be int.
+Now, which one will it return?
+Will it return an int or a double?
+This actually is a little bit problematic.
+The return type could be either T or U.
+Starting in C++ 17, we can put auto as the return type here,
+and it will allow compiler deduction.
+If you look in your reader, you'll
+see a version that will work with C++ 11 and 14.
+This is called a trailing return type.
+However, this function probably has
+to decide either return an int or a double in this case.
+Because in fact, what's going to happen
+is to see if A is less than B. And if A is an int
+and B is a double, your computer cannot actually compute this
+without knowing which of those is a larger.
+So the larger type will always be the type
+that's returned in that case.
+OK, let's do a couple of exercises
+before we end up this lecture and our hour together.
+So let me go back to our lecture exercise.
+And these are some function templates
+from Purdue University.
+So we're going to write one function, exchange AB, which
+has two parameters of the same type.
+So we only need one template parameter.
+A function which is instantiated from exchange
+will exchange or swap these two parameters.
+And then multiples, sum, x, and n.
+The first type of parameters will
+have the type represented by the function template type
+parameter kind, or T. n will always be int.
+The return type's void.
+All parameters are passed by value,
+except for sum, which is passed by reference.
+A function instantiated from multiples
+will compute 1 plus x plus 2x plus 3x and so forth to nx.
+So let's go ahead and do that, although I don't remember
+exactly how to solve that.
+OK, so here's the first one.
+We're going to exchange A and B. So for the templates,
+we're going to write template type name T.
+Looks like exchange doesn't return anything.
+And so that's going to be T reference A and T reference B.
+We'll create a temporary T object.
+So T temp.
+We'll initialize it with A. We'll say A equals B.
+We'll say B equals temp.
+And now we've exchanged the two values.
+OK, so notice we can do it with ints.
+We can do it with doubles.
+We can do it with strings.
+OK, so sum-- OK, so that is going to take template type
+name.
+They want kind for the type here,
+I think, just to show you that you can use--
+you don't need to use T. Void and kind reference sum.
+And kind-- what was the second argument in that?
+x, kind reference x, or kind x, test by value, and int n.
+OK, so sum, let's set it to whatever value represents 0,
+or the empty value.
+For instance, if we wanted to sum strings,
+do they do strings here?
+No, they only do it with numbers,
+because the expression is going to be 1 over.
+So we're going to say sum equals 0.
+Or is it?
+Let's look at the expression.
+So sum equals 1 plus x.
+And it'll be converted to whatever type it is.
+And then it's going to be x plus 2x plus 3x.
+So write a loop for int i equals 1, so 1x, i less than
+or equal to n, because we want nx, i plus plus,
+sum equals sum plus i times x.
+And I think that's all we'll have to do.
+Down here it works, you can see, with doubles.
+And it works with ints.
+OK, let's try it.
+OK, so that worked.
+Here's swapping two ints, here's swapping two doubles,
+here's swapping two strings.
+Here is doing multiples with doubles,
+here's doing multiples with integers.
+All righty then, I believe that's all for today.
+And so we will see you in the next lecture in lecture 15.

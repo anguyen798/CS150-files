@@ -1,0 +1,1428 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, this is Steve Gilbert. Welcome to lecture 7, More on Loops.
+
+2
+00:00:00,000 --> 00:00:00,000
+So we're going to continue with what we talked about on chapter 6, on lecture 6, where you were introduced to loops.
+
+3
+00:00:00,000 --> 00:00:00,000
+Now, many programmers think that writing loops correctly is a matter of luck or trial and error or magic.
+
+4
+00:00:00,000 --> 00:00:00,000
+It's like a holy grail. That is not actually the case. It's easy to consistently write loops that are correct, that work the first time.
+
+5
+00:00:00,000 --> 00:00:00,000
+You just have to learn how. Unless you're taught how to do it, you won't do it correctly. It's not natural.
+
+6
+00:00:00,000 --> 00:00:00,000
+Now I learned the technique that I'm going to teach you back in the 1980s when I first started programming.
+
+7
+00:00:00,000 --> 00:00:00,000
+This was developed by a professor at Berkeley named Doug Cooper, who wrote the book "O Pascal".
+
+8
+00:00:00,000 --> 00:00:00,000
+It's helped me as a programmer more than any other thing that I learned in school.
+
+9
+00:00:00,000 --> 00:00:00,000
+And I hope that you'll spend the time to kind of internalize these techniques and make them useful for you.
+
+10
+00:00:00,000 --> 00:00:00,000
+Now first, when we think about a loop, we need to think about two things.
+
+11
+00:00:00,000 --> 00:00:00,000
+Here's a simple problem specification that requires a loop.
+
+12
+00:00:00,000 --> 00:00:00,000
+I want you to count the number of characters in a sentence that ends with a period.
+
+13
+00:00:00,000 --> 00:00:00,000
+Count the number of characters in a sentence that ends with a period. Include the period in the count.
+
+14
+00:00:00,000 --> 00:00:00,000
+Now, the goal is what the loop is trying to accomplish. What work are we trying to produce?
+
+15
+00:00:00,000 --> 00:00:00,000
+What information are we trying to discover? Our goal here is to produce a count of the entire characters in a sentence.
+
+16
+00:00:00,000 --> 00:00:00,000
+How long is this sentence including the period at the end of it?
+
+17
+00:00:00,000 --> 00:00:00,000
+The bounds is what makes the loop stop. So this loop will stop when it encounters a period.
+
+18
+00:00:00,000 --> 00:00:00,000
+So when we found a period, we're done. We don't need the loop anymore.
+
+19
+00:00:00,000 --> 00:00:00,000
+And the plan is a set of steps needed to reach our goal.
+
+20
+00:00:00,000 --> 00:00:00,000
+So here's a plan. Let's read the first character. While the character is not a period, count the character.
+
+21
+00:00:00,000 --> 00:00:00,000
+Then read the next character.
+
+22
+00:00:00,000 --> 00:00:00,000
+Now, once you have the plan and the goal and the bounds, you need to think about where to put those parts in your loop.
+
+23
+00:00:00,000 --> 00:00:00,000
+So this is called the loop's topology. If you look at the loop on the right, you'll see four different sections.
+
+24
+00:00:00,000 --> 00:00:00,000
+There's something that happens before the loop. There's a loop test condition. There's a loop body.
+
+25
+00:00:00,000 --> 00:00:00,000
+And then there's something that happens after the loop. And we have some vocabulary for this as well.
+
+26
+00:00:00,000 --> 00:00:00,000
+The actions that occur before the loop, whether associated with the goal or the bounds, are called the loop's preconditions.
+
+27
+00:00:00,000 --> 00:00:00,000
+Stuff that happens before we encounter the loop.
+
+28
+00:00:00,000 --> 00:00:00,000
+The actions that control the loop, the test part, is called the loop's bounds. That's what stops the loop.
+
+29
+00:00:00,000 --> 00:00:00,000
+The actions that take place in the body are the operations of the loop.
+
+30
+00:00:00,000 --> 00:00:00,000
+That can include advancing the loop or updating the variables in the loop's goal.
+
+31
+00:00:00,000 --> 00:00:00,000
+And the actions that occur after the loop is over are called the loop's postcondition.
+
+32
+00:00:00,000 --> 00:00:00,000
+So let's look at how we'd put that to work.
+
+33
+00:00:00,000 --> 00:00:00,000
+First, we're going to look at the steps that are required to make the loop go around.
+
+34
+00:00:00,000 --> 00:00:00,000
+In this part, you want to think only about what makes the loop work, not that the work that the loop does.
+
+35
+00:00:00,000 --> 00:00:00,000
+So you're not thinking at all about whether you're counting or printing or anything like that.
+
+36
+00:00:00,000 --> 00:00:00,000
+Just what makes the loop work.
+
+37
+00:00:00,000 --> 00:00:00,000
+The first question you always have to ask, and the first piece of code you will always write, is the loop's bounds.
+
+38
+00:00:00,000 --> 00:00:00,000
+What makes the loop stop?
+
+39
+00:00:00,000 --> 00:00:00,000
+So in our case, if we're counting the letters in a period, we'd say "while letter is not a period."
+
+40
+00:00:00,000 --> 00:00:00,000
+Well, that's good. If I write that down in code, "while letter not equal to period," my code won't compile.
+
+41
+00:00:00,000 --> 00:00:00,000
+So that brings us to step two.
+
+42
+00:00:00,000 --> 00:00:00,000
+So the loop bounds is done in that second section.
+
+43
+00:00:00,000 --> 00:00:00,000
+So let me just go back to here. That's where the loop bounds is done.
+
+44
+00:00:00,000 --> 00:00:00,000
+The second part is figuring out what it takes to enter the loop.
+
+45
+00:00:00,000 --> 00:00:00,000
+What setup is needed to allow us to run this bounds condition?
+
+46
+00:00:00,000 --> 00:00:00,000
+This is called the bounds precondition.
+
+47
+00:00:00,000 --> 00:00:00,000
+So what setup is needed for this to be syntactically correct?
+
+48
+00:00:00,000 --> 00:00:00,000
+In our case, here's the string we're checking, str.
+
+49
+00:00:00,000 --> 00:00:00,000
+This is pseudocode. The little arrow means set string to the string to check.
+
+50
+00:00:00,000 --> 00:00:00,000
+Set letter to the first character in string.
+
+51
+00:00:00,000 --> 00:00:00,000
+And here's our bounds condition, "while the letter is not a period."
+
+52
+00:00:00,000 --> 00:00:00,000
+And so now if we translated that to C++ code, our program would compile and it would run.
+
+53
+00:00:00,000 --> 00:00:00,000
+But it would continue running forever.
+
+54
+00:00:00,000 --> 00:00:00,000
+As long as the first character was not a period, when we went back again, letter would still be the first character.
+
+55
+00:00:00,000 --> 00:00:00,000
+And so the third step in the mechanical part of getting your loop to work is advancing the loop.
+
+56
+00:00:00,000 --> 00:00:00,000
+Moving it from the setup or startup condition towards the bounds.
+
+57
+00:00:00,000 --> 00:00:00,000
+In our case, inside the body of the loop, we'd have to set the letter to the next character in string.
+
+58
+00:00:00,000 --> 00:00:00,000
+Whether we do that in a counter, whether we do it some other way, that's immaterial.
+
+59
+00:00:00,000 --> 00:00:00,000
+In the plan, all we need to do is make sure the letter is the next character in string.
+
+60
+00:00:00,000 --> 00:00:00,000
+Now we have a loop that runs, goes through the correct number of times,
+
+61
+00:00:00,000 --> 00:00:00,000
+and all we have to think about is, now what do I do for the work?
+
+62
+00:00:00,000 --> 00:00:00,000
+What do I do to reach my goal?
+
+63
+00:00:00,000 --> 00:00:00,000
+So part two, doing the work, is trying to reach our goal.
+
+64
+00:00:00,000 --> 00:00:00,000
+And the goal of every loop is to produce some information.
+
+65
+00:00:00,000 --> 00:00:00,000
+In our case, the goal of our loop is to produce the count of the characters in a sentence.
+
+66
+00:00:00,000 --> 00:00:00,000
+The count of the characters in a sentence.
+
+67
+00:00:00,000 --> 00:00:00,000
+So first, you go back to that top section, the precondition section,
+
+68
+00:00:00,000 --> 00:00:00,000
+and you create a variable to hold the answer.
+
+69
+00:00:00,000 --> 00:00:00,000
+This is called the goal precondition.
+
+70
+00:00:00,000 --> 00:00:00,000
+So here I'd come back up above those two variables I already created,
+
+71
+00:00:00,000 --> 00:00:00,000
+and I'd create another variable, count.
+
+72
+00:00:00,000 --> 00:00:00,000
+That'll be the result of the loop. That'll hold the answer.
+
+73
+00:00:00,000 --> 00:00:00,000
+Secondly, or fifth, step five actually,
+
+74
+00:00:00,000 --> 00:00:00,000
+what work do you need to do to update those variables?
+
+75
+00:00:00,000 --> 00:00:00,000
+This is the loop operation.
+
+76
+00:00:00,000 --> 00:00:00,000
+Well in our case, every time we get in the loop, before we go to the next character,
+
+77
+00:00:00,000 --> 00:00:00,000
+we need to update the goal.
+
+78
+00:00:00,000 --> 00:00:00,000
+We need to update the goal.
+
+79
+00:00:00,000 --> 00:00:00,000
+So do the work required to update the variables.
+
+80
+00:00:00,000 --> 00:00:00,000
+This is in the body, this is in the loop operation.
+
+81
+00:00:00,000 --> 00:00:00,000
+Now, the loop's finished, have we reached our goal?
+
+82
+00:00:00,000 --> 00:00:00,000
+You always have to answer that question after the loop is over.
+
+83
+00:00:00,000 --> 00:00:00,000
+You have always reached your bounds.
+
+84
+00:00:00,000 --> 00:00:00,000
+In other words, we have always encountered a period.
+
+85
+00:00:00,000 --> 00:00:00,000
+But, have we counted the period yet?
+
+86
+00:00:00,000 --> 00:00:00,000
+No, we haven't. So we haven't reached our goal,
+
+87
+00:00:00,000 --> 00:00:00,000
+we haven't counted the number of characters in a sentence, including the period.
+
+88
+00:00:00,000 --> 00:00:00,000
+And so after the loop is over, we'd have to count the period itself.
+
+89
+00:00:00,000 --> 00:00:00,000
+So make sure when you're writing these loops that you always ask yourself these six questions,
+
+90
+00:00:00,000 --> 00:00:00,000
+including the last one.
+
+91
+00:00:00,000 --> 00:00:00,000
+Have I reached my goal? Is the answer I have the correct answer?
+
+92
+00:00:00,000 --> 00:00:00,000
+Okay, so that's really short. There's more information in the text.
+
+93
+00:00:00,000 --> 00:00:00,000
+I hope you'll read it, and I hope you'll spend some time engaging in it.
+
+94
+00:00:00,000 --> 00:00:00,000
+It's not really a hands-on exercise, but it's something that will make your programming much, much easier.
+
+95
+00:00:00,000 --> 00:00:00,000
+Okay, so let's go now and talk about necessary and intentional bounds.
+
+96
+00:00:00,000 --> 00:00:00,000
+Suppose we have a string that contains 123.25,
+
+97
+00:00:00,000 --> 00:00:00,000
+and we want to extract just the integer portion, just the 123 part.
+
+98
+00:00:00,000 --> 00:00:00,000
+We'd write a loop, and we'd write a sentinel loop,
+
+99
+00:00:00,000 --> 00:00:00,000
+and the loop would stop when we find the period, the sentinel.
+
+100
+00:00:00,000 --> 00:00:00,000
+So this is just similar to what we just talked about.
+
+101
+00:00:00,000 --> 00:00:00,000
+This bounds condition is called the intentional bounds.
+
+102
+00:00:00,000 --> 00:00:00,000
+We intend to stop when we find a period.
+
+103
+00:00:00,000 --> 00:00:00,000
+So here is the loop in code, size T, I equals zero.
+
+104
+00:00:00,000 --> 00:00:00,000
+Because it's a sentinel loop, we'll write it as an indefinite loop using while.
+
+105
+00:00:00,000 --> 00:00:00,000
+While str at I is not equal to the period, plus plus I.
+
+106
+00:00:00,000 --> 00:00:00,000
+This works perfectly fine, it's perfectly correct, except what if the string doesn't contain a period?
+
+107
+00:00:00,000 --> 00:00:00,000
+In that case, our program will crash.
+
+108
+00:00:00,000 --> 00:00:00,000
+And so you always need to ask yourself while you're writing the loop bounds,
+
+109
+00:00:00,000 --> 00:00:00,000
+will this work for any possible input?
+
+110
+00:00:00,000 --> 00:00:00,000
+Will it work for the empty string?
+
+111
+00:00:00,000 --> 00:00:00,000
+Will it work for a negative number?
+
+112
+00:00:00,000 --> 00:00:00,000
+That sort of thing.
+
+113
+00:00:00,000 --> 00:00:00,000
+So in this case, if the string doesn't contain a period,
+
+114
+00:00:00,000 --> 00:00:00,000
+we need to add a second bounds condition called the necessary bounds.
+
+115
+00:00:00,000 --> 00:00:00,000
+The necessary bounds is what's required if you don't find your intentional bounds.
+
+116
+00:00:00,000 --> 00:00:00,000
+And so here, we'd add a necessary bounds with an and statement before our intentional bounds.
+
+117
+00:00:00,000 --> 00:00:00,000
+Notice we're going to keep going while I is less than or equal to the string size,
+
+118
+00:00:00,000 --> 00:00:00,000
+and the string at I is not equal to the period.
+
+119
+00:00:00,000 --> 00:00:00,000
+We're going to keep counting in that case, or we're going to keep incrementing.
+
+120
+00:00:00,000 --> 00:00:00,000
+Now, the break statement jumps out of a switch or a loop.
+
+121
+00:00:00,000 --> 00:00:00,000
+In a loop, break jumps from inside this if statement all the way out to the first statement,
+
+122
+00:00:00,000 --> 00:00:00,000
+following the loop's body.
+
+123
+00:00:00,000 --> 00:00:00,000
+And as you saw in lecture six, this can make your code clearer when you use it to construct a loop and a half.
+
+124
+00:00:00,000 --> 00:00:00,000
+Again, as in lecture six, I mentioned this is available in languages like Ada,
+
+125
+00:00:00,000 --> 00:00:00,000
+where they use the syntax exit when.
+
+126
+00:00:00,000 --> 00:00:00,000
+In C++, we create an exit when with an if statement along with a break.
+
+127
+00:00:00,000 --> 00:00:00,000
+Now, I should mention that in a loop, you should only have a break inside an if statement.
+
+128
+00:00:00,000 --> 00:00:00,000
+If you have a break outside of an if statement,
+
+129
+00:00:00,000 --> 00:00:00,000
+it will just create some code that is non-executable or unreachable code.
+
+130
+00:00:00,000 --> 00:00:00,000
+So, notice there's a slight difference here between the previous algorithm.
+
+131
+00:00:00,000 --> 00:00:00,000
+In this algorithm, we put the necessary bounds in the loop condition.
+
+132
+00:00:00,000 --> 00:00:00,000
+So, we're going to keep going while I is less than the string size.
+
+133
+00:00:00,000 --> 00:00:00,000
+We put the intentional bounds inside an if statement.
+
+134
+00:00:00,000 --> 00:00:00,000
+So, if str@i equals the period, we're done and break.
+
+135
+00:00:00,000 --> 00:00:00,000
+The big difference is that when you write a loop and a half,
+
+136
+00:00:00,000 --> 00:00:00,000
+your intentional bounds, the part that's in the if statement inside the loop,
+
+137
+00:00:00,000 --> 00:00:00,000
+is written as a positive statement.
+
+138
+00:00:00,000 --> 00:00:00,000
+It tells you what you need to do to get out of the loop.
+
+139
+00:00:00,000 --> 00:00:00,000
+So, notice this says str@i equals equals period,
+
+140
+00:00:00,000 --> 00:00:00,000
+whereas when we wrote it as part of the condition here,
+
+141
+00:00:00,000 --> 00:00:00,000
+we said str@i not equal to period.
+
+142
+00:00:00,000 --> 00:00:00,000
+So, in the condition, we're saying what's required to keep going.
+
+143
+00:00:00,000 --> 00:00:00,000
+In the loop and a half, we're saying what's required to get out of the loop.
+
+144
+00:00:00,000 --> 00:00:00,000
+What's required to get out of the loop.
+
+145
+00:00:00,000 --> 00:00:00,000
+Now, the continue statement is similar to a break.
+
+146
+00:00:00,000 --> 00:00:00,000
+Both continue and break are forms of controlled jump statements.
+
+147
+00:00:00,000 --> 00:00:00,000
+The continue statement, instead of leaving the loop, starts the next iteration.
+
+148
+00:00:00,000 --> 00:00:00,000
+So, here's a while loop.
+
+149
+00:00:00,000 --> 00:00:00,000
+We have an if statement. Again, like break, continue should only appear inside an if statement.
+
+150
+00:00:00,000 --> 00:00:00,000
+And we have one condition that will keep the loop going.
+
+151
+00:00:00,000 --> 00:00:00,000
+And if we have another condition, we're going to skip up back to the original condition.
+
+152
+00:00:00,000 --> 00:00:00,000
+Now, why would we want to do that?
+
+153
+00:00:00,000 --> 00:00:00,000
+We'd want to do that if the condition we're setting here is some kind of error condition.
+
+154
+00:00:00,000 --> 00:00:00,000
+That means that down here at the bottom, I can process the data we're processing
+
+155
+00:00:00,000 --> 00:00:00,000
+without having an if and an else statement here.
+
+156
+00:00:00,000 --> 00:00:00,000
+So, this is, again, a shorthand.
+
+157
+00:00:00,000 --> 00:00:00,000
+In the for statement, the continue will jump not to the condition, not to the end less than 10,
+
+158
+00:00:00,000 --> 00:00:00,000
+but to the update expression.
+
+159
+00:00:00,000 --> 00:00:00,000
+And while, it jumps right up to the test condition.
+
+160
+00:00:00,000 --> 00:00:00,000
+So, we're going to put this to work.
+
+161
+00:00:00,000 --> 00:00:00,000
+We're only going to do one exercise.
+
+162
+00:00:00,000 --> 00:00:00,000
+This lecture is considerably shorter than the other lectures we've had so far.
+
+163
+00:00:00,000 --> 00:00:00,000
+And we're going to do an exercise that is going to take a string that contains a dollar formatted string,
+
+164
+00:00:00,000 --> 00:00:00,000
+like a dollar sign, a space, commas, and so forth.
+
+165
+00:00:00,000 --> 00:00:00,000
+And we're going to look at the algorithm to convert it to a floating point number.
+
+166
+00:00:00,000 --> 00:00:00,000
+How do we convert a string to a floating point number?
+
+167
+00:00:00,000 --> 00:00:00,000
+So, again, if you haven't done this already, make sure that you have opened the problem statement here for lecture 7.
+
+168
+00:00:00,000 --> 00:00:00,000
+And so, the input string we're going to get may have dollar signs, spaces, and commas.
+
+169
+00:00:00,000 --> 00:00:00,000
+It may or may not have a decimal point.
+
+170
+00:00:00,000 --> 00:00:00,000
+You may assume that the number is well formed, meaning it's not going to have two decimal points.
+
+171
+00:00:00,000 --> 00:00:00,000
+And it's not an exponential notation, so you don't need to deal with that.
+
+172
+00:00:00,000 --> 00:00:00,000
+We're not going to use any library functions except for size.
+
+173
+00:00:00,000 --> 00:00:00,000
+We can use is digit.
+
+174
+00:00:00,000 --> 00:00:00,000
+Of course, we could have written that ourselves.
+
+175
+00:00:00,000 --> 00:00:00,000
+And we can use at here.
+
+176
+00:00:00,000 --> 00:00:00,000
+So this is going to produce a double with the actual value of the string.
+
+177
+00:00:00,000 --> 00:00:00,000
+So this is an ICO7A.
+
+178
+00:00:00,000 --> 00:00:00,000
+It's Mo Money.
+
+179
+00:00:00,000 --> 00:00:00,000
+We're going to put our name on it.
+
+180
+00:00:00,000 --> 00:00:00,000
+We're going to write the function that's going to return a double.
+
+181
+00:00:00,000 --> 00:00:00,000
+It's named Mo Money.
+
+182
+00:00:00,000 --> 00:00:00,000
+It's going to take a const string ref str.
+
+183
+00:00:00,000 --> 00:00:00,000
+Its result is going to be a double.
+
+184
+00:00:00,000 --> 00:00:00,000
+So double result.
+
+185
+00:00:00,000 --> 00:00:00,000
+Let's initialize it to zero.
+
+186
+00:00:00,000 --> 00:00:00,000
+And let's return result.
+
+187
+00:00:00,000 --> 00:00:00,000
+And then let's go ahead and try it out.
+
+188
+00:00:00,000 --> 00:00:00,000
+Make sure we've opened a shell here on A.
+
+189
+00:00:00,000 --> 00:00:00,000
+Open an integrated terminal.
+
+190
+00:00:00,000 --> 00:00:00,000
+Okay, that didn't actually open it on A.
+
+191
+00:00:00,000 --> 00:00:00,000
+We can just do CD A.
+
+192
+00:00:00,000 --> 00:00:00,000
+And now we're in the correct folder.
+
+193
+00:00:00,000 --> 00:00:00,000
+I can go ahead and close that so you can see it a little better.
+
+194
+00:00:00,000 --> 00:00:00,000
+I'm going to do make test.
+
+195
+00:00:00,000 --> 00:00:00,000
+And notice that it takes in values like $75, $.55, $1.50.75, $1,295.25.
+
+196
+00:00:00,000 --> 00:00:00,000
+And this is what it expects to get the output of the result out.
+
+197
+00:00:00,000 --> 00:00:00,000
+Okay, so let's put that away and let's look at the algorithm we need to do.
+
+198
+00:00:00,000 --> 00:00:00,000
+So what we're going to need to do is we're going to need to process that string.
+
+199
+00:00:00,000 --> 00:00:00,000
+And we're going to look at every character inside that.
+
+200
+00:00:00,000 --> 00:00:00,000
+So one way I can look at every character is I can just write a for loop.
+
+201
+00:00:00,000 --> 00:00:00,000
+So I'm going to say for auto C in STR.
+
+202
+00:00:00,000 --> 00:00:00,000
+Actually, let's write a traditional for loop.
+
+203
+00:00:00,000 --> 00:00:00,000
+Size T I equals zero.
+
+204
+00:00:00,000 --> 00:00:00,000
+Actually, since we've been talking about loops and a half, let's do that.
+
+205
+00:00:00,000 --> 00:00:00,000
+So size T I equals zero.
+
+206
+00:00:00,000 --> 00:00:00,000
+And let's actually say size T len equals STR size.
+
+207
+00:00:00,000 --> 00:00:00,000
+I don't want to just call STR size each time I go.
+
+208
+00:00:00,000 --> 00:00:00,000
+So while I is less than len, so this is our necessary bounds.
+
+209
+00:00:00,000 --> 00:00:00,000
+And now let's look at what possible things.
+
+210
+00:00:00,000 --> 00:00:00,000
+Actually, you know, the while loop is not going to work here because it's going to skip the update at the bottom.
+
+211
+00:00:00,000 --> 00:00:00,000
+So I'm going to go back to writing it as a for loop.
+
+212
+00:00:00,000 --> 00:00:00,000
+This is not scripted as you can tell.
+
+213
+00:00:00,000 --> 00:00:00,000
+So for size T I equals zero.
+
+214
+00:00:00,000 --> 00:00:00,000
+Len equals STR size.
+
+215
+00:00:00,000 --> 00:00:00,000
+I less than len plus plus I.
+
+216
+00:00:00,000 --> 00:00:00,000
+Okay, so we can accept three kinds of things.
+
+217
+00:00:00,000 --> 00:00:00,000
+Digits, a period, or we can get three kinds of things.
+
+218
+00:00:00,000 --> 00:00:00,000
+We can get a digit, we can get a period, we can get something that's a space or a dollar sign.
+
+219
+00:00:00,000 --> 00:00:00,000
+So if we have a period, so when I process this number 150.75, I'm going to be processing, so let's just look down where I have 150.75.
+
+220
+00:00:00,000 --> 00:00:00,000
+I'm going to be processing two different parts of the number.
+
+221
+00:00:00,000 --> 00:00:00,000
+I'm going to be parsing the integer part and I'm going to be processing the fractional or the cents part.
+
+222
+00:00:00,000 --> 00:00:00,000
+So I'm going to be processing the dollars and the cents.
+
+223
+00:00:00,000 --> 00:00:00,000
+Okay, the dollars and the cents.
+
+224
+00:00:00,000 --> 00:00:00,000
+So let's create a variable for dollars.
+
+225
+00:00:00,000 --> 00:00:00,000
+Int dollars is zero and double cents is zero.
+
+226
+00:00:00,000 --> 00:00:00,000
+Now if I see, so one part of my loop I want to process the whole part. One part of my loop I want to process the cents part.
+
+227
+00:00:00,000 --> 00:00:00,000
+One part of the loop I want to process the dollars part. One part I want to process the cents part.
+
+228
+00:00:00,000 --> 00:00:00,000
+So I need to keep track of whether or not I've seen a period.
+
+229
+00:00:00,000 --> 00:00:00,000
+So what I'm going to say is bool int dollars.
+
+230
+00:00:00,000 --> 00:00:00,000
+And I'm going to set that to true.
+
+231
+00:00:00,000 --> 00:00:00,000
+Oh no, int cents.
+
+232
+00:00:00,000 --> 00:00:00,000
+And I'm going to set that to false.
+
+233
+00:00:00,000 --> 00:00:00,000
+I'm not in the cents, I'm assuming that I'm in the dollars.
+
+234
+00:00:00,000 --> 00:00:00,000
+So now I'm ready to look at the characters.
+
+235
+00:00:00,000 --> 00:00:00,000
+So if str at i is equal to the period, what do I have?
+
+236
+00:00:00,000 --> 00:00:00,000
+I have my, I have int cents equals true.
+
+237
+00:00:00,000 --> 00:00:00,000
+And I don't need to process that anymore, so I can continue.
+
+238
+00:00:00,000 --> 00:00:00,000
+Now if it's not a period, it might not be a digit.
+
+239
+00:00:00,000 --> 00:00:00,000
+So if not is digit, str at i.
+
+240
+00:00:00,000 --> 00:00:00,000
+And let's actually save str at i as a character.
+
+241
+00:00:00,000 --> 00:00:00,000
+So char c equals str at i.
+
+242
+00:00:00,000 --> 00:00:00,000
+And again, I don't like calling a function multiple times to get the same value.
+
+243
+00:00:00,000 --> 00:00:00,000
+So if c is not a digit, is what that says.
+
+244
+00:00:00,000 --> 00:00:00,000
+So if not is digit, not is digit c, then what do we want to do?
+
+245
+00:00:00,000 --> 00:00:00,000
+We want to just get the next one. We don't need to process it.
+
+246
+00:00:00,000 --> 00:00:00,000
+So now what do I know if I got to line 22?
+
+247
+00:00:00,000 --> 00:00:00,000
+I know that I have the digit.
+
+248
+00:00:00,000 --> 00:00:00,000
+And now I have two possibilities.
+
+249
+00:00:00,000 --> 00:00:00,000
+If int cents, I'm going to process that one way.
+
+250
+00:00:00,000 --> 00:00:00,000
+Else, I'm going to process it the other way.
+
+251
+00:00:00,000 --> 00:00:00,000
+So first, I want to find out what the, so the digits are 0, 1, 2, 3, and so forth.
+
+252
+00:00:00,000 --> 00:00:00,000
+But they are the characters 0.
+
+253
+00:00:00,000 --> 00:00:00,000
+And that actually has the ASCII value 48.
+
+254
+00:00:00,000 --> 00:00:00,000
+So to turn that character digit into a binary digit, I have to subtract 48 from it.
+
+255
+00:00:00,000 --> 00:00:00,000
+So I'm going to say int digit equals c minus, and instead of 48, I'm going to just say the character is 0.
+
+256
+00:00:00,000 --> 00:00:00,000
+So that's the same as subtracting 48.
+
+257
+00:00:00,000 --> 00:00:00,000
+So now I have the binary digit.
+
+258
+00:00:00,000 --> 00:00:00,000
+Now my dollars equals dollars times 10.
+
+259
+00:00:00,000 --> 00:00:00,000
+Now dollars is 0 at this time.
+
+260
+00:00:00,000 --> 00:00:00,000
+Plus my digit.
+
+261
+00:00:00,000 --> 00:00:00,000
+So this algorithm is the algorithm for converting a sequence of characters into an integer.
+
+262
+00:00:00,000 --> 00:00:00,000
+Into an integer part.
+
+263
+00:00:00,000 --> 00:00:00,000
+And there's nothing else inside there. That's all there is to it.
+
+264
+00:00:00,000 --> 00:00:00,000
+Now, I could actually put this here.
+
+265
+00:00:00,000 --> 00:00:00,000
+Let's, again, I don't like repeating pieces of code.
+
+266
+00:00:00,000 --> 00:00:00,000
+So if we get to this piece of code.
+
+267
+00:00:00,000 --> 00:00:00,000
+If we get to that piece of code.
+
+268
+00:00:00,000 --> 00:00:00,000
+So if we're in the sense, then, and we can write this.
+
+269
+00:00:00,000 --> 00:00:00,000
+Then dollars equals dollars times 10 plus digit.
+
+270
+00:00:00,000 --> 00:00:00,000
+Plus a digit.
+
+271
+00:00:00,000 --> 00:00:00,000
+Oh no, that's actually that part right there.
+
+272
+00:00:00,000 --> 00:00:00,000
+So for this part.
+
+273
+00:00:00,000 --> 00:00:00,000
+So basically what we're doing is we're multiplying the first digit by 1, the second digit by 10, the third digit by 100, the fourth digit by 1000, and so forth.
+
+274
+00:00:00,000 --> 00:00:00,000
+To get the dollar amount.
+
+275
+00:00:00,000 --> 00:00:00,000
+Now here, what we want to do is divide the first digit by 10.
+
+276
+00:00:00,000 --> 00:00:00,000
+Divide the next digit by 100.
+
+277
+00:00:00,000 --> 00:00:00,000
+Divide the next digit by 1000, and so forth.
+
+278
+00:00:00,000 --> 00:00:00,000
+Does that make sense?
+
+279
+00:00:00,000 --> 00:00:00,000
+So that means we need to keep track of 10, 100, 1000.
+
+280
+00:00:00,000 --> 00:00:00,000
+I'm going to create a variable here I'm going to call the base to do that.
+
+281
+00:00:00,000 --> 00:00:00,000
+So double base equals 10.
+
+282
+00:00:00,000 --> 00:00:00,000
+And so the sense is going to be sense plus the digit divided by the base.
+
+283
+00:00:00,000 --> 00:00:00,000
+And then of course each time the base starts out at 10, now it needs to go to 100.
+
+284
+00:00:00,000 --> 00:00:00,000
+So base times equals 10.
+
+285
+00:00:00,000 --> 00:00:00,000
+So 10 times 10, 10 times 10 times 10, 10 times 10 times 10, and so forth.
+
+286
+00:00:00,000 --> 00:00:00,000
+Okay, so here we've processed the... so let's look at what we've done so far.
+
+287
+00:00:00,000 --> 00:00:00,000
+We've gone through every character in the string.
+
+288
+00:00:00,000 --> 00:00:00,000
+We've found out what that character is.
+
+289
+00:00:00,000 --> 00:00:00,000
+If it's a period, we just set our little flag here, in sense equals true.
+
+290
+00:00:00,000 --> 00:00:00,000
+And we continue and go up back to the next loop.
+
+291
+00:00:00,000 --> 00:00:00,000
+If it's not a digit, we continue.
+
+292
+00:00:00,000 --> 00:00:00,000
+We just skip it, we don't have to process it.
+
+293
+00:00:00,000 --> 00:00:00,000
+That means when I get to line 23, I know that I have a digit in C,
+
+294
+00:00:00,000 --> 00:00:00,000
+and I can turn it into a binary number.
+
+295
+00:00:00,000 --> 00:00:00,000
+So digit here is the binary value of whatever C is.
+
+296
+00:00:00,000 --> 00:00:00,000
+I've converted the character zero to the number zero.
+
+297
+00:00:00,000 --> 00:00:00,000
+And here is the base for the numbers we're doing, which are decimal.
+
+298
+00:00:00,000 --> 00:00:00,000
+So if I'm in cents, I take cents and I add the digit divided by the base.
+
+299
+00:00:00,000 --> 00:00:00,000
+So 1/10, right?
+
+300
+00:00:00,000 --> 00:00:00,000
+Then I multiply the base.
+
+301
+00:00:00,000 --> 00:00:00,000
+So now I'll have the digit divided by 100.
+
+302
+00:00:00,000 --> 00:00:00,000
+Next time I'll have the digit divided by 1,000, and so forth.
+
+303
+00:00:00,000 --> 00:00:00,000
+If it's not in cents, if I'm doing the dollars part,
+
+304
+00:00:00,000 --> 00:00:00,000
+I just multiply the dollars I have already times 10, and I add the digit to it.
+
+305
+00:00:00,000 --> 00:00:00,000
+Now the result is going to be dollars plus cents.
+
+306
+00:00:00,000 --> 00:00:00,000
+And we're going to return the result.
+
+307
+00:00:00,000 --> 00:00:00,000
+So let's see how we did here.
+
+308
+00:00:00,000 --> 00:00:00,000
+So let's save that.
+
+309
+00:00:00,000 --> 00:00:00,000
+Let's do make.
+
+310
+00:00:00,000 --> 00:00:00,000
+No errors.
+
+311
+00:00:00,000 --> 00:00:00,000
+Let's do make test.
+
+312
+00:00:00,000 --> 00:00:00,000
+Okay, one of them worked, which is the 75.
+
+313
+00:00:00,000 --> 00:00:00,000
+This one did not work at all.
+
+314
+00:00:00,000 --> 00:00:00,000
+This one did not work at all.
+
+315
+00:00:00,000 --> 00:00:00,000
+This one did not work at all.
+
+316
+00:00:00,000 --> 00:00:00,000
+Okay, so maybe what I'm going to guess, I'm going to make a quick guess
+
+317
+00:00:00,000 --> 00:00:00,000
+and make this digit a double.
+
+318
+00:00:00,000 --> 00:00:00,000
+And I'm also going to make dollars a double as well.
+
+319
+00:00:00,000 --> 00:00:00,000
+So that's just my first guess.
+
+320
+00:00:00,000 --> 00:00:00,000
+If not, we'll have to go through and trace through and maybe debug it.
+
+321
+00:00:00,000 --> 00:00:00,000
+So let's do make test.
+
+322
+00:00:00,000 --> 00:00:00,000
+And I just made double dollars.
+
+323
+00:00:00,000 --> 00:00:00,000
+But I still got exactly the wrong answer.
+
+324
+00:00:00,000 --> 00:00:00,000
+So let me look at my calculation here.
+
+325
+00:00:00,000 --> 00:00:00,000
+I'm going to turn off and pause this for a few seconds while I think about it,
+
+326
+00:00:00,000 --> 00:00:00,000
+rather than making you watch me sit here and think about it.
+
+327
+00:00:00,000 --> 00:00:00,000
+Okay, folks, I see my errors.
+
+328
+00:00:00,000 --> 00:00:00,000
+You notice on line 24 I have the base set to 10.
+
+329
+00:00:00,000 --> 00:00:00,000
+Well, this is inside the loop here.
+
+330
+00:00:00,000 --> 00:00:00,000
+So every time I'm setting it back to 10, it's never going to 100 or 1,000.
+
+331
+00:00:00,000 --> 00:00:00,000
+So I need to move that double base equals 10 outside of the loop up here.
+
+332
+00:00:00,000 --> 00:00:00,000
+So let's...
+
+333
+00:00:00,000 --> 00:00:00,000
+So you'll notice in my test here,
+
+334
+00:00:00,000 --> 00:00:00,000
+the dollar part was working perfectly fine.
+
+335
+00:00:00,000 --> 00:00:00,000
+I'm getting the correct number of dollars.
+
+336
+00:00:00,000 --> 00:00:00,000
+I'm not getting the correct number of cents.
+
+337
+00:00:00,000 --> 00:00:00,000
+So the cents algorithm was never doing the thousand.
+
+338
+00:00:00,000 --> 00:00:00,000
+So I was...when I had .55, I was setting the base back to 10 here,
+
+339
+00:00:00,000 --> 00:00:00,000
+and I was adding .5 and .5 rather than .5 and .05,
+
+340
+00:00:00,000 --> 00:00:00,000
+which is what this algorithm should have done.
+
+341
+00:00:00,000 --> 00:00:00,000
+So this should work okay.
+
+342
+00:00:00,000 --> 00:00:00,000
+Let's try it now.
+
+343
+00:00:00,000 --> 00:00:00,000
+Make test.
+
+344
+00:00:00,000 --> 00:00:00,000
+And all of our tests pass correctly.
+
+345
+00:00:00,000 --> 00:00:00,000
+So let me give you one last look at that code here.
+
+346
+00:00:00,000 --> 00:00:00,000
+So you can see it all on the screen at once.
+
+347
+00:00:00,000 --> 00:00:00,000
+And I'm actually going to get rid of a couple comments here
+
+348
+00:00:00,000 --> 00:00:00,000
+and make this code a little bit more compact,
+
+349
+00:00:00,000 --> 00:00:00,000
+so you can see it all at once.
+
+350
+00:00:00,000 --> 00:00:00,000
+Okay, and that will allow you to see all of the function there.
+
+351
+00:00:00,000 --> 00:00:00,000
+Let me put one more line,
+
+352
+00:00:00,000 --> 00:00:00,000
+and you can get the whole thing on one screen, I believe.
+
+353
+00:00:00,000 --> 00:00:00,000
+Not quite, but close.
+
+354
+00:00:00,000 --> 00:00:00,000
+Yeah, now there's the whole thing on one screen.
+
+355
+00:00:00,000 --> 00:00:00,000
+Okay, I told you this would be shorter,
+
+356
+00:00:00,000 --> 00:00:00,000
+only a little bit more than a half an hour.
+
+357
+00:00:00,000 --> 00:00:00,000
+And I will see you next time for Chapter 8.
+

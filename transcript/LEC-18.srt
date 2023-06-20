@@ -1,0 +1,1656 @@
+1
+00:00:00,000 --> 00:00:00,000
+Hello everyone, this is Steve Gilbert. Welcome to lecture 18 where we're going to talk about pointers in graphics.
+
+2
+00:00:00,000 --> 00:00:00,000
+Now C++, unlike Java, has no built-in graphics support. You need to use an external library.
+
+3
+00:00:00,000 --> 00:00:00,000
+That's because in C++, rather than trying to be the lowest common denominator, they expect the libraries to work with the platform that you're on.
+
+4
+00:00:00,000 --> 00:00:00,000
+So we are going to use a library to process images. When I say images, I mean image files, like PNG files or GIF files or JPEG files.
+
+5
+00:00:00,000 --> 00:00:00,000
+And the image, the library we're going to use is called the STB or the Sean T. Bartlett libraries. Those libraries are written in the C programming language.
+
+6
+00:00:00,000 --> 00:00:00,000
+And this is going to be really, really common when you work with C++, that you want to go out and use a library, and the library will be written in C.
+
+7
+00:00:00,000 --> 00:00:00,000
+So we're going to look at how we use this C graphics library to read and write images and use pointers to manipulate the image data.
+
+8
+00:00:00,000 --> 00:00:00,000
+So first we want to look at pointers as output parameters to load the picture into memory.
+
+9
+00:00:00,000 --> 00:00:00,000
+And so there is a function in this library called load, and we will use that. But to get the output, we can't use references because C doesn't have references.
+
+10
+00:00:00,000 --> 00:00:00,000
+We need to use pointers. We're going to look at opening a file, and with that we're going to have to pass C strings.
+
+11
+00:00:00,000 --> 00:00:00,000
+In our program we're going to have a string object, and so that's going to be a problem. When we open the file, rather than checking for fail, like we've done with C in and C out,
+
+12
+00:00:00,000 --> 00:00:00,000
+with C libraries it's very common to check to see if the pointer is null or not. So we're going to check for null pointer instead of fail.
+
+13
+00:00:00,000 --> 00:00:00,000
+Because we're going to process the data, we don't know how big the data is, we're going to use address arithmetic instead of size.
+
+14
+00:00:00,000 --> 00:00:00,000
+In other words, we're not going to have a vector, we're going to have a raw buffer of memory, a raw chunk of memory loaded somewhere,
+
+15
+00:00:00,000 --> 00:00:00,000
+and all we're going to have are addresses to the beginning and end of it.
+
+16
+00:00:00,000 --> 00:00:00,000
+To get through those, we're going to use iterator loops using pointers, and we're going to call these pointers begin and end, just like we use begin and end on our iterators.
+
+17
+00:00:00,000 --> 00:00:00,000
+And finally we're going to look at pointer increment and dereferencing.
+
+18
+00:00:00,000 --> 00:00:00,000
+So go ahead and in the images folder of chapter 18, you can load your own picture or you can choose one of the pictures that I have.
+
+19
+00:00:00,000 --> 00:00:00,000
+So here's Austin Powers, Dr. Evil, here is Vermeer, and here is Wayne.
+
+20
+00:00:00,000 --> 00:00:00,000
+So a lot of that guy.
+
+21
+00:00:00,000 --> 00:00:00,000
+Or you can just drop your own picture inside here and try posterizing one of your own.
+
+22
+00:00:00,000 --> 00:00:00,000
+I'm actually going to go get a picture here while I'm talking to you.
+
+23
+00:00:00,000 --> 00:00:00,000
+I'm going to go over to one of my folders.
+
+24
+00:00:00,000 --> 00:00:00,000
+Let's look at some of my folders down on the web.
+
+25
+00:00:00,000 --> 00:00:00,000
+Let's see what I have. I want only a little photo.
+
+26
+00:00:00,000 --> 00:00:00,000
+So let's look at one of the ones I have from one of my syllabi.
+
+27
+00:00:00,000 --> 00:00:00,000
+And so here's a small picture of me. Let's see if I have a bigger one more recently.
+
+28
+00:00:00,000 --> 00:00:00,000
+Here's Steve P&G. I'm going to use that one. So I'm just going to drag it over there.
+
+29
+00:00:00,000 --> 00:00:00,000
+I'm going to drop it on the images folder.
+
+30
+00:00:00,000 --> 00:00:00,000
+And so this is the picture that I'm going to posterize. You can drop your own inside there if you want.
+
+31
+00:00:00,000 --> 00:00:00,000
+And what we're going to do is we're going to posterize it. So this is an example of posterization.
+
+32
+00:00:00,000 --> 00:00:00,000
+We are going to use the library called STBI Load.
+
+33
+00:00:00,000 --> 00:00:00,000
+Let's go over here and let's go into posterize.cpp and I'll talk a little bit about how this works.
+
+34
+00:00:00,000 --> 00:00:00,000
+So the library we're using is called STBI Image for reading and writing.
+
+35
+00:00:00,000 --> 00:00:00,000
+These are called header only C libraries. In other words, you only need to include the header.
+
+36
+00:00:00,000 --> 00:00:00,000
+But we've said before that header files should usually only contain prototypes, not actually code.
+
+37
+00:00:00,000 --> 00:00:00,000
+Well, with a header only library, you actually have to put the code inside there.
+
+38
+00:00:00,000 --> 00:00:00,000
+But if you need to use the code in multiple files, you don't want to have two copies of the code.
+
+39
+00:00:00,000 --> 00:00:00,000
+Your code would actually not link if you did that.
+
+40
+00:00:00,000 --> 00:00:00,000
+And so when we are using it in one file like this, we use these two special defines.
+
+41
+00:00:00,000 --> 00:00:00,000
+These are required for the image and the image write one.
+
+42
+00:00:00,000 --> 00:00:00,000
+And that's just to tell the compiler when it sees this that it's not only going to use the declarations out of this,
+
+43
+00:00:00,000 --> 00:00:00,000
+but the definitions out of it as well.
+
+44
+00:00:00,000 --> 00:00:00,000
+And you're free to look through these files. There's documentation at the top of it.
+
+45
+00:00:00,000 --> 00:00:00,000
+And you might find it actually kind of interesting.
+
+46
+00:00:00,000 --> 00:00:00,000
+So what we're going to do is we're going to just follow this code right here.
+
+47
+00:00:00,000 --> 00:00:00,000
+So I'm going to ask the user CL file to open.
+
+48
+00:00:00,000 --> 00:00:00,000
+And I'm going to create a string, FNAME, and I say CNFNAME.
+
+49
+00:00:00,000 --> 00:00:00,000
+So just like our IPO programs, nothing different there.
+
+50
+00:00:00,000 --> 00:00:00,000
+Now I'm going to load the image into memory.
+
+51
+00:00:00,000 --> 00:00:00,000
+And to do that I'm going to call this function called STBI_LOAD.
+
+52
+00:00:00,000 --> 00:00:00,000
+So let's look at the prototype for that function.
+
+53
+00:00:00,000 --> 00:00:00,000
+So STBI_LOAD takes not a string, but a CONT_CHAR_STAR file name.
+
+54
+00:00:00,000 --> 00:00:00,000
+This is called a C style string.
+
+55
+00:00:00,000 --> 00:00:00,000
+It doesn't take an int for the width and the height and the bits.
+
+56
+00:00:00,000 --> 00:00:00,000
+This is bytes per pixel or the channels. Channels it does take an int.
+
+57
+00:00:00,000 --> 00:00:00,000
+But these it takes a pointer to an int and a pointer to height
+
+58
+00:00:00,000 --> 00:00:00,000
+and a pointer to an int for bytes per pixel.
+
+59
+00:00:00,000 --> 00:00:00,000
+And it returns a pointer to an unsigned char.
+
+60
+00:00:00,000 --> 00:00:00,000
+So this function is a C function.
+
+61
+00:00:00,000 --> 00:00:00,000
+And file name is a C style string.
+
+62
+00:00:00,000 --> 00:00:00,000
+So we have a string, FNAME.
+
+63
+00:00:00,000 --> 00:00:00,000
+We cannot pass that in place of the C style string.
+
+64
+00:00:00,000 --> 00:00:00,000
+But we can call one of the functions in the C++ string class
+
+65
+00:00:00,000 --> 00:00:00,000
+to return a C style string.
+
+66
+00:00:00,000 --> 00:00:00,000
+So the first argument we're going to need to pass to STBI_LOAD is that.
+
+67
+00:00:00,000 --> 00:00:00,000
+Now first I'm going to need to add images to the file name to look for
+
+68
+00:00:00,000 --> 00:00:00,000
+because we'll put our images in an images folder.
+
+69
+00:00:00,000 --> 00:00:00,000
+So I'm going to say FNAME = images/ + FNAME
+
+70
+00:00:00,000 --> 00:00:00,000
+And actually let's not do that. Let's create another string variable.
+
+71
+00:00:00,000 --> 00:00:00,000
+I'll call it path =
+
+72
+00:00:00,000 --> 00:00:00,000
+because I actually want to use the FNAME later.
+
+73
+00:00:00,000 --> 00:00:00,000
+Now I'm also going to create variables for height, width, and bits per pixel.
+
+74
+00:00:00,000 --> 00:00:00,000
+I'm going to make those int.
+
+75
+00:00:00,000 --> 00:00:00,000
+So int width, height, and bytes per pixel.
+
+76
+00:00:00,000 --> 00:00:00,000
+In other words we can have 2 bytes per pixel, 1 byte per pixel, 4 bytes per pixel, and so forth.
+
+77
+00:00:00,000 --> 00:00:00,000
+And then I'm going to call STBI_LOAD.
+
+78
+00:00:00,000 --> 00:00:00,000
+So I'm going to call STBI_LOAD
+
+79
+00:00:00,000 --> 00:00:00,000
+And I'm going to pass my path, but I'm going to convert it to a C string.
+
+80
+00:00:00,000 --> 00:00:00,000
+Now, because we cannot pass variables by reference, C has no references,
+
+81
+00:00:00,000 --> 00:00:00,000
+we need to create address output parameters.
+
+82
+00:00:00,000 --> 00:00:00,000
+So I've already put the variables, width, height, and bytes per pixel,
+
+83
+00:00:00,000 --> 00:00:00,000
+but I need to then pass the addresses.
+
+84
+00:00:00,000 --> 00:00:00,000
+So the address of width, the address of height, and the address of BPP.
+
+85
+00:00:00,000 --> 00:00:00,000
+And I think we're going to create a variable for channels here as well.
+
+86
+00:00:00,000 --> 00:00:00,000
+And set that to 4.
+
+87
+00:00:00,000 --> 00:00:00,000
+So when we read this data in, we're going to read it in 4 bytes per pixel.
+
+88
+00:00:00,000 --> 00:00:00,000
+Sorry, I'm recording this at work and I just had the janitors come in,
+
+89
+00:00:00,000 --> 00:00:00,000
+so I had to shut everything down and come back and try and remember where I left off.
+
+90
+00:00:00,000 --> 00:00:00,000
+So we're looking at loading the images.
+
+91
+00:00:00,000 --> 00:00:00,000
+We pass this address of the width, the height, and the bytes per pixel.
+
+92
+00:00:00,000 --> 00:00:00,000
+And those are filled in in the function when you call the function.
+
+93
+00:00:00,000 --> 00:00:00,000
+Now we had one additional argument here, the channels, so that's not filled in.
+
+94
+00:00:00,000 --> 00:00:00,000
+That's just passed as normal, rather than an output parameter.
+
+95
+00:00:00,000 --> 00:00:00,000
+So I'm going to pass the channels.
+
+96
+00:00:00,000 --> 00:00:00,000
+And that's just saying we want 4 bytes per pixel,
+
+97
+00:00:00,000 --> 00:00:00,000
+regardless of how many bytes per pixel were used in the original image.
+
+98
+00:00:00,000 --> 00:00:00,000
+Now this is going to return a pointer to the image data.
+
+99
+00:00:00,000 --> 00:00:00,000
+The image data is going to be stored on the heap if this function succeeds.
+
+100
+00:00:00,000 --> 00:00:00,000
+And so we're going to store that in an unsigned char pointer,
+
+101
+00:00:00,000 --> 00:00:00,000
+but we're going to make that pointer const.
+
+102
+00:00:00,000 --> 00:00:00,000
+If it can't open the file, it will return null pointer.
+
+103
+00:00:00,000 --> 00:00:00,000
+And we need to make the pointer const because we need to free the memory later,
+
+104
+00:00:00,000 --> 00:00:00,000
+and I don't want to take a chance that I accidentally change this pointer,
+
+105
+00:00:00,000 --> 00:00:00,000
+which would crash my whole program.
+
+106
+00:00:00,000 --> 00:00:00,000
+So let's finish that last part there.
+
+107
+00:00:00,000 --> 00:00:00,000
+So I'm going to say unsigned char, so that's just an 8-bit value,
+
+108
+00:00:00,000 --> 00:00:00,000
+an 8-bit numeric value, pointer, I'll call it data,
+
+109
+00:00:00,000 --> 00:00:00,000
+and I'm going to make the pointer const, and I'll load the image there.
+
+110
+00:00:00,000 --> 00:00:00,000
+And let me just move this comment up above the line that I actually did that with.
+
+111
+00:00:00,000 --> 00:00:00,000
+So I'm saving the value in an unsigned pointer, and notice I made it const.
+
+112
+00:00:00,000 --> 00:00:00,000
+Now, how am I going to tell if my code succeeded?
+
+113
+00:00:00,000 --> 00:00:00,000
+I'm going to tell if my code succeeded because I'll get null pointer if it can't open the file.
+
+114
+00:00:00,000 --> 00:00:00,000
+So let's process that here.
+
+115
+00:00:00,000 --> 00:00:00,000
+So we'll say if data equals null pointer, then I am going to print an error message,
+
+116
+00:00:00,000 --> 00:00:00,000
+"Sierra cannot open path," and I'll simply return.
+
+117
+00:00:00,000 --> 00:00:00,000
+I think this is a void function.
+
+118
+00:00:00,000 --> 00:00:00,000
+No, no, it's main, so I'm going to return minus 1.
+
+119
+00:00:00,000 --> 00:00:00,000
+Okay, now we're ready to process the data.
+
+120
+00:00:00,000 --> 00:00:00,000
+Now we're ready to process the image data.
+
+121
+00:00:00,000 --> 00:00:00,000
+So I've got a chunk of data loaded out somewhere on the heap.
+
+122
+00:00:00,000 --> 00:00:00,000
+I've got a pointer to the first byte of that data,
+
+123
+00:00:00,000 --> 00:00:00,000
+and I have the width and the height and the bytes per pixel filled in in calling the function right here.
+
+124
+00:00:00,000 --> 00:00:00,000
+So first I'm going to create a pointer to the first byte of data.
+
+125
+00:00:00,000 --> 00:00:00,000
+I've already got one data, but I can't change that.
+
+126
+00:00:00,000 --> 00:00:00,000
+So I need to create a pointer. I'll call it "beg" and I'll initialize it with "data."
+
+127
+00:00:00,000 --> 00:00:00,000
+Then I'll create a second pointer named "n" and I'll use address arithmetic.
+
+128
+00:00:00,000 --> 00:00:00,000
+What's address arithmetic?
+
+129
+00:00:00,000 --> 00:00:00,000
+Well, if I add an integer, "n," to an address, what I end up with is a new address.
+
+130
+00:00:00,000 --> 00:00:00,000
+So I'm going to use width times height times the bytes per pixel for "n."
+
+131
+00:00:00,000 --> 00:00:00,000
+Actually, I'm just going to use the channels rather than bytes per pixel in that.
+
+132
+00:00:00,000 --> 00:00:00,000
+So I'm going to create a pointer beginning.
+
+133
+00:00:00,000 --> 00:00:00,000
+So I'm going to say "unsigned char pointer beg equals data."
+
+134
+00:00:00,000 --> 00:00:00,000
+And then I'm going to say "unsigned char pointer end equals beg plus width times height times the channels."
+
+135
+00:00:00,000 --> 00:00:00,000
+And that will give me the total number of bytes.
+
+136
+00:00:00,000 --> 00:00:00,000
+And this pointer end will be pointing to the byte that would be right after this chunk of data.
+
+137
+00:00:00,000 --> 00:00:00,000
+Right after that chunk of data.
+
+138
+00:00:00,000 --> 00:00:00,000
+Now, I've got those two pointers, and I'm going to use the pointer beg and an iterator loop to visit each element.
+
+139
+00:00:00,000 --> 00:00:00,000
+So each pixel in the image contains four unsigned char values.
+
+140
+00:00:00,000 --> 00:00:00,000
+A pixel contains a red part, a byte, a green part, a byte, a blue part, a byte.
+
+141
+00:00:00,000 --> 00:00:00,000
+And since we requested that this be a four channel or a four component color, it will also contain an "a" or an "alpha" or a transparency channel.
+
+142
+00:00:00,000 --> 00:00:00,000
+So even if the original one didn't have transparency, we added it to the image here.
+
+143
+00:00:00,000 --> 00:00:00,000
+So that means we can write a loop that looks like this.
+
+144
+00:00:00,000 --> 00:00:00,000
+While beg is not equal to end, that will be our loop. That will be our iterator loop.
+
+145
+00:00:00,000 --> 00:00:00,000
+We're going to remember that the first byte is red, the second byte is green, and the third byte is blue.
+
+146
+00:00:00,000 --> 00:00:00,000
+The last byte is alpha.
+
+147
+00:00:00,000 --> 00:00:00,000
+So you'll increment, so we want to process red, green, blue, and the alpha channel.
+
+148
+00:00:00,000 --> 00:00:00,000
+Now for the alpha channel, we're not going to do anything to process it, so we're just going to say beg++ and skip it.
+
+149
+00:00:00,000 --> 00:00:00,000
+For the red channel, what we're going to do is we're going to pass it to a function called "posterized".
+
+150
+00:00:00,000 --> 00:00:00,000
+So what I'm going to do is I'm going to write a function up here at the top.
+
+151
+00:00:00,000 --> 00:00:00,000
+It's going to be a void function.
+
+152
+00:00:00,000 --> 00:00:00,000
+And I'm going to take an unsigned char by reference, and I'll just call it "c".
+
+153
+00:00:00,000 --> 00:00:00,000
+And we'll do something to it inside here.
+
+154
+00:00:00,000 --> 00:00:00,000
+So I want to take my red pixel, I want to pass that unsigned char, and so I'm going to say "poster"
+
+155
+00:00:00,000 --> 00:00:00,000
+and I'm going to dereference the pointer to modify that part of the pixel.
+
+156
+00:00:00,000 --> 00:00:00,000
+Then I'm going to go look at the next color, or the next component.
+
+157
+00:00:00,000 --> 00:00:00,000
+So beg++.
+
+158
+00:00:00,000 --> 00:00:00,000
+For green, I'm going to say "poster *beg"
+
+159
+00:00:00,000 --> 00:00:00,000
+and then I'm going to move the pointer so it's pointing at the next one, beg++.
+
+160
+00:00:00,000 --> 00:00:00,000
+Then I'm going to point blue, "poster *beg"
+
+161
+00:00:00,000 --> 00:00:00,000
+I'm going to point it to the next one, so now it's pointing to the alpha.
+
+162
+00:00:00,000 --> 00:00:00,000
+I don't want to do anything for the alpha, so I'm just going to skip it.
+
+163
+00:00:00,000 --> 00:00:00,000
+So notice we're taking each of these four parts, the red, the green, the blue, and the alpha
+
+164
+00:00:00,000 --> 00:00:00,000
+and we are passing it to this poster function, the rgb and a.
+
+165
+00:00:00,000 --> 00:00:00,000
+So in the image, we're going to use this rule to posterize it.
+
+166
+00:00:00,000 --> 00:00:00,000
+So notice that this is an unsigned char, so it can have the values between 0 and 255.
+
+167
+00:00:00,000 --> 00:00:00,000
+0 meaning there's no color, 255 meaning it's fully saturated with that red or that green or the blue.
+
+168
+00:00:00,000 --> 00:00:00,000
+So we're going to put in our rule, and we're going to say "if c < 64, let's set c to 31."
+
+169
+00:00:00,000 --> 00:00:00,000
+Now notice that this is an output parameter, or input/output, it's coming in with one value, somewhere under 64.
+
+170
+00:00:00,000 --> 00:00:00,000
+We're setting it to 31.
+
+171
+00:00:00,000 --> 00:00:00,000
+So "else if c < 128, we'll set c = 95. Else if c < 192, we'll set c to 159.
+
+172
+00:00:00,000 --> 00:00:00,000
+And if it's none of those, we'll set c = 223.
+
+173
+00:00:00,000 --> 00:00:00,000
+So basically, we're changing the original image inside there.
+
+174
+00:00:00,000 --> 00:00:00,000
+So we passed each pixel to the poster function and we skipped the alpha.
+
+175
+00:00:00,000 --> 00:00:00,000
+Now we're going to save the image data with another function from the library, stb_write, so we've only used two functions so far, stb_load, stb_iload, and stb_write.
+
+176
+00:00:00,000 --> 00:00:00,000
+We're going to save ours as a png, no matter which of those styles you originally read.
+
+177
+00:00:00,000 --> 00:00:00,000
+And then we're going to free the data by passing data to stb_image_free.
+
+178
+00:00:00,000 --> 00:00:00,000
+So this is an example of dynamic memory.
+
+179
+00:00:00,000 --> 00:00:00,000
+When we called load, we borrowed memory from the operating system and put this image on the heap.
+
+180
+00:00:00,000 --> 00:00:00,000
+Now that we're done, we want to free that memory up so it can be used for other things, for strings and vectors and so forth.
+
+181
+00:00:00,000 --> 00:00:00,000
+So there's our processing. Now let's save it under a new name.
+
+182
+00:00:00,000 --> 00:00:00,000
+This is the prototype, and so that's going to return true if it worked, false if it didn't.
+
+183
+00:00:00,000 --> 00:00:00,000
+So we'll say if stb_iwrite
+
+184
+00:00:00,000 --> 00:00:00,000
+And actually let's say string modified equals
+
+185
+00:00:00,000 --> 00:00:00,000
+images
+
+186
+00:00:00,000 --> 00:00:00,000
+plus
+
+187
+00:00:00,000 --> 00:00:00,000
+Well, let's think about it. So I have, let's see, my original file is ap.png.
+
+188
+00:00:00,000 --> 00:00:00,000
+My path is ap.png.
+
+189
+00:00:00,000 --> 00:00:00,000
+So I'll say
+
+190
+00:00:00,000 --> 00:00:00,000
+posterized dash
+
+191
+00:00:00,000 --> 00:00:00,000
+plus fname
+
+192
+00:00:00,000 --> 00:00:00,000
+Okay, so that's the, I'll say modified file.
+
+193
+00:00:00,000 --> 00:00:00,000
+So that's the data we're going to save it in.
+
+194
+00:00:00,000 --> 00:00:00,000
+Now it's a string, so notice my first argument is not a string, it's a const char star, a C style string.
+
+195
+00:00:00,000 --> 00:00:00,000
+So when I call write, I have to pass modified file
+
+196
+00:00:00,000 --> 00:00:00,000
+C_str to turn it into a C string.
+
+197
+00:00:00,000 --> 00:00:00,000
+I need to pass the width, the height, the channels,
+
+198
+00:00:00,000 --> 00:00:00,000
+the data,
+
+199
+00:00:00,000 --> 00:00:00,000
+remember that pointer we didn't change,
+
+200
+00:00:00,000 --> 00:00:00,000
+and for this png files we need to pass the stride in bytes.
+
+201
+00:00:00,000 --> 00:00:00,000
+In other words, how long is a row?
+
+202
+00:00:00,000 --> 00:00:00,000
+And the row is, each row will be width long times the number of channels.
+
+203
+00:00:00,000 --> 00:00:00,000
+So times four in this case.
+
+204
+00:00:00,000 --> 00:00:00,000
+Okay, so if that's true, if that's true,
+
+205
+00:00:00,000 --> 00:00:00,000
+we're going to write out cout, saved file, saved posterized file,
+
+206
+00:00:00,000 --> 00:00:00,000
+saved modification in modified file.
+
+207
+00:00:00,000 --> 00:00:00,000
+Else, Sierre did not write data in modified file.
+
+208
+00:00:00,000 --> 00:00:00,000
+Okay, regardless of whether we saved it, regardless of whether we saved it,
+
+209
+00:00:00,000 --> 00:00:00,000
+we're going to need to free the memory.
+
+210
+00:00:00,000 --> 00:00:00,000
+To free the memory, use the function stbiImageFree,
+
+211
+00:00:00,000 --> 00:00:00,000
+and we pass in the original pointer we originally got from using the memory.
+
+212
+00:00:00,000 --> 00:00:00,000
+Okay, you ready to try it?
+
+213
+00:00:00,000 --> 00:00:00,000
+Let's go ahead and open a shell.
+
+214
+00:00:00,000 --> 00:00:00,000
+I'm going to do make run,
+
+215
+00:00:00,000 --> 00:00:00,000
+and it didn't compile, so I've made some syntax errors.
+
+216
+00:00:00,000 --> 00:00:00,000
+Let's go fix those first.
+
+217
+00:00:00,000 --> 00:00:00,000
+Okay, so I'm going to guess that these aren't a problem.
+
+218
+00:00:00,000 --> 00:00:00,000
+I'm going to hope they're not a problem.
+
+219
+00:00:00,000 --> 00:00:00,000
+Okay, so these probably only showed up because of my problem here.
+
+220
+00:00:00,000 --> 00:00:00,000
+So in line 38, when you have errors like this, just scroll down until you find some code that you've actually written,
+
+221
+00:00:00,000 --> 00:00:00,000
+like posterize.cpp on line 38,
+
+222
+00:00:00,000 --> 00:00:00,000
+and that problem is because I put the pointer in the wrong place.
+
+223
+00:00:00,000 --> 00:00:00,000
+So it's a const data is a const pointer to a char,
+
+224
+00:00:00,000 --> 00:00:00,000
+and the pointer cannot go to the other half.
+
+225
+00:00:00,000 --> 00:00:00,000
+Okay, let's save that and do make again, just make sure it compiles.
+
+226
+00:00:00,000 --> 00:00:00,000
+Oh, a bunch more errors.
+
+227
+00:00:00,000 --> 00:00:00,000
+And if these errors occur in...
+
+228
+00:00:00,000 --> 00:00:00,000
+Okay, I'm going to pause this right now while I go look this up, because I don't expect you to have this problem.
+
+229
+00:00:00,000 --> 00:00:00,000
+Okay, folks, I'm back.
+
+230
+00:00:00,000 --> 00:00:00,000
+We had a problem on the make file. I'm doing this in late spring, just before the summer starts,
+
+231
+00:00:00,000 --> 00:00:00,000
+and apparently they changed one of the versions of the files we're using, so I had to change the make file.
+
+232
+00:00:00,000 --> 00:00:00,000
+So I'm going to do make run again.
+
+233
+00:00:00,000 --> 00:00:00,000
+You guys will never see this when you actually do it, because I will change the make file before you get the starter code.
+
+234
+00:00:00,000 --> 00:00:00,000
+And it's going to ask me...
+
+235
+00:00:00,000 --> 00:00:00,000
+STBI write 3. Okay, I'm stopping again. I'm going to try and fix that.
+
+236
+00:00:00,000 --> 00:00:00,000
+Okay, that was an error with my code. It should not be STBI write. That's probably the reason I got all the errors.
+
+237
+00:00:00,000 --> 00:00:00,000
+It's STBI write PNG.
+
+238
+00:00:00,000 --> 00:00:00,000
+I should have just copied it from up here instead of just typing it myself.
+
+239
+00:00:00,000 --> 00:00:00,000
+Okay, so now let's try it.
+
+240
+00:00:00,000 --> 00:00:00,000
+Make run.
+
+241
+00:00:00,000 --> 00:00:00,000
+So I'm going to open Steve.png.
+
+242
+00:00:00,000 --> 00:00:00,000
+And it saved my modification in images.
+
+243
+00:00:00,000 --> 00:00:00,000
+Posterized Steve.png.
+
+244
+00:00:00,000 --> 00:00:00,000
+So here was the original Steve that I showed you before.
+
+245
+00:00:00,000 --> 00:00:00,000
+And here's the posterized version of it.
+
+246
+00:00:00,000 --> 00:00:00,000
+So here's posterized Steve.
+
+247
+00:00:00,000 --> 00:00:00,000
+So Steve and posterized Steve.
+
+248
+00:00:00,000 --> 00:00:00,000
+Okay, so that worked.
+
+249
+00:00:00,000 --> 00:00:00,000
+Boy, that was kind of frustrating. It took me a little bit of time to figure out what was actually going on there.
+
+250
+00:00:00,000 --> 00:00:00,000
+Okay.
+
+251
+00:00:00,000 --> 00:00:00,000
+So pretty neat. Can I go ahead and flip this as...
+
+252
+00:00:00,000 --> 00:00:00,000
+Yeah, so I can see them side by side there. That's kind of neat.
+
+253
+00:00:00,000 --> 00:00:00,000
+Alright, so let's go on.
+
+254
+00:00:00,000 --> 00:00:00,000
+Again, that was all caused by user error. My problem.
+
+255
+00:00:00,000 --> 00:00:00,000
+So we're going to do a second one in B.
+
+256
+00:00:00,000 --> 00:00:00,000
+We're going to convert an image to its grayscale value.
+
+257
+00:00:00,000 --> 00:00:00,000
+And with STBI load. So let's look at B here.
+
+258
+00:00:00,000 --> 00:00:00,000
+So notice we have the same starter here.
+
+259
+00:00:00,000 --> 00:00:00,000
+I have a type alias so I don't have to keep typing unsigned char.
+
+260
+00:00:00,000 --> 00:00:00,000
+I've loaded the image instead of width, height, and bytes per pixel, I've used W and H.
+
+261
+00:00:00,000 --> 00:00:00,000
+And I'm loading the specific image here and I'm hard coding in the channels.
+
+262
+00:00:00,000 --> 00:00:00,000
+So I'm doing this part that we did in the last one by hand.
+
+263
+00:00:00,000 --> 00:00:00,000
+And at the bottom I've got the right part and that's working okay.
+
+264
+00:00:00,000 --> 00:00:00,000
+And I'm freeing the data down here already.
+
+265
+00:00:00,000 --> 00:00:00,000
+So I want to convert this image to a grayscale value.
+
+266
+00:00:00,000 --> 00:00:00,000
+And with the way we did the previous problem, we were processing it a character at a time.
+
+267
+00:00:00,000 --> 00:00:00,000
+So let's go back and just look at that code just briefly.
+
+268
+00:00:00,000 --> 00:00:00,000
+So I'm going to look in A at posterize. Not the images.
+
+269
+00:00:00,000 --> 00:00:00,000
+Posterize.cpp
+
+270
+00:00:00,000 --> 00:00:00,000
+And you'll notice in here when I'm processing that, I'm processing all four pieces one piece at a time.
+
+271
+00:00:00,000 --> 00:00:00,000
+Wouldn't it be nice if I could process this whole thing as one pixel instead of the red part of pixel one, the blue part of pixel one, the green part of pixel one, and so forth.
+
+272
+00:00:00,000 --> 00:00:00,000
+And we can actually do that and that's what we're going to do in grayscale.
+
+273
+00:00:00,000 --> 00:00:00,000
+So when we call STBI load we get a pointer to an unsigned char.
+
+274
+00:00:00,000 --> 00:00:00,000
+We can store all that data in a pixel by creating a pixel structure.
+
+275
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and do that here.
+
+276
+00:00:00,000 --> 00:00:00,000
+We'll create a pixel structure here. So struct pixel.
+
+277
+00:00:00,000 --> 00:00:00,000
+And it's going to take a Uchar red, green, blue, and alpha.
+
+278
+00:00:00,000 --> 00:00:00,000
+So we can cut and remember the semicolon at the end of the structure definition.
+
+279
+00:00:00,000 --> 00:00:00,000
+Now I can create a pixel pointer.
+
+280
+00:00:00,000 --> 00:00:00,000
+So I'm going to create a pixel pointer here.
+
+281
+00:00:00,000 --> 00:00:00,000
+Pointer beg equals data.
+
+282
+00:00:00,000 --> 00:00:00,000
+Now when we try and compile this, let me go ahead and open a shell on B.
+
+283
+00:00:00,000 --> 00:00:00,000
+When I try and compile this with make
+
+284
+00:00:00,000 --> 00:00:00,000
+I'm still getting my missing field initializers here.
+
+285
+00:00:00,000 --> 00:00:00,000
+Ok, so what I'm going to do is I'm going to change the makefile on this one as well.
+
+286
+00:00:00,000 --> 00:00:00,000
+And again this will be fixed before you guys get to it.
+
+287
+00:00:00,000 --> 00:00:00,000
+So 18 A and B need to be fixed.
+
+288
+00:00:00,000 --> 00:00:00,000
+I get this error.
+
+289
+00:00:00,000 --> 00:00:00,000
+So this error tells me I cannot convert an unsigned char pointer to a pixel pointer when I initialize it.
+
+290
+00:00:00,000 --> 00:00:00,000
+And so what we need to do is we need to use a special cast called a reinterpret cast
+
+291
+00:00:00,000 --> 00:00:00,000
+to tell the compiler to look at data four pixels at a time instead of one pixel at a time.
+
+292
+00:00:00,000 --> 00:00:00,000
+Four pixels at a time instead of one pixel at a time.
+
+293
+00:00:00,000 --> 00:00:00,000
+And so what I'm going to do is I'm going to say reinterpret that pointer as a pixel pointer.
+
+294
+00:00:00,000 --> 00:00:00,000
+And now my code will compile.
+
+295
+00:00:00,000 --> 00:00:00,000
+Now my code will compile.
+
+296
+00:00:00,000 --> 00:00:00,000
+Now you remember address arithmetic is how we got the end pointer.
+
+297
+00:00:00,000 --> 00:00:00,000
+Address arithmetic is a pointer plus an integer gives me a new address.
+
+298
+00:00:00,000 --> 00:00:00,000
+The end is expressed now not in terms of bytes but pixel in our case.
+
+299
+00:00:00,000 --> 00:00:00,000
+That means we don't need to use the bytes per pixel to create a new pointer named end.
+
+300
+00:00:00,000 --> 00:00:00,000
+We can just do it directly.
+
+301
+00:00:00,000 --> 00:00:00,000
+So pixel pointer end equals beg plus, now notice not data.
+
+302
+00:00:00,000 --> 00:00:00,000
+It has to be beg because we want to add to this pointer beg plus width times height.
+
+303
+00:00:00,000 --> 00:00:00,000
+Notice we don't need to multiply it like we did in the previous program.
+
+304
+00:00:00,000 --> 00:00:00,000
+So now we're going to use an iterator loop to process each pixel.
+
+305
+00:00:00,000 --> 00:00:00,000
+So while beg not equal to end just like we did in the previous one.
+
+306
+00:00:00,000 --> 00:00:00,000
+And at the end we're going to do beg plus plus.
+
+307
+00:00:00,000 --> 00:00:00,000
+So that's going to process a pixel at a time.
+
+308
+00:00:00,000 --> 00:00:00,000
+I don't need four beg plus pluses to go through that.
+
+309
+00:00:00,000 --> 00:00:00,000
+So this will process each pixel.
+
+310
+00:00:00,000 --> 00:00:00,000
+We're going to increment the pointer to go to the next pixel.
+
+311
+00:00:00,000 --> 00:00:00,000
+Now we're going to take that image and we're going to grayscale it.
+
+312
+00:00:00,000 --> 00:00:00,000
+So I'm going to write two functions.
+
+313
+00:00:00,000 --> 00:00:00,000
+I'm going to copy this 38, line 38 and 39.
+
+314
+00:00:00,000 --> 00:00:00,000
+And I'm going to go up here.
+
+315
+00:00:00,000 --> 00:00:00,000
+It doesn't actually tell me where to write those functions so I'm going to write those here.
+
+316
+00:00:00,000 --> 00:00:00,000
+So my average function is going to take a pixel by reference.
+
+317
+00:00:00,000 --> 00:00:00,000
+So void average pixel reference p.
+
+318
+00:00:00,000 --> 00:00:00,000
+And my luminance function, and I've spelled luminance wrong.
+
+319
+00:00:00,000 --> 00:00:00,000
+I'm going to try and correct that before you guys see that.
+
+320
+00:00:00,000 --> 00:00:00,000
+My luminance function is going to take a pixel pointer p.
+
+321
+00:00:00,000 --> 00:00:00,000
+So I just want you to see how these two functions work.
+
+322
+00:00:00,000 --> 00:00:00,000
+So we've already incremented the beg pointer to point to the next pixel.
+
+323
+00:00:00,000 --> 00:00:00,000
+The type of the pointer determines how far the pointer moves.
+
+324
+00:00:00,000 --> 00:00:00,000
+An unsigned char moves only one byte.
+
+325
+00:00:00,000 --> 00:00:00,000
+And pixel pointer moves the size of a pixel or four bytes.
+
+326
+00:00:00,000 --> 00:00:00,000
+Now if we have a pointer to a pixel, we access the structure members using pointer to member.
+
+327
+00:00:00,000 --> 00:00:00,000
+So beg arrow red not star beg red.
+
+328
+00:00:00,000 --> 00:00:00,000
+So we're going to pass each pixel to our two grayscale functions, average and luminance.
+
+329
+00:00:00,000 --> 00:00:00,000
+First one by reference and the second one by address.
+
+330
+00:00:00,000 --> 00:00:00,000
+And then I'm going to write one using average and one using luminance.
+
+331
+00:00:00,000 --> 00:00:00,000
+And I'm going to manually change the name of the files so you can compare.
+
+332
+00:00:00,000 --> 00:00:00,000
+So the average is going to look like this.
+
+333
+00:00:00,000 --> 00:00:00,000
+Int average, I'll call it ADG, equals p red plus p blue plus p green.
+
+334
+00:00:00,000 --> 00:00:00,000
+Doesn't make any difference which order I put them in.
+
+335
+00:00:00,000 --> 00:00:00,000
+All divided by three.
+
+336
+00:00:00,000 --> 00:00:00,000
+That's the average.
+
+337
+00:00:00,000 --> 00:00:00,000
+Now what I want to do is I want to set those back to the average.
+
+338
+00:00:00,000 --> 00:00:00,000
+So p red equals p green equals p blue equals the average.
+
+339
+00:00:00,000 --> 00:00:00,000
+So we're assigning average to p blue.
+
+340
+00:00:00,000 --> 00:00:00,000
+We're assigning the result of that to p green and the result of that to p red.
+
+341
+00:00:00,000 --> 00:00:00,000
+So that's going to be the average.
+
+342
+00:00:00,000 --> 00:00:00,000
+So let's go ahead and for each pixel let's just say average.
+
+343
+00:00:00,000 --> 00:00:00,000
+And I want the pixel so I'm going to get the pixel by star beg.
+
+344
+00:00:00,000 --> 00:00:00,000
+Star beg, that's a pixel pointer.
+
+345
+00:00:00,000 --> 00:00:00,000
+I'm going to get the average by star beg.
+
+346
+00:00:00,000 --> 00:00:00,000
+Ok, let's run it.
+
+347
+00:00:00,000 --> 00:00:00,000
+So let me open a terminal again on it.
+
+348
+00:00:00,000 --> 00:00:00,000
+I guess I closed my terminal.
+
+349
+00:00:00,000 --> 00:00:00,000
+Let me close the other terminals I have open here.
+
+350
+00:00:00,000 --> 00:00:00,000
+And we'll do make run.
+
+351
+00:00:00,000 --> 00:00:00,000
+Ok, variable or field average declared void.
+
+352
+00:00:00,000 --> 00:00:00,000
+My problem there, of course, is that I put my two functions here
+
+353
+00:00:00,000 --> 00:00:00,000
+when they needed to go after my structure.
+
+354
+00:00:00,000 --> 00:00:00,000
+Let's say make run.
+
+355
+00:00:00,000 --> 00:00:00,000
+Ok, so images grayscale.png.
+
+356
+00:00:00,000 --> 00:00:00,000
+And so let's look in images.
+
+357
+00:00:00,000 --> 00:00:00,000
+Here's our original picture, billiards.
+
+358
+00:00:00,000 --> 00:00:00,000
+And here's the grayscale version of that.
+
+359
+00:00:00,000 --> 00:00:00,000
+So let's rename this.
+
+360
+00:00:00,000 --> 00:00:00,000
+So just right click and do rename.
+
+361
+00:00:00,000 --> 00:00:00,000
+Or you can press F2.
+
+362
+00:00:00,000 --> 00:00:00,000
+And let's change that to average.png.
+
+363
+00:00:00,000 --> 00:00:00,000
+Ok, now let's go back to our code.
+
+364
+00:00:00,000 --> 00:00:00,000
+And for the luminance we're going to use these values.
+
+365
+00:00:00,000 --> 00:00:00,000
+Now this is to make sure that the color averages reflect the sensitivity of our eyes.
+
+366
+00:00:00,000 --> 00:00:00,000
+And so we're going to say int average equals static cast int.
+
+367
+00:00:00,000 --> 00:00:00,000
+And then p, notice we have a pointer, p arrow red times .299 plus p arrow green times .587 plus p arrow blue times .114.
+
+368
+00:00:00,000 --> 00:00:00,000
+And now we're simply going to do the same thing that we did on line 27.
+
+369
+00:00:00,000 --> 00:00:00,000
+But instead of using the dot, because p is a pointer in this one, we're going to use the arrow here to do this.
+
+370
+00:00:00,000 --> 00:00:00,000
+Ok, so there's the luminance version.
+
+371
+00:00:00,000 --> 00:00:00,000
+Ok, now let's just run it once again.
+
+372
+00:00:00,000 --> 00:00:00,000
+So make run.
+
+373
+00:00:00,000 --> 00:00:00,000
+It's going to save the image in grayscale.png.
+
+374
+00:00:00,000 --> 00:00:00,000
+So in images, grayscale.png.
+
+375
+00:00:00,000 --> 00:00:00,000
+We're going to select it, press F2 or right click and rename.
+
+376
+00:00:00,000 --> 00:00:00,000
+I'm going to name this luminance.
+
+377
+00:00:00,000 --> 00:00:00,000
+And here's the luminance version.
+
+378
+00:00:00,000 --> 00:00:00,000
+So let's look at the luminance and look at the average.
+
+379
+00:00:00,000 --> 00:00:00,000
+And right click.
+
+380
+00:00:00,000 --> 00:00:00,000
+So there's the average.png and let's look at the luminance.png.
+
+381
+00:00:00,000 --> 00:00:00,000
+Ok, and what you'll notice is that the colors that were red and, actually both those look exactly the same, don't they?
+
+382
+00:00:00,000 --> 00:00:00,000
+Oh, you know why they look the same?
+
+383
+00:00:00,000 --> 00:00:00,000
+Because I'm calling average in both cases.
+
+384
+00:00:00,000 --> 00:00:00,000
+So let's go back to our code here now.
+
+385
+00:00:00,000 --> 00:00:00,000
+And comment out where to call the average.
+
+386
+00:00:00,000 --> 00:00:00,000
+And now call luminance.
+
+387
+00:00:00,000 --> 00:00:00,000
+Spell it right here.
+
+388
+00:00:00,000 --> 00:00:00,000
+And let's pass in big this time.
+
+389
+00:00:00,000 --> 00:00:00,000
+So notice this time we don't dereference it because the luminance function takes a pointer.
+
+390
+00:00:00,000 --> 00:00:00,000
+Let's run it. Let's delete our luminance.png before because it was really the wrong one.
+
+391
+00:00:00,000 --> 00:00:00,000
+Let's run it again. Make run.
+
+392
+00:00:00,000 --> 00:00:00,000
+Let's go over and rename this.
+
+393
+00:00:00,000 --> 00:00:00,000
+And let's open up a terminal there.
+
+394
+00:00:00,000 --> 00:00:00,000
+And let's open up average.
+
+395
+00:00:00,000 --> 00:00:00,000
+So I have the average and the luminance.
+
+396
+00:00:00,000 --> 00:00:00,000
+So here's what I want you to see.
+
+397
+00:00:00,000 --> 00:00:00,000
+Actually, let's look at the billiards.png.
+
+398
+00:00:00,000 --> 00:00:00,000
+Maybe we can open it in three things.
+
+399
+00:00:00,000 --> 00:00:00,000
+So there's the billiards.
+
+400
+00:00:00,000 --> 00:00:00,000
+Let's open this one and change that to average.
+
+401
+00:00:00,000 --> 00:00:00,000
+Ok, so that's nice.
+
+402
+00:00:00,000 --> 00:00:00,000
+Let's close that so we can see them a little better.
+
+403
+00:00:00,000 --> 00:00:00,000
+Let's move that over there so we can see them a little better.
+
+404
+00:00:00,000 --> 00:00:00,000
+What we want to look at is our eyes are more sensitive to green light than they are to red light.
+
+405
+00:00:00,000 --> 00:00:00,000
+So you notice in the color pictures, notice that these green balls, 14 and I can't see what the other number is, right in the middle there,
+
+406
+00:00:00,000 --> 00:00:00,000
+appear lighter than the red ones over here or the blue ones.
+
+407
+00:00:00,000 --> 00:00:00,000
+The blue ones appear darkest.
+
+408
+00:00:00,000 --> 00:00:00,000
+And when we average them, notice how the blue ones become light and the two green ones become very, very dark.
+
+409
+00:00:00,000 --> 00:00:00,000
+And so by adjusting to the sensitivity of our light, we get a picture that is more like the luminance over here, the picture over here.
+
+410
+00:00:00,000 --> 00:00:00,000
+Notice how the blue appears relatively dark, the green appears light, just like it normally appears to our eyes.
+
+411
+00:00:00,000 --> 00:00:00,000
+Ok, so this kind of took a long time. I hope when you guys do it, it actually won't take you that much time
+
+412
+00:00:00,000 --> 00:00:00,000
+because I don't think you're going to run into the same problems I had because I'm going to go right now
+
+413
+00:00:00,000 --> 00:00:00,000
+and I'm going to fix the starter code so you don't end up with those problems.
+
+414
+00:00:00,000 --> 00:00:00,000
+Ok, I'll see you next time for lecture 19.
+

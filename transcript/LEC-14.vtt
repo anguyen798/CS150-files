@@ -1,0 +1,2687 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:00.000
+ Hello again everyone, this is Steve Gilbert.
+
+00:00:00.000 --> 00:00:00.000
+ Welcome to Lecture 14, where we're going to talk
+
+00:00:00.000 --> 00:00:00.000
+ about exceptions and templates.
+
+00:00:00.000 --> 00:00:00.000
+ So in Lecture 13, we talked about assumptions.
+
+00:00:00.000 --> 00:00:00.000
+ Assumptions are things that you believe should be true.
+
+00:00:00.000 --> 00:00:00.000
+ So when you write a function, you assume certain things
+
+00:00:00.000 --> 00:00:00.000
+ about the inputs.
+
+00:00:00.000 --> 00:00:00.000
+ When you write a function, you assume certain things
+
+00:00:00.000 --> 00:00:00.000
+ about the output.
+
+00:00:00.000 --> 00:00:00.000
+ We call those preconditions and postconditions.
+
+00:00:00.000 --> 00:00:00.000
+ So a precondition is something that's true about the inputs,
+
+00:00:00.000 --> 00:00:00.000
+ and a postcondition is something that should
+
+00:00:00.000 --> 00:00:00.000
+ be true about the outputs.
+
+00:00:00.000 --> 00:00:00.000
+ Now, when we write these preconditions
+
+00:00:00.000 --> 00:00:00.000
+ and postconditions, we use some doxygen tags
+
+00:00:00.000 --> 00:00:00.000
+ to document them so that people who call your function
+
+00:00:00.000 --> 00:00:00.000
+ know what to expect.
+
+00:00:00.000 --> 00:00:00.000
+ So for instance, for the square root function,
+
+00:00:00.000 --> 00:00:00.000
+ they should know that n should be greater or equal to 0.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, if you pass a negative number to square root,
+
+00:00:00.000 --> 00:00:00.000
+ you are not going to get the expected output.
+
+00:00:00.000 --> 00:00:00.000
+ The postcondition and the @return tags
+
+00:00:00.000 --> 00:00:00.000
+ are going to tell you what you should expect to return.
+
+00:00:00.000 --> 00:00:00.000
+ So you can use @return and @post kind of interchangeably
+
+00:00:00.000 --> 00:00:00.000
+ to talk about the return value.
+
+00:00:00.000 --> 00:00:00.000
+ You'd use things like @exception.
+
+00:00:00.000 --> 00:00:00.000
+ Now, you can use @post to tell what
+
+00:00:00.000 --> 00:00:00.000
+ should happen if the precondition is violated.
+
+00:00:00.000 --> 00:00:00.000
+ So what is @post for square root?
+
+00:00:00.000 --> 00:00:00.000
+ Well, @post for square root is it
+
+00:00:00.000 --> 00:00:00.000
+ will return not a number in that case
+
+00:00:00.000 --> 00:00:00.000
+ if you violate the precondition.
+
+00:00:00.000 --> 00:00:00.000
+ So we have five things we can do with a precondition violation.
+
+00:00:00.000 --> 00:00:00.000
+ First, we could try and fix it.
+
+00:00:00.000 --> 00:00:00.000
+ So think again about square root.
+
+00:00:00.000 --> 00:00:00.000
+ If you were writing the square root function,
+
+00:00:00.000 --> 00:00:00.000
+ you might decide if you get a negative number,
+
+00:00:00.000 --> 00:00:00.000
+ you'll just return 0 in that case.
+
+00:00:00.000 --> 00:00:00.000
+ Now, that would fix the problem of getting not a number, which
+
+00:00:00.000 --> 00:00:00.000
+ is what they actually do in the square root function.
+
+00:00:00.000 --> 00:00:00.000
+ But it wouldn't really return the right answer.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, you'd be giving it the wrong answer.
+
+00:00:00.000 --> 00:00:00.000
+ The square root of minus 1 is not 0.
+
+00:00:00.000 --> 00:00:00.000
+ And so we generally don't want to do that.
+
+00:00:00.000 --> 00:00:00.000
+ Although, when you're first programming,
+
+00:00:00.000 --> 00:00:00.000
+ frequently you're taught to think about what
+
+00:00:00.000 --> 00:00:00.000
+ will happen if this happens.
+
+00:00:00.000 --> 00:00:00.000
+ So let's make sure that it doesn't crash and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ But we really don't want to do that.
+
+00:00:00.000 --> 00:00:00.000
+ Secondly, we can terminate with an error message.
+
+00:00:00.000 --> 00:00:00.000
+ So just stop the program when the error occurs
+
+00:00:00.000 --> 00:00:00.000
+ and stop.
+
+00:00:00.000 --> 00:00:00.000
+ Now, sometimes we want to do that,
+
+00:00:00.000 --> 00:00:00.000
+ and sometimes we don't want to do that.
+
+00:00:00.000 --> 00:00:00.000
+ For instance, we certainly wouldn't
+
+00:00:00.000 --> 00:00:00.000
+ want to do that if someone types in the wrong URL
+
+00:00:00.000 --> 00:00:00.000
+ in your web browser.
+
+00:00:00.000 --> 00:00:00.000
+ You wouldn't want to terminate and say, sorry,
+
+00:00:00.000 --> 00:00:00.000
+ Chrome's decided you've typed in the wrong URL.
+
+00:00:00.000 --> 00:00:00.000
+ We're not going to send you to that page.
+
+00:00:00.000 --> 00:00:00.000
+ But sometimes that's the right thing to do.
+
+00:00:00.000 --> 00:00:00.000
+ If your program discovers an error that's
+
+00:00:00.000 --> 00:00:00.000
+ going to propagate further and further and further
+
+00:00:00.000 --> 00:00:00.000
+ inside your code-- in other words,
+
+00:00:00.000 --> 00:00:00.000
+ if one of the preconditions is violated,
+
+00:00:00.000 --> 00:00:00.000
+ the program continuing to run is not really a good idea.
+
+00:00:00.000 --> 00:00:00.000
+ And so if the problem is caused by a mistake
+
+00:00:00.000 --> 00:00:00.000
+ that you have made in your programming-- in other words,
+
+00:00:00.000 --> 00:00:00.000
+ something that you logically believe should be true--
+
+00:00:00.000 --> 00:00:00.000
+ you do want to terminate.
+
+00:00:00.000 --> 00:00:00.000
+ And I'll talk about how you do that in a second.
+
+00:00:00.000 --> 00:00:00.000
+ Thirdly, we could return an error code.
+
+00:00:00.000 --> 00:00:00.000
+ And that's kind of what square root does.
+
+00:00:00.000 --> 00:00:00.000
+ Square root returns a non-valid number
+
+00:00:00.000 --> 00:00:00.000
+ if its precondition is violated.
+
+00:00:00.000 --> 00:00:00.000
+ It returns a special number called not a number.
+
+00:00:00.000 --> 00:00:00.000
+ You could throw an exception, which allows the programmer
+
+00:00:00.000 --> 00:00:00.000
+ to catch it.
+
+00:00:00.000 --> 00:00:00.000
+ Now, you can't do anything about what square root returns.
+
+00:00:00.000 --> 00:00:00.000
+ But if a function throws an exception, like s2i,
+
+00:00:00.000 --> 00:00:00.000
+ you could actually catch it.
+
+00:00:00.000 --> 00:00:00.000
+ Or finally, we could ignore the problem altogether
+
+00:00:00.000 --> 00:00:00.000
+ and just hope for the best.
+
+00:00:00.000 --> 00:00:00.000
+ So we obviously don't want to ignore it.
+
+00:00:00.000 --> 00:00:00.000
+ We generally don't want to fix it silently,
+
+00:00:00.000 --> 00:00:00.000
+ unless the fix is just immaterial,
+
+00:00:00.000 --> 00:00:00.000
+ like for something in the user interface that
+
+00:00:00.000 --> 00:00:00.000
+ wouldn't be that big a deal.
+
+00:00:00.000 --> 00:00:00.000
+ So that leaves us with these three--
+
+00:00:00.000 --> 00:00:00.000
+ terminate with an error message, return an error code,
+
+00:00:00.000 --> 00:00:00.000
+ throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ So as I mentioned in the last lecture,
+
+00:00:00.000 --> 00:00:00.000
+ if you have a programming error, we
+
+00:00:00.000 --> 00:00:00.000
+ want to use a statement called assert, which terminates
+
+00:00:00.000 --> 00:00:00.000
+ and tells you what line the error occurred on.
+
+00:00:00.000 --> 00:00:00.000
+ So for instance, if I'm writing a function sum
+
+00:00:00.000 --> 00:00:00.000
+ between lower and upper, any time
+
+00:00:00.000 --> 00:00:00.000
+ that function is called with a lower that
+
+00:00:00.000 --> 00:00:00.000
+ is greater than upper, I have an error that won't make sense.
+
+00:00:00.000 --> 00:00:00.000
+ Now, if I returned 0 from that-- in other words,
+
+00:00:00.000 --> 00:00:00.000
+ if I kind of fixed it silently, or I wrote my algorithm
+
+00:00:00.000 --> 00:00:00.000
+ so the function returns 0 when lower was greater than upper--
+
+00:00:00.000 --> 00:00:00.000
+ I really have a programming error.
+
+00:00:00.000 --> 00:00:00.000
+ And I haven't found that error.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, I'm calling the function
+
+00:00:00.000 --> 00:00:00.000
+ when lower is greater than upper.
+
+00:00:00.000 --> 00:00:00.000
+ And I really kind of didn't want that to happen.
+
+00:00:00.000 --> 00:00:00.000
+ So you might decide, this logically can never happen.
+
+00:00:00.000 --> 00:00:00.000
+ If I call the function with lower greater than upper,
+
+00:00:00.000 --> 00:00:00.000
+ I've made a mistake.
+
+00:00:00.000 --> 00:00:00.000
+ And so I would like the program to automatically stop
+
+00:00:00.000 --> 00:00:00.000
+ when that occurs and tell me, Steve,
+
+00:00:00.000 --> 00:00:00.000
+ you've made a mistake on line 42 in foo.cpp.
+
+00:00:00.000 --> 00:00:00.000
+ And so that's what the assert statement does.
+
+00:00:00.000 --> 00:00:00.000
+ It allows you to put in statements
+
+00:00:00.000 --> 00:00:00.000
+ that enforce the logic that you're
+
+00:00:00.000 --> 00:00:00.000
+ trying to put inside your code.
+
+00:00:00.000 --> 00:00:00.000
+ Commercial code is literally littered with assertions.
+
+00:00:00.000 --> 00:00:00.000
+ One of the nice things about assertions
+
+00:00:00.000 --> 00:00:00.000
+ is that when you're developing the code,
+
+00:00:00.000 --> 00:00:00.000
+ you can put them in, check your bugs,
+
+00:00:00.000 --> 00:00:00.000
+ when you're testing it and running it.
+
+00:00:00.000 --> 00:00:00.000
+ And then when you ship your code, you can remove them.
+
+00:00:00.000 --> 00:00:00.000
+ So you're not having the overhead of the if statements
+
+00:00:00.000 --> 00:00:00.000
+ that the assert statement generates.
+
+00:00:00.000 --> 00:00:00.000
+ All right, so let's talk about the other kinds of errors,
+
+00:00:00.000 --> 00:00:00.000
+ though--
+
+00:00:00.000 --> 00:00:00.000
+ errors that are not caused by you, the programmer,
+
+00:00:00.000 --> 00:00:00.000
+ errors caused by exceptional but anticipated circumstances.
+
+00:00:00.000 --> 00:00:00.000
+ If you live in the Arctic and you live in an igloo,
+
+00:00:00.000 --> 00:00:00.000
+ you should expect that at some time
+
+00:00:00.000 --> 00:00:00.000
+ you're going to see a polar bear at your front door.
+
+00:00:00.000 --> 00:00:00.000
+ You should anticipate that.
+
+00:00:00.000 --> 00:00:00.000
+ It's exceptional.
+
+00:00:00.000 --> 00:00:00.000
+ That's not the normal.
+
+00:00:00.000 --> 00:00:00.000
+ But you should anticipate it.
+
+00:00:00.000 --> 00:00:00.000
+ What kind of things can we anticipate when programming?
+
+00:00:00.000 --> 00:00:00.000
+ Well, is the user ever going to type in a file name
+
+00:00:00.000 --> 00:00:00.000
+ incorrectly?
+
+00:00:00.000 --> 00:00:00.000
+ Sure.
+
+00:00:00.000 --> 00:00:00.000
+ Is the disk ever going to be full when
+
+00:00:00.000 --> 00:00:00.000
+ you're saving a file?
+
+00:00:00.000 --> 00:00:00.000
+ Sure.
+
+00:00:00.000 --> 00:00:00.000
+ Now, those kinds of errors, we could just
+
+00:00:00.000 --> 00:00:00.000
+ return an error code.
+
+00:00:00.000 --> 00:00:00.000
+ But the problem with an error code
+
+00:00:00.000 --> 00:00:00.000
+ is the user or the programmer has to check the error code.
+
+00:00:00.000 --> 00:00:00.000
+ These are a little more serious.
+
+00:00:00.000 --> 00:00:00.000
+ If the disk is full when saving a file,
+
+00:00:00.000 --> 00:00:00.000
+ you simply can't go on.
+
+00:00:00.000 --> 00:00:00.000
+ You'll lose data.
+
+00:00:00.000 --> 00:00:00.000
+ If the user types a file name incorrectly,
+
+00:00:00.000 --> 00:00:00.000
+ the program simply won't work.
+
+00:00:00.000 --> 00:00:00.000
+ And so an exception is for something
+
+00:00:00.000 --> 00:00:00.000
+ that you want to handle and you want to force yourself
+
+00:00:00.000 --> 00:00:00.000
+ to handle, or you want to force programmers
+
+00:00:00.000 --> 00:00:00.000
+ using your class to handle.
+
+00:00:00.000 --> 00:00:00.000
+ This should be handled by throwing an exception.
+
+00:00:00.000 --> 00:00:00.000
+ So you all know how functions work.
+
+00:00:00.000 --> 00:00:00.000
+ Functions take inputs, they process the inputs,
+
+00:00:00.000 --> 00:00:00.000
+ and they produce an output.
+
+00:00:00.000 --> 00:00:00.000
+ They return that output.
+
+00:00:00.000 --> 00:00:00.000
+ But actually, functions have a second way of returning.
+
+00:00:00.000 --> 00:00:00.000
+ So you can think of the return the normal channel,
+
+00:00:00.000 --> 00:00:00.000
+ but the exception is a back channel.
+
+00:00:00.000 --> 00:00:00.000
+ So we can say, if the program normally works--
+
+00:00:00.000 --> 00:00:00.000
+ and let's use the function called s2i.
+
+00:00:00.000 --> 00:00:00.000
+ s2i takes a string and returns an integer,
+
+00:00:00.000 --> 00:00:00.000
+ just like our parseInt function we're going to write today does.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to write a version of s2i.
+
+00:00:00.000 --> 00:00:00.000
+ And if I pass--
+
+00:00:00.000 --> 00:00:00.000
+ that stands for string to integer.
+
+00:00:00.000 --> 00:00:00.000
+ If I pass the string that contains the character 1,
+
+00:00:00.000 --> 00:00:00.000
+ it will convert that string to an integer and return 1.
+
+00:00:00.000 --> 00:00:00.000
+ If I pass a string that contains the word 1, the English word
+
+00:00:00.000 --> 00:00:00.000
+ 1, instead of returning the integer,
+
+00:00:00.000 --> 00:00:00.000
+ it returns via this back channel called throwing an exception.
+
+00:00:00.000 --> 00:00:00.000
+ And that exception is thrown to the function that handled it.
+
+00:00:00.000 --> 00:00:00.000
+ Actually, it's thrown not necessarily
+
+00:00:00.000 --> 00:00:00.000
+ to the function that called it, like the return statement is,
+
+00:00:00.000 --> 00:00:00.000
+ the statement that called it.
+
+00:00:00.000 --> 00:00:00.000
+ It's thrown to the nearest exception handler.
+
+00:00:00.000 --> 00:00:00.000
+ So an exception handler is a special kind
+
+00:00:00.000 --> 00:00:00.000
+ of block of code that we'll look at shortly.
+
+00:00:00.000 --> 00:00:00.000
+ Now, in C++, the throwing an exception looks like this.
+
+00:00:00.000 --> 00:00:00.000
+ If I detected an error condition,
+
+00:00:00.000 --> 00:00:00.000
+ just throw some object.
+
+00:00:00.000 --> 00:00:00.000
+ Now, again, this is similar to a return statement
+
+00:00:00.000 --> 00:00:00.000
+ from inside a function, but it doesn't
+
+00:00:00.000 --> 00:00:00.000
+ return to the calling function, but to an error handler.
+
+00:00:00.000 --> 00:00:00.000
+ If there is no error handler, then it
+
+00:00:00.000 --> 00:00:00.000
+ will keep bubbling up to the very main function
+
+00:00:00.000 --> 00:00:00.000
+ where it'll find a default handler.
+
+00:00:00.000 --> 00:00:00.000
+ And that default handler will terminate the program,
+
+00:00:00.000 --> 00:00:00.000
+ and it will look almost exactly like an assertion.
+
+00:00:00.000 --> 00:00:00.000
+ Look almost exactly like an assertion.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so you might have seen these in Java.
+
+00:00:00.000 --> 00:00:00.000
+ You may have had to handle them in Java.
+
+00:00:00.000 --> 00:00:00.000
+ And in Java, in C++, any kind of object
+
+00:00:00.000 --> 00:00:00.000
+ may be thrown as an exception.
+
+00:00:00.000 --> 00:00:00.000
+ Now, Java has a whole class hierarchy
+
+00:00:00.000 --> 00:00:00.000
+ of exceptions that are rooted in the class called throwable.
+
+00:00:00.000 --> 00:00:00.000
+ Throwable has two subclasses, error and exception.
+
+00:00:00.000 --> 00:00:00.000
+ In C++, we could throw an integer
+
+00:00:00.000 --> 00:00:00.000
+ if we wanted to catch different kinds of error codes.
+
+00:00:00.000 --> 00:00:00.000
+ So you could catch int, and then you
+
+00:00:00.000 --> 00:00:00.000
+ could check to see if it's 1, do this.
+
+00:00:00.000 --> 00:00:00.000
+ If it's 2, do that.
+
+00:00:00.000 --> 00:00:00.000
+ If it's 3, do that, and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ You could throw a C++ string.
+
+00:00:00.000 --> 00:00:00.000
+ Notice the little s after the double quotes.
+
+00:00:00.000 --> 00:00:00.000
+ We could throw a C string as well.
+
+00:00:00.000 --> 00:00:00.000
+ That would be a different kinds of things.
+
+00:00:00.000 --> 00:00:00.000
+ So we could throw a C++ string.
+
+00:00:00.000 --> 00:00:00.000
+ We could throw one of the standard library exception
+
+00:00:00.000 --> 00:00:00.000
+ classes.
+
+00:00:00.000 --> 00:00:00.000
+ So this is similar to Java with its throwable, runtime
+
+00:00:00.000 --> 00:00:00.000
+ exception, index out of bounds exception, and so forth.
+
+00:00:00.000 --> 00:00:00.000
+ We could throw an illegal argument
+
+00:00:00.000 --> 00:00:00.000
+ and construct an illegal argument object
+
+00:00:00.000 --> 00:00:00.000
+ and say that the illegal argument was A.
+
+00:00:00.000 --> 00:00:00.000
+ Now, the standard library includes, just like Java,
+
+00:00:00.000 --> 00:00:00.000
+ a variety of exception classes.
+
+00:00:00.000 --> 00:00:00.000
+ If you want to include those, you have to include a header.
+
+00:00:00.000 --> 00:00:00.000
+ They're not automatically included, just
+
+00:00:00.000 --> 00:00:00.000
+ like everything in C++.
+
+00:00:00.000 --> 00:00:00.000
+ And the most common ones are things like domain error,
+
+00:00:00.000 --> 00:00:00.000
+ the parameters outside the valid range, invalid argument,
+
+00:00:00.000 --> 00:00:00.000
+ the argument was invalid for some reason, or out of range.
+
+00:00:00.000 --> 00:00:00.000
+ The argument's not in expected range.
+
+00:00:00.000 --> 00:00:00.000
+ So that's how we throw.
+
+00:00:00.000 --> 00:00:00.000
+ That's how we signal from our function
+
+00:00:00.000 --> 00:00:00.000
+ that an error has occurred.
+
+00:00:00.000 --> 00:00:00.000
+ If we're calling the function, how do we
+
+00:00:00.000 --> 00:00:00.000
+ intercept and handle that?
+
+00:00:00.000 --> 00:00:00.000
+ And so to intercept and handle exceptions,
+
+00:00:00.000 --> 00:00:00.000
+ we do almost the same thing you would do in Java and Python.
+
+00:00:00.000 --> 00:00:00.000
+ Python has try, except, I think.
+
+00:00:00.000 --> 00:00:00.000
+ Java has try, catch.
+
+00:00:00.000 --> 00:00:00.000
+ So you place the code that can fail inside a try block.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to call the function parseInt.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to pass it a string.
+
+00:00:00.000 --> 00:00:00.000
+ That string may contain the digit 1,
+
+00:00:00.000 --> 00:00:00.000
+ but it may also contain the word 1.
+
+00:00:00.000 --> 00:00:00.000
+ And if it contains the word 1, rather than setting x
+
+00:00:00.000 --> 00:00:00.000
+ to a value at all, what we'll do is we'll throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ And any statements that follow this parseInt
+
+00:00:00.000 --> 00:00:00.000
+ will be jumped over until we get to a catch block.
+
+00:00:00.000 --> 00:00:00.000
+ So the catch block has to say what kind of exception
+
+00:00:00.000 --> 00:00:00.000
+ it's going to throw.
+
+00:00:00.000 --> 00:00:00.000
+ Now, this exception, we're going to decide what it throws.
+
+00:00:00.000 --> 00:00:00.000
+ So you catch a specific type of exception.
+
+00:00:00.000 --> 00:00:00.000
+ You always want to catch it by reference.
+
+00:00:00.000 --> 00:00:00.000
+ So in this case, if we say the argument was invalid
+
+00:00:00.000 --> 00:00:00.000
+ and we're catching that, we'd say catch invalid argument ref
+
+00:00:00.000 --> 00:00:00.000
+ e.
+
+00:00:00.000 --> 00:00:00.000
+ And then it would jump.
+
+00:00:00.000 --> 00:00:00.000
+ If it failed, it would not do the next statement.
+
+00:00:00.000 --> 00:00:00.000
+ It would jump from there to this invalid argument.
+
+00:00:00.000 --> 00:00:00.000
+ Let me close Zoom.
+
+00:00:00.000 --> 00:00:00.000
+ Keeps popping up, saying it wants me to log in.
+
+00:00:00.000 --> 00:00:00.000
+ It would jump from this parseInt when it failed.
+
+00:00:00.000 --> 00:00:00.000
+ It wouldn't assign anything to x.
+
+00:00:00.000 --> 00:00:00.000
+ And it would jump down here to this catch,
+
+00:00:00.000 --> 00:00:00.000
+ see if the exception that was thrown was this type.
+
+00:00:00.000 --> 00:00:00.000
+ If it was, it would set the exception argument,
+
+00:00:00.000 --> 00:00:00.000
+ and we would go into the exception altogether.
+
+00:00:00.000 --> 00:00:00.000
+ So let's try a couple of those exercises,
+
+00:00:00.000 --> 00:00:00.000
+ just so you get a feel for try-catch.
+
+00:00:00.000 --> 00:00:00.000
+ So these are on part A of our exercises.
+
+00:00:00.000 --> 00:00:00.000
+ There's an empty try-catch block here,
+
+00:00:00.000 --> 00:00:00.000
+ which will do the catching.
+
+00:00:00.000 --> 00:00:00.000
+ But it's up to us to redesign the code to make use of it.
+
+00:00:00.000 --> 00:00:00.000
+ Now, there's an imaginary roster of students,
+
+00:00:00.000 --> 00:00:00.000
+ which we'll pretend is dynamic, but for the purpose
+
+00:00:00.000 --> 00:00:00.000
+ of this exercise, is hard-coded.
+
+00:00:00.000 --> 00:00:00.000
+ You'll find the names in the source code.
+
+00:00:00.000 --> 00:00:00.000
+ And the roster's implemented as an unordered map.
+
+00:00:00.000 --> 00:00:00.000
+ You haven't learned how to use that,
+
+00:00:00.000 --> 00:00:00.000
+ but you really don't need to know how to use it for that.
+
+00:00:00.000 --> 00:00:00.000
+ When running the program, you're asked to enter a name.
+
+00:00:00.000 --> 00:00:00.000
+ After doing so, it will use the map
+
+00:00:00.000 --> 00:00:00.000
+ to print out the age of that student.
+
+00:00:00.000 --> 00:00:00.000
+ Unfortunately, if the user enters
+
+00:00:00.000 --> 00:00:00.000
+ a name that's not on the roster, it
+
+00:00:00.000 --> 00:00:00.000
+ is not on the roster, an exception is thrown,
+
+00:00:00.000 --> 00:00:00.000
+ which we don't handle, and the program just terminates.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to do two modifications to this.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to catch the exception so that it can least
+
+00:00:00.000 --> 00:00:00.000
+ exit gracefully, and write out a nice error telling the user
+
+00:00:00.000 --> 00:00:00.000
+ that the name they entered doesn't exist.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to print the actual name they entered back at them.
+
+00:00:00.000 --> 00:00:00.000
+ So let's do this first exercise.
+
+00:00:00.000 --> 00:00:00.000
+ So here's our unordered map.
+
+00:00:00.000 --> 00:00:00.000
+ So a map simply is a key, like the name here, and the age.
+
+00:00:00.000 --> 00:00:00.000
+ So this is mapping a student's names to their ages.
+
+00:00:00.000 --> 00:00:00.000
+ So this code is in a bit of a sorry state.
+
+00:00:00.000 --> 00:00:00.000
+ If we enter a name inside here, and the name
+
+00:00:00.000 --> 00:00:00.000
+ is Fred, which is not on our list, it will, when we do this,
+
+00:00:00.000 --> 00:00:00.000
+ this line, student name at, will throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ Will throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ And so this is the try catch that we want to use.
+
+00:00:00.000 --> 00:00:00.000
+ That's the necessary syntax.
+
+00:00:00.000 --> 00:00:00.000
+ So we are going to throw an error.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to put this code.
+
+00:00:00.000 --> 00:00:00.000
+ So that part's going to be outside.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to write try.
+
+00:00:00.000 --> 00:00:00.000
+ And then I'm going to take this line-- actually,
+
+00:00:00.000 --> 00:00:00.000
+ let me just copy this part out.
+
+00:00:00.000 --> 00:00:00.000
+ So it gave us the syntax here.
+
+00:00:00.000 --> 00:00:00.000
+ I'm just going to bring the catch here.
+
+00:00:00.000 --> 00:00:00.000
+ And we're going to catch if it's out of range.
+
+00:00:00.000 --> 00:00:00.000
+ And let me fix that.
+
+00:00:00.000 --> 00:00:00.000
+ And we're going to say, C error, sorry, comma, name
+
+00:00:00.000 --> 00:00:00.000
+ was not there.
+
+00:00:00.000 --> 00:00:00.000
+ I don't know if that's the correct error message.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so notice the code that may fail
+
+00:00:00.000 --> 00:00:00.000
+ is placed inside our try block.
+
+00:00:00.000 --> 00:00:00.000
+ This code cannot fail.
+
+00:00:00.000 --> 00:00:00.000
+ This code cannot fail.
+
+00:00:00.000 --> 00:00:00.000
+ It's placed inside a try block.
+
+00:00:00.000 --> 00:00:00.000
+ So let's try it.
+
+00:00:00.000 --> 00:00:00.000
+ And I left out a set of arrows there.
+
+00:00:00.000 --> 00:00:00.000
+ So I had a syntax error.
+
+00:00:00.000 --> 00:00:00.000
+ Oops, and I put the arrows in the wrong place.
+
+00:00:00.000 --> 00:00:00.000
+ Still had a syntax error.
+
+00:00:00.000 --> 00:00:00.000
+ I left off a semicolon.
+
+00:00:00.000 --> 00:00:00.000
+ I'm all thumbs today.
+
+00:00:00.000 --> 00:00:00.000
+ OK, enter a name, John.
+
+00:00:00.000 --> 00:00:00.000
+ John is 16 years old.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so yeah, so I didn't have-- so it was sorry, comma,
+
+00:00:00.000 --> 00:00:00.000
+ Jake does not exist.
+
+00:00:00.000 --> 00:00:00.000
+ So let's look at John.
+
+00:00:00.000 --> 00:00:00.000
+ John is found, prints out its name,
+
+00:00:00.000 --> 00:00:00.000
+ and then skips over the catch block.
+
+00:00:00.000 --> 00:00:00.000
+ Catch block is never executed.
+
+00:00:00.000 --> 00:00:00.000
+ Jake throws an exception here.
+
+00:00:00.000 --> 00:00:00.000
+ We skip over the name is age years old.
+
+00:00:00.000 --> 00:00:00.000
+ We jump from line 24 to line 27, and we print out,
+
+00:00:00.000 --> 00:00:00.000
+ sorry, name does not exist.
+
+00:00:00.000 --> 00:00:00.000
+ Same thing with Lawrence.
+
+00:00:00.000 --> 00:00:00.000
+ Zoltan exists, so that works OK.
+
+00:00:00.000 --> 00:00:00.000
+ So this is try, catch.
+
+00:00:00.000 --> 00:00:00.000
+ Now let's do the second one.
+
+00:00:00.000 --> 00:00:00.000
+ So we want to do it so that the program validates
+
+00:00:00.000 --> 00:00:00.000
+ by using the try, catch.
+
+00:00:00.000 --> 00:00:00.000
+ Doesn't just print out an error message,
+
+00:00:00.000 --> 00:00:00.000
+ and it should do it continuously until they actually
+
+00:00:00.000 --> 00:00:00.000
+ enter a valid name.
+
+00:00:00.000 --> 00:00:00.000
+ So we don't have to do much difference here.
+
+00:00:00.000 --> 00:00:00.000
+ What we're going to do is we're going
+
+00:00:00.000 --> 00:00:00.000
+ to need to put all this code inside a do while block.
+
+00:00:00.000 --> 00:00:00.000
+ A do while.
+
+00:00:00.000 --> 00:00:00.000
+ So do, enter a name.
+
+00:00:00.000 --> 00:00:00.000
+ Then we're going to put our try block.
+
+00:00:00.000 --> 00:00:00.000
+ Try block.
+
+00:00:00.000 --> 00:00:00.000
+ And we'll create a Boolean value.
+
+00:00:00.000 --> 00:00:00.000
+ So that's going to have to be created
+
+00:00:00.000 --> 00:00:00.000
+ before the do while loop.
+
+00:00:00.000 --> 00:00:00.000
+ So Boole equals or done, false.
+
+00:00:00.000 --> 00:00:00.000
+ If we succeed and don't throw an exception,
+
+00:00:00.000 --> 00:00:00.000
+ we're going to set done equal to true.
+
+00:00:00.000 --> 00:00:00.000
+ So now we're going to put in our catch block.
+
+00:00:00.000 --> 00:00:00.000
+ And exactly the same code we had before.
+
+00:00:00.000 --> 00:00:00.000
+ Here, sorry, name does not exist.
+
+00:00:00.000 --> 00:00:00.000
+ And here's the end of our do.
+
+00:00:00.000 --> 00:00:00.000
+ And here's the while.
+
+00:00:00.000 --> 00:00:00.000
+ Not done.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to continue doing that while it's not done.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to enter in a name, print in the name.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to try it.
+
+00:00:00.000 --> 00:00:00.000
+ If we try it and we succeed, if we get down to line 28,
+
+00:00:00.000 --> 00:00:00.000
+ we're going to set done to true.
+
+00:00:00.000 --> 00:00:00.000
+ This will fail and we'll be through.
+
+00:00:00.000 --> 00:00:00.000
+ So let's try it.
+
+00:00:00.000 --> 00:00:00.000
+ So enter name John.
+
+00:00:00.000 --> 00:00:00.000
+ That worked fine.
+
+00:00:00.000 --> 00:00:00.000
+ We just entered the name, set done to true.
+
+00:00:00.000 --> 00:00:00.000
+ We hit our while loop and we're finished.
+
+00:00:00.000 --> 00:00:00.000
+ Here we entered a name Jake.
+
+00:00:00.000 --> 00:00:00.000
+ Nope.
+
+00:00:00.000 --> 00:00:00.000
+ Sorry, name does not exist.
+
+00:00:00.000 --> 00:00:00.000
+ It went up and it asked us to enter a name again.
+
+00:00:00.000 --> 00:00:00.000
+ Now in this case, the code check doesn't
+
+00:00:00.000 --> 00:00:00.000
+ show what it really looks like.
+
+00:00:00.000 --> 00:00:00.000
+ So we would not enter Jake, Bill, and Paul.
+
+00:00:00.000 --> 00:00:00.000
+ We'd enter Jake.
+
+00:00:00.000 --> 00:00:00.000
+ It would say enter a name.
+
+00:00:00.000 --> 00:00:00.000
+ We'd enter Bill here.
+
+00:00:00.000 --> 00:00:00.000
+ Enter a name.
+
+00:00:00.000 --> 00:00:00.000
+ We'd enter Paul.
+
+00:00:00.000 --> 00:00:00.000
+ Paul's 31 years old.
+
+00:00:00.000 --> 00:00:00.000
+ So notice this just repeats until it
+
+00:00:00.000 --> 00:00:00.000
+ gives us the correct answer.
+
+00:00:00.000 --> 00:00:00.000
+ It gives us the correct answer.
+
+00:00:00.000 --> 00:00:00.000
+ OK, let's actually write some code now.
+
+00:00:00.000 --> 00:00:00.000
+ And so go over and open.
+
+00:00:00.000 --> 00:00:00.000
+ And open in IC14B, open int helper.h and int helper.cpp.
+
+00:00:00.000 --> 00:00:00.000
+ I don't know why it's not letting me open both those.
+
+00:00:00.000 --> 00:00:00.000
+ Maybe because I haven't added any code to it.
+
+00:00:00.000 --> 00:00:00.000
+ Let me add code to that one and do the cpp.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ OK, let's open a terminal on that.
+
+00:00:00.000 --> 00:00:00.000
+ And then let me close that.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so these are the two functions we're going to write.
+
+00:00:00.000 --> 00:00:00.000
+ So let's look at those.
+
+00:00:00.000 --> 00:00:00.000
+ The first function, parseInt, is going
+
+00:00:00.000 --> 00:00:00.000
+ to convert a string to an integer.
+
+00:00:00.000 --> 00:00:00.000
+ So int n equals parseInt 42.
+
+00:00:00.000 --> 00:00:00.000
+ If it can't succeed, it's going to throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ The second function is going to read an int from the console.
+
+00:00:00.000 --> 00:00:00.000
+ So this is int n equals readInt.
+
+00:00:00.000 --> 00:00:00.000
+ Enter a number.
+
+00:00:00.000 --> 00:00:00.000
+ The prompt is optional.
+
+00:00:00.000 --> 00:00:00.000
+ And just like the last problem we did,
+
+00:00:00.000 --> 00:00:00.000
+ it's going to keep prompting until integer values are
+
+00:00:00.000 --> 00:00:00.000
+ entered.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to start by documenting
+
+00:00:00.000 --> 00:00:00.000
+ the functions in the header.
+
+00:00:00.000 --> 00:00:00.000
+ Then we're going to have invalid input to parseInt
+
+00:00:00.000 --> 00:00:00.000
+ by throwing an exception.
+
+00:00:00.000 --> 00:00:00.000
+ And then we're going to validate our logic with assert.
+
+00:00:00.000 --> 00:00:00.000
+ Now there's a little bit more information
+
+00:00:00.000 --> 00:00:00.000
+ on this in the handout over here.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to include the preconditions, postconditions,
+
+00:00:00.000 --> 00:00:00.000
+ and exceptions.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to throw an invalid argument with an error message
+
+00:00:00.000 --> 00:00:00.000
+ when parseInt fails.
+
+00:00:00.000 --> 00:00:00.000
+ We use parseInt in an endless loop
+
+00:00:00.000 --> 00:00:00.000
+ and try catch to implement readInt.
+
+00:00:00.000 --> 00:00:00.000
+ And we'll use assert to check that we never
+
+00:00:00.000 --> 00:00:00.000
+ reach the end of readInt.
+
+00:00:00.000 --> 00:00:00.000
+ And I will just test this.
+
+00:00:00.000 --> 00:00:00.000
+ I'll break out of my loop to make sure
+
+00:00:00.000 --> 00:00:00.000
+ that the assertion works.
+
+00:00:00.000 --> 00:00:00.000
+ Make sure that the assertion works.
+
+00:00:00.000 --> 00:00:00.000
+ So let's document the function.
+
+00:00:00.000 --> 00:00:00.000
+ And so parseInt-- we didn't put this in a namespace.
+
+00:00:00.000 --> 00:00:00.000
+ We could have.
+
+00:00:00.000 --> 00:00:00.000
+ So converts a string to an integer.
+
+00:00:00.000 --> 00:00:00.000
+ At param s-- let me change that to str.
+
+00:00:00.000 --> 00:00:00.000
+ I don't like just using single letter names.
+
+00:00:00.000 --> 00:00:00.000
+ str is the string-- so str is the string to convert.
+
+00:00:00.000 --> 00:00:00.000
+ Let's put in our precondition at pre.
+
+00:00:00.000 --> 00:00:00.000
+ At pre, we'll contain valid digits, optional sign.
+
+00:00:00.000 --> 00:00:00.000
+ Let's do minus 1, 2, 3 to give the optional sign there.
+
+00:00:00.000 --> 00:00:00.000
+ So that tells us the precondition.
+
+00:00:00.000 --> 00:00:00.000
+ That says what we assume is going
+
+00:00:00.000 --> 00:00:00.000
+ to be true about parseInt at post or at return
+
+00:00:00.000 --> 00:00:00.000
+ or at exception.
+
+00:00:00.000 --> 00:00:00.000
+ Let's use at exception because that's a valid argument.
+
+00:00:00.000 --> 00:00:00.000
+ If invalid argument, if str contains--
+
+00:00:00.000 --> 00:00:00.000
+ contains invalid characters.
+
+00:00:00.000 --> 00:00:00.000
+ And we might want to put more about what that possibly is.
+
+00:00:00.000 --> 00:00:00.000
+ And at return, the integer result.
+
+00:00:00.000 --> 00:00:00.000
+ So that's pretty good for the documentation.
+
+00:00:00.000 --> 00:00:00.000
+ So readInt-- it's an integer from the console
+
+00:00:00.000 --> 00:00:00.000
+ or standard input.
+
+00:00:00.000 --> 00:00:00.000
+ At param prompt will be displayed
+
+00:00:00.000 --> 00:00:00.000
+ if passed with a colon.
+
+00:00:00.000 --> 00:00:00.000
+ OK, at return, and the post condition here
+
+00:00:00.000 --> 00:00:00.000
+ is keeps prompting.
+
+00:00:00.000 --> 00:00:00.000
+ So there's our documentation.
+
+00:00:00.000 --> 00:00:00.000
+ There's our documentation.
+
+00:00:00.000 --> 00:00:00.000
+ So let's take this.
+
+00:00:00.000 --> 00:00:00.000
+ Let's go over to inhelper.cpp.
+
+00:00:00.000 --> 00:00:00.000
+ Let's put your Canvas ID on it.
+
+00:00:00.000 --> 00:00:00.000
+ Let's write the functions here.
+
+00:00:00.000 --> 00:00:00.000
+ You can leave the docs inside here if you want.
+
+00:00:00.000 --> 00:00:00.000
+ You don't have to.
+
+00:00:00.000 --> 00:00:00.000
+ Let's put the body on it.
+
+00:00:00.000 --> 00:00:00.000
+ Let's stub it.
+
+00:00:00.000 --> 00:00:00.000
+ Let's return a value in each case.
+
+00:00:00.000 --> 00:00:00.000
+ We're stubbing it, just making a skeleton.
+
+00:00:00.000 --> 00:00:00.000
+ Let's go ahead and try it.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so number one, we made a syntax error.
+
+00:00:00.000 --> 00:00:00.000
+ And that is when we have default arguments,
+
+00:00:00.000 --> 00:00:00.000
+ you need to remove them in the implementation.
+
+00:00:00.000 --> 00:00:00.000
+ Let's try it again.
+
+00:00:00.000 --> 00:00:00.000
+ So parseInt is what's being tested here.
+
+00:00:00.000 --> 00:00:00.000
+ parseInt is what's being tested here.
+
+00:00:00.000 --> 00:00:00.000
+ So let's actually do something.
+
+00:00:00.000 --> 00:00:00.000
+ And parseInt didn't work at all.
+
+00:00:00.000 --> 00:00:00.000
+ So let's go over and look at how we get parseInt to work.
+
+00:00:00.000 --> 00:00:00.000
+ So what we need to do for parseInt
+
+00:00:00.000 --> 00:00:00.000
+ is we need a string stream.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to take a input string stream.
+
+00:00:00.000 --> 00:00:00.000
+ And we're going to initialize that with the parameter str.
+
+00:00:00.000 --> 00:00:00.000
+ Then we're going to create an int n.
+
+00:00:00.000 --> 00:00:00.000
+ And we're going to read into n.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ Now, if n is not failed--
+
+00:00:00.000 --> 00:00:00.000
+ and you can write that as if not n fail.
+
+00:00:00.000 --> 00:00:00.000
+ So if not n fail, in other words, if n's still good.
+
+00:00:00.000 --> 00:00:00.000
+ And n is at EOF, then we're simply going to return n.
+
+00:00:00.000 --> 00:00:00.000
+ This simply means, did we consume everything
+
+00:00:00.000 --> 00:00:00.000
+ inside that string?
+
+00:00:00.000 --> 00:00:00.000
+ We're at end of file.
+
+00:00:00.000 --> 00:00:00.000
+ That's true.
+
+00:00:00.000 --> 00:00:00.000
+ This says, well, we didn't read any invalid characters.
+
+00:00:00.000 --> 00:00:00.000
+ So if both of those are the case, that's true.
+
+00:00:00.000 --> 00:00:00.000
+ Now, it's possible that someone could enter a string like this.
+
+00:00:00.000 --> 00:00:00.000
+ So notice that the n will automatically
+
+00:00:00.000 --> 00:00:00.000
+ skip this whitespace.
+
+00:00:00.000 --> 00:00:00.000
+ But it will still stop right on this character.
+
+00:00:00.000 --> 00:00:00.000
+ That means we're not at end of file.
+
+00:00:00.000 --> 00:00:00.000
+ And so to fix that, we have to read the whitespace again.
+
+00:00:00.000 --> 00:00:00.000
+ So in whitespace.
+
+00:00:00.000 --> 00:00:00.000
+ And now we're just going to repeat this statement.
+
+00:00:00.000 --> 00:00:00.000
+ Now, I'm sure this kind of bothers you.
+
+00:00:00.000 --> 00:00:00.000
+ And it bothers me a lot, too.
+
+00:00:00.000 --> 00:00:00.000
+ Because really what I'd like to do is do this.
+
+00:00:00.000 --> 00:00:00.000
+ I'd like to read the input and the whitespace all
+
+00:00:00.000 --> 00:00:00.000
+ in one statement.
+
+00:00:00.000 --> 00:00:00.000
+ That works under the GCC library we're doing.
+
+00:00:00.000 --> 00:00:00.000
+ It works on Unix.
+
+00:00:00.000 --> 00:00:00.000
+ Again, the GCC library we're using.
+
+00:00:00.000 --> 00:00:00.000
+ It works on Windows, the Windows libraries.
+
+00:00:00.000 --> 00:00:00.000
+ It doesn't work on the Mac libraries.
+
+00:00:00.000 --> 00:00:00.000
+ And actually, since we're not programming this in Mac,
+
+00:00:00.000 --> 00:00:00.000
+ I'm just going to use it anyway.
+
+00:00:00.000 --> 00:00:00.000
+ On the Mac libraries, unfortunately, it fails.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to read the number.
+
+00:00:00.000 --> 00:00:00.000
+ If there's any whitespace, we're going to read it.
+
+00:00:00.000 --> 00:00:00.000
+ So this one's going to read OK.
+
+00:00:00.000 --> 00:00:00.000
+ This one-- actually, let me comment that out.
+
+00:00:00.000 --> 00:00:00.000
+ This one is going to throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ That's what we want to happen.
+
+00:00:00.000 --> 00:00:00.000
+ That should throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ And so we're going to throw invalid argument.
+
+00:00:00.000 --> 00:00:00.000
+ [TYPING]
+
+00:00:00.000 --> 00:00:00.000
+ Or something else like that.
+
+00:00:00.000 --> 00:00:00.000
+ Now, let's come down here to run.
+
+00:00:00.000 --> 00:00:00.000
+ Let's comment out those first two.
+
+00:00:00.000 --> 00:00:00.000
+ And let's just do make run.
+
+00:00:00.000 --> 00:00:00.000
+ Make run.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to pull that right there.
+
+00:00:00.000 --> 00:00:00.000
+ I'm going to clean that and do make run.
+
+00:00:00.000 --> 00:00:00.000
+ Student testing 125.
+
+00:00:00.000 --> 00:00:00.000
+ It works.
+
+00:00:00.000 --> 00:00:00.000
+ Now, if we've done everything correctly,
+
+00:00:00.000 --> 00:00:00.000
+ this one should throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ So make run.
+
+00:00:00.000 --> 00:00:00.000
+ Terminate after throwing an instance
+
+00:00:00.000 --> 00:00:00.000
+ of standard invalid argument.
+
+00:00:00.000 --> 00:00:00.000
+ 5.2 is not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ 15.2 is not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ So that's pretty cool, right?
+
+00:00:00.000 --> 00:00:00.000
+ So this is the default handler when we didn't catch anything.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, we didn't put this in a try catch.
+
+00:00:00.000 --> 00:00:00.000
+ If you don't put it in a try catch, it just terminates.
+
+00:00:00.000 --> 00:00:00.000
+ So through an instance of standard invalid argument.
+
+00:00:00.000 --> 00:00:00.000
+ Let's comment out that line again.
+
+00:00:00.000 --> 00:00:00.000
+ And then let's go to our second one
+
+00:00:00.000 --> 00:00:00.000
+ up here, which is read int.
+
+00:00:00.000 --> 00:00:00.000
+ So for read int, we're going to prompt the display
+
+00:00:00.000 --> 00:00:00.000
+ if it exists.
+
+00:00:00.000 --> 00:00:00.000
+ So if not prompt empty.
+
+00:00:00.000 --> 00:00:00.000
+ Or you can write it if prompt not equal to quote, quote.
+
+00:00:00.000 --> 00:00:00.000
+ This is a little less efficient than-- because prompt empty.
+
+00:00:00.000 --> 00:00:00.000
+ Prompt not equal to quote, quote has to first convert
+
+00:00:00.000 --> 00:00:00.000
+ the quote, quote into a string.
+
+00:00:00.000 --> 00:00:00.000
+ It has to use the relational operator
+
+00:00:00.000 --> 00:00:00.000
+ to find if it's not equal.
+
+00:00:00.000 --> 00:00:00.000
+ So prompt empty is just going to return true or false
+
+00:00:00.000 --> 00:00:00.000
+ immediately.
+
+00:00:00.000 --> 00:00:00.000
+ So that's probably a little better.
+
+00:00:00.000 --> 00:00:00.000
+ But this probably is easier for people to understand.
+
+00:00:00.000 --> 00:00:00.000
+ If the prompt is not empty, we're
+
+00:00:00.000 --> 00:00:00.000
+ going to see out the prompt.
+
+00:00:00.000 --> 00:00:00.000
+ And if prompt back is not equal to a space,
+
+00:00:00.000 --> 00:00:00.000
+ and prompt back is not equal to a colon,
+
+00:00:00.000 --> 00:00:00.000
+ let's just say a space.
+
+00:00:00.000 --> 00:00:00.000
+ If that's not the case, then I'm going
+
+00:00:00.000 --> 00:00:00.000
+ to print out a colon or space.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, I want to get the input away from the prompt.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ Now let's convert the thing.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to say return parsing.
+
+00:00:00.000 --> 00:00:00.000
+ Oh, we need to read the value.
+
+00:00:00.000 --> 00:00:00.000
+ So string value.
+
+00:00:00.000 --> 00:00:00.000
+ Oh, we need to--
+
+00:00:00.000 --> 00:00:00.000
+ yeah.
+
+00:00:00.000 --> 00:00:00.000
+ Yeah, we're going to use parseInt.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to return parseInt.
+
+00:00:00.000 --> 00:00:00.000
+ parseInt value.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ So this is the basic structure.
+
+00:00:00.000 --> 00:00:00.000
+ Let's come down here and uncomment these two lines.
+
+00:00:00.000 --> 00:00:00.000
+ Let's do make run on it.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ Enter a number.
+
+00:00:00.000 --> 00:00:00.000
+ And notice how it added my colon.
+
+00:00:00.000 --> 00:00:00.000
+ So notice my prompt is enter a number.
+
+00:00:00.000 --> 00:00:00.000
+ It adds the colon in this space after it
+
+00:00:00.000 --> 00:00:00.000
+ and puts my input there.
+
+00:00:00.000 --> 00:00:00.000
+ I'll enter 245.
+
+00:00:00.000 --> 00:00:00.000
+ And you enter 245.
+
+00:00:00.000 --> 00:00:00.000
+ Now let me run it again.
+
+00:00:00.000 --> 00:00:00.000
+ 2.45.
+
+00:00:00.000 --> 00:00:00.000
+ It threw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ So we want, if this value is bad,
+
+00:00:00.000 --> 00:00:00.000
+ that's going to return-- that's going to throw an exception.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to put this whole thing in an endless loop.
+
+00:00:00.000 --> 00:00:00.000
+ File, true.
+
+00:00:00.000 --> 00:00:00.000
+ So this will return out of the loop.
+
+00:00:00.000 --> 00:00:00.000
+ Then we'll put this part.
+
+00:00:00.000 --> 00:00:00.000
+ Enter inside a try.
+
+00:00:00.000 --> 00:00:00.000
+ Catch.
+
+00:00:00.000 --> 00:00:00.000
+ And I'm not going to print an error message.
+
+00:00:00.000 --> 00:00:00.000
+ Oh, maybe I will.
+
+00:00:00.000 --> 00:00:00.000
+ Maybe I'll print an error message.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ I don't know if the testing actually wants this error
+
+00:00:00.000 --> 00:00:00.000
+ message.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ So this is like what we did in the code check exercise.
+
+00:00:00.000 --> 00:00:00.000
+ So we have a do while or a while true.
+
+00:00:00.000 --> 00:00:00.000
+ And if we can parse the value, we get out.
+
+00:00:00.000 --> 00:00:00.000
+ If not, we print out, sorry, that's not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ And we go back and prompt for it again.
+
+00:00:00.000 --> 00:00:00.000
+ So let's try that now with our run here.
+
+00:00:00.000 --> 00:00:00.000
+ So make run.
+
+00:00:00.000 --> 00:00:00.000
+ Enter a number, 1.
+
+00:00:00.000 --> 00:00:00.000
+ Sorry, 1 is not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ Enter a number, 45.2.
+
+00:00:00.000 --> 00:00:00.000
+ Sorry, 45.2 is not an integer.
+
+00:00:00.000 --> 00:00:00.000
+ 75.
+
+00:00:00.000 --> 00:00:00.000
+ OK, and we entered 75.
+
+00:00:00.000 --> 00:00:00.000
+ Now once we've done that, we can check the parse
+
+00:00:00.000 --> 00:00:00.000
+ in here with the testing.
+
+00:00:00.000 --> 00:00:00.000
+ So make test.
+
+00:00:00.000 --> 00:00:00.000
+ So it works perfectly fine.
+
+00:00:00.000 --> 00:00:00.000
+ So up here, you're going to--
+
+00:00:00.000 --> 00:00:00.000
+ oh, we want to do one more thing.
+
+00:00:00.000 --> 00:00:00.000
+ We want to break out of the loop to see
+
+00:00:00.000 --> 00:00:00.000
+ that our assertion works.
+
+00:00:00.000 --> 00:00:00.000
+ And we haven't put in an assertion.
+
+00:00:00.000 --> 00:00:00.000
+ So an assertion is something that is impossible.
+
+00:00:00.000 --> 00:00:00.000
+ So what's impossible?
+
+00:00:00.000 --> 00:00:00.000
+ This loop is while true.
+
+00:00:00.000 --> 00:00:00.000
+ It's impossible for me to get here.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm just going to say assert false.
+
+00:00:00.000 --> 00:00:00.000
+ This is saying this is unreachable.
+
+00:00:00.000 --> 00:00:00.000
+ That is unreachable.
+
+00:00:00.000 --> 00:00:00.000
+ Now what I'm going to do is I'm going
+
+00:00:00.000 --> 00:00:00.000
+ to make a mistake in my code.
+
+00:00:00.000 --> 00:00:00.000
+ Remember, assertions are determined
+
+00:00:00.000 --> 00:00:00.000
+ to catch mistakes in your code.
+
+00:00:00.000 --> 00:00:00.000
+ I can say that my intention, my assumption,
+
+00:00:00.000 --> 00:00:00.000
+ is that I should never, ever be able to get
+
+00:00:00.000 --> 00:00:00.000
+ to this line of code.
+
+00:00:00.000 --> 00:00:00.000
+ It's unreachable.
+
+00:00:00.000 --> 00:00:00.000
+ It's unreachable.
+
+00:00:00.000 --> 00:00:00.000
+ But what if I inadvertently say break?
+
+00:00:00.000 --> 00:00:00.000
+ Like that.
+
+00:00:00.000 --> 00:00:00.000
+ So this is a piece of error in my code now.
+
+00:00:00.000 --> 00:00:00.000
+ And when I do-- let's do make run again.
+
+00:00:00.000 --> 00:00:00.000
+ And when I do 1, if I do 42, it works fine.
+
+00:00:00.000 --> 00:00:00.000
+ But if I do 1, it throws the exception.
+
+00:00:00.000 --> 00:00:00.000
+ But also, I actually had an assertion.
+
+00:00:00.000 --> 00:00:00.000
+ So I'd go look at line 55.
+
+00:00:00.000 --> 00:00:00.000
+ When I looked at line 55, it would say,
+
+00:00:00.000 --> 00:00:00.000
+ oh, this should be unreachable, or this is unreachable.
+
+00:00:00.000 --> 00:00:00.000
+ And then I'd look back and try and find my error.
+
+00:00:00.000 --> 00:00:00.000
+ I'd see, how did I possibly get to that code?
+
+00:00:00.000 --> 00:00:00.000
+ And maybe I'd put it in the debugger or so forth.
+
+00:00:00.000 --> 00:00:00.000
+ So I'm going to comment that out.
+
+00:00:00.000 --> 00:00:00.000
+ So this is the kind of thing you want to put in your statement.
+
+00:00:00.000 --> 00:00:00.000
+ Now, false normally would put some kind of condition.
+
+00:00:00.000 --> 00:00:00.000
+ False just means, if you ever get to this line of code,
+
+00:00:00.000 --> 00:00:00.000
+ throw the exception, or throw the assertion,
+
+00:00:00.000 --> 00:00:00.000
+ trigger the assertion at that point.
+
+00:00:00.000 --> 00:00:00.000
+ All right.
+
+00:00:00.000 --> 00:00:00.000
+ So those were two good exercises to get you
+
+00:00:00.000 --> 00:00:00.000
+ into throwing exceptions.
+
+00:00:00.000 --> 00:00:00.000
+ The last topic we're going to talk about today
+
+00:00:00.000 --> 00:00:00.000
+ is function templates.
+
+00:00:00.000 --> 00:00:00.000
+ So look at this function.
+
+00:00:00.000 --> 00:00:00.000
+ So I have a function smaller, takes two integers, a and b,
+
+00:00:00.000 --> 00:00:00.000
+ and uses the conditional operator,
+
+00:00:00.000 --> 00:00:00.000
+ return the smaller of a or b.
+
+00:00:00.000 --> 00:00:00.000
+ So if a is less than b, it returns a.
+
+00:00:00.000 --> 00:00:00.000
+ Otherwise, it returns b.
+
+00:00:00.000 --> 00:00:00.000
+ Notice this, actually, the algorithm that she uses
+
+00:00:00.000 --> 00:00:00.000
+ will return b if they're identical, not a.
+
+00:00:00.000 --> 00:00:00.000
+ So perhaps it would have been better
+
+00:00:00.000 --> 00:00:00.000
+ if you wanted to return a if it was the smaller.
+
+00:00:00.000 --> 00:00:00.000
+ In other words, first or smaller would say a less than
+
+00:00:00.000 --> 00:00:00.000
+ or equal to b, return a.
+
+00:00:00.000 --> 00:00:00.000
+ What if we want this function, though,
+
+00:00:00.000 --> 00:00:00.000
+ to work for something other than an integer?
+
+00:00:00.000 --> 00:00:00.000
+ Will it work for a double?
+
+00:00:00.000 --> 00:00:00.000
+ In other words, if we called smaller 1.5, 1.75, well,
+
+00:00:00.000 --> 00:00:00.000
+ first it would truncate them, right?
+
+00:00:00.000 --> 00:00:00.000
+ It wouldn't really work for other types.
+
+00:00:00.000 --> 00:00:00.000
+ So if I wanted smaller of 3.5 and 7.5,
+
+00:00:00.000 --> 00:00:00.000
+ I'd always get back an int here.
+
+00:00:00.000 --> 00:00:00.000
+ If I wanted smaller of zebra and ant, it wouldn't work at all.
+
+00:00:00.000 --> 00:00:00.000
+ So how would we fix that?
+
+00:00:00.000 --> 00:00:00.000
+ How would we fix it?
+
+00:00:00.000 --> 00:00:00.000
+ Well, option one is just write an overloaded function
+
+00:00:00.000 --> 00:00:00.000
+ for each type.
+
+00:00:00.000 --> 00:00:00.000
+ So here's a smaller for a for double,
+
+00:00:00.000 --> 00:00:00.000
+ and here's a smaller for string.
+
+00:00:00.000 --> 00:00:00.000
+ And then our main function on the previous page works.
+
+00:00:00.000 --> 00:00:00.000
+ The downside, the disadvantage, is
+
+00:00:00.000 --> 00:00:00.000
+ that you have to write a new version for each type you want.
+
+00:00:00.000 --> 00:00:00.000
+ When the code in the body is exactly the same,
+
+00:00:00.000 --> 00:00:00.000
+ both of them say return a less than b, a, b.
+
+00:00:00.000 --> 00:00:00.000
+ So it's kind of redundant.
+
+00:00:00.000 --> 00:00:00.000
+ That's where function templates come in.
+
+00:00:00.000 --> 00:00:00.000
+ So a function template is a set of instructions
+
+00:00:00.000 --> 00:00:00.000
+ that tell the compiler how to generate a function when
+
+00:00:00.000 --> 00:00:00.000
+ it is called.
+
+00:00:00.000 --> 00:00:00.000
+ The functions are only generated if they are called.
+
+00:00:00.000 --> 00:00:00.000
+ If we write the template for smaller,
+
+00:00:00.000 --> 00:00:00.000
+ and we pass in-- we don't call it with a string,
+
+00:00:00.000 --> 00:00:00.000
+ it will never be generated from a string.
+
+00:00:00.000 --> 00:00:00.000
+ So here's the template function.
+
+00:00:00.000 --> 00:00:00.000
+ Notice first that every template function always
+
+00:00:00.000 --> 00:00:00.000
+ starts with template, type name, and then
+
+00:00:00.000 --> 00:00:00.000
+ some symbol you're going to use as a placeholder for your type.
+
+00:00:00.000 --> 00:00:00.000
+ T is really common.
+
+00:00:00.000 --> 00:00:00.000
+ U is really common.
+
+00:00:00.000 --> 00:00:00.000
+ But you can use larger names or ones that are more descriptive
+
+00:00:00.000 --> 00:00:00.000
+ if you want.
+
+00:00:00.000 --> 00:00:00.000
+ So this says the function smaller
+
+00:00:00.000 --> 00:00:00.000
+ is going to return a type of whatever type T is.
+
+00:00:00.000 --> 00:00:00.000
+ And it's going to take two arguments, a const T ref for a
+
+00:00:00.000 --> 00:00:00.000
+ and a const T ref for b.
+
+00:00:00.000 --> 00:00:00.000
+ And notice the code in here is exactly the same.
+
+00:00:00.000 --> 00:00:00.000
+ Now, templates have to be seen when your code compiles.
+
+00:00:00.000 --> 00:00:00.000
+ For that reason, they're generally
+
+00:00:00.000 --> 00:00:00.000
+ placed in a header file.
+
+00:00:00.000 --> 00:00:00.000
+ They are not pre-compiled like a regular function.
+
+00:00:00.000 --> 00:00:00.000
+ Now, there are two ways to call a template function.
+
+00:00:00.000 --> 00:00:00.000
+ Or specifically, there are two ways
+
+00:00:00.000 --> 00:00:00.000
+ to generate the function from the template.
+
+00:00:00.000 --> 00:00:00.000
+ When you call it, you can explicitly specify
+
+00:00:00.000 --> 00:00:00.000
+ the type to be used for T. So I could
+
+00:00:00.000 --> 00:00:00.000
+ call that function with smaller.
+
+00:00:00.000 --> 00:00:00.000
+ And then in angle brackets after the name, I could say string.
+
+00:00:00.000 --> 00:00:00.000
+ So generate a smaller function that uses string for T,
+
+00:00:00.000 --> 00:00:00.000
+ and then pass in frog and flea.
+
+00:00:00.000 --> 00:00:00.000
+ Now, that will write-- when you call the function,
+
+00:00:00.000 --> 00:00:00.000
+ it will write a version of smaller
+
+00:00:00.000 --> 00:00:00.000
+ that has the T replaced with string here.
+
+00:00:00.000 --> 00:00:00.000
+ So it will say string smaller.
+
+00:00:00.000 --> 00:00:00.000
+ Const string ref a, const string ref b, return a less than b.
+
+00:00:00.000 --> 00:00:00.000
+ It will write that function for you.
+
+00:00:00.000 --> 00:00:00.000
+ So that is called a template function.
+
+00:00:00.000 --> 00:00:00.000
+ This is a function template.
+
+00:00:00.000 --> 00:00:00.000
+ The function that's generated is called a template function.
+
+00:00:00.000 --> 00:00:00.000
+ Now, can you simply call it implicitly?
+
+00:00:00.000 --> 00:00:00.000
+ Yes, you can.
+
+00:00:00.000 --> 00:00:00.000
+ So if I call the function auto n equals smaller 3.46 and 3.45,
+
+00:00:00.000 --> 00:00:00.000
+ it will, in fact, give me back 3.45.
+
+00:00:00.000 --> 00:00:00.000
+ And that generates this function.
+
+00:00:00.000 --> 00:00:00.000
+ Double, remember, replaces the T with double,
+
+00:00:00.000 --> 00:00:00.000
+ replaces the a with double, the b with double.
+
+00:00:00.000 --> 00:00:00.000
+ And actually, it will replace it with const double ref,
+
+00:00:00.000 --> 00:00:00.000
+ const double ref b.
+
+00:00:00.000 --> 00:00:00.000
+ The reason we do the const in the template
+
+00:00:00.000 --> 00:00:00.000
+ is because we don't know what type T is going to be here.
+
+00:00:00.000 --> 00:00:00.000
+ And so we use the const T ref in case it's a library type.
+
+00:00:00.000 --> 00:00:00.000
+ It doesn't hurt it if it's a primitive type,
+
+00:00:00.000 --> 00:00:00.000
+ although it's not as efficient as it could be.
+
+00:00:00.000 --> 00:00:00.000
+ Now, a couple of problems with that.
+
+00:00:00.000 --> 00:00:00.000
+ First, the compiler cannot read your mind.
+
+00:00:00.000 --> 00:00:00.000
+ What if we said auto s equals smaller frog and flea?
+
+00:00:00.000 --> 00:00:00.000
+ If we do this, the compiler is going
+
+00:00:00.000 --> 00:00:00.000
+ to deduce type T as a character array instead of string.
+
+00:00:00.000 --> 00:00:00.000
+ And the code actually will not work.
+
+00:00:00.000 --> 00:00:00.000
+ So notice earlier-- so notice here
+
+00:00:00.000 --> 00:00:00.000
+ I'm finding the smaller frog and flea, and it doesn't work.
+
+00:00:00.000 --> 00:00:00.000
+ But here, I explicitly said, oh, I
+
+00:00:00.000 --> 00:00:00.000
+ want to use string for that type.
+
+00:00:00.000 --> 00:00:00.000
+ And it did work.
+
+00:00:00.000 --> 00:00:00.000
+ So the compiler can't read your mind.
+
+00:00:00.000 --> 00:00:00.000
+ The solution is to either explicitly instantiate it,
+
+00:00:00.000 --> 00:00:00.000
+ or you can add an overload of the function.
+
+00:00:00.000 --> 00:00:00.000
+ If you write an overloaded non-template function that
+
+00:00:00.000 --> 00:00:00.000
+ exactly matches the arguments here,
+
+00:00:00.000 --> 00:00:00.000
+ then this version will be used before the other version.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ A couple more problems with deduction.
+
+00:00:00.000 --> 00:00:00.000
+ What happens when we do this?
+
+00:00:00.000 --> 00:00:00.000
+ Auto n equals smaller 3.46 and 4.
+
+00:00:00.000 --> 00:00:00.000
+ Well, that doesn't even compile.
+
+00:00:00.000 --> 00:00:00.000
+ T is supposed to be a double, like argument 1,
+
+00:00:00.000 --> 00:00:00.000
+ or an n, like argument 2.
+
+00:00:00.000 --> 00:00:00.000
+ And remember, let's look back at the template.
+
+00:00:00.000 --> 00:00:00.000
+ We have only one type name here, but two arguments
+
+00:00:00.000 --> 00:00:00.000
+ that are type T. So it's going to look at this one and say,
+
+00:00:00.000 --> 00:00:00.000
+ oh, no, it's a double.
+
+00:00:00.000 --> 00:00:00.000
+ Oh, no, it's an int.
+
+00:00:00.000 --> 00:00:00.000
+ It doesn't compile.
+
+00:00:00.000 --> 00:00:00.000
+ It doesn't compile.
+
+00:00:00.000 --> 00:00:00.000
+ OK.
+
+00:00:00.000 --> 00:00:00.000
+ So how do we fix that?
+
+00:00:00.000 --> 00:00:00.000
+ Well, you don't have to make every argument the same type
+
+00:00:00.000 --> 00:00:00.000
+ parameter.
+
+00:00:00.000 --> 00:00:00.000
+ So let's say we have a double.
+
+00:00:00.000 --> 00:00:00.000
+ We don't have to make every argument the same type
+
+00:00:00.000 --> 00:00:00.000
+ parameter.
+
+00:00:00.000 --> 00:00:00.000
+ So I could say template.
+
+00:00:00.000 --> 00:00:00.000
+ I could create a type name named T, another type name named
+
+00:00:00.000 --> 00:00:00.000
+ U. And in this case, when I called it here,
+
+00:00:00.000 --> 00:00:00.000
+ A would be double, or T would be double, and U would be int.
+
+00:00:00.000 --> 00:00:00.000
+ Now, which one will it return?
+
+00:00:00.000 --> 00:00:00.000
+ Will it return an int or a double?
+
+00:00:00.000 --> 00:00:00.000
+ This actually is a little bit problematic.
+
+00:00:00.000 --> 00:00:00.000
+ The return type could be either T or U.
+
+00:00:00.000 --> 00:00:00.000
+ Starting in C++ 17, we can put auto as the return type here,
+
+00:00:00.000 --> 00:00:00.000
+ and it will allow compiler deduction.
+
+00:00:00.000 --> 00:00:00.000
+ If you look in your reader, you'll
+
+00:00:00.000 --> 00:00:00.000
+ see a version that will work with C++ 11 and 14.
+
+00:00:00.000 --> 00:00:00.000
+ This is called a trailing return type.
+
+00:00:00.000 --> 00:00:00.000
+ However, this function probably has
+
+00:00:00.000 --> 00:00:00.000
+ to decide either return an int or a double in this case.
+
+00:00:00.000 --> 00:00:00.000
+ Because in fact, what's going to happen
+
+00:00:00.000 --> 00:00:00.000
+ is to see if A is less than B. And if A is an int
+
+00:00:00.000 --> 00:00:00.000
+ and B is a double, your computer cannot actually compute this
+
+00:00:00.000 --> 00:00:00.000
+ without knowing which of those is a larger.
+
+00:00:00.000 --> 00:00:00.000
+ So the larger type will always be the type
+
+00:00:00.000 --> 00:00:00.000
+ that's returned in that case.
+
+00:00:00.000 --> 00:00:00.000
+ OK, let's do a couple of exercises
+
+00:00:00.000 --> 00:00:00.000
+ before we end up this lecture and our hour together.
+
+00:00:00.000 --> 00:00:00.000
+ So let me go back to our lecture exercise.
+
+00:00:00.000 --> 00:00:00.000
+ And these are some function templates
+
+00:00:00.000 --> 00:00:00.000
+ from Purdue University.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to write one function, exchange AB, which
+
+00:00:00.000 --> 00:00:00.000
+ has two parameters of the same type.
+
+00:00:00.000 --> 00:00:00.000
+ So we only need one template parameter.
+
+00:00:00.000 --> 00:00:00.000
+ A function which is instantiated from exchange
+
+00:00:00.000 --> 00:00:00.000
+ will exchange or swap these two parameters.
+
+00:00:00.000 --> 00:00:00.000
+ And then multiples, sum, x, and n.
+
+00:00:00.000 --> 00:00:00.000
+ The first type of parameters will
+
+00:00:00.000 --> 00:00:00.000
+ have the type represented by the function template type
+
+00:00:00.000 --> 00:00:00.000
+ parameter kind, or T. n will always be int.
+
+00:00:00.000 --> 00:00:00.000
+ The return type's void.
+
+00:00:00.000 --> 00:00:00.000
+ All parameters are passed by value,
+
+00:00:00.000 --> 00:00:00.000
+ except for sum, which is passed by reference.
+
+00:00:00.000 --> 00:00:00.000
+ A function instantiated from multiples
+
+00:00:00.000 --> 00:00:00.000
+ will compute 1 plus x plus 2x plus 3x and so forth to nx.
+
+00:00:00.000 --> 00:00:00.000
+ So let's go ahead and do that, although I don't remember
+
+00:00:00.000 --> 00:00:00.000
+ exactly how to solve that.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so here's the first one.
+
+00:00:00.000 --> 00:00:00.000
+ We're going to exchange A and B. So for the templates,
+
+00:00:00.000 --> 00:00:00.000
+ we're going to write template type name T.
+
+00:00:00.000 --> 00:00:00.000
+ Looks like exchange doesn't return anything.
+
+00:00:00.000 --> 00:00:00.000
+ And so that's going to be T reference A and T reference B.
+
+00:00:00.000 --> 00:00:00.000
+ We'll create a temporary T object.
+
+00:00:00.000 --> 00:00:00.000
+ So T temp.
+
+00:00:00.000 --> 00:00:00.000
+ We'll initialize it with A. We'll say A equals B.
+
+00:00:00.000 --> 00:00:00.000
+ We'll say B equals temp.
+
+00:00:00.000 --> 00:00:00.000
+ And now we've exchanged the two values.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so notice we can do it with ints.
+
+00:00:00.000 --> 00:00:00.000
+ We can do it with doubles.
+
+00:00:00.000 --> 00:00:00.000
+ We can do it with strings.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so sum-- OK, so that is going to take template type
+
+00:00:00.000 --> 00:00:00.000
+ name.
+
+00:00:00.000 --> 00:00:00.000
+ They want kind for the type here,
+
+00:00:00.000 --> 00:00:00.000
+ I think, just to show you that you can use--
+
+00:00:00.000 --> 00:00:00.000
+ you don't need to use T. Void and kind reference sum.
+
+00:00:00.000 --> 00:00:00.000
+ And kind-- what was the second argument in that?
+
+00:00:00.000 --> 00:00:00.000
+ x, kind reference x, or kind x, test by value, and int n.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so sum, let's set it to whatever value represents 0,
+
+00:00:00.000 --> 00:00:00.000
+ or the empty value.
+
+00:00:00.000 --> 00:00:00.000
+ For instance, if we wanted to sum strings,
+
+00:00:00.000 --> 00:00:00.000
+ do they do strings here?
+
+00:00:00.000 --> 00:00:00.000
+ No, they only do it with numbers,
+
+00:00:00.000 --> 00:00:00.000
+ because the expression is going to be 1 over.
+
+00:00:00.000 --> 00:00:00.000
+ So we're going to say sum equals 0.
+
+00:00:00.000 --> 00:00:00.000
+ Or is it?
+
+00:00:00.000 --> 00:00:00.000
+ Let's look at the expression.
+
+00:00:00.000 --> 00:00:00.000
+ So sum equals 1 plus x.
+
+00:00:00.000 --> 00:00:00.000
+ And it'll be converted to whatever type it is.
+
+00:00:00.000 --> 00:00:00.000
+ And then it's going to be x plus 2x plus 3x.
+
+00:00:00.000 --> 00:00:00.000
+ So write a loop for int i equals 1, so 1x, i less than
+
+00:00:00.000 --> 00:00:00.000
+ or equal to n, because we want nx, i plus plus,
+
+00:00:00.000 --> 00:00:00.000
+ sum equals sum plus i times x.
+
+00:00:00.000 --> 00:00:00.000
+ And I think that's all we'll have to do.
+
+00:00:00.000 --> 00:00:00.000
+ Down here it works, you can see, with doubles.
+
+00:00:00.000 --> 00:00:00.000
+ And it works with ints.
+
+00:00:00.000 --> 00:00:00.000
+ OK, let's try it.
+
+00:00:00.000 --> 00:00:00.000
+ OK, so that worked.
+
+00:00:00.000 --> 00:00:00.000
+ Here's swapping two ints, here's swapping two doubles,
+
+00:00:00.000 --> 00:00:00.000
+ here's swapping two strings.
+
+00:00:00.000 --> 00:00:00.000
+ Here is doing multiples with doubles,
+
+00:00:00.000 --> 00:00:00.000
+ here's doing multiples with integers.
+
+00:00:00.000 --> 00:00:00.000
+ All righty then, I believe that's all for today.
+
+00:00:00.000 --> 00:00:00.000
+ And so we will see you in the next lecture in lecture 15.
+

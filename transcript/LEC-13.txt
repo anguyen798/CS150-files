@@ -1,0 +1,334 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 13 on string streams and assertions.
+So, we have been working with streams that print to a source and read from a sink.
+That source has been your keyboard or a file, and the sink has been the monitor or a file or a screen.
+But instead of writing output to the screen or a file, or reading input from a keyboard or a file,
+a string stream reads and writes data to and from string objects in memory.
+Now to use string streams we have to include a new header. They are not included in Iostream or Fstream.
+This header is called Sstream. So for output files we create a new output string stream which is called an OStringStream.
+Now when you create that output string stream, nothing has been written to it yet. There is no data, so it is empty.
+You can write any kind of data to it using the regular interface of the stream classes.
+You can use put, you can use the extraction operator, you can print of course strings like this, or you can print integers.
+All of them will be converted to output in this string stream.
+Now once you have the data, what you want to do is you want to make a copy of the string that the string stream contains.
+And you do that by calling the member function str.
+So when you are finished writing, you get a string object, you extract it from the string by calling out.str.
+Now string streams are really useful when you need to mix numeric and text formatting.
+So in Java you do something like this, str.ance = the answer is colon + 42.
+And Java would automatically convert this 42 to a string and concatenate it with this string.
+In C++ what you do is you take an OStringStream, an output string stream, and you would print the answer is and then 42.
+And then you would say string out = outString.
+Now you can reuse the same string stream object over and over again, in other words print a line, extract the string, print a line and extract the string.
+But when you do that you need to clear out the old string object.
+And you do that by calling str. function, but this time instead of passing no arguments, you pass an empty string.
+And that will give you a fresh stream buffer. So this is like set the string I'm carrying to nothing, this is like get the string that I'm carrying around to nothing.
+So we are going to do an exercise here.
+And we are going to write a function that takes a double monetary value and returns a dollar formatted C++ string.
+And you would use the function like this. If you have an amount, you would simply write $2 amount when you do cout and that would convert it to this dollar formatted string.
+So if the amount was 1234, it should produce $1,234.00
+So let's go ahead and do that. Make sure you have opened up your VSCode. And this is in 13A, so let's open dollars there.
+Let's open a shell on it, open an integrated terminal.
+And let's complete the $2 function here.
+So let's put our ID up here.
+Ok, so I'm going to put this down a little bit and put that over here so we can see the code a little bit more.
+Ok, so the function is going to return a string. It's named as $2.
+It is going to take a double amount.
+And we want to turn that into a string. Now to convert a double to a string, we just do this.
+$string $out $out $fixed $setPrecision $to $out $amount
+And return $out.$string
+So we created a string stream. We set the formatting on the string stream.
+We printed our amount to the string stream. And then we extracted the string from that and returned the string stream.
+So let's go ahead and try that. Let's do a test. It's not going to be correct yet because we haven't put in the commas or the dollars.
+But you notice it is in fact turning our thing into a number with two decimal places here at the end.
+So now all we need to do is we need to insert the comma and the dollar sign.
+We can do that using string formatting.
+So basically what I'm going to do is I'm going to say $str = $out$str
+Now what I want to do, so let's look at what we have for our output string.
+So I have something like this.
+Let's see if that in fact copied control C.
+It might not have.
+Maybe I can copy it like
+No, it doesn't look like I can copy it.
+Oh, I can copy it. I did copy it.
+So what I want to do is I want to go 1, 2, 3, 4, 5, 6 and put in a comma.
+Hi folks, I'm back. I kind of got interrupted there for some meetings and an office hour and so forth.
+OK, so let's return to this problem of the $2 function.
+What we're going to do here is rather than just returning $out$str
+We're going to save the output as a result variable, as a string.
+And then we're going to return the dollar sign, the space and result at the end.
+And now all I need to do is I need to look inside here and find out where to put commas.
+I need to add one comma here.
+And so obviously it needs to be greater than 1, 2, 3, 4, 5, 6 characters before I add a comma.
+Otherwise, it's fine just the way it is.
+So if result size is greater than 6, what we're going to need to do is split it up and bring in commas.
+So the place where I'm going to put the first comma is at position 6.
+If it's only 6 long, it doesn't need a comma.
+So I'm going to save that in an int variable.
+I'm going to call this "pos"
+And I'm going to get the string size, the result size, minus 6.
+And technically, we should do a static cast on this.
+But it actually works without it.
+The reason we need a static cast is because this is an int.
+Because if I'm going backwards here, I want to make sure I can go less than 0 when I'm done.
+And so we're going to say result equals result, substring 0, up until the position where the comma is supposed to go.
+We'll add a comma to it, and then we'll get the rest of the result.
+So that's going to let me get, these three is from 0 to the position.
+So that position would be there.
+And the second part is from the position to the end, and we added a comma to it.
+Now we might need to add more commas.
+We can go ahead and try this right here.
+Do make test.
+And we'll see the first three work, where we only have one, but here I need another comma.
+And I might need more here.
+Here I have several commas.
+And so what I'm going to do is I'm going to say pos minus equals 3, move back three characters.
+And while pos is greater than 0, I'm going to say result equals result, substring 0, pos, plus comma, plus result, substring, pos.
+Finally, to make that loop go around, I'll need to say pos minus equals 3 if I need another one.
+OK, let's see if that does it.
+So let's do control L.
+Do make test.
+And it looks like we have all of ours.
+So here I have one, two, three, four commas in this one.
+Notice how this also, when we converted it to a string, it converted that .99, rounded up to an 8 for the number there.
+So it did that correctly.
+OK, so now let's look at input strings.
+So in Java you can parse a string by using a scanner.
+So I can create a scanner, in equals new scanner, and instead of passing in system in, I can pass the string that I want to parse.
+And so then I could simply use in next, which would give me March, and in next int, which would give me the 17 here.
+And then I could say int year equals in next year.
+Notice that it's kind of hard here, however, to parse it if it's going to contain a comma or something like that.
+In C++ you use an input string stream to do something similar.
+So here's an iStringStream in, instead of a scanner in.
+This is January 1st, 2018.
+Notice here I do have a comma in this one.
+Then I can get a month.
+I can read in the month like this.
+I can get an int for the day and the year, and notice month was a string.
+An int for the day, the year, and a character for the comma that I want to read.
+And then I can just read in the day, the comma, to extract this comma after that and the year.
+And this input will skip all of this extra white space.
+So really, really very flexible.
+So we're going to put that to work.
+And we're going to complete a function which takes a string that contains multiple parts.
+So we're going to parse the arguments.
+And then we're going to print only the input lines following between those lines.
+And so this list function will take a string that looks like this.
+This says open Alice.text and prints the lines 40 to 50 in Alice.text.
+We'll assume that the lines start at 1 and that we'll include both 40 and 50.
+Now this time, if the function doesn't work, we're going to return, if it does work, we're going to return true.
+Otherwise, we're going to return false.
+So let's minimize that. Let's close dollars.
+Let's come on over here and open up B.
+And open up list.cpp.
+So put your ID here.
+OK, in the instructions it gives you a little bit more information.
+So we're going to attempt a file name that passes the first word.
+Cannot open file name or return false.
+If the starting number is larger than the ending number, the starting number and ending number are the same.
+We're going to print that one line.
+We'll print invalid starter end position along with the argument and return false.
+If the file is opened and the starting number is not larger than the ending number,
+then the function reads the lines specified in the file and prints those lines.
+Assume that the line numbers start at 1, not 0.
+And print the line numbers in a field 4 wide, followed by a period and a space and the line.
+If successful, it should return true.
+So we're going to assume it's successful, so I'll add that line.
+Return true.
+OK, now let's parse args.
+So I'm going to create an input string stream, iStringStream.
+I'll call it StirIn.
+And I'm going to initialize it by passing in the arguments.
+Now I'm going to extract from that string stream the file name.
+So, string, fName, and StirIn, fName.
+Now I want to extract the starting and ending positions.
+So, if starting, ending, StirIn, starting, and ending.
+OK, so this is how we read from a string stream.
+Now let's put this to work and do our two possible errors.
+So, we'll do an ifStream, in, and I'll use fName.
+If in fail, couldn't open it, we'll see error, cannot open, fName.
+And we'll return false.
+Another possibility. Starting is greater than ending.
+If starting greater than ending.
+See error.
+Let's just go ahead and copy from the handout.
+Args.
+And we'll return false as well.
+So here we extracted or parsed the data.
+Here we're double checking or validating that data to make sure it's OK.
+We have the right file name, we can open it.
+Now, we're going to go ahead and print the lines.
+So I need a int lineName equals one.
+I need a string line.
+I need a while getLine, in, line.
+Let's start the line number zero.
+And then immediately say lineNode++.
+Now, we're only going to print it if it's in front of, after the starting.
+So if lineNode is greater or equal to starting.
+See out.
+We want a field for wide.
+Let's look at our instructions again.
+For wide.
+And we're going to print the line number in that field.
+That's followed by a period and a space.
+That's followed by line.
+OK, so let's try it.
+OK, let's actually close that terminal.
+And open up a terminal over here.
+Now, we have a problem already.
+So we're going to see that when we test the code.
+OK, so our checking, invalid start position and position work.
+Our checking for the cannot open no file.
+But here, we're looking for Moby Dick from 101 to 103.
+Expected three lines.
+But we found 22,000 lines.
+Yeah, 22,000 lines.
+And so the problem is that we didn't stop.
+We didn't stop when we hit our end.
+So let's say.
+And.
+Line no is less than.
+OK, and so that will stop us when we get to the ending number.
+Now we have to read all the ones up to the starting number. We don't have to read any of the ones after that.
+Alright, let's try it.
+Let's do make test.
+OK, so here we're running the correct number of lines.
+Now you might wonder, you might wonder.
+Why I didn't say this if we're going to include the line number.
+Because notice we're incrementing the line number before we decide if we're going to print it.
+And so if I said less than or equal to ending.
+When it was on ending, we'd go and we'd print the next line number after.
+So be really careful when you're doing this to make sure that you have this part set up correctly.
+OK, so that's it for our string streams and input string stream and an output string stream.
+So let's go ahead now and talk about one other topic.
+This is assumptions and preconditions.
+Now often a function makes assumptions about its inputs.
+These are called the functions preconditions.
+And for instance, if I say cout the square root of n.
+What is assumed about n?
+We assume that it's positive number.
+If it's not a positive number, the output is not correct.
+In the standard library, there's a function called s2i or string to int.
+That will convert a string to an integer.
+What would we assume about s when we're calling s2i s?
+We'd assume that s contains something like 125 and not the word one.
+Now at a minimum, when you're writing a function, you need to think about and document your assumptions.
+And we do that with a statement called a pre statement.
+This is part of the doxygen tags.
+So for the square root, the precondition would be that n is greater or equal to zero.
+Now, a post condition is what we assume will be true when the functions completed.
+Now that may be include things like external side effects.
+A global variable will be set.
+If you do see output 65, a is set to the standard output.
+Right, that's a side effect. That's the post condition.
+You should include what the functions assumed to return as well.
+So all of these are the post conditions.
+And you should document those as well using doxygen tags.
+And so at post says the status is true.
+If the number is read correctly, we might have more to say about that.
+If the function throws an exception, we'd use an at exception tag.
+Again, that's part of the post condition.
+This is what will happen.
+So if the function works correctly, the status is true.
+If the function does not work correctly, it throws an exception when the number is out of range.
+So again, when you're writing your functions, you want to document those.
+You want to allow the people who see the function to know what will happen when an error occurs.
+So when we have a precondition violation, when we have inappropriate input given to our function,
+we can do five things.
+Three of them are appropriate in certain circumstances.
+Two of them are commonly done, but are not really very appropriate.
+The first is you can make the input fail safely.
+So this is sometimes called defensive programming.
+Specifically, what you're defending against is the program crashing.
+You don't want the program to crash.
+So for instance, we could have S2I1 simply return the value zero.
+What's the problem with that?
+That makes it very hard to find errors in your code.
+In other words, you won't find the place where you in fact passed the wrong argument to S2I1.
+You'll just get back a zero in that case, which is not really the right answer.
+So number one is really not a good idea.
+We really don't want that to happen.
+Number two, if your function gets an invalid input,
+or you notice some other kind of precondition violation,
+you can terminate the program with an error message.
+Think about would you like that to happen in your web browser.
+You type in a URL and Chrome or Firefox crash.
+You wouldn't like that.
+You try to save a document in Word and the disk is full and it just terminates the program.
+Again, you wouldn't like that.
+So there are certain situations where that's not appropriate.
+Three, you can return an error code, which the user can check.
+Or what we've seen with our streams, you can set an error state like see and fail.
+When an error occurs, they set an error state.
+It's up to us to check that.
+Is there a problem with that?
+Yeah, actually.
+Programmers may or sometimes will just ignore those error states.
+So it doesn't force the programmer to handle potential problems.
+The way you can force programmers to handle potential problems,
+which we'll cover in the next lecture, is you can throw an exception, which can be caught.
+Finally, you can do what most programmers do.
+That's number five.
+You just don't do anything.
+You just hope for the best.
+Or you say, that's a feature.
+It's not a bug.
+So all of those are possibilities.
+So today in this lecture, I want to talk about one of these situations,
+terminating the program with an error message.
+When is that the correct thing to do?
+Some errors are caused by external circumstances.
+The user types in the wrong URL, as I mentioned.
+They save to a full thumb drive.
+Well, that's not the right way to handle that problem.
+You don't want the program to terminate when that happens.
+However, other errors are caused by you, the programmer.
+Here, if you've made a mistake in your code,
+you want the error to announce itself as soon as it's found
+and stop at the point where the error occurs.
+You don't want just the program to crash
+and not tell you where the problem was.
+You don't want it to fail silently,
+because then you'll never find the bug.
+To do this, we use a statement called an assert statement.
+Now, this is inherited from the C language.
+As you can see, the header file is called C assert.
+All of the C inherited functions are C assert.
+And in this, you just write assert counter is greater than 3.
+If this was the precondition, the counter must be 3.
+The advantage of assertions is it allows you to write self-checking code.
+If you write a statement, you're certain, or you assume that it does one thing,
+write an assertion for that.
+This is called instrumenting your code.
+This allows you to automatically detect and notify you when an error occurs.
+Sometimes these are called sanity checks or smoke tests.
+So you want to use assert only for things that cannot logically happen.
+Don't use asserts for things where the user will input bad data.
+Only for things that cannot logically happen.
+So if I have a function called sumBetween,
+I want to make sure that lower is not greater than upper.
+And so I'm going to assert that lower is less than or equal to upper.
+It's impossible for that not to pass.
+Logically, that must be true for this function to have any sense at all.
+And so I have on my slide here, it cannot happen,
+but it really must happen.
+Now assertions actually are something called a macro.
+And a macro is a piece of code that this is going to expand
+when I write assert lower less than or equal to upper.
+It's going to say, if lower is greater than upper,
+then terminate the program, print out the file number, and so forth.
+So this is going to expand, we say the macro expands,
+into an if statement.
+And as you can imagine, a macro or an assert statement
+takes time to do this check.
+It takes time to do this automatic detection.
+And so when we have found all of these logical errors in our code,
+and we're ready to ship it out to our users,
+what we call production code,
+we would generally remove that code by defining the end debug symbol
+before including cassert.
+That simply replaces what the assert did with just nothing.
+Now alternatively, and normally, we'll add a make debug
+or make release flag to our make file,
+and it will just pass in the -d end debug when we're compiling.
+So we don't actually have to change the source code at all.
+Okay, so that's it for this lecture.
+We'll see you next time with lecture 14.

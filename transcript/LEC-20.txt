@@ -1,0 +1,326 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 20, where we're going to talk about arrays, pointers, and algorithms.
+So let's talk about pointers and arrays. The array name represents the address of the first element.
+So in the array ar here, ar is really not a separate variable, it's just the address of 1.
+I can store that address into a pointer like this. So I can say i_ptr = the address of ar sub 0.
+However, since the array name is the address of the first element, I can also say i_ptr = ar. That's much easier.
+It's not ok to take the address of that address. So i_ptr = the address of ar is not ok.
+Now, i_ptr does not need to point to the first element. If I want to point it to the second element, I can say i_ptr = the address of ar sub 1.
+However, while I can change what's in this pointer variable, I cannot change what's in ar.
+So I cannot say ar = i_ptr and have ar now change so it's pointing to the second element.
+So ar is like a constant pointer to the first element of the array.
+So think of an array name as a pointer literal.
+Now, you can access elements using the subscript operator. So here's array ar sub 0.
+We call this array notation.
+With a pointer, we can access it using the indirection operator. This is called pointer notation. So see out *ipointer.
+However, that's just convention. In fact, you can use both the subscript operator and the indirection operator indiscriminately.
+So on ar, if I wanted to print out the first element, I could say *ar.
+On my pointer, *ipointer p, if I wanted to print out the element it's pointing at, I could say pointer sub 0.
+That's because all address expressions simply combine an address and an offset.
+So address bracket offset means the same as add the offset to the address and dereference it.
+So these two expressions are entirely identical.
+Now, given this, so I have an array ar, 1, 2, 3, 4, 5.
+I have an int n and an int m, 1 and 2.
+If I say ar sub 3, it gets me the value 4.
+ar sub 0, ar sub 1, ar sub 2, ar sub 3.
+This is array notation and I'm using literals.
+If I add ar plus 3, that gives me a new address.
+So ar is pointing here, ar plus 1 is pointing there, ar plus 2 is pointing there, and ar plus 3 is pointing there.
+And I dereference that pointer, or that address, using address arithmetic, I still get the 4.
+I could use ar plus 3, again so I've taken the pointer ar, which is pointing to 1, moved it 1, 2, and 3.
+I've offset it by 3.
+And then, instead of dereferencing it, I could subscript it at 0.
+So the element at that 0 dereference it.
+I could do ar plus 1, ar pointing to the 1, ar plus 1 pointing to the 2.
+And then I could substripe it with m. That means add 1, 2 to the address and dereference it.
+So all of these things, all of these expressions, would give me this value 4.
+So subscripting and pointer notation are just two ways to do the same thing.
+So when I say I pointer plus 1, this is a pointer plus an integer expression.
+This is an address expression. You know if you add an integer and a double, you get back a double?
+If you add a pointer and an integer, you get back a pointer.
+The int in this case represents an offset, but not a byte offset.
+It doesn't mean go forward one byte from I pointer.
+It means go forward one element.
+What's an element? The element is the number of bytes based on the element's type.
+So if I pointer is an int, generally this is going to be the same as taking this address and adding 4 to that address
+because we're adding the size of one int.
+So here's some equivalent expressions.
+ar, of course, is the address of ar sub 0.
+ar plus 1 is the address of ar sub 1.
+star ar plus 1 is equal to ar sub 1
+and star ar plus 1 is equal to ar sub 0 plus 1.
+Now, since the array names are constant, they can't be changed,
+but a pointer that points to an array element may be changed.
+This is really important when you're using the plus plus and minus minus operators.
+Remember that these operators are right associative.
+That means that when we increment a pointer, the operator that's to the right is going to happen first.
+So assume that we have an array 10 and a pointer that points to that array.
+If I do this, star ar plus plus, that's illegal.
+In other words, I can't apply the plus plus to the ar because ar is an array.
+Star i pointer plus plus is fine.
+That means it's right associative, so we increment first and then dereference.
+Now, because this is post increment, however,
+the value of this expression, i pointer plus plus, is what pointer was pointing to before it was changed.
+So this moves the pointer, returns the old pointer, and that old pointer is then dereferenced.
+This also is fine. Here we're incrementing the pointer,
+and now we're returning the new pointer and we're dereferencing it.
+OK, let's look at arrays, functions, and pass by address.
+Now, arrays are passed to functions by address, not by reference.
+It's similar to pass by reference, but it's a little bit different.
+So here is a function called sum that takes an array a and a size.
+Remember, when we call a function, we have to pass the size because we don't copy that.
+Now, the parameter a here is really a pointer.
+It's a pointer that's initialized with the address of the first element in the array when the array is called.
+And we can write it like that with the empty brackets. That's perfectly fine.
+That kind of tells the people who see the parameter that you're expecting to see an array there.
+Or it can be written the way you'd write a regular pointer, int star a.
+Both of those are perfectly fine.
+And this is the only place these two notations are interchangeable,
+when you have a parameter that's pointing to an array.
+Unlike a vector, you cannot pass an array by value.
+You cannot pass an array by value.
+So we're going to look at this. I think it's useful to see this visually.
+So I'm going to run a...I'm going to try and run a thing.
+Let's see if this will pop up. Yes, it popped up.
+I'm going to bring this over here and maximize it over here.
+So here's a little function where I create an array. I'm going to go to the first here.
+I create an array. When I initialize it, it's initialized on the stack to 1, 2, 3, 4, 5.
+Now I'm going to call this function sum.
+You notice that it takes an argument, an array, a, and the length,
+and it's simply going to loop through that array and sum the element.
+So watch what happens when I call sum.
+So we have to create what's called a stack frame.
+Notice that the parameter a is a pointer to const.
+So a is a pointer, length is a size t, result is a local variable.
+And these, of course, are all created on the stack.
+Now as we go through, notice that a is pointed to that array.
+So we haven't passed the array, we've passed the pointer.
+And as we loop through here, it goes through and just adds the values.
+And finally it's going to return the result.
+We're going to print the result 15 out here when we're done,
+and that stack frame is going to be destroyed.
+So the effect of doing that is similar to pass by reference.
+And so we always, but notice we don't use the ampersand with the array parameter at all.
+Again, don't get confused with that.
+Now if the array is not changed, like we did in our sum function,
+then make sure you put the const in front of the parameter.
+If you don't put the const, then we cannot pass a constant array to the function,
+which is something we'd want to do for summing.
+Okay, we're going to finish up by looking at some essential algorithms.
+Common algorithms are similar to vector.
+Of course we have to deal differently with the size problem, right?
+We can't simply write one and get the size out of the argument.
+Also, since there's no range checking, we have to spend extra care to make sure we're doing it correct.
+So let's do three or four algorithm exercises similar to the ones we did before.
+So our first one is we're going to count for a particular condition.
+So let's go over to our handout here.
+So our first exercise, we're going to write two array counting functions, count evens and word founds.
+Once you've written the stubs for minimal functions, then build using make test.
+Once you can build, then you complete the bodies for each function.
+So let's go over here.
+This is going to be in 20A in our IC folder.
+So here's counting.cpp.
+We're going to write our two functions here, count evens.
+So that's going to return the count of even numbers, so int count evens.
+Numbers is an array of int, so const int numbers, bracket bracket.
+And length is the size of the array. I'll use size T.
+And we're going to create the result, so int sum.
+And I'm going to return that sum.
+Let me call it actually count because it's count even.
+Okay, we're doing the stub first.
+Okay, our second function is word found.
+It's going to return the number of times that word is found in the array strings.
+So strings is an array of string to be searched.
+It's going to return an int, words found.
+And so an array of strings, so const string bracket bracket strings.
+So strings is the name of the array.
+And word is a string, so it's a const string reference word.
+So notice how I used the reference here on the individual string,
+but I don't use the reference here at all.
+Okay, so let's say int found is zero and return found.
+So now we have a good stub. Let's create a folder here.
+Let's try it, make test.
+Now we know that it compiles. No.
+Okay, so this is a problem with people who come from Java.
+In Java we could write the array like that.
+In C++, remember that the brackets need to go after the name of the variable,
+not after the name of the type.
+And I actually haven't programmed Java for a couple years,
+and I still constantly make that mistake.
+Okay, words found.
+Okay, so that means I, so this is a linker error, words found,
+that means me think I spelled the name wrong. No.
+Hmm, okay. Let's look at these.
+I passed only two parameters, forgot the third parameter.
+Okay, let's try that again.
+Make test.
+Okay, and our code compiles now correctly.
+So we have the stub correct.
+Okay, so now let's go over algorithm for counting.
+It's the same as it was for vectors.
+Create a variable to hold the counter.
+So I'm counting over here the number of even numbers found in the array.
+We'll use four, size p, i, equals zero, i less than len.
+Notice I don't have to get len out of size like I would with a vector.
+Plus plus i, and if numbers sub i, remainder two is zero,
+then we're going to increase our counter, count plus plus.
+Okay, let's try that before we go on to the next one.
+So let's do make test.
+And some of these are not working.
+Actually, none of those are working.
+Oh yeah, count evens is working now.
+I was looking up earlier in the test.
+Count evens is working.
+Alright, let's just clear that.
+So that is working.
+I'm not sure why this -- I'm not sure why that's printing twice like that.
+That's kind of strange.
+Okay, and let's do words found.
+So we'll do the same thing.
+Four, size p, i, equals zero, i less than len, plus plus i, if strings sub i equals word.
+And we found another one, found plus plus, and we're going to return found.
+Okay, so the algorithm is not hard, just the different mechanics for --
+so we have 100% now.
+The different mechanics for working with an array are different.
+Okay, so we did counting.
+Now let's go ahead and do accumulating.
+So we're going to do adding, our second one here.
+So on adding, we're going to write the function sum13,
+and I'm going to assume I'm going to kill both these terminals here.
+And I'm going to kill that.
+I'm going to go to b.
+And I'm going to put my id on here.
+And here's the instructions for the function.
+Add the numbers in the array, except the number 13 and the numbers immediately following don't count.
+So it's an integer array, so my sum is going to be an int, sum13.
+It's going to take a const int numbers, bracket, bracket.
+Now remember we could write this as this way, but still work exactly the same way.
+And size t, len, and int sum is zero.
+Return sum.
+And we got the stub.
+We probably should make sure we have a terminal here.
+And do make test on it.
+So our stub works okay.
+And so let's look at the algorithm for adding.
+Again we go through each element in the array.
+For size t, i equals zero, i less than len, plus plus i.
+And if numbers sub i is not equal to 13, then we want to add it.
+Let's say sum plus equals, not plus plus, sum plus equals numbers sub i.
+Now what if it is equal to 13? Do we want to do anything?
+Well we don't want to add it, but we need to skip the next one.
+So I'm going to need to have another plus plus i here, so I skip that number immediately following.
+So I don't print that.
+Okay, so now let's try it once again.
+Make test.
+And now we have 100% of it.
+The third algorithm we want is we want to find the extreme values, the largest and the smallest ones.
+So let's close that terminal. Let's close adding.
+Let's go to extreme.
+Here we're going to write the function big diff.
+So we're going to print the difference between the smallest and largest elements in numbers.
+So the difference is going to be an int.
+Function is named big diff.
+And it's going to take const int numbers, it's an array, and size p len.
+And so rather than creating a result here, what we're going to do is walk through the algorithm for finding the largest and smallest.
+So int largest equals numbers sub zero.
+Int smallest equals numbers sub zero.
+So the largest and smallest are the first element in the array.
+Now we're going to look through the rest of the elements.
+So we're going to print for size p i equals, we've already looked at zero, right?
+One, i less than len, plus plus i.
+And now for each number we're going to see if the number we have here at numbers sub i is greater than the largest or smaller than the smallest.
+So if numbers sub i is greater than the largest, then the largest is numbers sub i.
+We're changing largest.
+And if numbers sub i is less than the smallest, then the smallest equals numbers sub i.
+Now could both of these be true?
+No, both of those couldn't be true.
+As long as we have a value of smallest and largest, then both of these couldn't be true.
+Okay, now we're done.
+And so we need to figure out what we're going to return, the difference between the largest and smallest.
+And so we're going to say return largest minus smallest.
+We don't need the absolute value because that will always be zero or greater.
+Zero or greater.
+Okay, let's open a shell on that and try it out.
+Make test.
+Alright, that's good.
+Now we're going to test out one more thing here.
+And that is returning an array.
+So you can't return a local array, unlike a vector.
+However, the effect of pass by address is exactly the same as pass by reference.
+And so you can use that to create array output parameters.
+So here's an example.
+We want to use a loop to fill an array with a value.
+You can't just write a function that returns an array.
+So what you have to do is you have to pass the array in.
+Notice we're missing the const in front of it.
+It says this is either an input/output or an output parameter.
+And this is going to fill this entire array with this value.
+So notice while length is not equal to zero, that's a shorthand way to say that.
+A and then minus minus len, because len of course is going to be beyond the last index.
+So that's going to put it to the last index equals value.
+Now len is shorter, but it isn't yet zero yet.
+When len is one, minus minus len is going to say a sub zero equals value.
+We'll come over here.
+While len, len is zero. That's false.
+And the loop will end.
+Okay, so let's do our last exercise here.
+Output.cpp
+Let's close that shell. Let's close that.
+Let's go into D.
+And put our ID on this.
+So here we're going to write a void function, a procedure.
+So void ten run.
+It's going to take an array, numbers.
+So int numbers, that is modified in the function.
+Notice I didn't do constant numbers.
+Size, p, len.
+Void functions are really easy to stub.
+So we can go ahead and create a shell on that now.
+Open it in the integrated terminal.
+I do make test.
+And you can see that it runs.
+It doesn't give us the correct answer, of course.
+So here's our algorithm.
+We want to look at the numbers, and for each multiple of ten,
+change all the values following it to be that multiple of ten,
+until encountering another multiple of ten.
+So here's the first one. Two, multiple of ten, don't do anything to it.
+Ten, multiple of ten, remember it.
+Three, not a multiple of ten, change it to ten.
+Four, not a multiple of ten, change it to ten.
+Twenty, another multiple of ten, remember it.
+Five, change it to twenty.
+So for this, we're going to do for size, p, i equals zero, i less than len, plus plus i.
+If numbers sub i, remainder ten equals zero.
+So that's a multiple of ten, right?
+It's evenly divisible by ten.
+If that's true, what we want to do is remember it.
+If that's false, we want to store remembered value in numbers sub i.
+So how do I remember something?
+I remember something by storing it in a variable.
+So let's say int remembered equals zero.
+Alright, yeah, let's just say int remembered equals zero.
+So if that's the case, we're going to say remembered equals numbers sub i.
+And now we're going to store the remembered value in numbers sub i.
+So numbers sub i equals remembered.
+Okay, let's try it and see if that works.
+It kind of looks like it should work.
+Let's move this over here so we can see the whole test.
+Make test.
+Oh, I got 50%.
+So let's look at what's expected here.
+So ten run gives me two, ten, ten, ten, twenty, twenty.
+So I'm expected to ten, ten, twenty, twenty.
+So this is what it's expected to be out of that.
+But I found zero ten, ten, ten, twenty, twenty.
+So it looks like this first number is not a multiple of ten.
+And I replace it with the remembered value.
+And my remembered value here is zero.
+So it looks like this store the remembered value only works if I've already seen a multiple of ten.
+So we could create a flag in there and say, you know, yes, I saw a multiple of ten and set it.
+Or we could use a special flag value like that and then say, if remembered is not equal to minus one,
+then numbers of i equals remembered.
+So we have to handle the case, we have to make sure that we're not doing anything until we've already seen one already.
+When we do that, we should go from 50% to 100% now.
+All of them should work.
+Alright, folks, it looks like that is all we have today.
+When you come back, I'll see you in the next lecture in lecture 21.

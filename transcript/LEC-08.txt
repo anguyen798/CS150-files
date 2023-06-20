@@ -1,0 +1,762 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 8, where we're going to talk about function libraries.
+In this lecture we're going to build a library of ancient algorithms.
+And the ancient algorithms we're going to implement in our library are Euclid's algorithm, the greatest common divisor from about 330 BC.
+We're going to implement Newton's square root algorithm.
+This was actually developed in ancient Babylon under Hammurabi around 1800 BC, but Newton always gets credit for it.
+And finally we're going to find a better approximation for pi than the fraction 355 over 113.
+Now each of these is going to need an indefinite loop.
+We have two kinds of indefinite loops. We have while condition, and that's generally preferred. It's generally easier to understand and maintain.
+And we have a do while condition. We use that seldom, but we use that in one of our algorithms here.
+Now each of these algorithms also uses a new kind of indefinite loop called a limit loop.
+The loops we looked at in the last lecture were sentinel loops. We were looking until we found a period.
+Here we're going to use a loop where we reduce a number to zero, or where we do a couple of approximations,
+where we do some bisection or some non-convergence tests. Are we going closer to zero or further away from zero?
+Those kinds of things. These are used very much in finance. They're used in graphics. They're used in the sciences.
+And so we're not only going to learn how to write a function library, but we're going to look at loops, continue looking at loops.
+So the library we're going to talk about, first we need to define some functions.
+For the compiler to compile your code, the compiler needs to know the argument types and the return types.
+And so there are several ways we can go about doing that. First, we could define the function before we use it.
+Now we'd only do this for the very smallest programs. So you have a main function, and up above the main function,
+you write the definition for the function that you want to call inside main.
+For programs that are slightly larger, what we can use, now the problem with defining the functions before you use them,
+is that if one function calls another function, it has to be defined before it is called in the other function.
+And so it's quite difficult to order the functions if there are multiple functions,
+which is why this is only useful for small, one-off kind of programs.
+However, if you want to define the functions and use them in the same program,
+what you can do is you can declare the functions before the main function,
+and then you can define the functions after the main functions.
+Now this is useful for small programs where you want to keep everything in one file.
+The third way to handle this is to separately compile the functions,
+and then link them together with the main function, the function that calls it.
+And that's the last, it's the most flexible, and that's what we're going to do from now on.
+So go ahead and open your algo lib folder in your IDE, and we'll look at several different files.
+So here's algo, algo lib,
+and so here's my ICO8 algo lib.
+So I have algo.cpp, algo.h, makefile, and tester.cpp.
+Let me open the makefile here, and I'll move the makefile down to the end.
+So let me talk about what these three files are, four files are.
+Algo.h is our interface file.
+It will contain the prototypes for all of the functions in our library,
+and it will contain the documentation.
+Algo.cpp is the implementation file.
+That is where we will put our source code.
+Tester.cpp is our client or testing file.
+It is the file that will be calling the functions.
+Algo.cpp will be defining the functions, and algo.h will be declaring the functions.
+Finally, we have something that needs to put all of these parts together,
+and that is our makefile, and that is the project file that we're going to use to put everything together.
+Now you'll notice there are a couple of other files inside there,
+cs150check.cpp and cs150check.h,
+and those are files we'll use for the testing framework.
+So notice we have several different files inside here,
+and we need to put all of those together, and the job of doing that will be the makefile.
+We're going to start, though, with algo.h.
+So before you do anything, you will need to create the interface for your classes,
+or the interface for your functions.
+These interfaces are going to be declarations, function declarations, or prototypes.
+However, what would happen if we had this situation?
+And so let me just put this code away, and down here in 150, let me create a couple of new files,
+and I'll call this a.h,
+and I'll create a new file here.
+b.h,
+and in a.h, I'm going to say include b.h,
+and that's in b.h.
+I'm going to include a.h,
+and in a.h, I'm going to include b.h,
+and finally in my example cpp here, I'm going to include a.h.
+Now I haven't put anything inside the files, but I want to show you the problem.
+So now, let me go ahead and open an integrated terminal.
+Now, if I try and make example.cpp,
+that actually worked.
+Let's put something inside here.
+Okay, so I'll put a prototype in a.h, and I'll put another prototype
+in b.h.
+Example.cpp has included a.h,
+and I'm going to say g++ example.cpp out example.
+Okay, so this is the error I want you to see.
+So notice a.h tries to include b,
+b tries to include a, a tries to include b again,
+b tries to include a again, and so forth.
+Now you might think, well, why would anybody do that?
+That just seems incredibly silly.
+Nobody would in fact do that.
+But in fact, if I look at this header, iostream,
+it needs to have the declarations of the functions that print out strings.
+So if we look inside iostream.h, or iostream,
+we'd see that it includes the header for string.
+Then, when we look at the string class,
+we'd see that it needs to have a function, like getline,
+that needs to know about the iostream classes,
+so it will include iostream.
+So it's exactly the same as what I did here with a and b.
+And so we have to have some way of preventing that,
+and that is what we get with what are called header guards.
+So open up algol.h, and I'll show you what a header guard looks like.
+It consists of preprocessor declarations that say
+#if end if. That means if not defined,
+then we use the name of the file, typically in all uppercase,
+so algo, not a period, but an underscore for h.
+And if that is not defined, then go ahead and define it.
+So #define algol.h.
+And then at the end, endif.
+Now, the first time this header file is discovered,
+algol.h will not be defined,
+and so we will run the stuff between the if endif
+and the endif at the end,
+the #if endif and the #endif at the end.
+The first line inside that is define algol.h,
+and so that allows the compiler to run it,
+remember it, just for this run.
+So the next time it sees this,
+the #if endif algol.h will be false,
+and all the inner part will be skipped,
+which would include some other file.
+Let's put our name on this as well.
+And...
+Okay, so these are header guards,
+they prevent multiple inclusions.
+They prevent multiple inclusions.
+So you just need to remember this incantation,
+every header will be surrounded by this.
+Now, our header files can contain documentation,
+it can contain prototypes,
+which are function declarations,
+it can contain constant definitions
+that are used in multiple files or multiple functions,
+it can contain class or structure definitions,
+it can contain something called a template,
+and it can contain global variable declarations,
+that's the ones with the extern, you remember,
+not global variable definitions.
+The things that it may not contain in a header file
+are function or variable definitions,
+or using namespace standard.
+That cannot go in the interface file.
+So, we're going to add three functions to our header.
+GCD, for the greatest common divisor,
+yeah, greatest common divisor, Euclid's algorithm,
+square root, for Newton's square root,
+and pi.
+So that's the prototype.
+Notice that it ends in a semicolon.
+Here's the double square root,
+ends in a semicolon,
+and here's pi.
+It's going to take a numerator and a denominator,
+and there is a parenthesis and a semicolon
+at the end right here.
+I apparently did not color them correctly on the slide.
+So let's go ahead and add those.
+So here's our prototypes.
+So int GCD, int A, and int B,
+and double square root, double n,
+and void pi with an unsigned reference n
+and an unsigned reference d,
+and a semicolon.
+Okay, so now we've got our prototypes in our interface,
+but we might actually have a problem.
+Do you recognize what the problem is?
+Well, we have two square root functions.
+The library already has a square root function,
+and so if we tried to compile the code
+with our version of square root
+and the version of square root that the library already has,
+the compiler would give us an error.
+It would say we have a name clash or a name collision.
+Okay, a name collision.
+And so the solution to these name collisions,
+and the reason that namespaces were invented,
+is to put our functions in their own namespace.
+We'll name our namespace A A for ancient algorithms.
+Now, we're going to need to do this
+both in the implementation and in the interface,
+both in the header file and in the CPP file.
+And that just looks like namespace A A,
+an open brace, a closing brace,
+and I actually don't think we need the semicolon.
+I'm going to leave it off just to see.
+So I'm going to say namespace A A,
+and I'm going to put a closing brace on it.
+Okay, so there is my declaration file,
+my declaration file, or my interface file.
+Now, the client file is the one that calls or tests the functions.
+In the CS course reader, in the course reader you're going to read,
+you'll learn to do this manually.
+And we kind of learned to do it in the first couple weeks,
+where you wrote code,
+you wrote, figured out what the output would be for your IPO programs,
+and you figured out what the expected output should be,
+for different inputs.
+We're going to do this using the CS150 automated test framework.
+And so here's the framework process for testing.
+You write a function called,
+so let me go over here to my code,
+and we'll look at the tester.
+Let me move that over in second place here.
+So one thing you do is you include this header file
+for the functions that are in the test function,
+and then you include the header for the functions that need to be tested.
+So I will give you this file with run tests in it,
+and all you'll need to do is add the include for the functions you're going to test.
+So let's go ahead, since we're testing this, let's put our ID here.
+Then inside the function run tests,
+you will have a begin tests.
+This will begin all the tests you're going to do,
+and at the very end you'll have an end tests.
+For each function you're going to test,
+you'll write a function called begin function test.
+So this is the test for GCD.
+This is the test for square root Newton's method,
+and this is the test for pi approximate.
+And so that will begin function test and end function test,
+and that will create the tests for that.
+Now in between this, you'll use different versions of what are called assert equals.
+So this is the version of assert equals.
+Those are in this header file.
+So this is assert equals for integers.
+So we're going to say when we call our GCD function with 12 and 90,
+we expect to get back 6 as the greatest common divisor.
+If we call it with 42 and 56, we expect to get back 14,
+and if we call it with 56 and 42, we expect to get back 14.
+Notice these two are the same, but I've just exchanged them.
+For Newton's square root method,
+we're going to have to call a different version of assert equals,
+one that checks doubles, and that checks using an epsilon value here.
+So notice I've set up epsilon 10 e to the minus 4th,
+and I'm checking the expected value, calling the function,
+and passing in how close they have to be before they're equal.
+And finally, for the last one, we're going to call assert equals.
+We're going to do it for integers again,
+but we're calling one where we're calling a procedure,
+and we're testing two things.
+So I'm calling the function with pi.
+I'm calling our function pi.
+I'm setting the variables n and d to 355, 113.
+Then I have a comma, and this is the value I'm checking against this assert equals.
+So you don't have to memorize these,
+but I wanted you to see what the test program looks like.
+What a test program looks like.
+So you can use this to write your own tests.
+So let's go ahead.
+Where are we here?
+Let's close each of these bath shells,
+and let's go ahead and go to Algolib here
+and open an integrated folder there.
+So we're in Algolib, and we're going to do make tester.
+So notice I'm not doing make test.
+I don't even have a make file yet.
+I'm doing make tester, which is going to compile this program.
+And when I do, notice that there are no red things here.
+All of these are linker errors.
+It cannot find the function in function start.
+It doesn't have the main function in function run tests.
+It can't find begin tests.
+And so what that tells you,
+the fact that we only got linker errors here,
+is that this code compiles without any compile errors.
+So we only got linker errors there.
+We didn't get any compile errors.
+So again, to use the framework,
+we include the header for the functions we're testing.
+We place our testing code between begin function test
+and end function test.
+And then we use one of the different assert equals varieties
+that you can see in tester.cpp.
+And so when we did make tester, again, we got linker errors,
+but no compiler errors.
+If we had not written the header file,
+we would get compiler errors.
+And just to show you that that's true,
+let's come over here,
+and let's comment out that algo.h that we just wrote.
+And let's do make tester again.
+So I'll control L and do make tester.
+And now notice all the red errors.
+It doesn't know what aa square root is.
+So now we have a whole bunch of compiler errors.
+Compiler errors.
+Before, we did not because we told the compiler here
+inside algo.h what each function took as an argument
+and what it returned.
+Even though we don't have the function yet,
+we declared them.
+That's all the compiler needs to do to compile tester.cpp.
+And just to show you, I'm going to clear this once again.
+So if I say g++-c, I'm saying only compile,
+tester.cpp, notice I get no errors or no warnings.
+It compiles and produces tester.o for us.
+Okay, so now we're ready to go on to step three.
+We've written two of those files.
+The client file, I actually wrote it for you, of course.
+You added a little bit of code.
+And the header file.
+And so now we're ready to add the implementation.
+Now the implementation is going to go in the cpp file.
+And so there are five steps that you will want to memorize.
+You will always want to start with the stubs or skeletons.
+So add, include, header.
+Notice the double quotes.
+So this will be include algo.h.
+Add any other headers needed to implement your code.
+You can use using namespace standard in the cpp file.
+It cannot go in the header file.
+It can go in the cpp file.
+Copy the prototypes and the namespace from the header file.
+Remove the semicolons, add the body,
+and the return statements.
+So let's go ahead and do that stubbing step.
+So we will come over here to algo.cpp.
+We will include algo.h.
+Do we need to use any library functions?
+Well, we might need to use something.
+So let's assume we need to use something in C math.
+And because I want to use some of the functions in C math,
+let's assume I want the using namespace standard.
+Now I'm going to go back to algo.h.
+I'm going to copy everything in the namespace.
+I'm going to come to my -- let me move my tester down to the bottom there.
+I'm going to come back here.
+I'm going to paste it in there.
+And now I'm just going to come remove the semicolons from the prototypes,
+put in a body,
+and for those functions that need to return something,
+I'm just going to return a double value,
+or I'm just going to return a dummy value.
+So I'll say return zero, and I'll say return zero here.
+Okay, so this is a void function,
+so you notice I don't need to return anything for that.
+Now you might think right now that this code would build,
+but it still doesn't build because we need one more file.
+We need a file to put everything together, and that is the make file.
+So the make file is the cross-platform builder file.
+It's instructions to a program called make.
+Cross-platform means that it works on Windows, it works on Unix, it works on the Mac.
+Now it's true that different platforms like Visual Studio on Windows,
+or I can't remember the name of the compiler framework on the Mac, Xcode.
+Each of those platforms have their own builder programs
+and their own format for the files,
+but this one works on every platform.
+So make is worth using.
+Now lately, people have started using another program called CMake.
+What CMake does, it's also a cross-platform builder,
+is CMake will create for you make files,
+or if you're on Visual Studio, it'll create Visual Studio projects.
+If you're on Xcode, it'll create Xcode projects.
+I think in this class, we're simply going to stick with make
+because it's easier to learn than CMake, I believe.
+CMake is a little bit more complex.
+If you want to learn more about CMake, you can look at the videos I have on the homepage,
+the ones from the guy from British Columbia,
+and he has quite a bit on using CMake if you want to learn that.
+So here's what goes in a make file.
+There are three parts.
+There are the variables that describe what the inputs and outputs are.
+There are rules that are used to combine those variables to produce the inputs and output,
+and then the actions that are used.
+So variables, rules, and actions.
+So the first variables, these are actually technically called macros,
+but we'll just think of them as variables,
+is the name for our executable and the name for our object files.
+So let's go over to our make file,
+and let's put them inside here.
+By the way, comments in make files are just the pound sign, like that.
+So we will create a variable for our exe,
+and we will say the exe, I'm going to call this algo_tester.
+So you can have dashes inside there if you want.
+That's the name of the executable.
+The objects are algo.o.
+So for every CPP file, you're going to create an object file.
+So algo.o, cs150check.o, and tester.o.
+So algo.o, cs150check.o, and tester.o.
+So each of these is going to be separately compiled,
+and then they'll be linked together when we put in our rule.
+So our second step is the rule to build the target.
+So our target is going to be our executable.
+To expand that variable, or to play that macro,
+what we do is we put it in a parenthesis and precede that by a dollar sign.
+So in our case, we could type it out manually,
+but nobody does because then you have to type it out manually all throughout the program.
+So our target and dependency, our target here, is going to be the executable.
+That's what we want to build.
+And our dependency is going to be the object files, objs.
+Again, in parenthesis, preceded by a dollar sign.
+So this says to build this executable, algo tester,
+we need to build first algo.o, cs150check.o, and tester.o.
+Make knows how to build those, provided we have the CPP files for them.
+The third step is the actions.
+So the actions all proceed with a tab character.
+Can't use a space here. If you use a space, you'll get an error.
+So press your tab key.
+And you notice it showed a little tab character.
+Press your tab key.
+And we're going to run a variable called cxx.
+Where'd cxx come from?
+We created it in the environment when we first set up our program.
+We're then going to pass a second variable.
+This is called cxxflags.
+Where did that come from?
+Again, we set that up when we set up our program.
+And you can actually see what they are.
+Echo $cxx, it's g++, and echo $cxxflags.
+And you can see it's this long string that we created when we set up our program.
+When you ran the 150 config file at the beginning of the class.
+So these are the commands that we use to link our program together and build our program.
+Then the inputs are going to be our object files.
+So objs.
+And then we have a dash lowercase o.
+That's saying that's what the output is going to be.
+And the output is going to be our executable.
+So once we've done that, once we've done that.
+We can come down here and say make.
+And it will run each of those steps.
+It will create alga.o.
+It will create cs150check.o.
+It will create tester.o.
+It will link those three together.
+And it will produce the output.
+It will produce the output algo.tester.
+So that built our program.
+Now we would really like to say make test.
+And for that we need one more step, a fourth step.
+And that's to build a pseudo target.
+So a pseudo target, the target part, is not something that gets built.
+Inside the actions we don't build something like the executable.
+We run something here.
+So I'm going to run the executable.
+And I'm going to pass -t to it.
+And that is just what the framework uses to say, oh run the tests instead of run the program.
+And so again with my last one I'm going to add a pseudo target here.
+So I'm going to say test.
+Test depends on the executable existing.
+And I'm going to tab.
+And I'm going to do ./ meaning look in the current directory.
+Run the executable.
+And then space -t test that current file.
+Now -t is not a common thing.
+It's what our test framework is using to test.
+Once you've done that we can come over here and we can say make test.
+Just like you can with your homework.
+So notice we have the three tests that were written in the program.
+Checking the GCD, checking the square root, checking pi approximate.
+What was expected but what our programs found.
+Remember we returned zero in each of those cases.
+Okay so now let's look at implementing these three algorithms.
+And then we'll look at documenting them and generating the documentation.
+So GCD was developed by Euclid about 300 BC.
+And if you look at the slides there's a Wikipedia link if you want to read more about it.
+His essential insight was that if I have two numbers, the divisor of a larger number and a smaller number.
+That that divisor is going to be the same as the divisor of the smaller number and the larger minus the smaller.
+In other words by essentially repeatedly subtracting over and over again.
+I can get to the smallest combination of a and b that have the same divisor.
+And so when one of these a or b gets to zero then the other one is just going to be the smaller divisor.
+So that means we have to repeat. We have to do it once. So we're going to do that with a loop.
+We're reducing to zero so we have a limit loop.
+So here's the pseudocode for the algorithm GCD a b.
+Now it really doesn't matter with this algorithm whether a or b is smaller.
+Because unlike Euclid who originally used subtraction where it makes quite a bit difference that you divide the...
+you subtract the smaller from the larger.
+We're going to use remainder.
+And remainder works regardless of which one is smaller and larger.
+So this is the algorithm while b is not zero. A limit loop.
+Let temp be b. Let b be a. Remainder b.
+And then a equal the temp one.
+And then at the end GCD will be the a.
+So let's go ahead and implement that.
+We'll implement it and we'll test it.
+So let's minimize that.
+Let's go to algo.cpp.
+So we'll say while b is not equal to zero.
+We'll say temp equals b.
+b equals a remainder b.
+And a equals temp.
+And then at the end we're going to return a.
+a is going to be the smaller of those two.
+Or it's going to be the result.
+So let's try it.
+Let's go ahead and clear this up again.
+And do make test once again.
+And we'll see that for our GCD a...
+our a a GCD we in fact got the correct values for all of this.
+So that one worked.
+The second algorithm we want to look at
+is Newton's square root method.
+So this is as I mentioned attributed to Isaac Newton.
+But it's actually recorded in cuneiform
+from ancient Babylon, the Hammurabi dynasty about 17 or 1800 BC.
+And it's recorded in base 60 numbers.
+So we've looked at base 10, base 2, base 8, and base 16.
+These were in base 60.
+And this algorithm also uses a limit loop.
+It's an approximation algorithm.
+With an approximation algorithm you take two guesses
+and then you do a function on those two guesses
+until the difference is close enough.
+So here's the algorithm.
+You make a new guess as to the root of n.
+It doesn't matter what the guess is.
+Most people do n divided by 2.
+Then you write a loop.
+So we're going to loop. We're going to set the old guess to the new guess.
+We're going to set new guess to n divided by the old guess
+plus the old guess and all of that divided by 2.
+So this is the part that I don't know how they figured out, but they did.
+And we're going to keep doing that until the difference
+between the guesses is less than epsilon.
+So let's go ahead and implement and test that.
+So let's minimize that.
+And let's look at the square root function.
+So what we want to do is we want to make a new guess
+for the root of n.
+So double new guess equals n divided by 2.
+It wouldn't really matter what you set it to.
+Now we're going to write a loop.
+So this loop is going to use a do while loop.
+So we're going to say do while.
+The difference between the guesses is less than epsilon.
+So for the difference we're going to take the absolute value
+of new guess minus old guess.
+And until it is less than epsilon.
+So while it is greater or equal to k epsilon,
+we'll keep going.
+Now of course my code doesn't compile now because some of those things I don't have.
+So first notice that I'm checking these two variables new guess minus old guess.
+My algorithm says in the loop I'm setting old guess equal to new guess.
+You might be tempted to do this.
+Double old guess new guess.
+The problem is that your code won't compile.
+Because old guess will not be in scope.
+It will be created here and go out of scope at that point.
+And so it will not be created.
+So we have to create old guess up here.
+Double old guess.
+And we might just set it to new guess.
+Or set it to zero. It doesn't make any difference.
+And so inside the loop we have to set old guess equal to new guess.
+Now this still won't compile because we don't know what k epsilon is.
+So let's create k epsilon here.
+So const double k epsilon.
+Equals we'll do 1.0 e to the minus 14.
+So we'll say that's if it's closer than that it's close enough for our work.
+Finally one more step here in our algorithm from the slides.
+Is we're going to set new guess.
+Equal to n divided by old guess.
+Plus old guess.
+All of that divided by two.
+And finally rather than returning zero of course we're going to return either new guess or old guess.
+They are functionally identical here.
+So we'll return new guess.
+Okay so here's our algorithm for square root.
+Let's go ahead and try that.
+Make test.
+And here our square root is working.
+Of course I checked something that wasn't very complex.
+We would actually like to check something a little more complex.
+If we were doing this you know outside of a classroom situation.
+The third algorithm we're going to look at.
+Is finding a approximation for pi.
+So pi is an irrational number.
+That means there is no rational number.
+Irrational means a ratio.
+So there is no fraction that represents pi.
+And so about 1650 BC.
+So in 16 BC, 17 BC, 18 BC in Egypt they used 19 over 6.
+That's the Ames papyrus.
+In Babylon they used 25 over 8 as the number for pi.
+Archimedes in 150 BC recognized that pi was irrational.
+And it was between two fractions.
+Between 223 over 71 and 220 over 70.
+In the first century Ptolemy thought he got a little bit closer.
+He used 377 over 120.
+Ptolemy is famous of course you remember for the person who thought that the sun went around the earth.
+And finally in the 5th century in China.
+This emperor whose name I'm not even going to try and pronounce.
+I'm going to call him Su.
+Came up with the number 355 over 113.
+And that was the approximation we want to try and beat.
+So our goal is to find a better approximation than Su.
+And so like the Newton's algorithm.
+This is going to be an approximation algorithm.
+We're going to try something, see if we get a better one.
+Try it again, see if we get a better one and so forth.
+So we'll make an initial approximation.
+While it isn't close enough we'll try and get closer.
+Now to find out if it's close enough.
+We have to have some way of checking what the actual value of pi is.
+So this is called a test oracle.
+And so we're going to use what our computer thinks pi is.
+By using the libraries arc cosine of -1 as our test oracle for pi.
+Then we'll use the absolute value of Su - pi as our epsilon value.
+So let's go ahead and see if we can figure out that last one here.
+Okay, now notice we're not going to return anything.
+All we're going to do is change the values of n and d.
+So let's create some constants.
+So const double k Su equals 355.0 divided by.
+And I forgot from my slide what it was.
+355 by 113.
+Okay, and so our k pi, const double k pi is going to equal a cosine -1.
+So this will be our oracle.
+For our epsilon, const double k epsilon, we'll use the absolute value of k Su - k pi.
+And we're going to use a while loop.
+So we're going to guess what our approximation is.
+So that's going to be double approx equals n divided by d.
+Now we have a problem.
+n is an unsigned number, d is an unsigned number.
+This is undoubtedly going to be wrong.
+So we need to convert these to doubles.
+So I need to say static cast double n.
+Now you don't need to convert it.
+It will implicitly convert d to a double if one of the arguments in here is a double.
+Now notice you could not do this.
+You need to do one of the arguments.
+So that wouldn't help you at all, right?
+Because you've already divided n divided by d before you cast it to a double.
+So you need to do it like this.
+You need to cast one of the arguments.
+And some people are trying to add a multiplication in there.
+So 1.0 times n divided by d would work just as well.
+It would cast that value to a double.
+It would promote it.
+So that's our approximation.
+So make an additional approximation.
+So while the difference between our approximation minus k pi is greater or equal to k epsilon,
+we want to get closer.
+We want to get it less than epsilon.
+Less than epsilon.
+So to get it less than, we're going to find out if our approximation is greater than pi or less than pi.
+So if approximation is greater than k pi, then what we want to do is make the number smaller.
+And we make the number smaller by adding to the denominator.
+So if that is the case, we're going to say d plus plus.
+We're going to add one to the denominator.
+And if it's not greater than pi, we're going to add one to the numerator, n plus plus.
+I'm missing my semicolons there.
+Put it in there, then took it out.
+So that's how we're going to move it, get closer to getting closer to this.
+So now we need to calculate the approximation again.
+Now that we've changed the difference of values in n and d.
+So we'll say approximation equals static cast double n over d.
+And now we'll keep going through there until this is true.
+Or until that is false.
+Until that is false.
+Until absaprox minus k pi is less than k epsilon.
+So let's try our third test here.
+Okay, and our last time checking pi approximate shows that the fraction should be the next closer one to pi than 355 over 113 is 52,162 over 16,604.
+So here's the pi value.
+Here's what 355 over 113 gives me.
+And this is our new value that's a little closer.
+Notice that pi is actually, we're a little less than pi.
+This was a little greater than pi.
+But we're still closer to pi than that one was.
+That one was.
+Okay, so that's all the tests.
+The last thing we want to do is we want to look at documenting our code.
+So we're going to use javadoc style function comments similar to what we used with java.
+Now the tool we're going to use is not javadoc, it's this program called doxygen.
+You place these in your header file.
+And you will always have in every header file a file comment with @file.
+And you'll have a namespace comment.
+So let me show you what those look like.
+So let me minimize that.
+Let me go to algo.h.
+So I've already put the file comment here.
+I've put the @author.
+And I've put the @version here already.
+And we already filled that in.
+Now in front of the namespace we're going to do slash, star, star.
+And I'm simply going to describe in one sentence what this is.
+The ancient algorithms library.
+So that's documenting my namespace.
+Notice I have to use backspace so that I can do slash, star.
+If you don't do backspace, notice that this isn't highlighted again.
+It's not highlighted correctly.
+So I need to do backspace there to get the slash, star.
+So this is the file comment.
+This is the namespace comment.
+Then in front of each function we're going to add a function comment.
+So again, slash, star, star, and ending with star, slash.
+Slash, star, star, ending with star, slash.
+Slash, star, star, ending with star, slash.
+So that's the basic structure.
+It will always start with a single line that describes what it does and ends in a period.
+So calculates the greatest common divisor, period.
+This one is going to calculate the square root using Newton's method.
+And this one is going to calculate a better approximation for pi than 355 over 113.
+Again, ending with a period.
+Now for each parameter, you will create a param tag.
+And the param tag looks like this.
+It's @param, then the name of the parameter, a, and then description, the first number.
+@param b, the second number.
+So we'll do the same thing for this. @param n, the number, the process.
+And for this one, we have @param n, the initial numerator.
+I always spell numerator as a numberator. @param d, the initial denominator.
+Then, so we've got the, we've got the file comment, we've got the param tag,
+we're going to add a return tag describing what's returned.
+So this function does @return.
+I'm the greatest common advisor of a and b.
+And this returns @return the square root of n.
+And this one doesn't return anything, it's a void function, so we don't have to say anything about that.
+Finally, we can add code segments.
+So those will be syntax highlighted in the generated documentation.
+So this starts with @code and ends with @encode.
+Make sure you put the @encode in or your comments will not be processed.
+So we'll say example@code.cpp @encode.
+And we'll say double root equals a square root of 3.5.
+And for the GCD, let's add an example there.
+Example@code.cpp and @encode.
+And let's say, let's look at some of our tests so we can, in our test, 12 to 90.
+[ Typing Sounds ]
+Okay, so give them an example of what's happening.
+And for the last one, calling it code@cpp @encode.
+Let's do unsigned, n equals zero, d equals zero.
+And this is pi, n and d.
+And what did it equal?
+52, 163.
+N is 52, 163.
+And d is 16, 604.
+Okay, so there is our comments.
+You can take a picture of the comments for the, as one of the things you're going to do for your, for your in-class exercise.
+There's a place where they want you to shoot a picture of the comments.
+Okay, the last picture we want to take is we want to turn this into HTML documentation.
+And for that, we're going to use a tool called Doxygen.
+Now, we do not yet have that on this platform.
+It was on the previous one we used.
+But what we're going to do, no worries, we're just going to install it.
+So to install it, go to your shell and type in sudo, that means do something as the super user, apt-get install doxygen.
+And that will read the package lists and if it's already installed, which I've already did it earlier, it will say, you know, it's already here.
+If it's not installed, it will say, do you want to install this? It will use so many megabytes.
+Click yes and install it.
+Once you've installed it, you're going to create a file called the doxy file.
+Notice I'm in my algol lib file and again you only have to do this once.
+So I'm going to say doxygen -g and that will generate this file called a doxy file.
+Then open up the doxy file and go through it, the instructions here, and change each of these lines and save it.
+Finally, once you've done that, so assuming you've got doxygen, you've opened your doxy file, you've saved your doxy file,
+to generate your documentation, you're going to say doxygen doxy file, just like that.
+That is going to look on the left hand side in my algolib folder, you'll see that it created a new folder called html here.
+In the html folder, there's a folder called search.
+In the search folder, there's a folder called index.html.
+Here's index.html in the html folder.
+So I'm going to close the search folder and find index.html here.
+What I want to do is I want to preview this.
+So to preview it, what I'm going to do is I'm going to right click and open that search folder.
+Actually I didn't want search, let me close that bash shell.
+And let me close that bash shell.
+And it will open up a new terminal on the html, open an integrated terminal.
+So now I'm on the html folder, and what I want to do is I want to look at this folder.
+And to do that, because I'm already on the internet, I have to run another web server.
+So I'm going to run the program called http-server.
+This was installed with our IDE here.
+And notice that's starting a little web server.
+And if I control click on this link, it will open that up in my browser.
+And I can click on index.html.
+Now of course, normally what you do with this documentation is you put it out on the web.
+So this is the documentation for our ancient algorithms library.
+We're going to click on the namespace.
+And here is our AA, the ancient algorithms library.
+You remember when we put this in our comments.
+I'm going to click on that.
+And notice that's telling me the functions inside that.
+So notice it's got three functions, gcd, square root, and pi.
+This is the output that I produced for this.
+And so notice the examples and everything that people can read.
+So this is how you generate documentation for your users to use.
+Okay, so that's it with this lecture.
+I'll see you when we come back for the next one.

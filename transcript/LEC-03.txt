@@ -1,0 +1,1252 @@
+>> Hello folks, this is Steve Gilbert and welcome
+to lecture three on numbers and calculations.
+Before you start, make sure you've gone
+into the Thursday tab here on calculations in week one.
+You've clicked the link for the lecture exercise.
+When lecture three exercise comes up, click the link
+for the starter form, save a local copy
+and make sure you rename it so you can find it later
+when you get started.
+Okay, so let's go ahead and talk a little bit more
+about type concepts.
+So in the last lecture we talked about variables.
+A variable is a name storage location that holds a value.
+Variables and values both have types.
+And types have three characteristics.
+They have the domain, the operations
+and the representation of that type.
+So the domain simply means all values contained in that type.
+The domain for the type bool, for instance, is true and false.
+There are no other values maintained in that type.
+The domain for the type int is all the whole numbers
+within the range of the type.
+So the type for int is roughly plus or minus 2 billion
+for a 32-bit int or plus or minus 127 for an 8-bit int.
+Again, depending on the size.
+So all the values contained in that type.
+We could not put for an int, for an 8-bit int.
+We could not put a number that was larger.
+It would be outside of the domain.
+And we could not put a number
+that contained a fractional portion.
+Now the second thing with a type, so the values
+that can be contained in the type is the domain.
+The operations are what you can do with that value.
+So for the built-in types, these are specified
+by the C++ language.
+So for instance, in Java, we can use the remainder operator
+on the floating point or real number types.
+In C++, we cannot.
+The language prohibits that.
+So the language specifies what operations are available.
+Now for the library types, like the string type,
+things that are built into the C++ standard library,
+those are specified by the language specification.
+So the language standard
+and the language specification specifies the operations
+for that type.
+Of course, for user-defined types, the operations are
+defined by the person who wrote the class.
+Finally, the representation determines what bits,
+given a block of memory and a particular bit pattern,
+what does that mean?
+So if I say int, how many bytes are required
+and how are the bits inside that byte interpreted to be an int?
+The same thing if I say char or double or whatever.
+So in C++, unlike Java, the representation, in other words,
+how the bits are interpreted and the size, how many bytes are used
+for each type, differs by implementation.
+And we'll talk about that.
+Now, why aren't they all the same?
+Why don't they do the same thing as Java and make a byte type,
+which is 8-bit, a short byte, a short type,
+which is 16-bit and so forth?
+That's because different computer hardware is more
+efficient with different sizes.
+So this allows C++ to run to the best effect
+on the hardware you have.
+So these are the three characteristics
+that make up a type.
+We have several categories of types in C++.
+We have the built-in, primitive, or fundamental types.
+All of those worlds kind of mean the same thing.
+The things that are built into the language itself,
+not the library.
+That includes things like the integer types,
+the whole number types, the floating point
+or real number types, the character types,
+and the bool type.
+Now, very few of them, right?
+With those types, and actually with other types,
+we can derive new types.
+So these are called derived types or compound types.
+So I can take an array, I can take a char,
+and I can create an array of char.
+So an array of char is a different type than just char.
+It's derived from char, but it's a derived type.
+I can make a pointer to a double.
+I can make a reference to an integer.
+So arrays, pointers, and references are not their own
+independent types.
+They're based on or derived from other types.
+Thirdly, we have user-defined types.
+Types that are created in the library.
+Types that are created by you, the programmer.
+Types that interact with the rest of C++
+as if they were built-in types.
+And for these, we have enumerated types,
+that is single value, numbered, or scalar types.
+That's the enum type.
+We have struct for structured or record data types.
+And then we have classes for object-oriented programming.
+Finally, some of these types are used to build the things
+that are in the standard library.
+So we refer to these types as library types,
+even though they're structures or enumerations or classes.
+So types such as string and vector are not built
+into the C++ language.
+Instead, they're built into the standard library
+that comes with C++.
+Now, C++ is what we call statically typed.
+That means the types of the variables,
+the types of the functions are indicated in the source code.
+And so to show you exactly what that means, I have to kind
+of compare it to other languages.
+So Python, for instance, uses what's called dynamic typing.
+So this is the definition for a function named add
+that takes two arguments, A and B. What kind of value,
+if any, does add return?
+What kind of things are A and B?
+Well, you don't know when you're writing your code.
+When you run your code, A will be given a value.
+It will be a number.
+It will be a string.
+It will be a real number, an integer number.
+Similarly, you don't know
+until the program runs what the function will return.
+So this is called dynamic typing.
+A is not a specific kind of variable.
+B is not a specific kind of variable.
+It's given a value when the program runs,
+and its type is determined at that time.
+Static typing is what Pascal and Java and C++ use.
+That is, the types are determined explicitly
+when we declare or define the variables.
+So here is a function in C++.
+It would look very similar in Java.
+And notice that this specifically says
+that this function is going to return an integer.
+Notice the Python version does not say what kind
+of function that is.
+It also says that the two arguments, A and B,
+are both going to be integers.
+And so the types with static typing are determined
+when the program is compiled.
+Now we have a similar term that's often confused,
+and this is called strong typing.
+So strong typing means
+that a variable can only hold one kind of value.
+And so you might think, well, if I have a double value,
+and I try and assign -- if I have a double variable,
+and I try and assign --
+I'm actually going to open up our editor here,
+and I'm going to just create a new file here.
+I'll call it example.
+That's CPD.
+And so if I try and create a variable --
+and that is actually not very big.
+I'm going to -- I'm not quite sure why my font is so small
+when it's bigger over here.
+No, I guess it's about the same size.
+So double X equals 3.
+Now this works in both C++ and Java,
+but this is not an example of strong typing,
+because the value on the right, 3, is a whole number.
+The value variable on the left, where I'm putting that,
+is the wrong kind of thing to put it in.
+This is not an integer.
+This is an integer.
+And if we had strong typing only,
+then this would not compile, because we're trying
+to put the wrong kind of value in the wrong kind of box,
+the wrong kind of variable.
+And so what both Java and C++ do is they convert this 3
+to behind the scenes, invisibly, a 3.0.
+And so the 3.0 is what's put inside of that.
+This is called a promotion or a widening conversion.
+Now in Java, if we did this, int y equals 3.15,
+we would get a syntax error.
+So that's because this is too big.
+It's 64 bits.
+This is a 32-bit bucket.
+And the bits are arranged in a different pattern,
+because remember, the value is the set
+of bits interpreted according to its type.
+And so the bits that make up 3.15 are not the same
+as the bits that would go into the integer X. And so in Java,
+this is illegal, but in C++, it is not illegal.
+So in C++, we have strong typing,
+but we have implicit conversions,
+conversions that are not allowed in other languages.
+So in C++, this is okay.
+It's exactly as if we had written convert this 3.5
+to an int, throw away the .5 and store it into A.
+We won't get any errors.
+Now because of that, and because of the experience people have
+had with Java and C# in the last 10 or 15 years,
+people have realized that that leads to some kind of errors.
+And so in C++ now, if we want to make sure that we're doing,
+if we're not inadvertently losing data,
+we could do it like this instead of that.
+We could just put braces around this.
+And now, just like Java would get an error,
+which is what we expect, right?
+We would expect this narrowing conversion not to succeed.
+But in C++, if you use the traditional assignment,
+these narrowing conversions succeed.
+So sometimes people complain and say, "No,
+C++ is not strongly typed because I can put a double inside
+an int and it didn't tell me I made a mistake."
+Well, it is strongly typed,
+but it has these implicit conversions exactly
+like Java has the implicit conversions,
+but it will do a narrowing conversion.
+In other words, losing data, whereas Java will not.
+And again, if you want to avoid that,
+which I strongly recommend,
+what you should do is you should make sure
+that you use the curly braces when you do the assignment.
+Okay, so let's go ahead and look at the types now
+that are built in.
+So the first type we have, like Java, is a integer,
+which is a signed whole number.
+When we say a number is signed, we mean that the number
+or the variable can represent negative and positive numbers.
+Now in Java, ints are signed 32-bit whole numbers.
+In C++, that's not the case.
+I have worked on C++ compilers where integers were 16 bits,
+and the largest integer we could have was 32,767.
+Today, 32 is most common, just like Java,
+but 16-bit is still used in the microprocessor world,
+especially for embedded systems.
+So it must be at least 16 bits, or it can't be an int.
+That's what the language requires,
+but it could be 32 bits.
+In fact, an int could be 64 bits, and I expect to see
+that soon as processors get larger.
+We can modify the type int with a modifier
+that specifies the size.
+So we can write a long int, and we can leave off the word int
+and use long, just like Java does,
+and that must be at least 32 bits.
+Now in Java, a long must be 64 bits.
+Now in C++, that is not the case, and so many platforms,
+Visual C++, for instance,
+longs and ints are exactly the same size.
+They're 32 bits.
+Shorts, again, this is shorthand for short int,
+but you can just write short if you want, must be at least 16
+bits like they are in Java, but they can be 32 bits as well.
+So it would be possible for ints, longs,
+and shorts all to be the same size on a given platform.
+They usually aren't all the same size,
+but often several of them are.
+The platform we're going to be using, our Unix platform,
+is going to have 32-bit ints, 64-bit longs, 16-bit shorts,
+and all platforms now have long, long.
+This is an extension before C++11,
+but now all platforms have the ability to do a long, long,
+which is the equivalent to a long in Java.
+And again, in C++, we can write this as a long, long int.
+Okay? Now, with all of these types that specify the size
+of the bytes, we can also specify how they're interpreted.
+So you can combine the word unsigned with any of these
+above to specify that we want to take the whole bit pattern
+and apply it to positive numbers.
+So let me just give you a quick example.
+If I take a 16-bit number, a short, if I write short,
+I can represent numbers from minus 32,768 to plus 32,767.
+The zero is right in the middle of the positive
+and negative numbers if you put it
+on a timeline or a number line.
+If I put unsigned short, I cannot store any negative
+numbers, but I get twice as many positive numbers.
+I can store from zero to 65,535 numbers.
+And it's the same for all the types.
+Now, Java has a byte type to represent an 8-bit
+signed integers.
+C++ uses the type char both for characters
+and for small integers.
+So for characters, you just use a plain char.
+For byte integers, you do a signed char
+if you want the numbers minus 128 to 127,
+or you use an unsigned char if you want
+to represent the numbers zero to 255.
+We'll actually use these byte integers later
+because they're very useful when we process images.
+C++ has three floating point types,
+unlike Java, which has only two.
+Those of you coming from Python are familiar
+with the type float, but the float
+in type Python is called a double in Java.
+Python actually doesn't have the same float type,
+which is around four bytes long.
+The double type is typically eight bytes long.
+And the long double may be the same as the double.
+It is on Visual C++, or it may be larger.
+Okay? So we will not use long double generally.
+It's not actually that useful in C++.
+And we will generally not use float unless we happen
+to use them in an array for images or something like that.
+So for floating point types, we'll almost always use double.
+For integer types, we'll almost always use int,
+unless we need very small integers,
+in which case we'll use signed or unsigned char.
+Now, literals mean you literally write out a number.
+And when you write out a number, we assume you're working
+with decimal numbers, that is base 10.
+So with a decimal literal, we can preface it
+to change the base.
+So if I start a number with the digit zero,
+I'm going to assume I'm going to be in base 8 or octal.
+So 073 means three ones in seven eights, not seven tens.
+If I preface it with 0x, and that x could be capital
+or lowercase, it means I'm assuming that the base is 16,
+and the number is in hexadecimal.
+And so 0x73 is not the decimal number 73,
+it's three ones in seven sixteens.
+And if I have the -- start with the preface OB, or 0B, not OB,
+0B, it's assumed that the numbers are binary.
+Now, I can also add a modifier after the literal.
+If I do a U, this can be uppercase or lowercase,
+it's more common to do capital.
+That means that we want to interpret
+that number as an unsigned number.
+If I do an L, it means we want to use long storage.
+If I do two L's, it means we want to use long, long storage.
+And of course, I combine the unsigned,
+which determines how we view the representation
+with the size modifiers.
+So I could have 123 ULL.
+C++14, we're using C++17 in this class, also allows you
+to use the apostrophe to act as a separator for long numbers.
+So if you have a very large decimal number,
+we commonly separate out the thousands
+with a comma, the comma won't work in C++,
+but you can use the apostrophe,
+so you still get the same visual separation.
+For floating point literals, you can type them
+as simply 243 dot, notice that'll be type double.
+Notice we don't need a trailing zero for that,
+but we do need the dot.
+The literal 234 is a type int, 234 point is of type double.
+If you add an L to the end of your number,
+like 7.5432L, it's of type long double, the literal.
+And finally, you can do it in scientific notation here,
+adding an E with a plus or minus for the exponent.
+The E can be capitalized or lowercase.
+This'll be type double, using scientific notation.
+And if we wanted type float, we would use the letter F. Again,
+this can be lower or uppercase, I've used uppercase here.
+You should not use lowercase for the L,
+because people are going to confuse it with a one,
+you're going to confuse it with a one.
+Now, we can actually, since we can use literals
+to specify a type, and we can use variable names,
+or type names like int or double to declare the type,
+we can actually use only the literal
+to infer or deduce the type.
+When you do that, instead of specifying a type name,
+you use the keyword auto, and then you don't use braces.
+And so, when I say auto A,
+notice I haven't specified what kind of thing A is.
+The compiler comes along and says, well,
+what's going into that?
+Well, 23U is an unsigned int,
+so the type for A would be an unsigned int.
+Similarly, I've done the same thing for the variable B.
+I haven't yet specified that it's a float,
+but I've written over here that it's type auto,
+and so it will induce, deduce, or infer from the 3F
+that B is a float.
+Now, a lot of modern C++ experts recommend this style called
+almost always auto, or AAA,
+because first it eliminates uninitialized variables.
+If we're going to get the type from the initializer,
+we don't have to worry about variables.
+It also improves maintenance.
+That means if you change the initializer,
+suppose you had, you know, int x equals 3, and you came along
+and you realized, oh, you know, that really should start
+with 3.5, and you forgot to change the int,
+then your code would be kind of out of sync.
+You wouldn't get an error message,
+and so maintenance works easier if you're using always auto,
+because the types track as the initializers will change.
+And finally, performance.
+If you use explicit types like int B equals 3.5F,
+we have to do an implicit conversion there
+that wouldn't have to happen if we didn't do that.
+And so this eliminates these initial conversions.
+So if you look on the slides, I have some links
+that you can watch and read several things about here.
+Watch this video on almost always audio,
+or almost always auto if you're interested in that.
+Let's go ahead and do an exercise, and let's go ahead
+and see if we can do the work of the compiler and infer
+from the literals what type would be there.
+Now, of course, if we were using auto, we'd put auto there,
+but here we're simply going to infer
+from the compiler what type would go there.
+Okay? So I'm going to make this slightly larger
+so it's easier to see on the video.
+So we're going to look at this program, and we're going
+to provide the correct explicit variable types for each
+of the variable declarations.
+You can assume that ints are 32 bits, that shorts are 16 bits.
+Now, to make this a little trickier, what we want
+to do is use the smallest legal type
+that will correctly store the subsequent value.
+Okay? Okay.
+So we're going to take a picture.
+We're going to click here.
+We're going to go in and look at this program.
+I'm going to make this a little larger again so you can see it.
+So notice I could say auto A equals this, but I instead,
+in which case it would be an int, right, an unsigned int,
+.25 is an unsigned int.
+Instead, what I want to do is think
+about using the smallest correct explicit type for that.
+So the question really we're asking is,
+what is the smallest type that will store minus 25?
+So an int obviously would.
+We could put a double inside there,
+but all of those would need to convert.
+And so the smallest type is an assigned char.
+So chars are what we use for values that are 8 bits.
+An 8-bit assigned char can hold the numbers
+from minus 128 to plus 127.
+So B, we could put that as assigned char,
+but 249 is outside the range of assigned char.
+It's outside the domain.
+So it wouldn't fit.
+What if instead, though, we made it an unsigned character?
+If it was an unsigned char or an unsigned byte, it would fit
+because the value for unsigned bytes is 0 to 255.
+So this would be an unsigned char.
+Okay, C obviously is bigger than we can store in assigned char
+or an unsigned char.
+How about the next larger number, the short?
+That's 16 bits.
+Could we store minus 1725 in that?
+Well, if it was an unsigned number, we could not,
+of course, because we can only have positive ones.
+So how about a signed short?
+Well, with 16 bits, we can store roughly plus or minus 32,000,
+and that will certainly fit.
+So this would be unsigned or signed short int.
+And with this type, because the default for all
+of integers is signed, we can leave off the word signed.
+And because with the shorts and longs,
+you can actually leave off the word int.
+We could write that simply as a short.
+Now, D obviously won't fit in plus or minus 32,000,
+but how about if we make that short unsigned?
+Well, then instead of plus or minus 32,000,
+we get 0 to roughly 65,000.
+And 49,000 would certainly fit in there.
+So this would be an unsigned short int.
+And again, we can leave off the word int if we want.
+[ Typing ]
+Okay, so this number is 2.
+There's hundreds.
+Here's thousands.
+Here's millions.
+It's 2,252,000, right?
+So obviously, that won't fit in a short.
+Will it fit in an int?
+Obviously, we have a negative number, so it has to be signed.
+It cannot be unsigned.
+And remember, the default is signed.
+We only have to put the unsigned keyword in there.
+We only have to put the signed keyword with chars.
+And if you just want to be pedantic,
+you can put it inside there.
+So an integer is 32 bits.
+That means we can store roughly plus or minus 2 billion numbers.
+So this is fine for int.
+Now, for the last three of these,
+I want to do something slightly different.
+I want to pretend that I am the compiler.
+And I want to put in what auto would put in here with 3u.
+And so for 3u, that would be an unsigned int.
+For minus 9ll, that would be a signed long long.
+Or just long long.
+Again, you can put signed long long int.
+That would be perfectly fine.
+So long long.
+And this one is an unsigned long long.
+For these exercises, we're using something called code check.
+So once you've typed your answer in there, you can go ahead
+and just click the code check button.
+And it will check it to see if you, in fact, got it correct.
+Okay? And so notice it's telling us
+that we have the correct values.
+And you're going to take a little picture.
+And so I'm going to actually make this a little smaller here.
+And I'm going to go ahead and take my picture.
+I'm going to do Windows shift s because I'm
+on a Windows machine.
+I'm going to take my picture.
+And I'm going to go over to my document here.
+And for exercise one, I'm going to go ahead
+and paste in those answers.
+Okay? If it gets too big, you can make it smaller
+so that it fits.
+We could have actually shot less,
+shot less for that picture.
+I shot kind of a lot for that picture.
+Okay, so let's go back to talking about.
+So that's types and inferred typing.
+Let's talk about binary numbers.
+I want to talk about how data is stored internally
+in these numbers.
+So internally, all numbers are stored in binary.
+In other words, base two.
+So when we talk about the base of a number,
+what we're talking about is the number of digits that are used
+to represent that number in human readable form.
+When we talk about the base of a number, we're talking about,
+again, the human readable form.
+So base two uses two digits.
+Those digits are zero and one.
+Base eight, or octal, uses eight digits.
+Those digits are zero, one, two, three, four, five, six, and seven.
+Base ten, or decimal numbers, uses ten digits.
+And the digits are zero through nine.
+And base 16, or hexadecimal, uses 16 digits.
+So we use the ten digits from decimal, zero through nine.
+And then we borrow the first six letters, A, B, C, D, E, and F.
+And so that's how we represent human readable
+hexadecimal numbers.
+So let's talk about how we interpret the bits internally,
+how we convert a number that's written
+in human readable form, zero, one, two, three, and so forth,
+to the actual value that's stored in the number.
+What does it mean when we write out the number 123?
+Well, in base ten, you learned this in grammar school.
+What we mean by 123, or one twenty three,
+is simply one times the base.
+Let me start at the right here.
+So whatever the base is, we take it to the zeroth power.
+So any number raised to the zeroth power is one.
+So that's three times one.
+Then we take the next digit, two times, and this is ten
+to the first power, or ten.
+So two times ten, plus one, that's the third digit
+over here, times ten to the second power,
+or ten times ten, or a hundred.
+And so in grammar school, you learned
+that is this is the ones place, this is the tens place,
+this is the hundreds place,
+the next one would be the thousands place.
+But this is what you're really doing under the hood.
+And if you understand that, then binary numbers,
+or base eight numbers, or base sixteen numbers, are easy.
+So here is a binary number.
+Because it's binary, we only have two digits, zero and one.
+And the way we interpret that, the way we get the value
+out of that, is by taking the base, which is two,
+raised to the powers, two to the zero, two to the first,
+two to the second, two to the third,
+two to the fourth, and so forth.
+And simply adding them together.
+So our right most digit here is one,
+and we take one times two to the power,
+two to the zeroth, or one times one.
+Then one times two to the first, or one times two.
+Then zero times two to the third, which of course is zero.
+Then one times two to the third, which is eight.
+Then one times two to the fourth, which is sixteen.
+Then one times two to the fifth, and so forth.
+And so that is simply one plus two, plus eight, plus sixteen,
+plus thirty-two, plus sixty-four,
+which gives me the same value.
+So one twenty-three, and this binary number,
+are exactly the same value.
+They're just represented in human different terms.
+We're representing them in different bases
+when we write them out.
+Now we will normally use base ten,
+but you should know algorithms to convert
+to these different bases.
+And so this gives you enough information to figure out how
+to convert to a different base.
+In other words, suppose we had this number,
+and we said it was base eight.
+Well that would be eight to the zeroth,
+plus one times eight to the first,
+plus zero times eight to the third, second.
+And then eight to the third, and so forth.
+We just simply replace these two to the sixth, two to the fifth,
+two to the fourth, by eight to the sixth, eight to the fifth,
+eight to the fourth.
+Or in base three, we do the same thing.
+So the conversion is essentially relatively simple.
+So we're going to do a second exercise.
+For this one, we're going to use our CS50 IDE.
+I'm going to go close that little thing I just typed there.
+We're going to do this first exercise,
+which shows the representation of different values.
+This is in part B over here, in IC03.
+And you're going to open up represent.cpp.
+You don't have to put your name on this, because we're just going
+to do some exercises and print
+out what the internal representation
+of these should be.
+Now to do that internal representation,
+what we're going to do is we're going
+to call a function called two bits.
+To do that, we've included this file called represent.h,
+that has the definition for the two bits function.
+Now most of you won't understand this right now.
+By the end of this semester, you will understand this.
+So we're going to look at that, and we're going to print
+out here what that means for each of those representations.
+So if I want the representation of the character A,
+what I'm going to print out is two bits, and I'm going to print
+out the literal character A. Okay?
+Now if I want the literal representation, in other words,
+what do the bits look like for the unsigned char B,
+I'm going to have to -- or the unsigned char 65,
+I'm going to have to make a variable of that type.
+So I'm going to say unsigned char B equals 65,
+and then I'm just going to print out two bits B. Okay?
+So you notice when I did A, I put the quotes around it.
+I passed the literal inside here.
+Here I'm passing in the variable.
+Okay. We've got the short value.
+So the signed short value, 32,768.
+So I'm going to have short C equals 32,768.
+And I'm going to have unsigned -- I'll do it.
+I'll do it between them next time.
+And so let's do two things here.
+Let's do two bits C. And then let's put
+out a comma and say C equals -- or I'll use the arrow -- C. Okay?
+And let's do a D for the unsigned short.
+So unsigned short D equals 32,768.
+And I'm going to do exactly the same thing I did here.
+I'm just going to copy that.
+I'm going to paste it over here.
+And I'm going to print out D, D, and D. Okay?
+Okay. Here we want the int value, 15.
+So two bits, 15.
+Now 15, of course, literally is an int.
+We want the int value minus 15.
+Two bits minus 15.
+We want the float, 15F.
+And the double 15F -- or double 15.
+I'm having a hard time putting my fingers on the right keys.
+Two bits, 15.0, or just 15 point.
+All right?
+If we just did 15, we'd have an integer.
+If we did 15.0, we'd have something else.
+But the float -- notice I don't need the floating point.
+If I put the F on the end of it, it knows it's float.
+I'm going to hope that's right.
+We'll find out when we compile it.
+Now then I'm going to be two bits,
+and I'm going to do a minus 15.0.
+All right?
+Because we did minus 15 with no point zero,
+and we got the int minus 15 here.
+Here we have the double minus 15.
+Now to compile this, we're going to have to right click
+on the folder that's in, open it in an integrated terminal,
+and notice that it does the change directory
+to move us over there.
+And then I'm simply going to say make run.
+Okay? Now I had an error.
+I do need the period on the 15F.
+I told you the compiler would tell us if we made
+that mistake, and I did make that mistake.
+So I'm going to put a period in the 15F.
+Okay, let's try it again.
+I'll clear the terminal with control L. And make run.
+Okay, so this is what we talked about originally with types.
+Notice that the character A,
+because I said it was a character, represents A.
+If I printed out the character A, I would get A.
+And actually, let's just do that.
+Let's go back here and do the same thing like we did for C
+and D. So I'm going to print out A. And here, oh,
+I'm going to say -- oh, actually,
+let's make a variable of that.
+So char A equals A. And put a semicolon there.
+And we'll do A. And then we'll print out comma A is --
+print out A. And then a new line.
+Okay? And we'll do the same thing to here.
+We'll add the -- oops.
+The comma B equals or B is B. And that will make it a little
+clearer when we build this and run it again.
+So let me clear the console and do make run again.
+[ Background Sounds ]
+Well, I didn't like that.
+[ Background Sounds ]
+I must have made a mistake in my code, which I did.
+So I'm going to go -- oh, I said two bits one instead
+of two bits A. Okay.
+Third time, hopefully this is the charm.
+Okay. So notice this bit pattern has a value.
+What's its value?
+The letter A. Okay?
+This bit pattern is the unsigned character 65.
+Now, when we print it out, it says it's A, but it's really 65.
+So depending on what we determined it was,
+notice the value changes.
+It was our determination that this was an int or a char.
+Right? So unsigned char 65 and int A have the same value
+or have the same bit pattern, but they have a different value
+because they represent different numbers.
+If we look at the short 32768, we get this bit pattern,
+16 bits, and we have the value 32768.
+If we look at unsigned short 32768,
+I'm obviously making some kind of mistake here.
+I'm going to pause this while I correct my mistake.
+Okay. I'm back.
+I'm sure many of you saw my errors.
+I said I want the short 32768, and I typed the short 32678.
+So 768 and 768.
+And I'm going to print this as an int.
+Okay. So let me try it.
+I said last time three times the charm.
+We'll hope that four times is the charm.
+So I'm going to do an A print.
+Okay. So here we have the character A
+and the unsigned character 65.
+If we take that value, this value, and we represent it
+as a character, it's A. If we represent it
+as an integer, it's 1.
+If we take this value and we represent it as a short,
+notice it won't fit inside a short.
+It does what we call an overflow.
+And so the value that's stored in there is -32768.
+If we store it in an unsigned short, which can store from 0
+to 65,000, we can store that value.
+So this does what we say overflows the domain.
+If we look at the integer 15, we have this bit pattern.
+And if we look at the value -15, we get some insight
+as how negative and positive numbers are stored differently
+as to their bit patterns.
+If we look at the float 15,
+so here's the integer 15 right here.
+And here's the float 15.
+Notice they're using the same amount of storage,
+but the bits are arranged entirely differently.
+In other words, the interpretation
+of the bits is different just
+because we said it was a different type.
+And if you look at the difference between the float
+and the double, you'll see
+that they arrange somewhat similarly.
+You can see the actual data right there for 15
+and the data for 15 right there.
+And the data for 15 right here.
+You can see that they're somewhat the same,
+although a little bit differently.
+And you notice -15 and positive 15.
+So look at the difference between negative and positive here
+for integers, the same number.
+And look at the difference between negative
+and positive for doubles.
+Only one bit has changed.
+And so what you can take away from this, I don't expect you
+to understand this decoding.
+What I do expect you to understand is
+that the value is a set of bits interpreted according
+to its type.
+The size of each representation of a type is based
+on the individual platform, the individual implementation.
+And that we can have two patterns
+that are exactly the same.
+But if their type is different,
+so notice these two patterns are the same.
+And these two patterns are the same.
+But because their type was different,
+their values are different.
+All right?
+So the value is the set of bits interpreted according
+to its type.
+Okay. So that's exercise B. You're going to take a picture
+of this.
+And you're going to take a picture of this part here
+for the in-class exercise.
+Okay. Let's go on to the next topic,
+which is conversions and casts.
+Okay? So C++ automatically converts between types
+of numbers on initialization or assignment.
+Okay? It does this silently.
+It doesn't warn you that it's happening.
+It just does it.
+So in C++11, we can use the curly braces called
+"list assignment" to give you a little bit greater control.
+So if you had an int variable and you assigned a double to it,
+maybe the variable should have been a double,
+but you don't notice.
+In Java, you get an error.
+In C++, you won't unless you use this list assignment.
+Now, you may get a compiler warning on an error
+or conversion, but there's no guarantee
+that that will actually happen because it's not illegal.
+So if you mean to explicitly convert between different types,
+you should use what's called a static cast.
+And see, in Java, you did something similar --
+simpler in Python as well, if you wanted to cast.
+This shows that the conversion is intentional.
+So for instance, if I want to store the whole part
+of a number pi, I can assign it to a static underscore cast.
+In angle brackets, I put the type I want
+to create my temporary of.
+So I want to convert pi to an int,
+and I put that in parentheses here.
+So this is the syntax for a static cast.
+Okay, so let's go and look at expressions.
+Let's go and look at expressions.
+So an expression is a calculation
+that produces a value.
+And to do that, we use operators and operands.
+These are terms from mathematics.
+So operands are the data that we operate on.
+And operands can be literal.
+So 3 plus 5 is an expression.
+3 and 5 are literally values.
+We can say use variables in expression.
+A minus 3.
+A is not a value, but it contains a value.
+So we can use it in an expression.
+We can use a function call.
+So func a is not a value, but it produces a value when I call it,
+and I can use that in an expression, 2 times func a.
+And we can have a sub-expression.
+So a plus 3 produces a value.
+That's an expression.
+And I can use that sub-expression as part
+of the expression a plus 3 times 5.
+Now the operators are the plus, the minus,
+the multiply in this situation.
+And all of these operators have three characteristics.
+First is the term arity.
+Arity simply means how many operands are needed.
+So 3 plus 5 is called a binary operator
+because two operands are needed.
+Minus 5 is a unary operator because only one operand
+is needed.
+Finally, we have one operator called the tertiary operator
+or the conditional operator that requires three operands.
+What the condition is, what the true value is,
+what the false value is.
+Secondly, we have what's called precedence.
+Precedence determines which operators bind more tightly
+to data than another operator.
+Now you probably learned P-E-M-D-A-S,
+PEMDAS in algebra.
+That's not exactly correct here.
+First, we don't have any E.
+There's no exponential operator.
+The P stands for the parenthesis.
+The M stands for the multiplicative operators,
+which means multiplication and division.
+Neither one of them binds more tightly.
+They're just at the same level.
+And the last level, the additive operators,
+includes addition and subtraction.
+Finally, associativity determines whether we go
+from right to left or left to right.
+And this is called the tie-breaking rule.
+We only use associativity when we have two operators
+at the same level of precedence.
+So let's look at an example.
+Here is an expression, 7 times 2 divided by 3.
+So each of these is a binary operator.
+Notice that multiplication
+and division have the same level of precedence.
+So the 2 and 3 bind at the same level as the 7 and 2.
+So what should we do?
+Well, we don't have a way to evaluate this.
+We have to fall back on rule 3, associativity.
+All binary operators are left associative,
+meaning we go from the left to the right.
+So this is 7 by 2 times 2, which is 14,
+divided by 3, which is 3.
+Okay? 3 or 4?
+4. 4. Okay.
+Okay. So if it was the other way, right,
+if we did the 2 divided by 3, we'd get 0 times 7,
+which would be 0.
+Okay. Now let's look at the arithmetic operators.
+We looked at the basic types.
+We've looked at the vocabulary for calculations.
+Let's look at the operators.
+There are five basic arithmetic operators.
+There is not an operator for exponentiation, okay,
+even though there is a math.
+There is not in C++.
+Now all five of these don't modify their operands.
+So you can use all five of these operators
+with an expression or a literal.
+So addition and subtraction is the plus and the minus token.
+These can also be the unary plus
+and the unary minus operators.
+So we use the same token depending on the context
+as to which operator it means.
+We have multiplication, which is the star,
+like it is in most programming languages, division,
+which is the forward slash, and remainder.
+So these last two require a little bit of explanation.
+Okay. Integer division in C++ works like integer division
+in Java, but unlike integer division in Python.
+In Python, when you divide two integers, you get real division.
+In other words, 2 divided by 3 is .666.
+In Java and C++, 2 divided by 3 is 0, right?
+And so look at this little girl standing
+at the board dividing 80 by 9.
+We have the thing we're dividing by --
+the thing we're dividing, the thing we're dividing by,
+and on the top of this little house,
+what we've done is we've put the quotient.
+So 9 -- 80 divided by 9 in C++ is 8.
+We discard this 8 down here in the basement.
+So it's not 8, 8, and 8/9.
+It's just 8.
+So the quotient's calculated.
+The remainder is discarded.
+The result is an integer.
+So 8, 8, and 8/9 is, of course, closer to 9, right?
+Because 81 would be 9.
+If we divided 81 by 9, we'd get 9.
+But it's not rounded up to 9.
+It's just 8 in that case.
+If we want the part down here in the basement,
+the part the little girl is drawing right now,
+we can use the remainder operator.
+This percent sign is not the --
+this doesn't have anything to do with percents.
+It also is not exactly the modulus operator.
+Modulus is a slightly different operation than the remainder.
+But it's close to that, okay?
+So 12 remainder 5 is 2.
+That's because when I divide 12 by 5, I get 2 for the quotient.
+There are two 5s in 12, but there's 2 left over, okay?
+So that's the remainder operator.
+Now, the last operators I want to look
+at are called side effect operators.
+And side effect operators include assignment,
+the shorthand assignment, plus equals,
+and increment and decrement.
+So increment and decrement, plus plus and minus minus.
+Those add 1 or subtract 1 to a variable.
+However, like all expressions, they produce a value.
+So the secondary side effect is to change the operand.
+So plus plus a adds 1 to a.
+Minus minus b subtracts 1 from b. It changes a and b.
+Thus, because it changes a and b, they only work
+with modifiable l values.
+That means you cannot write plus plus 7.
+Plus plus 7 is not equal to 7 plus 1.
+Plus plus 7 is illegal.
+You're trying to change the value 7.
+So the side effect is always to change 1 or subtract 1
+from the variable's values.
+So it's just a simpler way of saying x equals x plus 1.
+Or x equals x minus 1, right?
+You can simply say x plus plus or x minus minus.
+Or plus plus x or minus minus x. Now, the value
+of the whole expression, however,
+depends on where you place the operator.
+If you put it in front of the variable plus plus a,
+that changes a, and then it returns the variable
+that is changed.
+So plus plus a means change a and return a
+as the value of the expression.
+Postfix, writing a plus plus, saves the value
+that a had before we changed it, changes a,
+and then returns its own old saved value as a temporary.
+So let me give you a couple examples, short examples here
+so you can see that.
+I'm going to close represent, and I'm going to open
+up my example here.
+And I'm going to just put some simple code in here,
+include iostream using namespace standard int main.
+So I'm going to say int a equals 6, okay?
+I'm going to say int b equals a plus plus.
+And then I'm going to print out a and b.
+So what would you expect to get out of this?
+Now, I'm going to have to open up a terminal here
+on my CS150 folder.
+And I'm going to have to do make example.
+So I don't have a make file for it,
+so I have to use its name of the program.
+To run it, I have to do dot slash example.
+So if you watched in lecture one,
+if you watched the CS50 video on using the command line,
+you'll realize how to build and make a program.
+So when I run example, that prints out 7 and 6.
+So notice a plus plus changed a to 7, right?
+This changed a to 7.
+However, the value of this expression is the temporary
+value that a had, and that's what's copied over into b, okay?
+So notice b is 6 and a is 7 in this example.
+Now, there's some pitfalls with this.
+So here are the things to avoid.
+Notice here, I'm calling a function.
+I'm passing as an argument n,
+and then the expression n times n plus plus.
+Well, the problem here is that n plus plus changes n.
+So I don't know if the n over here on the left or the n
+in the middle have the value before
+or after it's changed.
+You don't know.
+Similarly, this.
+I have an expression with n divided by 2 plus 5 times 1 plus
+n plus plus, I'm not sure if this n has been changed or not.
+Now, it doesn't look like it when you look at it.
+You look at it and you think, well,
+obviously it hasn't been changed.
+It appears after it.
+It's always left to right.
+That's not the case, okay?
+That is not the case, okay?
+Finally, look at that expression.
+Y equals n plus plus plus n plus plus.
+Again, you don't know what that means.
+So some rules to remember.
+Don't use a variable that's part of more than one argument.
+Don't use if a variable appears more than once
+in an expression, n and n plus plus over here.
+The parenthesis won't help you in this case.
+You cannot put parenthesis around it to make it safer.
+It's unsafe, okay?
+So here, this is an expression, n plus plus plus n plus plus.
+Don't use if the variable n appears more
+than once in an expression.
+This also applies to the assignment operator.
+In other words, don't write something like this.
+Y equals y plus plus.
+Well, y plus plus is the value y had before it changed.
+So if y was 3, that would assign to y 3,
+but this changes y to 4.
+So what does that expression even mean?
+It's impossible to parse.
+This is what we call undefined behavior.
+Now, one of my favorite ones is this.
+So here's a is 6.
+I'm going to print out a plus plus, a plus plus, a plus plus.
+Now, again, this is undefined behavior.
+We're using the same variable in part of this whole expression.
+This is all one expression.
+And if we were to run that, I'm going to make example.
+Okay, so I actually -- on our IDE here, we could do this
+in one of the online IDEs here.
+In our IDE, I'm actually treating that as an error.
+I could change this instead of doing make example.
+I could do g plus plus example dot cpp dot o example.
+So I'm skipping all of the error checking that I have turned on.
+And then if I run example, in this case, I get 6, 7, 8.
+Many of you would think that's what it will always print.
+If I do clang plus plus, just another compiler.
+Clang is not going to let me do that
+because it has all the warnings turned on.
+And basically, it's telling me that this is undefined.
+Okay? And so I have an online compiler.
+I've tried it with Visual Studio, C++.
+It gives me 666.
+One of them gives me 678 in SalvaG++.
+Another one will give me 876.
+So the upshot of all of that is you should not ever,
+ever do any of these things.
+These are pitfalls that you're going to need to look out for.
+Okay, we're going to finish this up with the last part
+of our exercise.
+Each time, I'm going to try and do a larger problem that puts
+into, you know, into practice what we've been talking about
+and what we've been learning about.
+We have been working with IPO programs.
+And so down here, we're going to write this basic IPO program.
+And so we're going to do, this time I'm going
+to do something a little bit faster.
+In the last lecture, I went through this step by step.
+This time, we're going to do it really, really quickly.
+So let me bring this over.
+Let me close example.
+Let me go down to C. Let's do nets.cpp.
+Let's put our name on the top of it.
+I'm not going to put the date in because I might want
+to use it another semester.
+So, lecture three.
+I am going to put my full Canvas ID there.
+Okay, so I'm going to go to my problem.
+I'm going to get the instructions out.
+I'm going to put those inside here.
+I'm going to convert the comments.
+[ Typing ]
+I'm going to select that and comment it, slash, and then tab.
+And I'm going to figure out what the inputs,
+outputs, and so forth are.
+So, input, I have weight in pounds.
+This one, I'll use snake case.
+I used camel case in the last one.
+The number of nets for an activity
+and the number of minutes.
+Okay? Okay, so three inputs.
+Output, calories, calories, calories.
+Burn. Okay?
+And what's given on this?
+Well, I'm given one kilogram is 2.2 pounds.
+[ Typing ]
+I'm given anything else in the problem statement.
+Oh, I have a conversion formula.
+Okay. So, that's also given.
+[ Typing ]
+That conversion factor is that.
+And finally, I have my algorithm or processing.
+And again, I was given that in the problem.
+[ Typing ]
+Although not exactly in the form I want to use.
+And so, I'm going to print that in there.
+[ Typing ]
+Okay, so I can get rid of this.
+[ Typing ]
+And we can write our code here.
+Now, what's the first step we're always going to do for the code?
+The first step is always mock up the output.
+So, I'm going to go copy this code here.
+What I want the output to look like.
+I'm going to paste it in there.
+I'm going to separate it.
+I'm going to put quotes around it like we did before.
+[ Typing ]
+Around the parts that are going to stay the same.
+[ Typing ]
+And I'm going to put C outs and output operators.
+So, C out.
+[ Typing ]
+Copy that so I can just put it here multiple times.
+[ Typing ]
+Oops, no, that's not right.
+I have operator there, but not that.
+So, 250 and L. Six and NL.
+90 and NL.
+And output operators here and here.
+Make them go the right way.
+And an NL.
+[ Typing ]
+Okay, now I'm going to open a terminal on that.
+I'm going to right click that and open an integrated terminal.
+So, now notice I'm in folder C.
+I'm going to do make run.
+[ Typing ]
+And I'm going to make sure I haven't made any syntax errors.
+And that the output looks pretty much like my,
+like the code that I copied over there.
+And so, you can see that it, in fact,
+does look pretty similar.
+Okay. Okay, so that was step one.
+Our step two is we're going to now add the input,
+output, and processing sections.
+So, here's my input section.
+[ Typing ]
+Here is my processing section.
+[ Typing ]
+And here is my output section.
+Okay. So, for the input, I need variables, right?
+So, I need my weight in pounds.
+I need the number of mets for that activity.
+And then I need the met conversion factor.
+And then I'm going to send the minutes next exercising.
+So, let's make these first two doubles.
+So, double weight in pounds.
+[ Typing ]
+And let's do CN weight in pounds.
+[ Typing ]
+Let's remove this dummy value and the dummy inline there.
+And I have my first line done.
+And make sure I spell pounds right.
+I like the fact that the editor will color that to make sure
+that I spelled it right and give me a syntax thing.
+Okay. So, this is the number of mets for this activity.
+That might be an int as well, but we're multiplying.
+It was just a factor times 0.75.
+So, let me make it a double.
+Let's write double mets and CN mets.
+And let me remove the dummies here.
+And minutes, I'm going to go ahead
+and make this one an integer.
+So, I'll move the dummy to start with.
+I will have int minutes CN minutes.
+Okay. So, I've got the input part done.
+Now, let's go ahead and do the processing part.
+So, the output is going to be calories.
+So, I'm going to create a double value for that.
+So, double calories.
+Equals. And I'm going to put in this formula.
+And notice the formula isn't exactly in the right format.
+So, this is a formula for calories per minute.
+And so, I want to divide calories by minute.
+I want to, calories by minute, I want to multiply both sides
+by the minute to get this.
+So, that would be this factor times mets times, oops,
+times weighted kilograms times minutes.
+Alright. In other words, if it's calorie divided by minutes,
+I need to multiply both sides by minutes to get the minutes
+on the right-hand side.
+Okay. Now, we actually don't have these two variables.
+And factor was given up to us here.
+It's this value.
+So, I'm going to create a constant for that.
+So, const double K factor equals .0175.
+So, I'm going to replace this factor with K factor.
+And mets, we read inside here, but we don't have weights
+in kilogram, but I do have another given,
+which is the kilogram.
+So, const double K pounds per kilogram.
+Equals 2.2, 2.2 pounds per kilogram.
+And so, given that constant, I can figure
+out what the weight in kilograms is.
+Because here's the weight in pounds.
+So, double weight in kilograms equals weight in pounds.
+Weight in pounds divided by K pounds per kilogram.
+Okay. So, that looks pretty good.
+We're going to have to test it to make sure it's correct.
+For the output here, we want to put our calories.
+That's what we want for the output.
+And we probably want, looks like two decimal places
+in the output.
+So, I'm going to do CL fix set precision 2,
+like I did before.
+I'm going to make sure I have IOMINIP up here, which I do.
+Okay. That looks pretty good.
+So, let's go ahead and try it with make run and put
+in the same input we had before.
+So, make run.
+So, 250 kilograms.
+Mets for the activity, 6.
+Minutes spent exercising, 90.
+You burned an estimated 1073.86.
+It looks okay.
+So, let's try it with some different inputs.
+Let's just do make test.
+And here I've tested with the same 256 and 90.
+Then an input weight of zero.
+Obviously, I'm burning no calories.
+An input weight of 125 pounds.
+An input weight of 175 pounds.
+Okay. It shows the different calories that we've burned.
+So, this will be our picture for the test part.
+And here's the picture for the code part.
+Again, I want you to do more and more of these
+to get practice doing these kinds
+of input/output processing programs.
+And to get some practice with calculations.
+That's it for me today.
+I'll see you in lecture four.
+Thank you.

@@ -1,0 +1,906 @@
+Hello everyone, this is Steve Gilbert. Welcome to lecture 4 on functions and decisions.
+This week we're going to start moving away from writing input processing output programs
+and start moving towards writing functions.
+Now a function, you remember, is a named piece of code, like square root.
+You can think of these, though, like mini IPO programs.
+In other words, they still have input processing and output,
+but the input processing and output is somewhat different.
+So here are the major differences.
+Instead of prompting the user, "Please tell me the number of boxes that you want,"
+the input is going to come through the parameter list.
+There's going to be no prompt and then waiting for the user to type input.
+And then, instead of printing the output on the screen,
+the output is going to be returned from the function.
+Now, of course, you can still use functions to create IPO programs.
+In fact, you're going to do this in one of the homework assignments.
+You can have regular input and output,
+but normally, unless we're writing an input and output function,
+we won't do IO inside the function itself.
+So let's look at arguments and parameters.
+Now, most functions require extra information to do their work.
+In other words, you couldn't just dial up Domino's or Pizza Hut and say,
+"Send me a pizza," and not give them any extra information.
+You'd have to tell them who you are, where to send the pizza to,
+what size pizza you want, what, you know, toppings you want on the pizza, and so forth.
+And so think of a function like square root.
+Square root, when you call the square root function,
+it doesn't stop and say, "Hello, what number would you like the square root on?"
+It doesn't prompt you for input.
+It also doesn't print its output on the screen.
+Instead, square root gets its input through arguments and parameters.
+Now, we're going to use these two terms in a very specific way.
+Sometimes they're confused with each other,
+and many times they're used in different ways.
+But we're going to refer to arguments as the values that are supplied when a function is called,
+not the variables that are created when the function is defined.
+Those we're going to call parameters.
+So when a function's defined, we're going to declare variables
+that will be used inside the function to store the value.
+Now, we have two kinds of functions.
+We have fruitful functions or void functions.
+A fruitful function is a function that produces a value.
+That means we can call a fruitful function as part of an expression, as part of a calculation.
+A void function, which is also known as a procedure, needs a side effect.
+A void function would be something that says, you know, print this value.
+It doesn't return anything.
+It just does something.
+So the does something part we call a side effect.
+Now, we're going to do our first example here, our first exercise.
+So make sure that you have gone into, got the lecture exercise document,
+gone to Fridays, got the lecture exercise document,
+clicked the link for the starter code,
+and we'll look at this first problem we're going to do here.
+So here, what we want to do is write a function called last digit.
+Now, again, unlike the IPO programs we've written before in class,
+we're not going to prompt the user, what digit do you want to process?
+We're just going to pass the digit to the function last digit.
+So if we give last digit a number like 3,572, the last digit in that number is 2,
+and so that's the value it should return.
+We also want it to work for negative numbers.
+For instance, giving last digit -947 should return 7, not -7.
+You can use one other function here.
+You can use the abs function in C standard lib.
+That's the version of abs that works for integers,
+but no other library functions, and you can't use string.
+So we couldn't take the substring at the size -1,
+or the back function to get the integer.
+So let's look at how we do this.
+Let's open up in IC4, let's open up A, and let's open up last digit.cpp,
+and we're going to write our function here.
+Notice I've included only this one header we can have.
+So how do we write a function?
+Well, you always start with - so this is the function we're writing.
+You always start with first draft skeleton.
+The name for the skeleton is called a stub.
+A stub doesn't actually do all of the work.
+All it does is get the mechanical parts out of the way.
+The reason you start with this first draft skeleton
+is because you want to get the, again, the mechanical parts,
+the part that you can memorize, you want that to be second nature,
+just like driving a stick shift.
+You want the shifting and using the clutch and so forth to be second nature.
+And so that's what a stub is.
+So here are the six questions we need to ask.
+We need to ask first what kind of thing the function returns,
+and write that down first.
+In this case, last digit is going to return an int.
+Secondly, we need to put in the name of the function.
+Now, if we spell last digit with a lowercase d here,
+it's not going to work, because our testing, or our client program,
+is going to be calling the last digit function spelled exactly the way that is.
+Third, we're going to put the input variable declaration,
+the parameter declaration, inside parentheses following that.
+And so these three parts, one, two, and three,
+is going to create the interface for the function,
+the part that describes it to the compiler.
+The next part is going to create the body,
+or the implementation of the function.
+So you add braces to surround the function body.
+Then, don't think at all about what the program is going to do.
+Don't think at all about what the function is supposed to do.
+Think about what kind of thing it is going to produce.
+And so create a variable for the output, the result,
+and initialize it, just a nothing, to an empty value, to zero.
+Finally, return the result.
+Then, once you make sure that compiles it and links,
+you can test the program, and we can go in and complete it.
+So let's walk through these steps so you can see them together.
+So here's our function, lastDigit.
+The first question is, what kind of thing that returns?
+Well, it returns an int, so you just write that down.
+Then we put in the name, lastDigit.
+Then we put in the parameter.
+Now this is going to take a digit.
+It's going to be an int, so it's going to take a number.
+So I'm going to say int number.
+Notice this is what a parameter declaration looks like.
+Just like a regular variable declaration,
+except we don't put a semicolon there.
+So int number.
+So we did step one, two, and three.
+The return type, what comes out, the name of the function,
+and what goes into the function, the parameter declarations.
+Step four is to create the implementation, the body.
+Step five is to create the output.
+So this is going to be an int.
+So we're going to create the result.
+We're going to initialize it to zero.
+You can do it like that.
+You can do it like that.
+Either one of those is fine.
+What you can't do is that.
+If you do that, you have a random result.
+You don't want to do that.
+So we'll say int result, set it to zero.
+And then step six, we're going to return the result.
+Okay, so now we have our skeleton.
+Let's test the skeleton to make sure it worked.
+We're going to go over here.
+We're going to open an integrated folder on A.
+So now you notice that is switched to A.
+I'm going to go here and I'm going to do make test.
+Now you might be unhappy that you've got no points.
+You should not be.
+You should not be unhappy because what you've done is you've done all of the mechanical parts.
+If it didn't compile at this point,
+you'd know that you'd made some mistake in your stub, in your skeleton.
+And you could concentrate on getting that right without worrying about what makes the program work.
+So that's the whole beauty of this.
+Create the mechanical part first and then do the stub.
+So at one point you're concentrating on the syntax, getting that right.
+The second point you're concentrating on figuring out how to get the program to work.
+So let's think about how we get this program to work.
+If we have a number, 35, 7, 67, I want the last digit here.
+How do I get that 7 right there?
+Well I get the 7 by taking, dividing the number by 10 and getting the remainder.
+If I divide the number by 10, I get 356.
+If I get the remainder, I get the 7 that's left over.
+So I'm just going to set result equals number, remainder, 10.
+And I'm going to try that again.
+OK, let's clear the terminal with control L.
+Let's do make test.
+Oh, much better, I got 90.
+But I have one of these tests that is failing here.
+It's obvious why it's failing.
+It's failing because I'm getting -7 here.
+And so remember I told you that we could use this absolute value function for integers from there.
+And so we're just going to put the absolute value of number, remainder, 10 into the argument there.
+And we're going to make test once again.
+And we have 100%.
+When you're doing this, try to do it step by step as I've just showed you.
+Don't start at the top and simply try and type out the answer from the beginning and end.
+Do it in chunks like this.
+Build the stub.
+Make sure the mechanics work.
+Do the simplest thing that will possibly work.
+Result equals number, remainder, 10.
+Then fix up the parts that don't work.
+Do it incrementally.
+That will really help you.
+Now let's start talking about decisions.
+So if you were writing a programming language, what parts do you need?
+What features are required?
+So you can write any programming language using three control structures.
+This is from a paper that was written back in 1966 by Bohm and Jacopini.
+So we have been writing programs so far using only one control structure - sequence.
+That means we did our prompt, then our input, then our processing, then our output.
+The statements were in order - the first, the second, the third, and so forth.
+So that's what we've been doing with IPO programs.
+The second kind of sequence, or the second kind of control structure that we're going to work on now, is called selection.
+That's conditional execution with an if statement.
+This is also sometimes called branching.
+And then we're going to move on and look at iteration.
+That's while looping.
+So today we're going to start with selection.
+Now to make a decision, we first have to think about conditions.
+So decision making in C++ is based on these three foundations.
+First, the built-in bool type returns true and false.
+In Java this is called the boolean type.
+I think in Python it's called bool as well.
+Second, but in Python the true and false values are capital true and capital false.
+In Java they're true and false, lowercase, like this.
+Secondly, we have a group of operators called relational operators.
+The relational operators compare values of any type, and they produce a boolean result.
+Or a true/false result.
+Finally, we have the logical operators.
+The logical operators operate not on any kind of value, but only on boolean expressions, or true/false expressions.
+And they combine them or negate them.
+So the relational operators are operators like less than, greater than, greater than or equal, less than or equal, and equal.
+And the logical operators are the operators and, and, or, and, not.
+Now unfortunately, in C++ truthiness is a little bit more flexible than you might expect if you come from Python or if you come from Java.
+So here's the problem, and I'm going to walk you through several different pitfalls.
+Now, as with numbers, C++ has implicit bool conversions.
+Now, Java has implicit numeric conversions.
+In other words, it will automatically convert an int to a double, and you don't have to write a cast or anything like that.
+But C++ will convert a number to a true/false value.
+Something that Java won't do, and Python won't do.
+So, if you have a number, and if the expression is false, if the number is anything other than zero, it is true.
+If the number is zero, it's considered false.
+So numbers and boolean values are implicitly converted.
+Suppose I have a number, three, or a variable, a, that is a number.
+And I want to assign that to a bool.
+Well, if the number was zero, the bool variable will take on the value false.
+If it's anything other than zero, a negative number or a positive number, it will be true.
+Now, suppose I then take that bool variable, and I assign it to a number variable.
+No matter what the number variable originally was, now if the bool was false, the number will be zero.
+If the bool was true, the number will be one.
+Now, in Java, if you print out a boolean variable, you'll get true and false.
+The same thing is not true in C++.
+In C++, the default is to print out zero and one.
+Zero for false, one for true.
+So if I print out a boolean variable, it will print out zero or one.
+You can change that by using a manipulator.
+You remember the manipulators we used for fix and set precision?
+There's a bool alpha manipulator.
+If you do that, it will use true and false, just like Java does.
+So what are the pitfalls of this fact that numbers and boolean values are implicitly convertible?
+Here's the first pitfall, an embedded assignment.
+In Java, if we wrote this statement, if area equals zero,
+now notice that I have the assignment operator there, not the equality operator.
+In Java, Java would say, "Eh, that's not a boolean value.
+You've made a mistake in your if statement."
+In C++, it will actually assign zero to area,
+and then when the if statement tries to go and evaluate, it'll say,
+"Oh, I don't have a boolean here, but I have a number,
+and I can convert that number to a boolean, and so this would be false."
+If you assign a non-zero, then the condition is considered true.
+Again, you're not told about this problem.
+There is no warning.
+Java, of course, will protect you from this, and C# will protect you from this.
+They'll protect you from this as long as you're not comparing a boolean value to--
+or a boolean variable to true and false, in which case you'll have the same problem.
+So here's a question.
+Let me ask you this.
+I'll give you a few seconds.
+Pause the screen and see if you can answer it, and then I'll talk about it.
+Okay, so if a equals 3, if a equals 4, a is 4, which is weird,
+because I just set it to 3, else a is not 4.
+What prints?
+a.
+a is 4, weird.
+b. a is not 4.
+That's a syntax error.
+It won't compile.
+And d. neither one.
+So pause for a few seconds and then come back, and we'll answer it.
+Okay, welcome back.
+So here I have an embedded assignment instead of a comparison.
+When you read it, it says if a equals 4, of course it's not 4, it's 3,
+so I'll go into the else and print a is not 4.
+In fact, this assigns 4 to a, and then because that is nonzero,
+the if statement considers it true.
+And so we go into the truth part, and a prints out.
+a is 4, weird.
+So one of the pitfalls of convertibility between bools and numbers in C++.
+Let me show you a couple other conditional pitfalls.
+When you use the logical operators and and or,
+it's possible to have both an impossible and an unavoidable condition.
+The impossible condition is when you use and.
+And if you use and, in this case,
+I'm checking to see if a person is between 13 and 65,
+but in fact that's not what I've written.
+This is an impossible condition,
+because the variable age cannot both be less than 13 and greater than 65.
+It cannot be both of those.
+Now we use the term and.
+Make sure that person is under 13 and greater than 65.
+We wouldn't say that.
+However, we do use the term and and or kind of interchangeably in our informal speech.
+And so you need to make sure every time you use and and or
+that you double check to make sure you have a condition with and
+that it's possible for all conditions to be true simultaneously.
+This condition will always be false.
+It's impossible.
+Similarly, if you use or,
+make sure it's possible for all conditions to be false simultaneously.
+This condition here,
+when you read it to yourself,
+if age is greater than 13 or age is less than 65,
+do something.
+We read that kind of informally and it makes sense to us.
+But we don't realize that every age must be either greater than 13 or less than 65.
+There is no age that doesn't meet that condition.
+So it's unavoidable.
+Finally, because of this implicit conversion to Boolean,
+it's very, very important to remember to always use complete relational expressions in conditions.
+This is not a syntax error,
+and it especially bites people who are Python programmers.
+So we would read this if age is equal to 12 or 13 or 14,
+and that would make sense to us when we read it.
+But the compiler reads it if age equals 12,
+now that's false,
+or 13.
+Well, we're not saying age equals equals 13.
+We're just saying 13.
+And remember the Boolean operators and and or operate on Boolean expressions.
+So 13, even though it's a number here,
+is treated as a Boolean expression.
+It's not 0, therefore it's true.
+So this is if false or true, and it's always true.
+No matter what you do, no matter what value age it has,
+this expression will always be true.
+Let me give you another little quick check here.
+We have a string grade set to C.
+If grade equals equals A or A plus or A minus,
+C out got an A.
+Else if grade equals B or B plus or B minus,
+C out got a B.
+Else if grade equals C or C plus or C minus,
+C out got a C.
+What prints, assuming we have all the string includes and everything,
+does it print got an A, got a B, got a C, or a syntax error?
+So pause the video here, think about it, write down your answer,
+and when you come back I'll answer it.
+OK, welcome back.
+So this is the same problem we just talked about on the last slide.
+This is a Boolean expression, a relational expression.
+So grade equals equals A is false.
+Now the grade is not equal to A plus,
+but this is not saying if grade equals equals A plus.
+That is saying true.
+It's not zero, it's true.
+And so this is false or true, that whole expression is true,
+so this will always print out got an A.
+Let's look at another pitfall with comparison operators.
+So here I've called the square root function
+and stored the result in the variable root.
+Now I'm taking the square root of 2,
+and so if I multiply root times root,
+I should get the square of 2,
+or the square of the square root of 2,
+or I should get 2.
+And so this should print out OK.
+Now this is syntactically comparable,
+so I can compare this real number to this real number,
+but if you simply write it down the way you learned it in mathematics,
+you will get the wrong answer.
+This will in fact print out back to Math 30,
+because these answers will not exactly be 2.
+And so there is no perfect solution.
+In general, there's no perfect solution,
+because real numbers are designed to work with very, very small numbers,
+like a coronavirus,
+and very, very large numbers, like the distance to far galaxies.
+And so we cannot just have some simple value
+and say if it's this close, it's OK.
+So in general, you have to decide, based on the problem,
+what's close enough.
+We call that the epsilon value.
+So here's a very common one,
+1e^-14 is about the biggest difference that can be decided between two doubles.
+Then you take the two numbers, if you want to see if they're equal,
+root times root,
+subtract it from 2.0,
+and take the absolute value of that.
+And if the absolute value is less than this epsilon value,
+then the numbers are equivalently equal.
+Now this might seem like a lot of work,
+but it's in fact what you have to do.
+It's not only what you have to do in C++,
+it's what you have to do in Java and Python as well.
+You simply cannot compare real numbers using the relational operators
+and expect to get back a meaningful answer in every single case.
+So if you care about correctness,
+you'll make sure that you do this.
+OK, so that's the Boolean type and some pitfalls with the Boolean type.
+Let's go ahead and look at selection, so if statements.
+Why do we want to use if statements in our code?
+We use selection to control the flow of data.
+We want to select a particular value or kind of value from a data flow.
+For instance, we're getting all the transactions from a gas pump.
+We want to select the debits or the credits.
+How much do they owe us? How much did they pay us?
+We do that with an if statement.
+Now while this data is going by,
+we may want to selectively update a counter or an accumulator.
+We're looking at a string, and we want to count the vowels and the consonants.
+We need to use an if statement to determine which counter to update.
+We want to reduce root data to correct part of a program
+in response to user commands or to input.
+Oh, I got a credit in.
+I want to send it to the part of the programs that processes a credit.
+Oh, they checked three on the menu.
+I want to go to the action that corresponds to three on the menu.
+And finally, we use selection to error check data.
+If the data that comes in is not within the bounds,
+we would process it to a--we would send it to a place that would correct it.
+So we'll use error checking.
+We use selection to control error checking.
+The important thing to realize about this is that selection produces information.
+Selection is back to our old friend input, processing, and output.
+When you come to a selection statement,
+you have raw information before the selection statement--
+raw data before the selection statement.
+After the selection statement, things have changed.
+You know some more information.
+You know that I've found one more vowel
+or that I've added something to the amount that the user has paid.
+So selection produces information just like an IPO program.
+Input, processing, and output is the basic function that all computing is based on.
+Okay, so let's look at the six selection structures we have in C++.
+We have one-way independent if statements.
+So if this is true, do that or then do that.
+We have two-way or either/or actions.
+So this is--if this is true, do that; otherwise or else, do that.
+We have sequential dependent if statements.
+So if this is true, do that; else, if this is true, do that;
+else, if neither of those are true, do the third thing.
+We have nested or leveled decisions.
+If A is true and if B is true, do something;
+else, if A is true and B is false, do something else;
+else, if A is false and B is true, do something;
+else, if A is false and B is false, do something else.
+Nested or leveled decision making.
+We have labeled integral tests.
+This is called the switch structure.
+And finally, we have a selection expression.
+This is called the conditional operator.
+So we do a test.
+If the test is true, this value is assigned to val.
+If the test is false, this value is assigned to val.
+Now, in looking at these six kinds of selection structures,
+you have to understand that they're not all designed
+to do exactly the same thing.
+We have a rubric to decide which one is the right one to use.
+The first rubric is we want to make sure that
+whichever selection structure we use,
+it produces the correct output.
+That's kind of the non...we can't argue with that.
+It has to produce the correct output.
+The second thing we want to do is we want to make sure
+that whichever selection structure we use,
+that the code we produce is understandable
+and it's maintainable, meaning when you come back to it,
+you can change it and the code still works correctly.
+You can understand it and maintain it.
+Thirdly, we want to make sure we use the correct semantics.
+Each of these statements says something
+to a programmer who understands programming.
+And so it's like learning an idiom in a new language.
+If you're speaking French, there are idioms
+that are French idioms.
+You want to learn the idioms so when you say them,
+the French speakers will understand you.
+The same way with programming.
+If you use a one-way independent if statement,
+you may get all of your code correct.
+It may be understandable and maintainable,
+but it's not saying what you think it's saying,
+even if it produces the correct output.
+So using the correct semantics means using
+the correct kind of selection structure
+for the situation you're in.
+And only then, after we've done those three,
+do we want to fall back and think about,
+"Oh, I want to make sure that this code is efficient
+as it possibly could be."
+Okay, so let's look at which one is the correct one
+to use in each situation.
+Imagine that you're writing the code that is going to process
+this dialog box over here.
+Notice it has these check boxes.
+These check boxes mean that I could select one
+or all of them or none of them.
+So the decisions and what happens
+based on that decision is truly independent.
+When this happens, the only way to write these,
+you can't use if/else, you can't use if/else/if,
+you must use independent ifs.
+So if the startup task pane is checked,
+we're going to do whatever action is required for that.
+That has nothing to do with whether
+the layout was checked
+or any of the other ones were checked.
+And so independent ifs are the correct way to do this.
+This is called the "guarded action" idiom.
+In other words, we're only doing the action
+if we pass the test at the start of the action.
+The test condition is guarding
+the action that we're doing.
+This is the only case
+that you should ever use independent ifs.
+If this situation is not true,
+using independent ifs is the wrong
+semantics for that case.
+So let's look at another one.
+And beginning programmers, they learn the if statement
+and they try and use the if statement,
+the independent if statement, for everything.
+What happens if you have an either/or decision
+or a two-way branch?
+For this, we want to use the
+else statement. The reason we want to use
+the else statement is because it covers all
+possibilities. In other words, for
+every possible input, you want to put it
+in bucket A or bucket B.
+If you try doing this with
+independent if statements, you will
+make a mistake when you write the second if statement
+eventually. And that mistake will
+either allow you to skip some inputs
+or it will allow you to put an input
+in both buckets, which you don't want
+to do. So think of the situation of
+paying someone overtime
+when they get... or paying time
+and a half when someone gets overtime, more than
+40 hours a week. If you do it with
+independent if statements, you're likely to write
+if hours is less than 40,
+pay them normal time.
+Else... or if hours is greater than 40,
+pay them overtime.
+Well, you've just skipped the people whose hours were exactly
+40. If you go back and you realize
+you've skipped some people,
+if hours less than or equal
+to 40, pay them normally. If hours
+greater or equal to 40, pay them overtime.
+You've just paid the overtime people twice.
+So again, if you use if/else,
+someone will either be in the normal bucket
+or the overtime bucket, and they will never be
+in both buckets. And so it will
+skip you, it will avoid
+you doing situations where that problem occurs.
+So let's do an exercise. This is called
+the double sum exercise.
+Let's go back to our code space. I need to restart
+my code space because it stopped while I was
+talking to you guys.
+Let's see how long this
+takes to do it.
+[silence]
+Okay, we were in last digit,
+so I'm going to close last digit. We're going to
+go into B, and we're going to do
+the double sum problem.
+So let's look
+at the problem here.
+We're going to write a function, which
+given two int arguments, returns a sum
+unless the two values are the same, we're going to return
+double the sum.
+Okay, so let's put our
+name on this one.
+So this
+is going to take two int arguments,
+so it's going to return an int.
+Its name is double sum.
+It's going to take two parameters,
+so int a and
+int b.
+We're going to put the body on it.
+We're going to create the result.
+[typing]
+And we're going to return the result.
+[typing]
+And we're going to try it out to make sure we got it
+correctly mechanically working.
+So, right click, open a new integrated terminal.
+Do make
+test.
+And it compiles
+and runs correctly.
+So we know we've got the mechanical parts.
+Okay, so we want to say
+two things here.
+So if
+a
+is equal to b
+I'm going to
+set the result equal to
+two times a plus b.
+Else
+I'm going to set the result
+equal to a plus b.
+Okay, so
+this is relatively
+straightforward.
+It uses the correct semantics, if and else.
+In other words, something a
+either is equal to b or it's not equal to b.
+And it's going to
+go into one of these or the other.
+So if we look back to our
+four
+rubric that we were looking at
+to see if we've done it correctly.
+We've seen that it produces the correct result.
+And of course I'm going to check here to make sure it does produce the correct result.
+So I'm going to do make test.
+And yay,
+we have 100%.
+So it's pretty
+understandable with if else.
+I can see what's happening.
+It's semantically correct. It's an either or decision.
+It's not quite as efficient as I wanted.
+So we could come back here, even though we have it done
+correct and we're happy with it.
+We might come back and say, you know, I don't like the fact that I'm calculating
+a plus b twice.
+I'm calculating a plus b twice.
+And we could change that by
+simply taking our initial result
+and putting in a plus b.
+Now we can
+get rid of this else part all together.
+Now I still
+have an either or condition.
+This is my else condition
+and this is my if condition.
+And so I don't have to say a plus b again.
+I can say two times result like that.
+So this is the initial value.
+This is still an alternative action
+even though I'm not using the else statement.
+And it's somewhat more efficient.
+Right? Somewhat more efficient.
+It still has a slightly
+it still has a slight chance
+of error though. Remember our second
+thing was to make sure it's maintainable.
+What would that second chance of error be?
+Well, because I'm using equals equals here, I'm
+susceptible to doing that.
+And if I do that, of course,
+I break the first rule. Oh, actually I have the
+warning set up so that
+this will actually catch that.
+As in C++ normally
+it wouldn't catch that. So I have an extra warning set up
+w error parenthesis
+to catch that.
+However, it's possible we couldn't catch that.
+Right? It's possible we couldn't catch that.
+And so
+we might want to do something else.
+We might want to write this if a not equal to b
+result equals
+a plus b
+and then do the else part.
+So I'm going to put that back the way I had it.
+And I'm just going to rely
+on the fact that my compiler here is catching that
+so I don't have to worry about it.
+OK,
+let's go on to our next
+kind of decision statement.
+Our next kind of selection statement.
+Multiway interdependent tests.
+Now remember I said you should not
+use if for
+anything other than independent tests.
+And in this case we have an
+interdependent test. So if
+percent greater than one
+we get out of range. If percent is less than one we set
+the result to a. If percent is less than ninety
+we set the result to b. Set the result to c.
+We set our result to 65. We're going to
+set the result to d because this is true.
+This one is false so we won't change it to f.
+This one is also false so we won't change it
+out of range. So we'll set the result to 65.
+However, the test order
+is significant. So notice I've just
+changed the order of these two tests.
+I've done 90 then 70 then 80.
+And so this time
+65 is less than 90 so I get a b.
+65 is less than 70 so I get a d.
+65 is less than 80
+so I overwrite that d with a c
+and I end up with a c out of this. Now you might be
+happy about the fact that I've done this
+but we've broken our first most important
+rubric rule. The output
+is not correct.
+So this is not the correct way
+to write interdependent tests.
+If one test depends on the result
+of both of the tests that came before it or after it
+you have, are not supposed to use
+independent if statements.
+Instead, when only
+one condition can be true, then you should
+use if, else if,
+else if, else if. These are
+called ladder style if, else if
+statements. They're ladder style because you can read
+on them like the rungs of a ladder and you can
+look at each condition and pick out the
+one condition that could possibly
+be true. And so this is
+a program that is checking and turning
+a number, "and" into
+a word. One, two, three,
+four billion, two hundred and so forth.
+So this is obviously correct.
+The order matters, so you have to be
+more careful. In other words, because
+only one of them can be correct, you have to
+make sure that you select kind of
+from the left as the problems come in.
+It's semantically correct. It says there will only
+be one output, whereas the previous one
+was not semantically correct. It's efficient
+once the answer is found, there
+is no more checking.
+There is no more checking.
+So let's go ahead and do that. This will be our
+last exercise here. And we're going to use these
+sequential if statements to check
+on some dates for the
+four seasons problem. So this is part
+C.
+So let me open four seasons. Let me
+close that dash shell there.
+Close that dash shell. And let's put our name
+on the top of it.
+And let's look at the problem for four seasons.
+We're going to write a function named
+season. We're given two integer arguments
+representing a month and a day.
+And we're going to
+return the season for that month and day.
+Assume that months are specified as an
+integer between 1 and 12, 1 for January,
+2 for February. And the day is specified between
+1 and 31.
+So we can write the skeleton.
+So string
+season
+int month
+int day
+string result
+Now,
+when we wrote
+the, when we had a result
+that was an integer, we had to give it
+a starting value. With the string
+type, because it's a class type, we do not.
+This will be the empty string.
+So you don't need to write string result
+equals quote quote. As a matter of fact,
+you shouldn't do that.
+That actually does, requires the compiler
+or the run time to do some extra work.
+And we're going to return our result.
+I'm going to open a shell here.
+And I'm going to make sure that this
+compiles and runs.
+So I'm going to do make test.
+OK, so you can see that again I got
+zero, but I don't care about that. All I care about
+is the fact that this runs.
+So here, now let's go look at
+the conditions we want.
+So we have, are going to return
+winter, spring, summer, fall
+or invalid. So we have
+five possible outputs.
+So we can go ahead and write the skeleton for that.
+If something
+we're going to set
+the result to that.
+Else if something else.
+We're going to set the result to something else.
+Else if something else.
+So one, two, three.
+Else if something else.
+Four. And
+if it's none of those, it must be this one
+down here.
+OK, so this is the basic structure for
+an if, else, if.
+You notice how it looks just like a ladder here
+that we could climb down. So which of these
+cases should we handle first?
+Which of these cases should we handle first?
+Generally, if there is a
+error case, you want to handle that first.
+That means in all the other
+if statements, you don't have to worry about
+if the date is valid. So we're going to set
+the result to invalid here.
+And for all the rest of these,
+we're just going to set them to the
+so this is going to be winter.
+Spring.
+Summer.
+Winter.
+Spring.
+Summer.
+Winter.
+Summer.
+And fall.
+Summer.
+Sorry.
+And fall.
+The nice thing is fall is done.
+OK, so let's start way back up at
+the
+the next one.
+So let's start our way back up at
+start our way back up at
+invalid.
+So what does it take for a day to be invalid?
+So we don't have to validate
+each day to check each year's.
+But a month of 13 or -1 or a day
+less than
+1 or 31
+would not pass. So basically we have four conditions
+here. So if
+month less than 1 or
+month greater than 12
+or day less than 1
+or day
+greater than 31
+we know that the day is invalid.
+We know the day is invalid.
+So now in all the rest of these I know that the
+month is valid. So let's look at winter.
+So if the date
+falls between 12/16
+and 13/15
+so 12/16 is going to
+be the first day of winter, December 16th
+and 3/15 is going to be
+the last day of winter.
+So we're going to say if
+month
+equals 12
+and
+the day is greater than 15
+or
+if the month is January
+it's winter, if it's February it's winter,
+if it's before March 10th. So month
+less than 3
+or
+the month equals
+3 and day less
+than or equal to 15 we're in
+winter. Now when I get down
+to this next one I have removed
+all of the invalid dates. I've removed
+all the winter dates and so I don't have to do
+any of this checking anymore.
+All I have to say is
+if the month
+is less than 6
+or
+the month is 6
+and the day is less
+than or equal to 15.
+Why don't I have to check to see if the
+month is less than 3? Why don't I have to
+check for January, February and the early days of
+March because I already handled them here.
+They could not get down to this if statement. I've already
+taken them out for spring.
+Similarly for summer
+if
+the month is
+less than 9, it's before
+September or
+the month equals 9 and the day is
+less than or equal to 15.
+Again I'm in summer. For the else one I don't even
+have to worry about anything. Anything that's left
+must be fall.
+So this is how we do
+sequential if statements.
+Let's try it out and see if we got it right.
+I may have made a mistake.
+So we'll do make test.
+I didn't make a mistake. We got 100% on that.
+So you have everything here you need
+to take your screenshots
+and I will see you
+for lecture 5.
+.
